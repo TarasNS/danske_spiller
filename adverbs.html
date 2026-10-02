@@ -45,7 +45,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Danish Sentence Builder: Adverbs &amp; Connectors</title>
+  <title>Adverbier og bindeord — byg danske sætninger | Sjovt Dansk</title>
+  <meta name="description" content="Byg danske sætninger med adverbier og bindeord. Gratis grammatikøvelser på B1–B2-niveau." />
+  <meta property="og:title" content="Adverbier og bindeord — byg danske sætninger | Sjovt Dansk" />
+  <meta property="og:description" content="Byg danske sætninger med adverbier og bindeord. Gratis grammatikøvelser på B1–B2-niveau." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sjovtdansk.dk/adverbs.html" />
+  <meta property="og:locale" content="da_DK" />
+  <link rel="canonical" href="https://sjovtdansk.dk/adverbs.html" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Adverbier og bindeord",
+  "description": "Byg danske sætninger med adverbier og konjunktioner.",
+  "url": "https://sjovtdansk.dk/adverbs.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Adverbier", "Konjunktioner", "Dansk grammatik"],
+  "educationalLevel": "B1 B2",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Adverbier",
+      "item": "https://sjovtdansk.dk/adverbs.html"
+    }
+  ]
+}
+</script>
   <style>
     /* CSS reset */
     * {
@@ -313,12 +357,12 @@
 </head>
 <body>
   <header>
-    <h1><span data-sd-sprite="ur" data-scale="3" class="sd-bob" aria-hidden="true"></span> <span>Danish Sentence Builder</span></h1>
+    <h1><span data-sd-sprite="ur" data-scale="3" class="sd-bob" aria-hidden="true"></span> <span>Sætningsbyggeren</span></h1>
     <div class="header-buttons">
-      <button id="darkToggle" title="Toggle dark mode" aria-label="Toggle dark mode">Dark / Light</button>
-      <button id="importBtn" title="Import CSV data">Import Data</button>
-      <button id="reviewBtn" title="Review saved words (R)">Review</button>
-      <button id="settingsBtn" title="Settings">Settings</button>
+      <button id="darkToggle" title="Skift mellem lys og mørk" aria-label="Skift mellem lys og mørk tilstand">Lys / Mørk</button>
+      <button id="importBtn" title="Importér CSV-data">Importér data</button>
+      <button id="reviewBtn" title="Gennemgå gemte ord (R)">Repetition</button>
+      <button id="settingsBtn" title="Indstillinger">Indstillinger</button>
     </div>
   </header>
   <main>
@@ -333,12 +377,12 @@
   <!-- Import Modal -->
   <div id="importModal" class="hidden">
     <div class="modal-content">
-      <h2>Import CSV Data</h2>
-      <p>Paste your CSV (columns: word, meaning, sentence_da, sentence_en, category, level, theme). Separate values with commas or tabs.</p>
-      <textarea id="csvInput" placeholder="Paste CSV here..."></textarea>
+      <h2>Importér CSV-data</h2>
+      <p>Indsæt din CSV (kolonner: word, meaning, sentence_da, sentence_en, category, level, theme). Adskil værdierne med komma eller tabulator.</p>
+      <textarea id="csvInput" placeholder="Indsæt CSV her …"></textarea>
       <div>
-        <button id="loadDataBtn">Load Game Data</button>
-        <button id="cancelImportBtn">Cancel</button>
+        <button id="loadDataBtn">Indlæs data</button>
+        <button id="cancelImportBtn">Annullér</button>
       </div>
     </div>
   </div>
@@ -346,17 +390,16 @@
   <!-- Settings Modal (contains reset/export) -->
   <div id="settingsModal" class="hidden">
     <div class="modal-content">
-      <h2>Settings</h2>
+      <h2>Indstillinger</h2>
       <p>
-        Use these options to manage your progress. Data is stored in
-        localStorage【164741182258330†L185-L193】 and will persist across sessions unless you clear it or
-        browse in private mode.
+        Her kan du styre dine fremskridt. Dine data bliver gemt i browseren og
+        er der næste gang, medmindre du rydder dem eller bruger privat browsing.
       </p>
-      <button id="exportProgressBtn">Export Progress</button>
-      <button id="resetProgressBtn">Reset Progress</button>
-      <button id="closeSettingsBtn">Close</button>
+      <button id="exportProgressBtn">Eksportér fremskridt</button>
+      <button id="resetProgressBtn">Nulstil fremskridt</button>
+      <button id="closeSettingsBtn">Luk</button>
       <div id="exportArea" class="hidden">
-        <p>Copy your progress JSON below:</p>
+        <p>Kopiér dine fremskridt (JSON) herfra:</p>
         <textarea id="progressOutput" readonly style="width:100%;height:150px;"></textarea>
       </div>
     </div>
@@ -365,10 +408,10 @@
   <!-- Review Modal -->
   <div id="reviewModal" class="hidden">
     <div class="modal-content">
-      <h2>Review Mode</h2>
-      <p>Practice saved words or defeat Mistake Monsters. Answer each correctly three times to remove it.</p>
+      <h2>Repetition</h2>
+      <p>Øv de gemte ord, og besejr fejlmonstrene. Svar rigtigt tre gange på et ord for at slippe af med det.</p>
       <ul id="reviewList"></ul>
-      <button id="closeReviewBtn">Close</button>
+      <button id="closeReviewBtn">Luk</button>
     </div>
   </div>
 
@@ -496,23 +539,23 @@
 
     // Level definitions: label, unlock threshold (# correct answers required)
     const levels = [
-      { id: 0, name: "Explorer", threshold: 0 },
-      { id: 1, name: "Builder", threshold: 10 },
-      { id: 2, name: "Connector", threshold: 25 },
-      { id: 3, name: "Fluency", threshold: 45 },
-      { id: 4, name: "Master", threshold: 70 },
+      { id: 0, name: "Opdager", threshold: 0 },
+      { id: 1, name: "Bygger", threshold: 10 },
+      { id: 2, name: "Binder", threshold: 25 },
+      { id: 3, name: "Flydende", threshold: 45 },
+      { id: 4, name: "Mester", threshold: 70 },
     ];
 
     // Modes enumeration
     const MODES = {
-      MEANING: "Meaning Match",
-      GAP: "Sentence Gap",
-      TRANSLATE: "Translation Bridge",
-      ORDER: "Word Order",
-      CATEGORY: "Category Quest",
-      CONNECTOR: "Connector Duel",
-      LISTENING: "Listening Simulation",
-      BOSS: "Boss Round",
+      MEANING: "Find betydningen",
+      GAP: "Udfyld hullet",
+      TRANSLATE: "Oversættelsesbroen",
+      ORDER: "Ordstilling",
+      CATEGORY: "Ordklasse-jagten",
+      CONNECTOR: "Bindeordsduellen",
+      LISTENING: "Lyt og vælg",
+      BOSS: "Bossrunde",
     };
 
     // Current game state
@@ -525,6 +568,16 @@
     let reviewActive = false;
 
     /* === Utility Functions === */
+    function catDa(c) {
+      if (!c) return c;
+      const m = { Time: "Tid", Place: "Sted", Manner: "Måde", Frequency: "Hyppighed", "Cause/Effect": "Årsag og følge" };
+      if (/Coordinating/i.test(c)) return "Sideordnende konjunktion";
+      if (/Subordinating/i.test(c)) return "Underordnende konjunktion";
+      if (/Correlative/i.test(c)) return "Parvis konjunktion";
+      const k = Object.keys(m).find((x) => c.indexOf(x) !== -1);
+      return k ? "Biord – " + m[k].toLowerCase() : c;
+    }
+
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -572,13 +625,13 @@
       progress.weakestCategory = weakest;
       // Stats list
       const stats = [
-        { label: "Score", value: progress.score },
-        { label: "Level", value: levels[progress.level].name },
-        { label: "Streak", value: progress.streak },
-        { label: "Accuracy", value: progress.accuracy + "%" },
-        { label: "Words Practiced", value: progress.wordsPracticed },
-        { label: "Weakest", value: progress.weakestCategory || "-" },
-        { label: "Saved Words", value: Object.keys(progress.savedWords).length },
+        { label: "Point", value: progress.score },
+        { label: "Niveau", value: levels[progress.level].name },
+        { label: "Serie", value: progress.streak },
+        { label: "Træfsikkerhed", value: progress.accuracy + "%" },
+        { label: "Øvede ord", value: progress.wordsPracticed },
+        { label: "Svageste emne", value: catDa(progress.weakestCategory) || "-" },
+        { label: "Gemte ord", value: Object.keys(progress.savedWords).length },
       ];
       stats.forEach((item) => {
         const statDiv = document.createElement("div");
@@ -746,7 +799,7 @@
       const parts = currentEntry.sentence_da.split(/\s+/);
       // Shuffle parts to create scrambled array
       const scrambled = shuffle(parts.slice());
-      content.innerHTML = `<p>Arrange the words to form the correct sentence:</p>`;
+      content.innerHTML = `<p>Sæt ordene i den rigtige rækkefølge, så de danner en sætning:</p>`;
       const reorderDiv = document.createElement("div");
       reorderDiv.id = "reorderParts";
       scrambled.forEach((part, index) => {
@@ -757,7 +810,7 @@
       });
       content.appendChild(reorderDiv);
       const submitBtn = document.createElement("button");
-      submitBtn.textContent = "Submit Order";
+      submitBtn.textContent = "Tjek rækkefølgen";
       submitBtn.addEventListener("click", () => {
         const answer = reorderSelections.join(" ");
         handleAnswer(answer.trim() === currentEntry.sentence_da.trim());
@@ -772,7 +825,7 @@
     }
 
     function renderCategoryQuestion(content) {
-      content.innerHTML = `<p>Assign the word <strong>${currentEntry.word}</strong> to the correct category:</p>`;
+      content.innerHTML = `<p>Hvilken gruppe hører <strong>${currentEntry.word}</strong> til i?</p>`;
       // Provide list of categories (7 categories per spec)
       const categories = [
         "Time",
@@ -783,11 +836,20 @@
         "Subordinating conjunction",
         "Correlative conjunction",
       ];
+      const catLabels = {
+        "Time": "Tid",
+        "Place": "Sted",
+        "Manner": "Måde",
+        "Frequency": "Hyppighed",
+        "Coordinating conjunction": "Sideordnende konjunktion",
+        "Subordinating conjunction": "Underordnende konjunktion",
+        "Correlative conjunction": "Parvis konjunktion",
+      };
       const options = document.createElement("div");
       options.id = "options";
       categories.forEach((cat) => {
         const btn = document.createElement("button");
-        btn.textContent = cat;
+        btn.textContent = catLabels[cat];
         btn.addEventListener("click", () => {
           const corrCat = currentEntry.category;
           // Determine high‑level category
@@ -843,7 +905,7 @@
       // Hide the sentence after a short delay
       setTimeout(() => {
         const el = document.getElementById("listenSentence");
-        if (el) el.textContent = "(Sentence hidden)";
+        if (el) el.textContent = "(Sætningen er skjult)";
       }, 3000);
       // Provide options: missing word and distractors
       const distractors = dataset
@@ -894,14 +956,14 @@
         }
       });
       if (correct) {
-        feedback.textContent = "Correct!";
+        feedback.textContent = "Rigtigt!";
         progress.score += 10;
         progress.correct++;
         progress.streak++;
         progress.longestStreak = Math.max(progress.longestStreak, progress.streak);
         // Bonus points for fast answer: we could measure time but not implemented here
       } else {
-        feedback.textContent = "Wrong.";
+        feedback.textContent = "Forkert.";
         progress.streak = 0;
         // Record mistake for review
         const w = currentEntry.word;
@@ -931,7 +993,7 @@
       if (correct) {
         explanation.innerHTML = `<em>${currentEntry.word}:</em> ${currentEntry.meaning}`;
       } else {
-        explanation.innerHTML = `Correct answer: <strong>${currentEntry.word}</strong> — ${currentEntry.meaning}<br>Danish: ${currentEntry.sentence_da}<br>English: ${currentEntry.sentence_en}`;
+        explanation.innerHTML = `Det rigtige svar er <strong>${currentEntry.word}</strong> – ${currentEntry.meaning}<br>Dansk: ${currentEntry.sentence_da}<br>Engelsk: ${currentEntry.sentence_en}`;
       }
       feedback.appendChild(explanation);
       // After a delay, load next question automatically (except in review)
@@ -943,7 +1005,7 @@
             reviewActive = false;
             updateDashboard();
             populateMap();
-            document.getElementById("game").innerHTML = '<p>Review complete!</p><span data-sd-sprite="pokal" data-scale="6" class="sd-bob" aria-hidden="true"></span>';
+            document.getElementById("game").innerHTML = '<p>Repetitionen er færdig!</p><span data-sd-sprite="pokal" data-scale="6" class="sd-bob" aria-hidden="true"></span>';
             if (window.Sjovt) { Sjovt.hydrate(); Sjovt.fx.celebrate(); }
           } else {
             const next = reviewQueue.shift();
@@ -979,14 +1041,14 @@
         ...Object.keys(progress.mistakes),
       ]);
       if (reviewWords.size === 0) {
-        list.innerHTML = `<li>No saved words or mistakes.</li>`;
+        list.innerHTML = `<li>Ingen gemte ord eller fejl endnu.</li>`;
       } else {
         reviewWords.forEach((word) => {
           const entry = dataset.find((e) => e.word === word);
           if (!entry) return;
           const li = document.createElement("li");
           const needed = progress.mistakes[word] ? progress.mistakes[word].needed - (progress.mistakes[word].completed || 0) : (progress.savedWords[word] || 1);
-          li.innerHTML = `<strong>${word}</strong> – Needs ${needed} correct answers to clear`;
+          li.innerHTML = `<strong>${word}</strong> – mangler ${needed} rigtige svar, før det er klaret`;
           list.appendChild(li);
         });
       }
@@ -1073,9 +1135,9 @@
           saveProgress();
           updateDashboard();
           populateMap();
-          alert(`Loaded ${entries.length} entries.`);
+          alert(`${entries.length} poster er indlæst.`);
         } else {
-          alert("No valid entries found. Please check your CSV.");
+          alert("Der blev ikke fundet nogen gyldige poster. Tjek din CSV.");
         }
         importModal.classList.add("hidden");
       });
@@ -1095,7 +1157,7 @@
         output.value = JSON.stringify(progress, null, 2);
       });
       document.getElementById("resetProgressBtn").addEventListener("click", () => {
-        if (confirm("Reset all progress?")) {
+        if (confirm("Vil du nulstille alle dine fremskridt?")) {
           localStorage.removeItem("danishSentenceBuilderProgress");
           progress = {
             score: 0,
@@ -1114,7 +1176,7 @@
           saveProgress();
           updateDashboard();
           populateMap();
-          alert("Progress reset.");
+          alert("Dine fremskridt er nulstillet.");
         }
       });
       // Review mode button
@@ -1141,7 +1203,7 @@
         }
         if (e.key === "Enter") {
           // For order questions, submit order
-          const submit = Array.from(document.querySelectorAll("#content button")).find((b) => b.textContent === "Submit Order");
+          const submit = Array.from(document.querySelectorAll("#content button")).find((b) => b.textContent === "Tjek rækkefølgen");
           if (submit) submit.click();
         }
         if (e.key.toLowerCase() === "r") {

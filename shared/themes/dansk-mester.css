@@ -271,7 +271,7 @@ html.sd-page .ach { background: var(--sd-panel-2); opacity: 1; filter: grayscale
 html.sd-page .ach.un { filter: none; background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-orange); }
 html.sd-page .ach .aico { font-size: 0; min-height: 40px; display: flex; justify-content: center; align-items: center; }
 html.sd-page .ach .aname { font-family: var(--sd-font-display); font-weight: 700; font-size: 15px; text-transform: uppercase; margin-top: 6px; line-height: 1.25; }
-html.sd-page .ach:not(.un) .aname::after { content: " · LOCKED"; display: block; font-size: 13px; font-weight: 400; }
+html.sd-page .ach:not(.un) .aname::after { content: " · LÅST"; display: block; font-size: 13px; font-weight: 400; }
 html.sd-page .ach.un .aname::after { content: " ✓"; }
 
 /* ------------------------------------------------------------- bottom nav */

@@ -1,9 +1,53 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Danish Word Order Detective</title>
+<title>Ordstillingsdetektiven — øv V2-reglen og dansk ordstilling | Sjovt Dansk</title>
+<meta name="description" content="Øv V2-reglen og dansk ordstilling ved at sætte rodede sætninger i den rigtige rækkefølge. Gratis øvelser på B1–B2-niveau." />
+<meta property="og:title" content="Ordstillingsdetektiven — øv V2-reglen og dansk ordstilling | Sjovt Dansk" />
+<meta property="og:description" content="Øv V2-reglen og dansk ordstilling ved at sætte rodede sætninger i den rigtige rækkefølge. Gratis øvelser på B1–B2-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/ordstilling-detektiv/index.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/ordstilling-detektiv/index.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Ordstillingsdetektiven",
+  "description": "Øv V2-reglen og dansk ordstilling gennem spil.",
+  "url": "https://sjovtdansk.dk/ordstilling-detektiv/index.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Ordstilling", "V2-reglen", "Dansk grammatik"],
+  "educationalLevel": "B1 B2",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Ordstillingsdetektiven",
+      "item": "https://sjovtdansk.dk/ordstilling-detektiv/index.html"
+    }
+  ]
+}
+</script>
 <style>
 
 :root{
@@ -241,66 +285,66 @@ body{
 <body>
 <div class="wrap">
   <div class="masthead">
-    <div class="mast-row"><span data-sd-sprite="lup" data-scale="6" class="sd-bob" aria-hidden="true"></span><h1>Danish Word Order Detective</h1></div>
-    <div class="tag">Ordstillings&shy;detektiven — 12 Cases · A1 → B2</div>
-    <div class="rank" id="rankBadge">Rank: Trainee Detective</div>
+    <div class="mast-row"><span data-sd-sprite="lup" data-scale="6" class="sd-bob" aria-hidden="true"></span><h1>Ordstillingsdetektiven</h1></div>
+    <div class="tag">Ordstillings&shy;detektiven — 12 sager · A1 → B2</div>
+    <div class="rank" id="rankBadge">Rang: Detektivelev</div>
   </div>
 
   <!-- ================= MAP ================= -->
   <div class="card" id="mapScreen">
-    <p class="intro-line">CASE FILES — CITY POLICE, GRAMMAR DIVISION</p>
+    <p class="intro-line">SAGSMAPPER — POLITIETS GRAMMATIKAFDELING</p>
     <div class="tiers">
-      <span class="tier-pill t-a1">A1 · Cases 1–3</span>
-      <span class="tier-pill t-a2">A2 · Cases 4–6</span>
-      <span class="tier-pill t-b1">B1 · Cases 7–10</span>
-      <span class="tier-pill t-b2">B2 · Cases 11–12</span>
+      <span class="tier-pill t-a1">A1 · Sag 1–3</span>
+      <span class="tier-pill t-a2">A2 · Sag 4–6</span>
+      <span class="tier-pill t-b1">B1 · Sag 7–10</span>
+      <span class="tier-pill t-b2">B2 · Sag 11–12</span>
     </div>
     <div class="lvlfilter" id="lvlFilter"></div>
     <div class="map" id="mapGrid"></div>
-    <p class="progress-note" id="progNote">Cases solved: 0 / 12</p>
+    <p class="progress-note" id="progNote">Sager løst: 0 / 12</p>
     <div class="bar"><div id="progBar"></div></div>
-    <button class="reset" id="resetBtn">Reset all progress</button>
+    <button class="reset" id="resetBtn">Nulstil alle fremskridt</button>
     <button class="weak-btn hidden" id="weakBtn">Svage sætninger</button>
   </div>
 
   <!-- ================= PLAY ================= -->
   <div class="card hidden" id="playScreen">
     <div class="topbar">
-      <button class="back" id="backBtn">‹ Case Map</button>
+      <button class="back" id="backBtn">‹ Sagskort</button>
       <span class="timer hidden" id="timer">0:00</span>
       <div class="hud">
-        <div class="stat"><div class="l">Score</div><div class="v" id="scoreV">0</div></div>
-        <div class="stat"><div class="l">Streak</div><div class="v" id="streakV">0</div></div>
-        <div class="stat"><div class="l">Lives</div><div class="v lives" id="livesV">♥♥♥</div></div>
+        <div class="stat"><div class="l">Point</div><div class="v" id="scoreV">0</div></div>
+        <div class="stat"><div class="l">Serie</div><div class="v" id="streakV">0</div></div>
+        <div class="stat"><div class="l">Liv</div><div class="v lives" id="livesV">♥♥♥</div></div>
       </div>
     </div>
 
-    <div class="weak-banner hidden" id="weakBanner">Svage sætninger tilstand — øvetilstand</div>
+    <div class="weak-banner hidden" id="weakBanner">Svage sætninger – øvetilstand</div>
     <div class="casehead" id="caseHead"></div>
     <div class="qbar"><div id="qFill"></div></div>
 
     <div id="qArea">
-      <div class="prompt" id="promptLbl">▸ REBUILD THE STATEMENT</div>
+      <div class="prompt" id="promptLbl">▸ GENOPBYG UDSAGNET</div>
       <div class="en" id="enLine"></div>
       <div class="answer empty" id="answer"></div>
       <div class="pool" id="pool"></div>
       <div class="controls">
-        <button class="btn clear" id="clearBtn">Clear</button>
-        <button class="btn check" id="checkBtn" disabled>Examine</button>
+        <button class="btn clear" id="clearBtn">Ryd</button>
+        <button class="btn check" id="checkBtn" disabled>Undersøg</button>
       </div>
       <div class="explain" id="explain"><div class="inner">
         <div class="verdict" id="verdict"></div>
         <div class="sol" id="sol"></div>
         <div class="tr" id="trLine"></div>
         <div class="why" id="why"></div>
-        <button class="btn next" id="nextBtn" style="margin-top:12px">Next ▸</button>
+        <button class="btn next" id="nextBtn" style="margin-top:12px">Næste ▸</button>
       </div></div>
     </div>
 
     <div class="complete hidden" id="completeArea"></div>
   </div>
 
-  <div class="footnote">Built for Danish learners · click words to rebuild each statement</div>
+  <div class="footnote">Lavet til danskelever · klik på ordene for at genopbygge hvert udsagn</div>
 </div>
 <div class="flash" id="flash"></div>
 
@@ -313,10 +357,10 @@ body{
    ========================================================= */
 const CASES = [
 {
- n:1, title:"The Missing Coffee", cefr:"A1", lvl:"lb-a1",
- focus:"Subject + Verb + Object",
- story:"The break-room coffee has vanished, and Chief Madsen is furious. Every witness gives a plain statement — but their words are jumbled. Restore each basic sentence to reopen the canteen.",
- grammarTip:"Danish main clauses follow <b>Subject → Verb → Object</b>. The verb comes second, right after the subject. Keep it simple and direct.",
+ n:1, title:"Den forsvundne kaffe", cefr:"A1", lvl:"lb-a1",
+ focus:"Grundled + udsagnsled + genstandsled",
+ story:"Kaffen i frokoststuen er forsvundet, og chef Madsen er rasende. Hvert vidne giver en enkel forklaring – men ordene er blandet sammen. Sæt hver grundsætning rigtigt sammen, så kantinen kan åbne igen.",
+ grammarTip:"Danske hovedsætninger følger rækkefølgen <b>grundled → udsagnsled → genstandsled</b>. Udsagnsleddet står på anden plads, lige efter grundleddet. Hold det enkelt og direkte.",
  sents:[
   {da:"Jeg drikker kaffe", en:"I drink coffee"},
   {da:"Han læser en bog", en:"He reads a book"},
@@ -346,10 +390,10 @@ const CASES = [
  ]
 },
 {
- n:2, title:"The Lost Timeline", cefr:"A1", lvl:"lb-a1",
- focus:"Time expressions first → V2",
- story:"A suspect's diary survives, but every entry begins with a time — and the rest of the words have scattered. Rebuild the timeline to learn where he really was.",
- grammarTip:"When a <b>time expression starts the sentence</b>, the verb must stay in <b>second position</b> (the V2 rule). The subject then moves <i>after</i> the verb: <b>I går · købte · jeg</b> …",
+ n:2, title:"Den tabte tidslinje", cefr:"A1", lvl:"lb-a1",
+ focus:"Tidsudtryk først → verbet på 2. plads",
+ story:"En mistænkts dagbog er bevaret, men hver notits starter med et tidspunkt – og resten af ordene er spredt for alle vinde. Genskab tidslinjen og find ud af, hvor han virkelig var.",
+ grammarTip:"Når et <b>tidsudtryk står først</b>, bliver verbet stående på <b>anden plads</b> (V2-reglen). Grundleddet rykker så <i>bagefter</i> verbet: <b>I går · købte · jeg</b> …",
  sents:[
   {da:"I går købte jeg en bil", en:"Yesterday I bought a car"},
   {da:"I dag arbejder hun hjemme", en:"Today she works from home"},
@@ -379,10 +423,10 @@ const CASES = [
  ]
 },
 {
- n:3, title:"The Copenhagen Heist", cefr:"A1", lvl:"lb-a1",
- focus:"Place expressions first → V2",
- story:"A daring museum heist in Copenhagen. Surveillance notes describe where everyone was — but the place comes first in every line. Apply the V2 rule to pin down each location.",
- grammarTip:"A <b>place expression</b> in front position triggers the same V2 inversion as time: verb second, subject third — <b>I København · arbejder · han</b>.",
+ n:3, title:"Kuppet i København", cefr:"A1", lvl:"lb-a1",
+ focus:"Stedsudtryk først → verbet på 2. plads",
+ story:"Et dristigt museumstyveri i København. Overvågningsnotaterne beskriver, hvor alle befandt sig – men stedet står først i hver linje. Brug V2-reglen til at finde frem til hvert sted.",
+ grammarTip:"Et <b>stedsudtryk</b> forrest i sætningen udløser den samme omstilling som et tidsudtryk: verbet på anden plads, grundleddet på tredje: <b>I København · arbejder · han</b>.",
  sents:[
   {da:"I København arbejder han", en:"In Copenhagen he works"},
   {da:"På kontoret sidder de", en:"In the office they sit"},
@@ -412,10 +456,10 @@ const CASES = [
  ]
 },
 {
- n:4, title:"The Secret Report", cefr:"A2", lvl:"lb-a2",
- focus:"Negation with ikke",
- story:"A leaked report claims certain people were NOT where they said. Every statement hinges on one little word: <i>ikke</i>. Place it correctly to confirm each denial.",
- grammarTip:"In a main clause, <b>ikke</b> comes <i>after</i> the finite verb: <b>Jeg kommer ikke</b>. If the sentence starts with a time/place, ikke goes after the subject: <b>I dag arbejder jeg ikke</b>.",
+ n:4, title:"Den hemmelige rapport", cefr:"A2", lvl:"lb-a2",
+ focus:"Nægtelse med ikke",
+ story:"En lækket rapport hævder, at nogle mennesker IKKE var, hvor de sagde. Hvert udsagn hænger på ét lille ord: <i>ikke</i>. Sæt det på rette plads for at bekræfte hver benægtelse.",
+ grammarTip:"I en hovedsætning står <b>ikke</b> <i>efter</i> det finitte verbum: <b>Jeg kommer ikke</b>. Starter sætningen med et tids- eller stedsudtryk, står ikke efter grundleddet: <b>I dag arbejder jeg ikke</b>.",
  sents:[
   {da:"Jeg kommer ikke i morgen", en:"I'm not coming tomorrow"},
   {da:"Hun arbejder ikke hjemme", en:"She doesn't work from home"},
@@ -446,10 +490,10 @@ const CASES = [
  ]
 },
 {
- n:5, title:"The Witness Statements", cefr:"A2", lvl:"lb-a2",
- focus:"Frequency adverbs",
- story:"Three witnesses describe routines — what someone <i>always</i>, <i>often</i> or <i>never</i> does. The adverb is the clue. Slot it into the right spot to verify their habits.",
- grammarTip:"Frequency adverbs (<b>altid, ofte, sjældent, normalt, aldrig</b>) sit in the same slot as ikke — <i>after the finite verb</i>: <b>Jeg besøger ofte …</b>. After a fronted phrase they follow the subject: <b>Om morgenen drikker jeg altid …</b>.",
+ n:5, title:"Vidneudsagnene", cefr:"A2", lvl:"lb-a2",
+ focus:"Hyppighedsadverbier",
+ story:"Tre vidner beskriver deres rutiner – hvad nogen <i>altid</i>, <i>ofte</i> eller <i>aldrig</i> gør. Adverbiet er sporet. Sæt det på rette plads for at efterprøve deres vaner.",
+ grammarTip:"Hyppighedsadverbier (<b>altid, ofte, sjældent, normalt, aldrig</b>) står samme sted som ikke – <i>efter det finitte verbum</i>: <b>Jeg besøger ofte …</b>. Efter et forreste led følger de grundleddet: <b>Om morgenen drikker jeg altid …</b>",
  sents:[
   {da:"Jeg besøger ofte mine forældre", en:"I often visit my parents"},
   {da:"Hun kommer altid til tiden", en:"She always arrives on time"},
@@ -480,10 +524,10 @@ const CASES = [
  ]
 },
 {
- n:6, title:"The Disappearing Suspect", cefr:"A2", lvl:"lb-a2",
- focus:"Questions",
- story:"The prime suspect has vanished. To track him down you must interrogate everyone — but your questions came out scrambled. Rebuild them to crack the case.",
- grammarTip:"Two question types: <b>wh-questions</b> put the question word first, then the verb (<b>Hvor bor du?</b>). <b>Yes/no questions</b> put the <i>verb first</i> (<b>Drikker du kaffe?</b>).",
+ n:6, title:"Den forsvundne mistænkte", cefr:"A2", lvl:"lb-a2",
+ focus:"Spørgsmål",
+ story:"Hovedmistænkte er forsvundet. For at finde ham må du forhøre alle – men dine spørgsmål er kommet i uorden. Sæt dem rigtigt sammen for at opklare sagen.",
+ grammarTip:"To slags spørgsmål: <b>spørgeordsspørgsmål</b> har spørgeordet først og derefter verbet (<b>Hvor bor du?</b>). <b>Ja/nej-spørgsmål</b> har <i>verbet først</i> (<b>Drikker du kaffe?</b>).",
  sents:[
   {da:"Hvor bor du", en:"Where do you live?"},
   {da:"Hvornår kommer han", en:"When is he coming?"},
@@ -514,10 +558,10 @@ const CASES = [
  ]
 },
 {
- n:7, title:"The Hidden Message", cefr:"B1", lvl:"lb-b1",
- focus:"Modal verbs",
- story:"A coded message reveals what the suspects <i>can</i>, <i>must</i> and <i>want</i> to do. Modal verbs hold the key — decode each line by placing the main verb at the end.",
- grammarTip:"With a modal (<b>kan, skal, vil, må, bør</b>) the <i>modal</i> takes second position and the main verb goes to the <b>end</b> as an infinitive: <b>Jeg · kan · tale dansk</b>. Ikke sits between them: <b>Han kan ikke komme</b>.",
+ n:7, title:"Den skjulte besked", cefr:"B1", lvl:"lb-b1",
+ focus:"Modalverber",
+ story:"En kodet besked afslører, hvad de mistænkte <i>kan</i>, <i>skal</i> og <i>vil</i>. Modalverberne er nøglen – tyd hver linje ved at sætte hovedverbet til sidst.",
+ grammarTip:"Med et modalverbum (<b>kan, skal, vil, må, bør</b>) står <i>modalverbet</i> på anden plads, og hovedverbet står til sidst i infinitiv: <b>Jeg · kan · tale dansk</b>. <b>Ikke</b> står imellem dem: <b>Han kan ikke komme</b>.",
  sents:[
   {da:"Jeg kan tale dansk", en:"I can speak Danish"},
   {da:"Hun skal arbejde i morgen", en:"She has to work tomorrow"},
@@ -548,10 +592,10 @@ const CASES = [
  ]
 },
 {
- n:8, title:"The Locked Archive", cefr:"B1", lvl:"lb-b1",
- focus:"Perfect tense (har + participle)",
- story:"Behind a locked archive door lie records of what already happened. Each entry uses <i>har</i> + a past participle. Reconstruct the history to open the vault.",
- grammarTip:"The perfect tense = <b>har</b> (second position) + the <b>past participle at the end</b>: <b>Jeg · har · købt en bil</b>. Adverbs like ikke/aldrig come before the participle: <b>Jeg har ikke set …</b>.",
+ n:8, title:"Det låste arkiv", cefr:"B1", lvl:"lb-b1",
+ focus:"Førnutid (har + tillægsform)",
+ story:"Bag den låste arkivdør ligger optegnelser om det, der allerede er sket. Hver post bruger <i>har</i> + en tillægsform. Genskab historien for at åbne boksen.",
+ grammarTip:"Førnutid = <b>har</b> (på anden plads) + <b>tillægsformen til sidst</b>: <b>Jeg · har · købt en bil</b>. Adverbier som ikke og aldrig står før tillægsformen: <b>Jeg har ikke set …</b>.",
  sents:[
   {da:"Jeg har købt en bil", en:"I have bought a car"},
   {da:"Hun har besøgt Aarhus", en:"She has visited Aarhus"},
@@ -582,10 +626,10 @@ const CASES = [
  ]
 },
 {
- n:9, title:"The False Alibi", cefr:"B1", lvl:"lb-b1",
- focus:"Subordinate clauses with fordi",
- story:"A suspect's alibi falls apart in the 'because' clause. Subordinate word order is different — and that's where the lie hides. Rebuild each explanation to expose it.",
- grammarTip:"In a <b>fordi</b> (because) clause, there is <i>no</i> V2 inversion: it stays <b>subject → verb</b>. Crucially, adverbs like <b>ikke</b> move <i>before</i> the verb: <b>…, fordi jeg ikke er glad</b>.",
+ n:9, title:"Det falske alibi", cefr:"B1", lvl:"lb-b1",
+ focus:"Bisætninger med fordi",
+ story:"En mistænkts alibi falder fra hinanden i »fordi«-sætningen. Ordstillingen i bisætninger er en anden – og det er dér, løgnen gemmer sig. Genskab hver forklaring for at afsløre den.",
+ grammarTip:"I en <b>fordi</b>-sætning er der <i>ingen</i> omstilling: grundleddet står stadig <b>før verbet</b>. Vigtigt: adverbier som <b>ikke</b> flytter <i>foran</i> verbet: <b>…, fordi jeg ikke er glad</b>.",
  sents:[
   {da:"Jeg bliver hjemme, fordi jeg er syg", en:"I'm staying home because I'm sick"},
   {da:"Hun arbejder sent, fordi projektet er vigtigt", en:"She works late because the project is important"},
@@ -615,10 +659,10 @@ const CASES = [
  ]
 },
 {
- n:10, title:"The Shadow Network", cefr:"B1", lvl:"lb-b1",
- focus:"Advanced conjunctions (selvom, når, hvis, mens)",
- story:"A hidden network communicates in conditional code: <i>if</i> this, <i>when</i> that, <i>even though</i> the other. When the clue-clause comes first, the main clause flips. Untangle the network.",
- grammarTip:"When a subordinate clause (<b>selvom, når, hvis, mens</b>) comes <i>first</i>, the whole clause fills front position — so the main clause must invert: comma, then <b>verb before subject</b>: <b>Hvis du har tid, kan vi mødes</b>.",
+ n:10, title:"Skyggenetværket", cefr:"B1", lvl:"lb-b1",
+ focus:"Flere konjunktioner (selvom, når, hvis, mens)",
+ story:"Et skjult netværk kommunikerer i betingelsesskode: <i>hvis</i> det ene, <i>når</i> det andet, <i>selvom</i> det tredje. Når bisætningen står først, vender hovedsætningen om. Nøgl netværket op.",
+ grammarTip:"Når en bisætning (<b>selvom, når, hvis, mens</b>) står <i>først</i>, udfylder hele sætningen forreste plads – så hovedsætningen må vende om: komma, og derefter <b>verbum før grundled</b>: <b>Hvis du har tid, kan vi mødes</b>.",
  sents:[
   {da:"Selvom det regner, går jeg en tur", en:"Even though it's raining, I'm going for a walk"},
   {da:"Når mødet er slut, tager vi hjem", en:"When the meeting is over, we go home"},
@@ -648,10 +692,10 @@ const CASES = [
  ]
 },
 {
- n:11, title:"The Double Agent", cefr:"B2", lvl:"lb-b2",
- focus:"Mixed sentence structures",
- story:"One detective on the team is a double agent. Their reports mix everything — fronted phrases, modals, negation, subordinate clauses. Only a master of word order can spot the inconsistency.",
- grammarTip:"These combine several rules at once. Watch the order: fronted phrase → verb second → subject → <b>adverb/ikke</b> → other verbs. Keep modal/auxiliary in slot 2 and push main verbs to the end.",
+ n:11, title:"Dobbeltagenten", cefr:"B2", lvl:"lb-b2",
+ focus:"Blandede sætningsstrukturer",
+ story:"En af detektiverne på holdet er dobbeltagent. Rapporterne blander alt – forreste led, modalverber, nægtelse og bisætninger. Kun en mester i ordstilling kan få øje på uoverensstemmelsen.",
+ grammarTip:"Her kombineres flere regler på én gang. Hold styr på rækkefølgen: forreste led → verbum på anden plads → grundled → <b>adverbium/ikke</b> → øvrige verber. Lad modalverbet eller hjælpeverbet stå på anden plads, og skub hovedverberne til sidst.",
  sents:[
   {da:"I går kunne jeg ikke komme til mødet", en:"Yesterday I couldn't come to the meeting"},
   {da:"På kontoret arbejder han stadig på rapporten", en:"At the office he's still working on the report"},
@@ -681,10 +725,10 @@ const CASES = [
  ]
 },
 {
- n:12, title:"The Mastermind", cefr:"B2", lvl:"lb-b2",
- focus:"B2 complex & multi-clause sentences",
- story:"The final confrontation. The Mastermind speaks only in complex, multi-clause Danish — past conditionals, business reports, layered V2. Rebuild every statement to earn the title of Master Detective.",
- grammarTip:"At B2, sentences chain clauses and use compound tenses. The principles hold: subordinate clause fronted ⇒ main clause inverts; auxiliary in slot 2, participle/infinitive last; adverbs before the non-finite verb.",
+ n:12, title:"Hjernen bag", cefr:"B2", lvl:"lb-b2",
+ focus:"Sammensatte sætninger med flere led (B2)",
+ story:"Det afsluttende opgør. Hjernen taler kun i komplekse sætninger med flere led – fortidige betingelser, forretningsrapporter, lagdelt V2. Genskab hvert udsagn for at gøre dig fortjent til titlen Mesterdetektiv.",
+ grammarTip:"På B2-niveau kæder sætningerne flere led sammen og bruger sammensatte tider. Principperne gælder stadig: står bisætningen først, vender hovedsætningen om; hjælpeverbet står på anden plads, tillægsform eller infinitiv til sidst; adverbier står før det infinitte verbum.",
  sents:[
   {da:"Selvom virksomheden voksede hurtigt, lykkedes det ikke at øge indtjeningen", en:"Even though the company grew quickly, it didn't manage to increase earnings"},
   {da:"Hvis projektet var blevet godkendt tidligere, kunne vi have leveret hurtigere", en:"If the project had been approved earlier, we could have delivered faster"},
@@ -714,7 +758,7 @@ const CASES = [
 }
 ];
 
-const RANKS=["Trainee Detective","Junior Detective","Detective","Senior Detective","Inspector","Chief Inspector","Master Danish Grammar Detective"];
+const RANKS=["Detektivelev","Juniordetektiv","Detektiv","Seniordetektiv","Inspektør","Politiinspektør","Mesterdetektiv i dansk grammatik"];
 
 /* ---------- progress (localStorage on the user's own machine) ---------- */
 const SKEY="dwod_progress_v1";
@@ -786,7 +830,7 @@ function renderLvlFilter(){
   host.innerHTML=levels.map(lv=>{
     const cls=lv==="All" ? "" : " t-"+lv.toLowerCase();
     const active=lv===lvlFilterValue ? " active" : "";
-    return `<button type="button" class="tier-pill${cls}${active}" data-lvl="${lv}">${lv}</button>`;
+    return `<button type="button" class="tier-pill${cls}${active}" data-lvl="${lv}">${lv==="All"?"Alle":lv}</button>`;
   }).join("");
   host.querySelectorAll("button[data-lvl]").forEach(btn=>{
     btn.onclick=()=>{ lvlFilterValue=btn.getAttribute("data-lvl"); renderMap(); };
@@ -794,7 +838,7 @@ function renderLvlFilter(){
 }
 
 function renderMap(){
-  $("rankBadge").textContent="Rank: "+rankFor();
+  $("rankBadge").textContent="Rang: "+rankFor();
   renderLvlFilter();
   const g=$("mapGrid"); g.innerHTML="";
   CASES.filter(c=>lvlFilterValue==="All"||c.cefr===lvlFilterValue).forEach(c=>{
@@ -807,9 +851,9 @@ function renderMap(){
       `<span class="lvl ${c.lvl}">${c.cefr}</span>`+
       `<span class="ct">${c.title}</span>`+
       `<span class="cf">${c.focus}</span>`+
-      (done?`<span class="stamp">Solved</span>`:"")+
-      (!unlocked?`<span class="lock">LOCKED</span>`:"")+
-      (done&&prog.best[c.n]?`<span class="best">best ${prog.best[c.n]}%</span>`:"");
+      (done?`<span class="stamp">Løst</span>`:"")+
+      (!unlocked?`<span class="lock">LÅST</span>`:"")+
+      (done&&prog.best[c.n]?`<span class="best">bedst ${prog.best[c.n]} %</span>`:"");
     if(unlocked) b.onclick=()=>startCase(c.n);
     g.appendChild(b);
   });
@@ -818,21 +862,21 @@ function renderMap(){
   const fUnlocked=allSolved();
   f.className="casebtn final-card"+(fUnlocked?"":" locked");
   f.disabled=!fUnlocked;
-  f.innerHTML=`<span class="lvl lb-b2">FINAL</span>`+
-    `<span class="ct">The Final Investigation</span>`+
-    `<span class="cf">100 mixed questions · adaptive · timed · all concepts</span>`+
-    (fUnlocked?(prog.finalBest?`<div class="best" style="position:static;margin-top:6px">best ${prog.finalBest}%</div>`:""):`<span class="lock" style="position:static;display:block;margin-top:6px">Solve all 12 cases to unlock</span>`);
+  f.innerHTML=`<span class="lvl lb-b2">FINALE</span>`+
+    `<span class="ct">Den afsluttende efterforskning</span>`+
+    `<span class="cf">100 blandede spørgsmål · tilpasser sig · på tid · alle emner</span>`+
+    (fUnlocked?(prog.finalBest?`<div class="best" style="position:static;margin-top:6px">bedst ${prog.finalBest} %</div>`:""):`<span class="lock" style="position:static;display:block;margin-top:6px">Løs alle 12 sager for at låse op</span>`);
   if(fUnlocked) f.onclick=()=>startFinal();
   g.appendChild(f);
 
   const s=solvedCount();
-  $("progNote").textContent=`Cases solved: ${s} / 12`+(allSolved()?" · FINAL UNLOCKED":"");
+  $("progNote").textContent=`Sager løst: ${s} / 12`+(allSolved()?" · FINALEN ER LÅST OP":"");
   $("progBar").style.width=(s/12*100)+"%";
   const hasWeak=Object.values(prog.weak).some(v=>v>0);
   $("weakBtn").classList.toggle("hidden",!hasWeak);
 }
 $("resetBtn").onclick=()=>{
-  if(confirm("Reset all progress and stamps?")){prog={solved:{},best:{},weak:{},finalBest:0};saveP(prog);renderMap();}
+  if(confirm("Vil du nulstille alle fremskridt og stempler?")){prog={solved:{},best:{},weak:{},finalBest:0};saveP(prog);renderMap();}
 };
 $("weakBtn").onclick=()=>startWeak();
 $("backBtn").onclick=()=>{ stopTimer(); show("map"); renderMap(); };
@@ -852,7 +896,7 @@ function startWeak(){
   $("caseHead").innerHTML=
     `<div class="file">ØVETILSTAND · ALLE NIVEAUER</div>`+
     `<h2>Svage sætninger</h2>`+
-    `<div class="story">Gennemgå de sætninger, du har haft svært ved. Hver korrekt svar reducerer puljen — den skrumper, efterhånden som du øver dig.</div>`+
+    `<div class="story">Gennemgå de sætninger, du har haft svært ved. Hvert rigtigt svar gør puljen mindre – den skrumper, efterhånden som du øver dig.</div>`+
     `<div class="focus">${q.length} sætning${q.length===1?"":"er"} i puljen</div>`;
   show("play"); renderHUD(); loadQuestion();
 }
@@ -878,10 +922,10 @@ function startCase(n){
   G={mode:"case", caseN:n, c, queue:makeQueue(n), i:0, score:0, streak:0, lives:3, correct:0, total:0};
   $("timer").classList.add("hidden");
   $("caseHead").innerHTML=
-    `<div class="file">CASE FILE #${String(n).padStart(2,"0")} · ${c.cefr}</div>`+
+    `<div class="file">SAGSMAPPE #${String(n).padStart(2,"0")} · ${c.cefr}</div>`+
     `<h2>${c.title}</h2>`+
     `<div class="story">${c.story}</div>`+
-    `<div class="focus">Focus: ${c.focus}</div>`;
+    `<div class="focus">Fokus: ${c.focus}</div>`;
   show("play"); renderHUD(); loadQuestion();
 }
 
@@ -899,10 +943,10 @@ function startFinal(){
   q.sort((a,b)=>rank[a.cefr]-rank[b.cefr]+ (Math.random()-0.5));
   G={mode:"final", caseN:0, c:null, queue:q, i:0, score:0, streak:0, lives:99, correct:0, total:0, time:0};
   $("caseHead").innerHTML=
-    `<div class="file">SPECIAL DOSSIER · ALL LEVELS</div>`+
-    `<h2>The Final Investigation</h2>`+
-    `<div class="story">100 mixed statements from every case. Difficulty rises, weak areas appear more often, and the clock is running. Prove you are the Master Detective.</div>`+
-    `<div class="focus">Adaptive · Timed · A1 → B2</div>`;
+    `<div class="file">SÆRLIG SAGSMAPPE · ALLE NIVEAUER</div>`+
+    `<h2>Den afsluttende efterforskning</h2>`+
+    `<div class="story">100 blandede udsagn fra alle sagerne. Sværhedsgraden stiger, dine svage punkter dukker oftere op, og uret tikker. Bevis, at du er mesterdetektiven.</div>`+
+    `<div class="focus">Tilpasser sig · På tid · A1 → B2</div>`;
   show("play"); renderHUD(); startTimer(); loadQuestion();
 }
 
@@ -938,9 +982,9 @@ function loadQuestion(){
   cur={item, correct:tokens, placed:[], caseN:item.caseN||G.caseN};
 
   $("promptLbl").textContent=(G.mode==="final"||G.mode==="weak")
-    ? `▸ STATEMENT ${G.i+1} / ${total}  ·  ${item.cefr}`
-    : `▸ STATEMENT ${G.i+1} / ${total}`;
-  $("enLine").innerHTML=`Reconstruct in Danish: <b>"${item.en}"</b>`;
+    ? `▸ UDSAGN ${G.i+1} / ${total}  ·  ${item.cefr}`
+    : `▸ UDSAGN ${G.i+1} / ${total}`;
+  $("enLine").innerHTML=`Sæt sammen på dansk: <b>"${item.en}"</b>`;
 
   // answer slot
   const ans=$("answer"); ans.className="answer empty"; ans.innerHTML="";
@@ -1001,7 +1045,7 @@ $("checkBtn").onclick=()=>{
     G.correct++; G.streak++;
     const pts=10+Math.min(G.streak,5)*2+(G.mode==="final"?5:0);
     G.score+=pts;
-    if(G.streak>1&&G.streak%3===0) flash("x"+G.streak+" streak!");
+    if(G.streak>1&&G.streak%3===0) flash("x"+G.streak+" i træk!");
     if(G.mode==="weak"){
       const cn=cur.caseN;
       prog.weak[cn]=(prog.weak[cn]||1)-1;
@@ -1023,7 +1067,7 @@ function showExplain(ok){
   const tipText=G.mode==="weak"?(cur.item.grammarTip||""):(c?c.grammarTip:"");
   const ex=$("explain");
   ex.className="explain show "+(ok?"good":"bad");
-  $("verdict").textContent=ok?"✓ Case logic confirmed!":"✗ The word order doesn't hold up.";
+  $("verdict").textContent=ok?"✓ Sagens logik holder!":"✗ Ordstillingen holder ikke.";
   const solidText=cur.correct.join(" ");
   const solEl=$("sol");
   solEl.innerHTML="";
@@ -1032,9 +1076,9 @@ function showExplain(ok){
   solEl.appendChild(solTextSpan);
   solEl.appendChild(speakerBtn(solidText));
   $("trLine").textContent="“"+cur.item.en+"”";
-  $("why").innerHTML = (ok?"":"<b>Correct order shown above.</b> ")+ tipText;
+  $("why").innerHTML = (ok?"":"<b>Den rigtige rækkefølge står ovenfor.</b> ")+ tipText;
   if(G.mode!=="final" && G.mode!=="weak" && G.lives<=0){
-    $("nextBtn").textContent="See results ▸";
+    $("nextBtn").textContent="Se resultatet ▸";
   }else{
     $("nextBtn").textContent = (G.i>=G.queue.length-1)?"Finish ▸":"Next ▸";
   }
@@ -1082,31 +1126,31 @@ function finishSession(){
     const next=CASES.find(x=>x.n===G.caseN+1);
     area.innerHTML=
       `<div class="res-sprites" aria-hidden="true">${passed?'<span data-sd-sprite="pokal" data-scale="6"></span>':''}<span data-sd-sprite="lup" data-scale="6" class="${passed?'sd-hop':'sd-wig'}"></span>${passed?'<span data-sd-sprite="stjerne" data-scale="6"></span>':''}</div>`+
-      (passed?`<div class="bigstamp">SOLVED</div>`:`<div class="bigstamp" style="color:#8a6a30;border-color:#8a6a30;transform:rotate(-4deg)">REOPEN</div>`)+
+      (passed?`<div class="bigstamp">LØST</div>`:`<div class="bigstamp" style="color:#8a6a30;border-color:#8a6a30;transform:rotate(-4deg)">GENÅBN</div>`)+
       `<h2>${G.c.title}</h2>`+
-      `<div class="score">${G.correct} / ${G.total} correct · ${pct}%</div>`+
+      `<div class="score">${G.correct} / ${G.total} rigtige · ${pct} %</div>`+
       `<p>${passed
-        ? (next?`Case closed, Detective. <b>Case ${next.n}: ${next.title}</b> is now unlocked.`:`Outstanding — every case is solved! The <b>Final Investigation</b> awaits.`)
-        : `You ran low on leads. Score at least 60% (and keep a life) to stamp this case <b>Solved</b>. Try again — the words are shuffled fresh each time.`}</p>`+
+        ? (next?`Sagen er afsluttet, detektiv. <b>Sag ${next.n}: ${next.title}</b> er nu låst op.`:`Fremragende – alle sager er løst! Den <b>afsluttende efterforskning</b> venter.`)
+        : `Du løb tør for spor. Du skal have mindst 60 % rigtige (og beholde et liv) for at stemple sagen som <b>løst</b>. Prøv igen – ordene bliver blandet forfra hver gang.`}</p>`+
       `<div class="controls" style="margin-top:16px">
-         <button class="btn clear" id="againBtn">Retry case</button>
-         <button class="btn check" id="mapBtn2">Case Map ▸</button>
+         <button class="btn clear" id="againBtn">Prøv sagen igen</button>
+         <button class="btn check" id="mapBtn2">Sagskort ▸</button>
        </div>`;
     $("againBtn").onclick=()=>startCase(G.caseN);
     $("mapBtn2").onclick=()=>{show("map");renderMap();};
   }else{
     prog.finalBest=Math.max(prog.finalBest,pct); saveP(prog);
     const m=Math.floor(G.time/60),s=G.time%60;
-    const title = pct>=90?"MASTER DETECTIVE":pct>=70?"Ace Investigator":pct>=50?"Solid Sleuth":"Keep Investigating";
+    const title = pct>=90?"MESTERDETEKTIV":pct>=70?"Skarp efterforsker":pct>=50?"Dygtig opklarer":"Fortsæt efterforskningen";
     area.innerHTML=
       `<div class="res-sprites" aria-hidden="true"><span data-sd-sprite="pokal" data-scale="6"></span><span data-sd-sprite="lup" data-scale="6" class="sd-hop"></span></div>`+
-      `<div class="bigstamp" style="${pct>=90?'':'color:#8a6a30;border-color:#8a6a30'}">${pct>=90?'MASTER':'CASE'}</div>`+
+      `<div class="bigstamp" style="${pct>=90?'':'color:#8a6a30;border-color:#8a6a30'}">${pct>=90?'MESTER':'SAG'}</div>`+
       `<h2>${title}</h2>`+
-      `<div class="score">${G.correct} / ${G.total} · ${pct}%</div>`+
-      `<p>Time: <b>${m}:${String(s).padStart(2,"0")}</b> · Score: <b>${G.score}</b>${pct>=90?"<br>You have mastered Danish word order from A1 to B2.":"<br>The weak spots you missed will appear more often next time."}</p>`+
+      `<div class="score">${G.correct} / ${G.total} · ${pct} %</div>`+
+      `<p>Tid: <b>${m}:${String(s).padStart(2,"0")}</b> · Point: <b>${G.score}</b>${pct>=90?"<br>Du har styr på dansk ordstilling fra A1 til B2.":"<br>De punkter, du fejlede, dukker oftere op næste gang."}</p>`+
       `<div class="controls" style="margin-top:16px">
-         <button class="btn clear" id="againBtn">Run again</button>
-         <button class="btn check" id="mapBtn2">Case Map ▸</button>
+         <button class="btn clear" id="againBtn">Kør igen</button>
+         <button class="btn check" id="mapBtn2">Sagskort ▸</button>
        </div>`;
     $("againBtn").onclick=()=>startFinal();
     $("mapBtn2").onclick=()=>{show("map");renderMap();};

@@ -1,9 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Modsat – Danish Antonyms Trainer</title>
+<title>Danske modsætninger — øv antonymer | Sjovt Dansk</title>
+<meta name="description" content="Lær danske modsætningsord gennem quiz og par-spil. Gratis ordforrådsøvelser på B1–B2-niveau." />
+<meta property="og:title" content="Danske modsætninger — øv antonymer | Sjovt Dansk" />
+<meta property="og:description" content="Lær danske modsætningsord gennem quiz og par-spil. Gratis ordforrådsøvelser på B1–B2-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/danish-antonyms-game.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/danish-antonyms-game.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Danske Modsætninger",
+  "description": "Lær danske modsætningsord og antonymer gennem quiz og par-spil.",
+  "url": "https://sjovtdansk.dk/danish-antonyms-game.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Antonymer", "Ordforråd", "Danske ord"],
+  "educationalLevel": "B1 B2",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Danske Modsætninger",
+      "item": "https://sjovtdansk.dk/danish-antonyms-game.html"
+    }
+  ]
+}
+</script>
 <style>
   /* =========================================================
      THEME / DESIGN TOKENS
@@ -264,12 +308,12 @@
     <div class="row between">
       <div class="brand">
         <span class="logo" data-sd-sprite="modsat" data-scale="3" aria-hidden="true"></span>
-        <span>Modsat<small>Danish antonyms trainer</small></span>
+        <span>Modsat<small>Træn danske modsætninger</small></span>
       </div>
-      <button class="btn ghost small" id="navSettings">Settings</button>
+      <button class="btn ghost small" id="navSettings">Indstillinger</button>
     </div>
     <div class="hud">
-      <span class="chip level"><span class="ic" data-sd-sprite="pokal" data-scale="2" aria-hidden="true"></span><span id="hudLevel">Lv 1</span></span>
+      <span class="chip level"><span class="ic" data-sd-sprite="pokal" data-scale="2" aria-hidden="true"></span><span id="hudLevel">Niv. 1</span></span>
       <span class="chip xp"><span class="ic" data-sd-sprite="stjerne" data-scale="2" aria-hidden="true"></span><span id="hudXP">0 XP</span></span>
       <span class="chip streak"><span class="ic" data-sd-sprite="hjerte" data-scale="2" aria-hidden="true"></span><span id="hudStreak">0</span></span>
       <span class="chip acc"><span class="ic" data-sd-sprite="flag" data-scale="1" aria-hidden="true"></span><span id="hudAcc">0%</span></span>
@@ -277,54 +321,60 @@
     <div class="xpbar"><i id="xpFill"></i></div>
   </header>
 
+  <!-- ===================== INTRO ===================== -->
+  <section style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin: 16px 0; box-shadow: var(--shadow);">
+    <h1 style="margin: 0 0 12px; font-size: 20px; font-weight: 800; color: var(--ink);">Danske Modsætninger</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--muted);">Øv danske modsætningsord (antonymer) gennem quiz og par-spil. Lær ord, der betyder det modsatte, og styrk dit ordforråd på B1–B2-niveau.</p>
+  </section>
+
   <!-- ===================== DASHBOARD ===================== -->
   <section id="screen-dashboard" class="screen">
-    <h2 class="section-title first">Your progress</h2>
+    <h2 class="section-title first">Din fremgang</h2>
     <div class="grid stats-grid">
-      <div class="stat"><div class="n" id="stTotal">0</div><div class="l">Questions answered</div></div>
-      <div class="stat"><div class="n" id="stCorrect">0</div><div class="l">Correct</div></div>
-      <div class="stat"><div class="n" id="stIncorrect">0</div><div class="l">Incorrect</div></div>
-      <div class="stat"><div class="n" id="stMastered">0</div><div class="l">Mastered pairs</div></div>
-      <div class="stat"><div class="n" id="stWeak">0</div><div class="l">Weak pairs</div></div>
-      <div class="stat"><div class="n" id="stSpeed">0</div><div class="l">Best speed round</div></div>
+      <div class="stat"><div class="n" id="stTotal">0</div><div class="l">Besvarede spørgsmål</div></div>
+      <div class="stat"><div class="n" id="stCorrect">0</div><div class="l">Rigtige</div></div>
+      <div class="stat"><div class="n" id="stIncorrect">0</div><div class="l">Forkerte</div></div>
+      <div class="stat"><div class="n" id="stMastered">0</div><div class="l">Mestrede par</div></div>
+      <div class="stat"><div class="n" id="stWeak">0</div><div class="l">Svage par</div></div>
+      <div class="stat"><div class="n" id="stSpeed">0</div><div class="l">Bedste hurtigrunde</div></div>
     </div>
 
-    <h2 class="section-title">Choose a game mode</h2>
+    <h2 class="section-title">Vælg en spiltype</h2>
     <div class="grid modes" id="modeGrid"><!-- mode buttons injected --></div>
   </section>
 
   <!-- ===================== CATEGORY PICKER ===================== -->
   <section id="screen-category" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Back</button>
+    <button type="button" class="back-link" data-back>← Tilbage</button>
     <div class="card">
-      <h2 class="section-title first">Practice by category</h2>
+      <h2 class="section-title first">Øv efter emne</h2>
       <div class="pills" id="categoryPills"></div>
-      <div style="margin-top:18px"><button class="btn block" id="startCategory">Start practice</button></div>
+      <div style="margin-top:18px"><button class="btn block" id="startCategory">Start øvelsen</button></div>
     </div>
   </section>
 
   <!-- ===================== DIFFICULTY PICKER ===================== -->
   <section id="screen-difficulty" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Back</button>
+    <button type="button" class="back-link" data-back>← Tilbage</button>
     <div class="card">
-      <h2 class="section-title first">Practice by difficulty</h2>
+      <h2 class="section-title first">Øv efter sværhedsgrad</h2>
       <div class="pills" id="difficultyPills"></div>
-      <div style="margin-top:18px"><button class="btn block" id="startDifficulty">Start practice</button></div>
+      <div style="margin-top:18px"><button class="btn block" id="startDifficulty">Start øvelsen</button></div>
     </div>
   </section>
 
   <!-- ===================== QUESTION SCREEN ===================== -->
   <section id="screen-play" class="screen hidden">
     <div class="q-head">
-      <button class="btn ghost small" id="quitPlay">✕ Quit</button>
+      <button class="btn ghost small" id="quitPlay">✕ Afslut</button>
       <div class="progress-line"><i id="qProgress"></i></div>
-      <span class="run-streak" id="runStreak">Streak 0</span>
+      <span class="run-streak" id="runStreak">Serie 0</span>
       <span class="timer hidden" id="speedTimer">60</span>
     </div>
     <div id="playArea"></div>
     <div id="feedbackArea"></div>
     <div style="margin-top:16px" class="hidden" id="nextWrap">
-      <button class="btn block alt" id="nextBtn">Continue →</button>
+      <button class="btn block alt" id="nextBtn">Fortsæt →</button>
     </div>
   </section>
 
@@ -333,56 +383,56 @@
     <div class="card summary">
       <div class="big" id="sumEmoji" aria-hidden="true"><span data-sd-sprite="pokal" data-scale="8" class="sd-bob"></span></div>
       <div class="score" id="sumScore">0 / 0</div>
-      <div class="trans" id="sumLine">Nice work!</div>
+      <div class="trans" id="sumLine">Godt gået!</div>
       <div class="row" style="justify-content:center;margin-top:18px">
-        <button class="btn" id="sumAgain">Play again</button>
-        <button class="btn ghost" data-home>Home</button>
+        <button class="btn" id="sumAgain">Spil igen</button>
+        <button class="btn ghost" data-home>Forside</button>
       </div>
     </div>
   </section>
 
   <!-- ===================== REVIEW SCREEN ===================== -->
   <section id="screen-review" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Back</button>
+    <button type="button" class="back-link" data-back>← Tilbage</button>
     <div class="card">
       <div class="row between">
-        <h2 class="section-title first" style="margin:0">Review &amp; mistakes</h2>
-        <button class="btn small" id="practiceWeak">Practice weak</button>
+        <h2 class="section-title first" style="margin:0">Gennemgang og fejl</h2>
+        <button class="btn small" id="practiceWeak">Øv de svage</button>
       </div>
-      <p class="trans" id="reviewEmpty">No mistakes yet — keep practicing!</p>
+      <p class="trans" id="reviewEmpty">Ingen fejl endnu – øv dig videre!</p>
       <div id="weakList"></div>
-      <h2 class="section-title">Mastered pairs</h2>
+      <h2 class="section-title">Mestrede par</h2>
       <div id="masterList"></div>
     </div>
   </section>
 
   <!-- ===================== SETTINGS SCREEN ===================== -->
   <section id="screen-settings" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Back</button>
+    <button type="button" class="back-link" data-back>← Tilbage</button>
     <div class="card">
-      <h2 class="section-title first">Settings</h2>
+      <h2 class="section-title first">Indstillinger</h2>
       <div class="toggle-row">
-        <div><div class="t">Sound &amp; pronunciation</div><div class="d">Speak Danish words and sentences aloud</div></div>
+        <div><div class="t">Lyd og udtale</div><div class="d">Læs danske ord og sætninger højt</div></div>
         <span class="switch"><input type="checkbox" id="setSound"><label for="setSound"></label></span>
       </div>
       <div class="toggle-row">
-        <div><div class="t">Show example sentences</div><div class="d">Display examples in feedback</div></div>
+        <div><div class="t">Vis eksempelsætninger</div><div class="d">Vis eksempler, når du har svaret</div></div>
         <span class="switch"><input type="checkbox" id="setExamples"><label for="setExamples"></label></span>
       </div>
       <div class="toggle-row">
-        <div><div class="t">Practice only weak words</div><div class="d">Limit questions to pairs you got wrong</div></div>
+        <div><div class="t">Øv kun svage ord</div><div class="d">Spørg kun om de par, du har svaret forkert på</div></div>
         <span class="switch"><input type="checkbox" id="setWeakOnly"><label for="setWeakOnly"></label></span>
       </div>
       <div class="toggle-row">
-        <div><div class="t">Practice only unmastered words</div><div class="d">Skip pairs you have already mastered</div></div>
+        <div><div class="t">Øv kun ord, du ikke har mestret</div><div class="d">Spring de par over, du allerede mestrer</div></div>
         <span class="switch"><input type="checkbox" id="setUnmasteredOnly"><label for="setUnmasteredOnly"></label></span>
       </div>
       <div class="toggle-row">
-        <div><div class="t">Danish voice</div><div class="d" id="voiceInfo">Detecting…</div></div>
-        <button class="btn ghost small" id="testVoice">Test</button>
+        <div><div class="t">Dansk stemme</div><div class="d" id="voiceInfo">Leder efter stemme …</div></div>
+        <button class="btn ghost small" id="testVoice">Prøv</button>
       </div>
       <div style="margin-top:18px">
-        <button class="btn danger block" id="resetBtn">Reset all progress</button>
+        <button class="btn danger block" id="resetBtn">Nulstil alle fremskridt</button>
       </div>
     </div>
   </section>
@@ -755,6 +805,10 @@ const ANTONYMS = [
 ];
 
 /* The 12 categories shown in Category Practice (order matters for the UI). */
+const CAT_DA = {"Size":"Størrelse","Time":"Tid","Feelings":"Følelser","Personality":"Personlighed","Direction":"Retning","Quantity":"Mængde","Quality":"Egenskaber","Movement":"Bevægelse","Everyday adjectives":"Hverdagens tillægsord","Verbs":"Verber","Adverbs":"Biord","Other":"Andet"};
+const DIFF_DA = {"Easy":"Let","Medium":"Middel","Hard":"Svær","Mixed":"Blandet"};
+const catDa = c => CAT_DA[c] || c;
+const diffDa = d => DIFF_DA[d] || d;
 const CATEGORIES = ["Size","Time","Feelings","Personality","Direction","Quantity",
   "Quality","Movement","Everyday adjectives","Verbs","Adverbs","Other"];
 
@@ -832,7 +886,7 @@ function refreshVoices(){
   voices = speechSynthesis.getVoices();
   const v = danishVoice();
   const info = $("#voiceInfo");
-  if(info) info.textContent = v ? ("Using: " + v.name) : "No Danish voice found (using default)";
+  if(info) info.textContent = v ? ("Bruger: " + v.name) : "Ingen dansk stemme fundet (bruger standardstemmen)";
 }
 function danishVoice(){
   return voices.find(v=>/da(-|_)?DK/i.test(v.lang)) || voices.find(v=>/^da/i.test(v.lang)) || null;
@@ -880,7 +934,7 @@ function showScreen(name){
 function levelFromXP(xp){ return Math.floor(xp/100)+1; }
 function updateHud(){
   state.level = levelFromXP(state.xp);
-  $("#hudLevel").textContent = "Lv " + state.level;
+  $("#hudLevel").textContent = "Niv. " + state.level;
   $("#hudXP").textContent = state.xp + " XP";
   $("#hudStreak").textContent = state.streak;
   const acc = state.totalQuestions ? Math.round(state.correct/state.totalQuestions*100) : 0;
@@ -912,7 +966,7 @@ function addXP(n){
   const before = state.level;
   state.xp += n;
   state.level = levelFromXP(state.xp);
-  if(state.level > before) toast("Level up! Niveau " + state.level);
+  if(state.level > before) toast("Nyt niveau! Niveau " + state.level);
 }
 function bumpMastery(p, delta){
   const k = keyOf(p);
@@ -947,7 +1001,7 @@ function recordAnswer(pair, isCorrect){
   session.asked++;
   save();
   updateHud();
-  $("#runStreak").textContent = "Streak " + session.runStreak;
+  $("#runStreak").textContent = "Serie " + session.runStreak;
 }
 
 /* ============================================================
@@ -981,7 +1035,7 @@ function startSession(mode, opts){
   opts = opts || {};
   let pool = getPool(opts);
   if(pool.length < 1){
-    toast("No pairs match this filter yet.");
+    toast("Ingen par matcher filteret endnu.");
     return;
   }
   touchDailyStreak();
@@ -995,7 +1049,7 @@ function startSession(mode, opts){
   };
 
   $("#speedTimer").classList.toggle("hidden", mode!=="speed");
-  $("#runStreak").textContent = "Streak 0";
+  $("#runStreak").textContent = "Serie 0";
   showScreen("play");
 
   if(mode==="speed") startSpeedTimer();
@@ -1052,7 +1106,7 @@ function renderChoice(){
   const area = $("#playArea");
   area.innerHTML = `
     <div class="prompt">
-      <div class="label">What is the opposite?</div>
+      <div class="label">Hvad er det modsatte?</div>
       <div class="word" id="promptWord">${shown}</div>
       <div class="sub">(${shownEn})</div>
     </div>
@@ -1090,9 +1144,9 @@ function renderReverse(){
   const area = $("#playArea");
   area.innerHTML = `
     <div class="prompt">
-      <div class="label">Pick the matching Danish antonym pair</div>
+      <div class="label">Vælg det danske modsætningspar</div>
       <div class="word">${pair.enA} / ${pair.enB}</div>
-      <div class="sub">English meaning</div>
+      <div class="sub">Engelsk betydning</div>
     </div>
     <div class="options" id="opts"></div>`;
 
@@ -1124,9 +1178,9 @@ function renderMissing(){
   const area = $("#playArea");
   area.innerHTML = `
     <div class="prompt">
-      <div class="label">Type the opposite</div>
+      <div class="label">Skriv det modsatte</div>
       <div class="word" id="promptWord">${shown} →&nbsp;?</div>
-      <div class="sub">Hint: starts with “${answer[0]}”</div>
+      <div class="sub">Hint: begynder med »${answer[0]}«</div>
     </div>
     <div class="typebox">
       <input id="answerInput" type="text" autocomplete="off" autocapitalize="off"
@@ -1160,7 +1214,7 @@ function renderMatch(){
   const area = $("#playArea");
   area.innerHTML = `
     <div class="prompt" style="padding:16px">
-      <div class="label">Match each word with its antonym</div>
+      <div class="label">Find modsætningen til hvert ord</div>
     </div>
     <div class="match-grid">
       <div class="match-col" id="colL"></div>
@@ -1218,15 +1272,15 @@ function showFeedback(pair, ok){
     </div>` : "";
 
   fb.innerHTML = `
-    <div class="verdict">${ok?"✓ Korrekt!":"✗ Ikke helt"}</div>
+    <div class="verdict">${ok?"✓ Rigtigt!":"✗ Ikke helt"}</div>
     <div class="pairline">
       <span id="fbA">${pair.wordA}</span>
       <span class="arrow">⇄</span>
       <span id="fbB">${pair.wordB}</span>
     </div>
-    <div class="trans">${pair.enA} ⇄ ${pair.enB} · ${pair.category} · ${pair.difficulty}</div>
+    <div class="trans">${pair.enA} ⇄ ${pair.enB} · ${catDa(pair.category)} · ${diffDa(pair.difficulty)}</div>
     ${examplesHtml}
-    <div class="explain">“${pair.wordA}” betyder <strong>${pair.enA}</strong>; det modsatte er “${pair.wordB}” (<strong>${pair.enB}</strong>).</div>`;
+    <div class="explain">»${pair.wordA}« betyder <strong>${pair.enA}</strong>. Det modsatte er »${pair.wordB}« (<strong>${pair.enB}</strong>).</div>`;
   $("#feedbackArea").appendChild(fb);
 
   // add speaker buttons to the words & examples
@@ -1265,7 +1319,7 @@ function startSpeedTimer(){
       // score = correct answers this round
       if(session.askedCorrect > state.bestSpeed){
         state.bestSpeed = session.askedCorrect; save();
-        toast("New best speed score: " + session.askedCorrect + "!");
+        toast("Ny rekord i hurtigrunden: " + session.askedCorrect + "!");
       }
       showSummary(true);
     }
@@ -1279,11 +1333,11 @@ function showSummary(isSpeed){
   endSession();
   const correct = session.askedCorrect, total = session.asked;
   const pct = total ? Math.round(correct/total*100) : 0;
-  $("#sumScore").textContent = correct + " / " + total + " correct";
+  $("#sumScore").textContent = correct + " / " + total + " rigtige";
   if(window.Sjovt) Sjovt.fx.celebrate();
   $("#sumLine").textContent = isSpeed
-    ? ("Speed round! " + correct + " correct in 60s. Accuracy " + pct + "%.")
-    : ("Round complete — accuracy " + pct + "%. +" + (correct*10) + " XP earned.");
+    ? ("Hurtigrunde! " + correct + " rigtige på 60 sekunder. Træfsikkerhed: " + pct + " %.")
+    : ("Runden er slut – træfsikkerhed: " + pct + " %. Du har optjent " + (correct*10) + " XP.");
   updateDashboard();
   showScreen("summary");
 }
@@ -1292,14 +1346,14 @@ function showSummary(isSpeed){
    13) MODE MENU (dashboard)
    ============================================================ */
 const MODES = [
-  {id:"choice",   emoji:"modsat", t:"Antonym Choice",   d:"Pick the opposite from 4 options"},
-  {id:"match",    emoji:"snegl", t:"Match Pairs",       d:"Connect words to their antonyms"},
-  {id:"reverse",  emoji:"molle", t:"Reverse Translation",d:"English meaning → Danish pair"},
-  {id:"missing",  emoji:"cykel", t:"Missing Antonym",   d:"Type the opposite word"},
-  {id:"speed",    emoji:"stjerne", t:"Speed Round",        d:"As many as you can in 60s"},
-  {id:"review",   emoji:"hjerte", t:"Review Mistakes",   d:"Practice pairs you got wrong"},
-  {id:"category", emoji:"pokal", t:"Category Practice", d:"Focus on one topic"},
-  {id:"difficulty",emoji:"hat",t:"Difficulty Practice",d:"Easy, Medium, Hard or Mixed"}
+  {id:"choice",   emoji:"modsat", t:"Vælg modsætningen",   d:"Find det modsatte blandt fire ord"},
+  {id:"match",    emoji:"snegl", t:"Find par",       d:"Forbind ordene med deres modsætninger"},
+  {id:"reverse",  emoji:"molle", t:"Omvendt oversættelse",d:"Fra engelsk betydning til dansk par"},
+  {id:"missing",  emoji:"cykel", t:"Det manglende ord",   d:"Skriv det modsatte ord"},
+  {id:"speed",    emoji:"stjerne", t:"Hurtigrunde",        d:"Så mange du kan nå på 60 sekunder"},
+  {id:"review",   emoji:"hjerte", t:"Gentag fejlene",   d:"Øv de par, du har svaret forkert på"},
+  {id:"category", emoji:"pokal", t:"Øv efter emne", d:"Fokuser på ét emne"},
+  {id:"difficulty",emoji:"hat",t:"Øv efter sværhedsgrad",d:"Let, middel, svær eller blandet"}
 ];
 function buildModeMenu(){
   const grid = $("#modeGrid");
@@ -1332,7 +1386,7 @@ function buildCategoryPills(){
   CATEGORIES.forEach(c=>{
     const count = ANTONYMS.filter(p=>p.category===c).length;
     const pill = document.createElement("button");
-    pill.className="pill"; pill.textContent = c + " (" + count + ")";
+    pill.className="pill"; pill.textContent = catDa(c) + " (" + count + ")";
     pill.addEventListener("click", ()=>{
       chosenCategory = c;
       $$("#categoryPills .pill").forEach(p=>p.classList.remove("active"));
@@ -1346,7 +1400,7 @@ function buildDifficultyPills(){
   ["Easy","Medium","Hard","Mixed"].forEach(d=>{
     const pill = document.createElement("button");
     pill.className="pill" + (d==="Mixed"?" active":"");
-    pill.textContent = d;
+    pill.textContent = diffDa(d);
     pill.addEventListener("click", ()=>{
       chosenDifficulty = d;
       $$("#difficultyPills .pill").forEach(p=>p.classList.remove("active"));
@@ -1370,7 +1424,7 @@ function buildReview(){
 
   weakPairs.forEach(p=>weakBox.appendChild(reviewRow(p,"weak")));
   if(masterPairs.length===0){
-    masterBox.innerHTML = `<p class="trans">No mastered pairs yet — answer a pair correctly 3× to master it.</p>`;
+    masterBox.innerHTML = `<p class="trans">Ingen mestrede par endnu – svar rigtigt på et par tre gange for at mestre det.</p>`;
   }else{
     masterPairs.forEach(p=>masterBox.appendChild(reviewRow(p,"master")));
   }
@@ -1381,9 +1435,9 @@ function reviewRow(p, type){
   row.innerHTML = `
     <div>
       <div class="w">${p.wordA} ⇄ ${p.wordB}</div>
-      <div class="e">${p.enA} / ${p.enB} · ${p.category}</div>
+      <div class="e">${p.enA} / ${p.enB} · ${catDa(p.category)}</div>
     </div>
-    <span class="badge ${type==='weak'?'weak':'master'}">${type==='weak'?('★ '+masteryOf(p)+'/3'):'✓ mastered'}</span>`;
+    <span class="badge ${type==='weak'?'weak':'master'}">${type==='weak'?('★ '+masteryOf(p)+'/3'):'✓ mestret'}</span>`;
   row.querySelector(".w").appendChild(speakerBtn(p.wordA,"sm"));
   return row;
 }
@@ -1400,11 +1454,11 @@ function bindSettings(){
   });
   $("#testVoice").addEventListener("click", ()=>{ refreshVoices(); speak("Goddag, dette er dansk udtale."); });
   $("#resetBtn").addEventListener("click", ()=>{
-    if(confirm("Reset ALL progress, XP, streaks and saved data? This cannot be undone.")){
+    if(confirm("Vil du nulstille alle fremskridt, al XP, alle serier og alle gemte data? Det kan ikke fortrydes.")){
       localStorage.removeItem(STORAGE_KEY);
       state = defaultState();
       save(); updateHud(); updateDashboard(); bindSettings();
-      toast("Progress reset.");
+      toast("Fremskridt nulstillet.");
       showScreen("dashboard");
     }
   });
@@ -1422,7 +1476,7 @@ function wire(){
   $("#nextBtn").addEventListener("click", nextQuestion);
 
   $("#startCategory").addEventListener("click", ()=>{
-    if(!chosenCategory){ toast("Pick a category first."); return; }
+    if(!chosenCategory){ toast("Vælg først et emne."); return; }
     startSession("category", {category:chosenCategory});
   });
   $("#startDifficulty").addEventListener("click", ()=>{
@@ -1436,7 +1490,7 @@ function wire(){
 
   // Review entry from dashboard handled via mode menu; also expose a quick link:
   $("#practiceWeak").addEventListener("click", ()=>{
-    if(state.mistakes.length===0){ toast("No weak pairs!"); return; }
+    if(state.mistakes.length===0){ toast("Ingen svage par!"); return; }
     startSession("review", {mistakesOnly:true, ignoreSettings:true});
   });
 }

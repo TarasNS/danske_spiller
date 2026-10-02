@@ -112,7 +112,7 @@ html.sd-page .progress-line { height: 20px; border-radius: 0; background: var(--
 html.sd-page .progress-line > i { background: var(--sd-orange); transition: width .3s steps(6); box-shadow: inset 0 -6px 0 rgba(16,16,16,.25); }
 html.sd-page .run-streak { font-family: var(--sd-font-body); font-weight: 700; font-size: 16px; color: var(--sd-text); background: var(--sd-panel); padding: 6px 10px; box-shadow: var(--sd-box); }
 html.sd-page .timer { font-family: var(--sd-font-body); font-weight: 700; font-size: 22px; padding: 4px 10px; background: var(--sd-bad-bg); color: var(--sd-text); box-shadow: var(--sd-box-bad); min-width: 60px; text-align: center; }
-html.sd-page .timer::before { content: "TIME "; }
+html.sd-page .timer::before { content: "TID "; }
 html.sd-page .timer.calm { background: var(--sd-ok-bg); box-shadow: var(--sd-box-ok); }
 
 html.sd-page .prompt {
@@ -195,10 +195,10 @@ html.sd-page .toggle-row .d { font-size: 14px; color: var(--sd-text-soft); }
 html.sd-page .switch { width: 84px; height: 44px; }
 html.sd-page .switch input { display: block !important; position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 2; }
 html.sd-page .switch label { border-radius: 0; background: var(--sd-panel-2); box-shadow: var(--sd-box); transition: none; font-family: var(--sd-font-body); font-weight: 700; font-size: 14px; color: var(--sd-text); }
-html.sd-page .switch label::before { content: "OFF"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+html.sd-page .switch label::before { content: "FRA"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
 html.sd-page .switch label::after { width: 28px; height: 28px; border-radius: 0; background: var(--sd-ink); top: 8px; left: 8px; box-shadow: none; transition: none; }
 html.sd-page .switch input:checked + label { background: var(--sd-orange); color: #101010; }
-html.sd-page .switch input:checked + label::before { content: "ON"; right: auto; left: 12px; }
+html.sd-page .switch input:checked + label::before { content: "TIL"; right: auto; left: 12px; }
 html.sd-page .switch input:checked + label::after { left: auto; right: 8px; }
 html.sd-page .switch input:focus-visible + label { outline: 4px solid var(--sd-focus); outline-offset: 3px; box-shadow: 0 0 0 7px var(--sd-ink); }
 html.sd-page .switch input:focus-visible { outline: none !important; box-shadow: none !important; }

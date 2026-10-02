@@ -4,7 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="../shared/sjovt.js"></script>
-<title>Konjunktion Crush</title>
+<title>Konjunktion Crush — øv konjunktioner og bindeord | Sjovt Dansk</title>
+<meta name="description" content="Lær de danske konjunktioner (fordi, og, men, selvom m.fl.). Gratis grammatikøvelser på B1-niveau." />
+<meta property="og:title" content="Konjunktion Crush — øv konjunktioner og bindeord | Sjovt Dansk" />
+<meta property="og:description" content="Lær de danske konjunktioner (fordi, og, men, selvom m.fl.). Gratis grammatikøvelser på B1-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/konjunktioner/konjunktioner.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/konjunktioner/konjunktioner.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Konjunktioner",
+  "description": "Lær danske konjunktioner gennem spil.",
+  "url": "https://sjovtdansk.dk/konjunktioner/konjunktioner.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Konjunktioner", "Bindeord", "Dansk grammatik"],
+  "educationalLevel": "B1",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Konjunktioner",
+      "item": "https://sjovtdansk.dk/konjunktioner/konjunktioner.html"
+    }
+  ]
+}
+</script>
 <style>
 
 :root{
@@ -198,7 +242,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
 
     <div class="hud">
       <div class="stat"><div class="lab">Point</div><div class="val" id="scoreVal">0</div></div>
-      <div class="stat"><div class="lab">Combo</div><div class="val" id="streakVal">0</div></div>
+      <div class="stat"><div class="lab">Serie</div><div class="val" id="streakVal">0</div></div>
       <div class="stat"><div class="lab">Niveau</div><div class="val" id="lvlVal">1</div></div>
     </div>
     <div class="lives" id="lives"></div>
@@ -213,7 +257,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
       <div class="body" id="ruleBody"></div>
     </div>
     <button class="next hidden" id="next">Næste →</button>
-    <footer>300 sætninger · helt offline · ét spil</footer>
+    <footer>300 sætninger · virker helt uden internet</footer>
   </div>
 </div>
 
@@ -225,11 +269,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
   <div class="panel">
     <div class="big"><span data-sd-sprite="slik" data-scale="6" data-label="Ikon" class="sd-bob"></span></div>
     <h2>Konjunktion Crush</h2>
-    <p>Udfyld hullet i sætningen med den rigtige <b>konjunktion</b>. Ram rigtigt for at samle combo og point — og læs reglen efter hvert svar.</p>
+    <p>Udfyld hullet i sætningen med den rigtige <b>konjunktion</b>. Svar rigtigt for at opbygge en serie og få point — og læs reglen efter hvert svar.</p>
     <p>Du har <b>5 liv</b> <span data-sd-sprite="hjerte" data-scale="2"></span>. Klar?</p>
     <div class="legend">
       <span style="background:linear-gradient(135deg,#ff595e,#ff9f1c)">Hovedsætning</span>
-      <span style="background:linear-gradient(135deg,#9b5de5,#3a86ff)">Ledsætning</span>
+      <span style="background:linear-gradient(135deg,#9b5de5,#3a86ff)">Bisætning</span>
       <span style="background:linear-gradient(135deg,#19c3b2,#52d869)">Hv-ord</span>
     </div>
     <label class="flt" for="lvlSelect">Niveau
@@ -248,7 +292,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
     <div class="big" id="overEmoji"></div>
     <h2 id="overTitle">Slut!</h2>
     <p>Du fik <b id="finalScore">0</b> point</p>
-    <p>Rigtige svar: <b id="finalRight">0</b> · Længste combo: <b id="finalCombo">0</b></p>
+    <p>Rigtige svar: <b id="finalRight">0</b> · Længste serie: <b id="finalCombo">0</b></p>
     <p>Rekord: <b id="hiOver">0</b> <span id="newHi" style="display:none">★ Ny rekord!</span></p>
     <button class="play" id="againBtn">Spil igen</button>
     <button class="play play2" id="reviewBtn" style="display:none">Gennemgå fejl</button>
@@ -273,27 +317,27 @@ const RULES = {
   eller:["eller","<b>eller</b> — hovedsætningskonjunktion. Betyder et <b>alternativ</b>. Ordstilling efter: <b>SVA</b>.","A1"],
   for:["for","<b>for</b> — hovedsætningskonjunktion. Betyder en <b>forklaring</b>. Ordstilling efter: <b>SVA</b>.","A1"],
   saa_k:["så","<b>så</b> — hovedsætningskonjunktion. Betyder en <b>konsekvens</b> (= derfor). Ordstilling efter: <b>SVA</b>.","A1"],
-  at:["at","<b>at</b> — ledsætningskonjunktion. Indleder en <b>objektsætning</b>. Ordstilling: <b>SAV</b> (subjekt–adverbium–verbum).","A2"],
-  om:["om","<b>om</b> — ledsætningskonjunktion. Indleder en <b>spørgende ledsætning</b> (ja/nej-spørgsmål). Ordstilling: <b>SAV</b>.","B1"],
-  fordi:["fordi","<b>fordi</b> — ledsætningskonjunktion. Betyder en <b>forklaring / årsag</b>. Ordstilling: <b>SAV</b>.","A2"],
-  eftersom:["eftersom","<b>eftersom</b> — ledsætningskonjunktion. Betyder en <b>forklaring / årsag</b> (ligesom fordi). Ordstilling: <b>SAV</b>.","B2"],
-  selvom:["selvom","<b>selvom</b> — ledsætningskonjunktion. Betyder en <b>modsætning / indrømmelse</b>. Ordstilling: <b>SAV</b>.","B2"],
-  da:["da","<b>da</b> — ledsætningskonjunktion. <b>Tid</b>: noget der skete ÉN gang i fortiden. (Kan også betyde forklaring/fordi.) Ordstilling: <b>SAV</b>.","A2"],
-  naar:["når","<b>når</b> — ledsætningskonjunktion. <b>Tid</b>: noget der altid sker, plejer at ske eller vil ske. Ordstilling: <b>SAV</b>.","A2"],
-  idet:["idet","<b>idet</b> — ledsætningskonjunktion. <b>Tid</b> (lige i samme øjeblik) eller <b>forklaring</b>. Ordstilling: <b>SAV</b>.","B2"],
-  mens:["mens","<b>mens</b> — ledsætningskonjunktion. <b>Tid</b> (samtidig med) eller en <b>modsætning</b>. Ordstilling: <b>SAV</b>.","B1"],
-  hvorimod:["hvorimod","<b>hvorimod</b> — ledsætningskonjunktion. Betyder en <b>modsætning</b>. Ordstilling: <b>SAV</b>.","B2"],
-  foer:["før","<b>før</b> — ledsætningskonjunktion. <b>Tid</b>: noget sker før noget andet. Ordstilling: <b>SAV</b>.","B1"],
-  inden:["inden","<b>inden</b> — ledsætningskonjunktion. <b>Tid</b>: noget sker inden noget andet. Ordstilling: <b>SAV</b>.","B2"],
-  indtil:["indtil","<b>indtil</b> — ledsætningskonjunktion. <b>Tid</b>: en periode der slutter ved et punkt. Ordstilling: <b>SAV</b>.","B2"],
-  siden:["siden","<b>siden</b> — ledsætningskonjunktion. <b>Tid</b>: en periode fra fortiden frem til nu. Ordstilling: <b>SAV</b>.","B2"],
-  dengang:["dengang","<b>dengang</b> — ledsætningskonjunktion. <b>Tid</b>: noget der skete for længe siden. Ordstilling: <b>SAV</b>.","B2"],
-  saa_h:["så","<b>så</b> — ledsætningskonjunktion. Betyder en <b>hensigt / formål</b> (forklarer hvorfor man gør noget). Ordstilling: <b>SAV</b>.","B2"],
-  der:["der","<b>der</b> — ledsætningskonjunktion (relativ). Bruges KUN som <b>subjekt</b> i relativsætningen. Ordstilling: <b>SAV</b>.","B1"],
-  som:["som","<b>som</b> — ledsætningskonjunktion (relativ). Bruges som <b>subjekt eller objekt</b>. Når der er objekt, kan man kun bruge 'som'. Ordstilling: <b>SAV</b>.","B1"],
-  end:["end","<b>end</b> — ledsætningskonjunktion. Bruges i en <b>sammenligning</b> efter en komparativ (bedre, større, mere …). Ordstilling: <b>SAV</b>.","B2"],
-  ligesom:["ligesom","<b>ligesom</b> — ledsætningskonjunktion. Betyder <b>på samme måde som</b>. Ordstilling: <b>SAV</b>.","B2"],
-  hvis:["hvis","<b>hvis</b> — ledsætningskonjunktion. Betyder en <b>betingelse</b>. Ordstilling: <b>SAV</b>.","A2"],
+  at:["at","<b>at</b> — bisætningskonjunktion. Indleder en <b>objektsætning</b>. Ordstilling: <b>SAV</b> (subjekt–adverbium–verbum).","A2"],
+  om:["om","<b>om</b> — bisætningskonjunktion. Indleder en <b>spørgende bisætning</b> (ja/nej-spørgsmål). Ordstilling: <b>SAV</b>.","B1"],
+  fordi:["fordi","<b>fordi</b> — bisætningskonjunktion. Betyder en <b>forklaring / årsag</b>. Ordstilling: <b>SAV</b>.","A2"],
+  eftersom:["eftersom","<b>eftersom</b> — bisætningskonjunktion. Betyder en <b>forklaring / årsag</b> (ligesom fordi). Ordstilling: <b>SAV</b>.","B2"],
+  selvom:["selvom","<b>selvom</b> — bisætningskonjunktion. Betyder en <b>modsætning / indrømmelse</b>. Ordstilling: <b>SAV</b>.","B2"],
+  da:["da","<b>da</b> — bisætningskonjunktion. <b>Tid</b>: noget der skete ÉN gang i fortiden. (Kan også betyde forklaring/fordi.) Ordstilling: <b>SAV</b>.","A2"],
+  naar:["når","<b>når</b> — bisætningskonjunktion. <b>Tid</b>: noget der altid sker, plejer at ske eller vil ske. Ordstilling: <b>SAV</b>.","A2"],
+  idet:["idet","<b>idet</b> — bisætningskonjunktion. <b>Tid</b> (lige i samme øjeblik) eller <b>forklaring</b>. Ordstilling: <b>SAV</b>.","B2"],
+  mens:["mens","<b>mens</b> — bisætningskonjunktion. <b>Tid</b> (samtidig med) eller en <b>modsætning</b>. Ordstilling: <b>SAV</b>.","B1"],
+  hvorimod:["hvorimod","<b>hvorimod</b> — bisætningskonjunktion. Betyder en <b>modsætning</b>. Ordstilling: <b>SAV</b>.","B2"],
+  foer:["før","<b>før</b> — bisætningskonjunktion. <b>Tid</b>: noget sker før noget andet. Ordstilling: <b>SAV</b>.","B1"],
+  inden:["inden","<b>inden</b> — bisætningskonjunktion. <b>Tid</b>: noget sker inden noget andet. Ordstilling: <b>SAV</b>.","B2"],
+  indtil:["indtil","<b>indtil</b> — bisætningskonjunktion. <b>Tid</b>: en periode der slutter ved et punkt. Ordstilling: <b>SAV</b>.","B2"],
+  siden:["siden","<b>siden</b> — bisætningskonjunktion. <b>Tid</b>: en periode fra fortiden frem til nu. Ordstilling: <b>SAV</b>.","B2"],
+  dengang:["dengang","<b>dengang</b> — bisætningskonjunktion. <b>Tid</b>: noget der skete for længe siden. Ordstilling: <b>SAV</b>.","B2"],
+  saa_h:["så","<b>så</b> — bisætningskonjunktion. Betyder en <b>hensigt / formål</b> (forklarer hvorfor man gør noget). Ordstilling: <b>SAV</b>.","B2"],
+  der:["der","<b>der</b> — bisætningskonjunktion (relativ). Bruges KUN som <b>subjekt</b> i relativsætningen. Ordstilling: <b>SAV</b>.","B1"],
+  som:["som","<b>som</b> — bisætningskonjunktion (relativ). Bruges som <b>subjekt eller objekt</b>. Når der er objekt, kan man kun bruge 'som'. Ordstilling: <b>SAV</b>.","B1"],
+  end:["end","<b>end</b> — bisætningskonjunktion. Bruges i en <b>sammenligning</b> efter en komparativ (bedre, større, mere …). Ordstilling: <b>SAV</b>.","B2"],
+  ligesom:["ligesom","<b>ligesom</b> — bisætningskonjunktion. Betyder <b>på samme måde som</b>. Ordstilling: <b>SAV</b>.","B2"],
+  hvis:["hvis","<b>hvis</b> — bisætningskonjunktion. Betyder en <b>betingelse</b>. Ordstilling: <b>SAV</b>.","A2"],
   hvem:["hvem","<b>hvem</b> — hv-ord som konjunktion. Refererer til en <b>person</b>. Ordstilling: <b>SAV</b>.","B1"],
   hvor:["hvor","<b>hvor</b> — hv-ord som konjunktion. Refererer til et <b>sted</b>. Ordstilling: <b>SAV</b>.","B1"],
   hvornaar:["hvornår","<b>hvornår</b> — hv-ord som konjunktion. Refererer til <b>tid</b>. Ordstilling: <b>SAV</b>.","B1"],
@@ -693,7 +737,7 @@ function speakerBtn(text, cls){
 }
 
 let deck=[], idx=0, score=0, streak=0, bestStreak=0, level=1, lives=5, right=0, answered=false, current=null;
-const catName={hoved:"Hovedsætning",led:"Ledsætning",hv:"Hv-ord"};
+const catName={hoved:"Hovedsætning",led:"Bisætning",hv:"Hv-ord"};
 let selectedLvl='all';
 
 // ===== REVIEW =====
@@ -835,7 +879,7 @@ function choose(btn,word){
       score += gain;
       flashGreen();
       burstAt(btn,true);
-      if(streak>=3) showCombo('COMBO x'+mult+'! +'+gain);
+      if(streak>=3) showCombo('SERIE x'+mult+'! +'+gain);
     }
     blank.style.color='var(--c-green)';
     blank.style.borderColor='var(--c-green)';

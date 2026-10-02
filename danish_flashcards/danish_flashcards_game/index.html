@@ -1,9 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verb-glosekort</title>
+    <title>Danske Ord Flashcards — Glosekort dansk | Sjovt Dansk</title>
+    <meta name="description" content="Lær danske ord med glosekort (flashcards). Vend kortene og memorér nyt ordforråd A1–B1 gratis." />
+    <meta property="og:title" content="Danske Ord Flashcards — Glosekort dansk | Sjovt Dansk" />
+    <meta property="og:description" content="Lær danske ord med glosekort (flashcards). Vend kortene og memorér nyt ordforråd A1–B1 gratis." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sjovtdansk.dk/danish_flashcards/danish_flashcards_game/index.html" />
+    <meta property="og:locale" content="da_DK" />
+    <link rel="canonical" href="https://sjovtdansk.dk/danish_flashcards/danish_flashcards_game/index.html" />
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Danske Ord Flashcards",
+  "description": "Lær danske ord med glosekort (flashcards). Vend kortene og memorér nyt ordforråd.",
+  "url": "https://sjovtdansk.dk/danish_flashcards/danish_flashcards_game/index.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Dansk ordforråd", "Danske ord", "Memorering"],
+  "educationalLevel": "A1 A2 B1",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Danske Ord Flashcards",
+      "item": "https://sjovtdansk.dk/danish_flashcards/danish_flashcards_game/index.html"
+    }
+  ]
+}
+</script>
     <link rel="stylesheet" href="../../shared/sjovt.css">
     <script src="../../shared/sjovt.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -21,7 +65,7 @@
     <div class="app-container">
         <!-- Sidebar showing the list of verbs -->
         <aside class="sidebar">
-            <h2>Verb List</h2>
+            <h2>Verber</h2>
             <ul id="verb-list">
                 <!-- Verb items will be populated here dynamically -->
             </ul>
@@ -36,24 +80,24 @@
                 </div>
                 <div class="score-row">
                     <div class="progress-info">
-                        <span id="card-number">Card 1 of 1</span>
-                        <span id="remaining">Remaining: 0</span>
+                        <span id="card-number">Kort 1 af 1</span>
+                        <span id="remaining">Tilbage: 0</span>
                     </div>
                     <div class="score-info">
-                        <span id="correct-count">Correct: 0</span>
-                        <span id="wrong-count">Wrong: 0</span>
+                        <span id="correct-count">Rigtige: 0</span>
+                        <span id="wrong-count">Forkerte: 0</span>
                     </div>
                 </div>
             </div>
 
             <div id="review-mode-banner" class="review-mode-banner" style="display:none;">
-                <span>Review Mode — fixing your mistakes</span>
-                <button id="exit-review-btn" type="button">Back to full deck</button>
+                <span>Repetition – ret dine fejl</span>
+                <button id="exit-review-btn" type="button">Tilbage til hele bunken</button>
             </div>
 
             <div id="sd-done" class="sd-done" hidden role="status">
                 <span data-sd-sprite="pokal" data-scale="5" class="sd-hop" aria-hidden="true"></span>
-                <div><strong>✓ Deck complete!</strong> <span id="sd-done-text"></span></div>
+                <div><strong>✓ Bunken er færdig!</strong> <span id="sd-done-text"></span></div>
             </div>
 
             <div class="card-wrapper">
@@ -63,16 +107,16 @@
             <p id="sd-fb" class="sd-fb-line" role="status" aria-live="polite"></p>
 
             <div class="action-buttons">
-                <button id="wrong-btn" class="wrong">Got it wrong</button>
-                <button id="right-btn" class="right">Got it right</button>
+                <button id="wrong-btn" class="wrong">Det vidste jeg ikke</button>
+                <button id="right-btn" class="right">Det vidste jeg</button>
             </div>
 
             <div class="restart">
-                <button id="restart-btn">Start over</button>
+                <button id="restart-btn">Start forfra</button>
             </div>
 
             <div class="review-mistakes-wrap">
-                <button id="review-mistakes-btn" class="review-mistakes-btn" disabled title="No mistakes yet — keep practicing!">Review Mistakes</button>
+                <button id="review-mistakes-btn" class="review-mistakes-btn" disabled title="Ingen fejl endnu – øv dig videre!">Gentag fejlene</button>
             </div>
         </section>
     </div>

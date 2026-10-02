@@ -3,7 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magiske Verber — Dansk Verbumtræning</title>
+<title>Magiske Verber — øv bøjning af danske verber | Sjovt Dansk</title>
+<meta name="description" content="Træn bøjningen af danske verber i alle tider. Gratis øvelser på A2–B1-niveau." />
+<meta property="og:title" content="Magiske Verber — øv bøjning af danske verber | Sjovt Dansk" />
+<meta property="og:description" content="Træn bøjningen af danske verber i alle tider. Gratis øvelser på A2–B1-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/magiske_verber.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/magiske_verber.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Danske Verber",
+  "description": "Træn bøjning af danske verber i alle tider.",
+  "url": "https://sjovtdansk.dk/magiske_verber.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Verbumtræning", "Danske verber", "Bøjning"],
+  "educationalLevel": "A2 B1",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Danske Verber",
+      "item": "https://sjovtdansk.dk/magiske_verber.html"
+    }
+  ]
+}
+</script>
 <style>
 :root{
   --bg:#0b1020;
@@ -226,7 +270,7 @@ h1{
 <div class="wrap">
   <div class="crest"><span class="spark sd-bob" data-sd-sprite="tryllestav" data-scale="6" aria-hidden="true"></span></div>
   <h1>Magiske Verber</h1>
-  <p class="subtitle">Trylleskolen for danske udsagnsord · Practise Danish verbs</p>
+  <p class="subtitle">Trylleskolen for danske verber</p>
 
   <!-- MENU -->
   <div id="screen-menu" class="panel fadein">
@@ -258,7 +302,7 @@ h1{
     <div class="hud">
       <span class="chip" id="hudGame"></span>
       <span class="chip" id="hudProgress"></span>
-      <span class="chip streak">Stime <b id="hudStreak">0</b></span>
+      <span class="chip streak">Serie <b id="hudStreak">0</b></span>
       <span class="chip timer-chip hidden" id="hudTimerChip">Tid <b id="hudTimer">60</b>s</span>
     </div>
     <div class="bar-wrap"><div class="bar"><i id="gameBar"></i></div></div>
@@ -276,8 +320,8 @@ h1{
     <h2 class="title" style="color:var(--gold2)" id="resTitle">Runde fuldført!</h2>
     <div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:14px">
       <div class="stat"><div class="sv" id="resScore">0</div><div class="sl">Rigtige</div></div>
-      <div class="stat"><div class="sv" id="resAcc">0%</div><div class="sl">Præcision</div></div>
-      <div class="stat"><div class="sv" id="resStreak">0</div><div class="sl">Bedste stime</div></div>
+      <div class="stat"><div class="sv" id="resAcc">0%</div><div class="sl">Træfsikkerhed</div></div>
+      <div class="stat"><div class="sv" id="resStreak">0</div><div class="sl">Bedste serie</div></div>
     </div>
     <div id="resBadges" style="margin-top:14px"></div>
     <div class="row">
@@ -292,20 +336,20 @@ h1{
     <button type="button" class="back-link" onclick="goMenu()">‹ Tilbage til hovedmenu</button>
     <h2 class="center title" style="color:var(--gold2)">Din Tryllebog</h2>
     <div class="stat-grid">
-      <div class="stat"><div class="sv" id="stAcc">0%</div><div class="sl">Samlet præcision</div></div>
+      <div class="stat"><div class="sv" id="stAcc">0%</div><div class="sl">Samlet træfsikkerhed</div></div>
       <div class="stat"><div class="sv" id="stTotal">0</div><div class="sl">Spørgsmål i alt</div></div>
-      <div class="stat"><div class="sv" id="stStreak">0</div><div class="sl">Bedste stime</div></div>
-      <div class="stat"><div class="sv" id="stGames">0/8</div><div class="sl">Fuldførte spil</div></div>
+      <div class="stat"><div class="sv" id="stStreak">0</div><div class="sl">Bedste serie</div></div>
+      <div class="stat"><div class="sv" id="stGames">0/8</div><div class="sl">Gennemførte spil</div></div>
     </div>
 
     <div class="section-h">Mestring pr. niveau</div>
     <div id="masteryBox"></div>
 
     <div class="section-h">Svageste verber</div>
-    <div class="verb-tags" id="weakBox"><span style="color:var(--muted)">Endnu ingen data — spil lidt først.</span></div>
+    <div class="verb-tags" id="weakBox"><span style="color:var(--muted)">Ingen data endnu – spil lidt først.</span></div>
 
     <div class="section-h">Stærkeste verber</div>
-    <div class="verb-tags" id="strongBox"><span style="color:var(--muted)">Endnu ingen data.</span></div>
+    <div class="verb-tags" id="strongBox"><span style="color:var(--muted)">Ingen data endnu.</span></div>
 
     <div class="row">
       <button class="btn gold" onclick="startReview()">Gennemse fejl (<span id="missCount">0</span>)</button>
@@ -313,7 +357,7 @@ h1{
     </div>
   </div>
 
-  <p class="foot">Magiske Verber · Lavet til danske verbumtrollinger · Fremskridt gemmes lokalt på din enhed</p>
+  <p class="foot">Magiske Verber · Dine fremskridt gemmes på din egen enhed</p>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -549,7 +593,7 @@ function buildOptions(correct, verbKey){
   return {options:shuffled, correctIndex:shuffled.indexOf(correct)};
 }
 
-const TENSE_NAME = {nutid:'Nutid (present)', datid:'Datid (past)', forn:'Førnutid (perfect)'};
+const TENSE_NAME = {nutid:'Nutid', datid:'Datid', forn:'Førnutid'};
 const fill = (tpl, form) => tpl.replace('[v]', form);
 const blankHtml = (tpl) => tpl.replace('[v]', '<span class="blank">_____</span>');
 
@@ -569,20 +613,20 @@ ENTRIES.forEach(e=>{
   {
     const o = buildOptions(v.pa, inf);
     addQ({game:'arena',lvl:e.lvl,verb:inf,
-      instruction:'Vælg den rigtige verbumform.',
+      instruction:'Vælg den rigtige form af verbet.',
       prompt:blankHtml(e.d),
       options:o.options,correct:o.correctIndex,
-      explanation:`Datid (past) af "${inf}" er "${v.pa}". Tidsudtrykket peger på fortiden.`,
+      explanation:`Datid af "${inf}" er "${v.pa}". Tidsudtrykket peger på fortiden.`,
       en:e.en, speak:pastText});
   }
   // GAME 1 — Verb Form Arena (present blank) variant
   {
     const o = buildOptions(v.pr, inf);
     addQ({game:'arena',lvl:e.lvl,verb:inf,
-      instruction:'Vælg den rigtige verbumform.',
+      instruction:'Vælg den rigtige form af verbet.',
       prompt:blankHtml(e.p),
       options:o.options,correct:o.correctIndex,
-      explanation:`Nutid (present) af "${inf}" er "${v.pr}".`,
+      explanation:`Nutid af "${inf}" er "${v.pr}".`,
       en:e.en, speak:presText});
   }
   // GAME 2 — Time Machine (present -> past)
@@ -602,7 +646,7 @@ ENTRIES.forEach(e=>{
       instruction:`Byg førnutid med "${v.aux}". Vælg den rigtige form.`,
       prompt:`<span class="pre">Nutid: ${presText}</span>${blankHtml(e.pf)}`,
       options:o.options,correct:o.correctIndex,
-      explanation:`Førnutid (perfect) = ${v.aux} + tillægsform: "${v.aux} ${v.pp}".`,
+      explanation:`Førnutid = ${v.aux} + tillægsform: "${v.aux} ${v.pp}".`,
       en:e.en, speak:perfText});
   }
   // GAME 3 — Perfect Tense Builder
@@ -620,7 +664,7 @@ ENTRIES.forEach(e=>{
     const wrongSentence = fill(e.d, v.pr); // present form where past is needed
     const o = buildOptions(v.pa, inf);
     addQ({game:'repair',lvl:e.lvl,verb:inf,
-      instruction:'Find fejlen! Verbet står i forkert tid. Vælg den rigtige form.',
+      instruction:'Find fejlen! Verbet står i den forkerte tid. Vælg den rigtige form.',
       prompt:`<span class="pre">Forkert: ${wrongSentence}</span>${blankHtml(e.d)}`,
       options:o.options,correct:o.correctIndex,
       explanation:`Sætningen handler om fortiden, så "${v.pr}" skal være datid "${v.pa}". Rigtigt: ${pastText}`,
@@ -665,7 +709,7 @@ Object.keys(V).forEach(inf=>{
   {
     const o = buildOptions(v.pp, inf);
     addQ({game:'irregular',lvl:useLvl,verb:inf,
-      instruction:'Udfyld kæden. Hvad er TILLÆGSFORMEN (perfektum)?',
+      instruction:'Udfyld kæden. Hvad er TILLÆGSFORMEN (førnutid)?',
       prompt:`<span class="q-chain">${inf} → ${v.pr} → ${v.pa} → <span class="blank">_____</span></span>`,
       options:o.options,correct:o.correctIndex,
       explanation:`Bøjning: ${inf} → ${v.pr} → ${v.pa} → ${v.pp}. Bruges som "${v.aux} ${v.pp}".`,
@@ -676,14 +720,14 @@ Object.keys(V).forEach(inf=>{
 /* ---------- GAME METADATA ---------- */
 const GAME_SPR = {arena:'hat',timemachine:'snegl',perfect:'cykel',irregular:'hjerte',repair:'molle',detective:'flag',speed:'stjerne',mixed:'pokal'};
 const GAMES = {
-  arena:       {n:'Verb Form Arena',     ico:'⚔️', d:'Vælg den rigtige verbumform i sætningen.'},
-  timemachine: {n:'Time Machine Challenge',ico:'⏳', d:'Sætningen skifter tid — vælg den rigtige form.'},
-  perfect:     {n:'Perfect Tense Builder',ico:'🏗️', d:'Byg førnutid med har/er + tillægsform.'},
-  irregular:   {n:'Irregular Verb Lab',  ico:'🧪', d:'Træn de vigtige uregelmæssige verber.'},
-  repair:      {n:'Sentence Repair',     ico:'🔧', d:'Find og ret den forkerte verbumform.'},
-  detective:   {n:'Verb Detective',      ico:'🔍', d:'Læs sætningen og find tiden.'},
-  speed:       {n:'Speed Verb Duel',     ico:'⚡', d:'Så mange spørgsmål som muligt på 60 sekunder.'},
-  mixed:       {n:'Mixed Verb Review',   ico:'🎲', d:'Tilfældige spørgsmål fra alle spil og tider.'}
+  arena:       {n:'Verbalarenaen',     ico:'⚔️', d:'Vælg den rigtige verbumform i sætningen.'},
+  timemachine: {n:'Tidsmaskinen',ico:'⏳', d:'Sætningen skifter tid — vælg den rigtige form.'},
+  perfect:     {n:'Førnutidsbyggeren',ico:'🏗️', d:'Byg førnutid med har/er + tillægsform.'},
+  irregular:   {n:'Laboratoriet for uregelmæssige verber',  ico:'🧪', d:'Træn de vigtige uregelmæssige verber.'},
+  repair:      {n:'Sætningsværkstedet',     ico:'🔧', d:'Find og ret den forkerte verbumform.'},
+  detective:   {n:'Verbumdetektiven',      ico:'🔍', d:'Læs sætningen og find tiden.'},
+  speed:       {n:'Hurtigduellen',     ico:'⚡', d:'Så mange spørgsmål som muligt på 60 sekunder.'},
+  mixed:       {n:'Blandet repetition',   ico:'🎲', d:'Tilfældige spørgsmål fra alle spil og tider.'}
 };
 const GAME_ORDER = ['arena','timemachine','perfect','irregular','repair','detective','speed','mixed'];
 const DIFF_SPR = {easy:'snegl',medium:'cykel',hard:'molle'};
@@ -832,7 +876,7 @@ function beginGame(){
 }
 function startRound(gameKey, diffKey, isReview){
   const queue = isReview ? buildReviewQueue() : buildRound(gameKey, diffKey);
-  if(queue.length===0){ toast('Ingen spørgsmål — prøv et andet niveau'); return; }
+  if(queue.length===0){ toast('Ingen spørgsmål – prøv et andet niveau'); return; }
   S = {
     game:gameKey, diff:diffKey, review:isReview,
     queue, idx:0, correct:0, answered:0, streak:0, bestStreak:0,
@@ -968,11 +1012,11 @@ function endRound(){
   $('resScore').textContent = S.correct + (S.speed? '':' / '+S.answered);
   $('resAcc').textContent = acc+'%';
   $('resStreak').textContent = S.bestStreak;
-  $('resTitle').textContent = S.review ? 'Gennemgang fuldført!' : (S.speed? 'Tiden er gået!':'Runde fuldført!');
+  $('resTitle').textContent = S.review ? 'Gennemgangen er færdig!' : (S.speed? 'Tiden er gået!':'Runden er færdig!');
   // badges
   const badges=[];
   if(acc===100 && S.answered>=5) badges.push('★ Perfekt runde');
-  if(S.bestStreak>=8) badges.push('★ Stime på '+S.bestStreak);
+  if(S.bestStreak>=8) badges.push('★ Serie på '+S.bestStreak);
   if(S.speed) badges.push('★ '+S.correct+' på 60 sek');
   if(acc>=80) badges.push('★ Troldmandsniveau');
   $('resBadges').innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join('');
@@ -992,7 +1036,7 @@ function buildReviewQueue(){
   return shuffle(QUESTIONS.filter(q=>ids.has(q.id))).slice(0,15);
 }
 function startReview(){
-  if(P.mistakes.length===0){ toast('Ingen fejl at gennemse — flot!'); return; }
+  if(P.mistakes.length===0){ toast('Ingen fejl at gennemse – flot!'); return; }
   startRound(null, null, true);
 }
 
@@ -1016,15 +1060,15 @@ function showStats(){
   }).filter(x=>x.tot>=2);
   const weak = arr.filter(x=>x.w>0).sort((a,b)=>a.rate-b.rate).slice(0,8);
   const strong = arr.slice().sort((a,b)=>b.rate-a.rate || b.tot-a.tot).slice(0,8);
-  $('weakBox').innerHTML = weak.length? weak.map(x=>`<span class="vtag weak">${x.v} <small>(${Math.round(x.rate*100)}%)</small></span>`).join('') : '<span style="color:var(--muted)">Endnu ingen svage verber — godt gået!</span>';
-  $('strongBox').innerHTML = strong.length? strong.map(x=>`<span class="vtag strong">${x.v} <small>(${Math.round(x.rate*100)}%)</small></span>`).join('') : '<span style="color:var(--muted)">Endnu ingen data.</span>';
+  $('weakBox').innerHTML = weak.length? weak.map(x=>`<span class="vtag weak">${x.v} <small>(${Math.round(x.rate*100)}%)</small></span>`).join('') : '<span style="color:var(--muted)">Ingen svage verber endnu – godt gået!</span>';
+  $('strongBox').innerHTML = strong.length? strong.map(x=>`<span class="vtag strong">${x.v} <small>(${Math.round(x.rate*100)}%)</small></span>`).join('') : '<span style="color:var(--muted)">Ingen data endnu.</span>';
   showScreen('stats');
 }
 
 /* ---------- NAV ---------- */
 function goMenu(){ if(S&&S.timer) clearInterval(S.timer); buildMenu(); showScreen('menu'); }
 function resetProgress(){
-  if(confirm('Nulstil alt fremskridt? Dette kan ikke fortrydes.')){
+  if(confirm('Vil du nulstille alle fremskridt? Det kan ikke fortrydes.')){
     P=defaultProgress(); saveProgress(); buildMenu(); toast('Fremskridt nulstillet');
   }
 }

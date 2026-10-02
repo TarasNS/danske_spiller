@@ -3,7 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Idiomjæger — Dansk Idiom Skattejagt</title>
+<title>Idiomjægeren — danske talemåder og idiomer | Sjovt Dansk</title>
+<meta name="description" content="Jagt på danske idiomer og talemåder – og hvad de egentlig betyder. Gratis øvelser på B2-niveau." />
+<meta property="og:title" content="Idiomjægeren — danske talemåder og idiomer | Sjovt Dansk" />
+<meta property="og:description" content="Jagt på danske idiomer og talemåder – og hvad de egentlig betyder. Gratis øvelser på B2-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/idiomjaeger.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/idiomjaeger.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Idiomjægeren",
+  "description": "Jag på danske idiomer og talemåder.",
+  "url": "https://sjovtdansk.dk/idiomjaeger.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Danske idiomer", "Talemåder", "Dansk kultur"],
+  "educationalLevel": "B2",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Idiomjægeren",
+      "item": "https://sjovtdansk.dk/idiomjaeger.html"
+    }
+  ]
+}
+</script>
 <style>
 :root{
   --parchment:#f3e3c3;
@@ -275,6 +319,8 @@ label.flt{display:flex;flex-direction:column;gap:3px;font-size:.78rem;font-weigh
    ============================================================ */
 
 /* ---------- CATEGORIES ---------- */
+const CAT_DA = {"Everyday Life":"Hverdagsliv","Work & Meetings":"Arbejde og møder","Feelings & Emotions":"Følelser","Relationships":"Relationer","Decision Making":"Beslutninger","Success & Failure":"Succes og nederlag","Problems & Challenges":"Problemer og udfordringer","Time":"Tid","Money":"Penge","Communication":"Kommunikation","Society & News":"Samfund og nyheder","Very Danish Expressions":"Typisk danske udtryk","Humor & Informal Speech":"Humor og uformelt sprog"};
+const catDa = c => CAT_DA[c] || c;
 const CATS = [
   "Everyday Life","Work & Meetings","Feelings & Emotions","Relationships",
   "Decision Making","Success & Failure","Problems & Challenges","Time",
@@ -563,7 +609,7 @@ const MOTIVATE=["Flot fundet! 🏴‍☠️","Skat fundet!","Idiom afsløret!","
 function motivate(){return MOTIVATE[Math.floor(Math.random()*MOTIVATE.length)];}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function lvlBadge(l){return`<span class="lvl-badge lvl-${l}">${l}</span>`;}
-function catTag(c){return`<span class="tag cat">${CAT_ICON[c]||''} ${esc(c)}</span>`;}
+function catTag(c){return`<span class="tag cat">${CAT_ICON[c]||''} ${esc(catDa(c))}</span>`;}
 
 /* ============================================================
    SPEECH SYNTHESIS (Danish)
@@ -616,15 +662,15 @@ function topbar(extra){return`<div class="topbar"><button class="btn small ghost
    ACHIEVEMENTS
    ============================================================ */
 const ACHS=[
-  {id:'first',ico:'🥇',t:'Første Idiom',d:'Svar rigtigt på dit første idiom',test:()=>S.totalCorrect>=1},
-  {id:'m25',ico:'🗺️',t:'25 Idiomer Lært',d:'Mestr 25 idiomer',test:()=>masteredCount()>=25},
-  {id:'m50',ico:'🧭',t:'50 Idiomer Lært',d:'Mestr 50 idiomer',test:()=>masteredCount()>=50},
-  {id:'m100',ico:'👑',t:'100 Idiomer Lært',d:'Mestr 100 idiomer',test:()=>masteredCount()>=100},
-  {id:'explorer',ico:'🔍',t:'Idiom Explorer',d:'Mød mindst 60 forskellige idiomer',test:()=>Object.values(S.idiom).filter(s=>s.seen>0).length>=60},
-  {id:'streak',ico:'🔥',t:'På Jagt',d:'Opnå en stime på 15 i træk',test:()=>S.longest>=15},
-  {id:'ctx',ico:'🎯',t:'Context Master',d:'Gennemfør Context Master-runden',test:()=>S.ctxWin},
-  {id:'native',ico:'🎓',t:'Native Speaker',d:'Bestå Native Speaker Challenge',test:()=>S.natWin},
-  {id:'expert',ico:'🇩🇰',t:'Danish Expression Expert',d:'Mestr alle "Very Danish"-idiomer',test:()=>DATA.filter(d=>d.c==='Very Danish Expressions').every(d=>isMastered(d.id))},
+  {id:'first',ico:'🥇',t:'Første idiom',d:'Svar rigtigt på dit første idiom',test:()=>S.totalCorrect>=1},
+  {id:'m25',ico:'🗺️',t:'25 idiomer lært',d:'Mestr 25 idiomer',test:()=>masteredCount()>=25},
+  {id:'m50',ico:'🧭',t:'50 idiomer lært',d:'Mestr 50 idiomer',test:()=>masteredCount()>=50},
+  {id:'m100',ico:'👑',t:'100 idiomer lært',d:'Mestr 100 idiomer',test:()=>masteredCount()>=100},
+  {id:'explorer',ico:'🔍',t:'Idiomopdager',d:'Mød mindst 60 forskellige idiomer',test:()=>Object.values(S.idiom).filter(s=>s.seen>0).length>=60},
+  {id:'streak',ico:'🔥',t:'På Jagt',d:'Opnå en serie på 15 i træk',test:()=>S.longest>=15},
+  {id:'ctx',ico:'🎯',t:'Kontekstmesteren',d:'Gennemfør Kontekstmesteren',test:()=>S.ctxWin},
+  {id:'native',ico:'🎓',t:'Modersmålstaleren',d:'Bestå Modersmålstaleren',test:()=>S.natWin},
+  {id:'expert',ico:'🇩🇰',t:'Ekspert i danske udtryk',d:'Mestr alle de typisk danske idiomer',test:()=>DATA.filter(d=>d.c==='Very Danish Expressions').every(d=>isMastered(d.id))},
 ];
 function checkAchievements(){let unlocked=[];ACHS.forEach(a=>{if(!S.ach.includes(a.id)&&a.test()){S.ach.push(a.id);unlocked.push(a);}});if(unlocked.length){setTimeout(()=>toast(`🏆 Badge låst op: ${unlocked[0].t}`),700);}}
 
@@ -638,13 +684,13 @@ function renderMenu(){
   <div class="panel">
     ${topbar()}
     <h2 class="section-title">⚓ Vælg din jagt</h2>
-    <div class="progress-line">Mestrede skatte: <b>${masteredCount()}</b> / ${DATA.length} · Nøjagtighed: <b>${accuracy()}%</b> · Stime: <b>${S.streak}</b> 🔥</div>
+    <div class="progress-line">Mestrede skatte: <b>${masteredCount()}</b> / ${DATA.length} · Nøjagtighed: <b>${accuracy()}%</b> · Serie: <b>${S.streak}</b> 🔥</div>
     <div class="row mb" style="gap:10px">
       <label class="flt">Niveau<select id="fPlayLvl" onchange="setPlayLevel(this.value)">${['all',...LEVELS].map(l=>`<option value="${l}" ${PLAY_LVL===l?'selected':''}>${l==='all'?'Alle niveauer':l}</option>`).join('')}</select></label>
     </div>
     <div class="menu-grid">
-      <button class="btn primary" onclick="renderLearn()"><span class="ico" data-sd-sprite="molle" data-scale="4" aria-hidden="true"></span>Lærings-tilstand<span class="sub">Bladr & studér</span></button>
-      <button class="btn" onclick="renderPractice()"><span class="ico" data-sd-sprite="stjerne" data-scale="4" aria-hidden="true"></span>Øve-tilstand<span class="sub">Bland alle modes</span></button>
+      <button class="btn primary" onclick="renderLearn()"><span class="ico" data-sd-sprite="molle" data-scale="4" aria-hidden="true"></span>Lærings-tilstand<span class="sub">Bladr og studér</span></button>
+      <button class="btn" onclick="renderPractice()"><span class="ico" data-sd-sprite="stjerne" data-scale="4" aria-hidden="true"></span>Øve-tilstand<span class="sub">Bland alle spiltyper</span></button>
       <button class="btn" onclick="renderGames()"><span class="ico" data-sd-sprite="cykel" data-scale="4" aria-hidden="true"></span>Spil<span class="sub">13 spiltyper</span></button>
       <button class="btn" onclick="startWeak()"><span class="ico" data-sd-sprite="hjerte" data-scale="4" aria-hidden="true"></span>Svage Idiomer<span class="sub">${weakIdioms().length} til repetition</span></button>
       <button class="btn" onclick="renderStats()"><span class="ico" data-sd-sprite="pokal" data-scale="4" aria-hidden="true"></span>Statistik<span class="sub">Din fremgang</span></button>
@@ -663,7 +709,7 @@ function levelPool(){return PLAY_LVL==='all'?DATA:DATA.filter(d=>d.l===PLAY_LVL)
 function setPlayLevel(v){PLAY_LVL=v;renderMenu();}
 function filterControls(onChange){
   return`<div class="row mb" style="gap:10px">
-    <label class="flt">Kategori<select id="fCat">${['all',...CATS].map(c=>`<option value="${c}" ${FILT.cat===c?'selected':''}>${c==='all'?'Alle':c}</option>`).join('')}</select></label>
+    <label class="flt">Kategori<select id="fCat">${['all',...CATS].map(c=>`<option value="${c}" ${FILT.cat===c?'selected':''}>${c==='all'?'Alle':catDa(c)}</option>`).join('')}</select></label>
     <label class="flt">Niveau<select id="fLvl">${['all','A2','B1','B2','C1'].map(l=>`<option value="${l}" ${FILT.lvl===l?'selected':''}>${l==='all'?'Alle':l}</option>`).join('')}</select></label>
     <label class="flt">Status<select id="fMast">
       <option value="all" ${FILT.mast==='all'?'selected':''}>Alle</option>
@@ -671,7 +717,7 @@ function filterControls(onChange){
       <option value="no" ${FILT.mast==='no'?'selected':''}>Ikke mestrede</option>
     </select></label>
   </div>
-  <input type="text" id="fQ" placeholder="🔎 Søg idiom eller betydning..." value="${esc(FILT.q)}" style="width:100%;margin-bottom:10px">`;
+  <input type="text" id="fQ" placeholder="🔎 Søg efter idiom eller betydning …" value="${esc(FILT.q)}" style="width:100%;margin-bottom:10px">`;
 }
 function bindFilters(cb){
   ['fCat','fLvl','fMast'].forEach(idn=>{const el=document.getElementById(idn);if(el)el.onchange=()=>{FILT.cat=document.getElementById('fCat').value;FILT.lvl=document.getElementById('fLvl').value;FILT.mast=document.getElementById('fMast').value;cb();};});
@@ -719,19 +765,19 @@ function renderDict(){
    GAMES MENU
    ============================================================ */
 const GAMES=[
-  {id:'idiomHunter',ico:'🏹',t:'Idiom Hunter',d:'Match idiom → betydning'},
-  {id:'meaningHunter',ico:'🎣',t:'Meaning Hunter',d:'Match betydning → idiom'},
-  {id:'exampleDetective',ico:'🕵️',t:'Example Detective',d:'Find idiomet i sætningen'},
-  {id:'fillMissing',ico:'✏️',t:'Fill the Missing',d:'Udfyld det manglende ord'},
-  {id:'complete',ico:'🧩',t:'Complete the Expression',d:'Fuldfør udtrykket'},
-  {id:'memory',ico:'🃏',t:'Idiom Memory Cards',d:'Vend & match par'},
-  {id:'match',ico:'🔗',t:'Match Pairs',d:'Forbind idiom & betydning'},
-  {id:'category',ico:'📂',t:'Category Challenge',d:'Øv én kategori'},
-  {id:'timed',ico:'⏱️',t:'Timed Hunt',d:'60 sekunders jagt'},
-  {id:'survival',ico:'💀',t:'Idiom Survival',d:'Ét forkert = liv tabt'},
-  {id:'context',ico:'🎯',t:'Context Master',d:'Vælg idiom til situationen'},
-  {id:'native',ico:'🎓',t:'Native Speaker',d:'Avancerede B2–C1 idiomer'},
-  {id:'mixed',ico:'🌀',t:'Mixed Review',d:'Tilfældigt fra alt'},
+  {id:'idiomHunter',ico:'🏹',t:'Hvad betyder det?',d:'Match idiom → betydning'},
+  {id:'meaningHunter',ico:'🎣',t:'Hvilket idiom?',d:'Match betydning → idiom'},
+  {id:'exampleDetective',ico:'🕵️',t:'Eksempeldetektiven',d:'Find idiomet i sætningen'},
+  {id:'fillMissing',ico:'✏️',t:'Udfyld hullet',d:'Udfyld det manglende ord'},
+  {id:'complete',ico:'🧩',t:'Fuldfør udtrykket',d:'Fuldfør udtrykket'},
+  {id:'memory',ico:'🃏',t:'Idiom-memory',d:'Vend kortene og find parrene'},
+  {id:'match',ico:'🔗',t:'Find par',d:'Forbind idiom og betydning'},
+  {id:'category',ico:'📂',t:'Kategoriudfordringen',d:'Øv én kategori'},
+  {id:'timed',ico:'⏱️',t:'Tidsjagten',d:'60 sekunders jagt'},
+  {id:'survival',ico:'💀',t:'Overlevelse',d:'Ét forkert = liv tabt'},
+  {id:'context',ico:'🎯',t:'Kontekstmesteren',d:'Vælg idiom til situationen'},
+  {id:'native',ico:'🎓',t:'Modersmålstaleren',d:'Avancerede B2–C1 idiomer'},
+  {id:'mixed',ico:'🌀',t:'Blandet repetition',d:'Tilfældigt fra alt'},
 ];
 function renderGames(){
   app.innerHTML=`<div class="panel">${topbar()}<h2 class="section-title">🎮 Spil — 13 jagter</h2><div class="menu-grid">
@@ -740,7 +786,7 @@ function renderGames(){
 }
 function renderPractice(){
   app.innerHTML=`<div class="panel">${topbar()}<h2 class="section-title">🎯 Øve-tilstand</h2>
-  <p class="center" style="font-size:.95rem">En blandet runde, der bruger spaced repetition — svage idiomer dukker oftere op. 12 spørgsmål på tværs af spiltyper.</p>
+  <p class="center" style="font-size:.95rem">En blandet runde med intervalrepetition – svage idiomer dukker oftere op. 12 spørgsmål på tværs af spiltyper.</p>
   <div class="center mt"><button class="btn primary" onclick="startPractice()">Start øvelse ⚔️</button></div></div>`;
 }
 
@@ -850,7 +896,7 @@ function renderText(){
     <h2 class="section-title">${c.ico} ${c.title}</h2>
     <div class="row between progress-line"><span>Spørgsmål ${T.i+1} / ${c.total}</span><span>Point: <b>${T.score}</b></span></div>
     <div class="q-prompt">${q.promptHTML}</div>
-    <div class="text-input-row"><input type="text" id="txtIn" placeholder="Skriv det manglende ord..." autocomplete="off"><button class="btn primary" id="txtGo">Svar</button></div>
+    <div class="text-input-row"><input type="text" id="txtIn" placeholder="Skriv det manglende ord …" autocomplete="off"><button class="btn primary" id="txtGo">Svar</button></div>
     <div class="feedback" id="fb"></div><div id="explainSlot"></div>
     <div class="center mt hidden" id="nextWrap"><button class="btn primary" id="nextBtn">Næste ⟶</button></div>
   </div>`;
@@ -942,7 +988,7 @@ function startMatch(pool){
 }
 function renderMatch(){
   app.innerHTML=`<div class="panel">${topbar()}
-    <h2 class="section-title">🔗 Match Pairs</h2>
+    <h2 class="section-title">🔗 Find par</h2>
     <div class="progress-line">Forbundet: <b>${MP.done}</b>/5 — tryk et idiom og dets betydning</div>
     <div class="match-cols">
       <div class="match-col" id="colL">${MP.left.map(d=>`<div class="match-item" data-id="${d.id}" data-side="L">${esc(d.d)}${speakerBtn(d.d,'small')}</div>`).join('')}</div>
@@ -978,11 +1024,11 @@ function endMatch(){
    ============================================================ */
 function renderCategoryPick(){
   app.innerHTML=`<div class="panel">${topbar()}<h2 class="section-title">📂 Vælg kategori</h2>
-  <div class="menu-grid">${CATS.map(c=>{const n=DATA.filter(d=>d.c===c).length;return`<button class="btn" onclick="startCategory('${c.replace(/'/g,"\\'")}')"><span class="ico">${CAT_ICON[c]}</span>${c}<span class="sub">${n} idiomer</span></button>`;}).join('')}</div></div>`;
+  <div class="menu-grid">${CATS.map(c=>{const n=DATA.filter(d=>d.c===c).length;return`<button class="btn" onclick="startCategory('${c.replace(/'/g,"\\'")}')"><span class="ico">${CAT_ICON[c]}</span>${catDa(c)}<span class="sub">${n} idiomer</span></button>`;}).join('')}</div></div>`;
 }
 function startCategory(cat){
   const pool=DATA.filter(d=>d.c===cat);
-  startQuiz({gid:'category',ico:CAT_ICON[cat]||'📂',title:cat,pool,build:bIdiomMeaning,total:Math.min(10,pool.length)});
+  startQuiz({gid:'category',ico:CAT_ICON[cat]||'📂',title:catDa(cat),pool,build:bIdiomMeaning,total:Math.min(10,pool.length)});
 }
 
 /* ============================================================
@@ -991,23 +1037,23 @@ function startCategory(cat){
 function mixedBuild(d){const fns=[bIdiomMeaning,bMeaningIdiom,bExampleDetective,bContext];return fns[Math.floor(Math.random()*fns.length)](d);}
 function launchGame(id){
   switch(id){
-    case'idiomHunter':return startQuiz({gid:id,ico:'🏹',title:'Idiom Hunter',pool:levelPool(),build:bIdiomMeaning,total:10});
-    case'meaningHunter':return startQuiz({gid:id,ico:'🎣',title:'Meaning Hunter',pool:levelPool(),build:bMeaningIdiom,total:10});
-    case'exampleDetective':return startQuiz({gid:id,ico:'🕵️',title:'Example Detective',pool:levelPool(),build:bExampleDetective,total:10});
-    case'fillMissing':return startText({gid:id,ico:'✏️',title:'Fill the Missing',pool:levelPool(),total:8,
+    case'idiomHunter':return startQuiz({gid:id,ico:'🏹',title:'Hvad betyder det?',pool:levelPool(),build:bIdiomMeaning,total:10});
+    case'meaningHunter':return startQuiz({gid:id,ico:'🎣',title:'Hvilket idiom?',pool:levelPool(),build:bMeaningIdiom,total:10});
+    case'exampleDetective':return startQuiz({gid:id,ico:'🕵️',title:'Eksempeldetektiven',pool:levelPool(),build:bExampleDetective,total:10});
+    case'fillMissing':return startText({gid:id,ico:'✏️',title:'Udfyld hullet',pool:levelPool(),total:8,
       canUse:d=>!!blankWord(d.e,d.k),
       make:d=>({id:d.id,answer:d.k,promptHTML:`<div style="font-size:1.05rem">${esc(blankWord(d.e,d.k))}<span class="q-sub">Udfyld det manglende ord (${d.m})</span></div>`})});
-    case'complete':return startText({gid:id,ico:'🧩',title:'Complete the Expression',pool:levelPool(),total:8,
+    case'complete':return startText({gid:id,ico:'🧩',title:'Fuldfør udtrykket',pool:levelPool(),total:8,
       canUse:d=>d.d.trim().split(/\s+/).length>=2,
       make:d=>{const w=lastWord(d.d);const shown=d.d.replace(new RegExp(escRe(w)+'\\s*$'),'_____');return{id:d.id,answer:w,promptHTML:`<div>${esc(shown)}<span class="q-sub">Fuldfør udtrykket — betyder: ${esc(d.m)}</span></div>`};}});
     case'memory':return startMemory(levelPool());
     case'match':return startMatch(levelPool());
     case'category':return renderCategoryPick();
-    case'timed':return startQuiz({gid:id,ico:'⏱️',title:'Timed Hunt',pool:levelPool(),build:bIdiomMeaning,timer:60});
-    case'survival':return startQuiz({gid:id,ico:'💀',title:'Idiom Survival',pool:levelPool(),build:bIdiomMeaning,lives:3});
-    case'context':return startQuiz({gid:id,ico:'🎯',title:'Context Master',pool:levelPool(),build:bContext,total:10,onEnd:(s,t,p)=>{if(p>=70){S.ctxWin=true;checkAchievements();save();}}});
-    case'native':{const pool=levelPool().filter(d=>d.l==='B2'||d.l==='C1');return startQuiz({gid:id,ico:'🎓',title:'Native Speaker',pool,build:bIdiomMeaning,total:10,onEnd:(s,t,p)=>{if(p>=70){S.natWin=true;checkAchievements();save();}}});}
-    case'mixed':return startQuiz({gid:id,ico:'🌀',title:'Mixed Review',pool:levelPool(),build:mixedBuild,total:12});
+    case'timed':return startQuiz({gid:id,ico:'⏱️',title:'Tidsjagten',pool:levelPool(),build:bIdiomMeaning,timer:60});
+    case'survival':return startQuiz({gid:id,ico:'💀',title:'Overlevelse',pool:levelPool(),build:bIdiomMeaning,lives:3});
+    case'context':return startQuiz({gid:id,ico:'🎯',title:'Kontekstmesteren',pool:levelPool(),build:bContext,total:10,onEnd:(s,t,p)=>{if(p>=70){S.ctxWin=true;checkAchievements();save();}}});
+    case'native':{const pool=levelPool().filter(d=>d.l==='B2'||d.l==='C1');return startQuiz({gid:id,ico:'🎓',title:'Modersmålstaleren',pool,build:bIdiomMeaning,total:10,onEnd:(s,t,p)=>{if(p>=70){S.natWin=true;checkAchievements();save();}}});}
+    case'mixed':return startQuiz({gid:id,ico:'🌀',title:'Blandet repetition',pool:levelPool(),build:mixedBuild,total:12});
   }
 }
 function startPractice(){startQuiz({gid:'mixed',ico:'⚔️',title:'Øve-tilstand',pool:levelPool(),build:mixedBuild,total:12});}
@@ -1032,13 +1078,13 @@ function renderStats(){
     <div class="stat-grid">
       <div class="stat-box"><div class="num">${masteredCount()}</div><div class="lbl">Idiomer lært</div></div>
       <div class="stat-box"><div class="num">${accuracy()}%</div><div class="lbl">Nøjagtighed</div></div>
-      <div class="stat-box"><div class="num">${S.streak}</div><div class="lbl">Stime nu</div></div>
-      <div class="stat-box"><div class="num">${S.longest}</div><div class="lbl">Længste stime</div></div>
+      <div class="stat-box"><div class="num">${S.streak}</div><div class="lbl">Nuværende serie</div></div>
+      <div class="stat-box"><div class="num">${S.longest}</div><div class="lbl">Længste serie</div></div>
       <div class="stat-box"><div class="num">${seen}</div><div class="lbl">Mødt mindst 1x</div></div>
       <div class="stat-box"><div class="num">${today}</div><div class="lbl">Svar i dag</div></div>
     </div>
     <h3 style="margin:14px 0 6px">Kategori-mestring</h3>
-    ${catBars.map(b=>`<div class="bar-row"><span class="name">${CAT_ICON[b.name]} ${b.name}</span><span class="bar-track"><span class="bar-val" style="width:${b.pct}%"></span></span><span class="pct">${b.pct}%</span></div>`).join('')}
+    ${catBars.map(b=>`<div class="bar-row"><span class="name">${CAT_ICON[b.name]} ${catDa(b.name)}</span><span class="bar-track"><span class="bar-val" style="width:${b.pct}%"></span></span><span class="pct">${b.pct}%</span></div>`).join('')}
     <h3 style="margin:14px 0 6px">Niveau-mestring</h3>
     ${lvls.map(b=>`<div class="bar-row"><span class="name">${lvlBadge(b.name)} ${b.m}/${b.n}</span><span class="bar-track"><span class="bar-val" style="width:${b.pct}%"></span></span><span class="pct">${b.pct}%</span></div>`).join('')}
     <h3 style="margin:14px 0 6px">🪙 Svageste idiomer</h3>

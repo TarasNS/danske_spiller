@@ -5,8 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sjovt Dansk — lær dansk ved at spille</title>
 <meta name="description" content="Sjovt Dansk (sjovtdansk.dk): spil og øvelser der gør det sjovt at lære dansk — ordforråd, grammatik, vendinger, verber og præpositioner." />
+<meta property="og:title" content="Sjovt Dansk — lær dansk ved at spille" />
+<meta property="og:description" content="Lær dansk gratis gennem interaktive spil: ordforråd, grammatik, vendinger og verbum. A1–B2. Spil nu." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/" />
 <link rel="stylesheet" href="shared/sjovt.css" />
 <script src="shared/sjovt.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Sjovt Dansk",
+  "url": "https://sjovtdansk.dk/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://sjovtdansk.dk/#search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Sjovt Dansk",
+  "url": "https://sjovtdansk.dk/",
+  "sameAs": ["https://sjovtdansk.dk/"],
+  "description": "Interaktive spil til at lære dansk grammatik, ordforråd og vendinger.",
+  "areaServed": {
+    "@type": "Place",
+    "name": "Verden"
+  },
+  "educationalLevel": "A1 A2 B1 B2"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    }
+  ]
+}
+</script>
 <style>
   /* Homepage layout — everything visual comes from shared/sjovt.css tokens */
   * { box-sizing: border-box; }
@@ -108,7 +159,7 @@
       <div class="hero-in">
         <div class="hero-text">
           <h1 id="h1"><span>Sjovt</span><span>Dansk</span><em>ved at spille</em></h1>
-          <p>Ordforråd, grammatik og vendinger i små, hurtige spil. Vælg et spil, tryk på knappen — og kom i gang på under ét sekund.</p>
+          <p>Ordforråd, grammatik og vendinger i små, hurtige spil. Vælg et spil, tryk på knappen, og kom i gang på et øjeblik.</p>
           <a class="sd-btn sd-btn--ink sd-btn--lg" href="#spil" data-sd-nofx>Vælg spil ▼</a>
         </div>
         <div class="gb-wrap" aria-hidden="true">
@@ -154,6 +205,11 @@
       </div>
     </section>
 
+    <section class="intro" style="margin: 32px 4px; padding: 24px 28px; background: var(--sd-cream); border: 2px solid var(--sd-orange); border-radius: 12px; box-shadow: var(--sd-box);">
+      <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 700; color: var(--sd-ink); text-transform: uppercase; letter-spacing: 0.02em;">Om Sjovt Dansk</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--sd-ink);">Sjovt Dansk er gratis online spil der hjælper dig med at lære dansk grammatik, ordforråd og vendinger. Hver øvelse er designet til at være sjov, hurtig og effektiv — perfekt for A1–B2 niveau dansk som andetsprog. Spil på egen hånd eller brug Sjovt Dansk til at supplere din dansk undervisning.</p>
+    </section>
+
     <section class="controls" id="spil" aria-label="Find et spil">
       <div class="search">
         <label for="search">Søg efter spil</label>
@@ -166,7 +222,7 @@
       <div class="grid" id="games"></div>
       <div class="empty sd-panel" id="empty" hidden>
         <span data-sd-sprite="hat" data-scale="6"></span>
-        <p class="sd-text">Ingen spil matcher din søgning. Prøv et andet ord.</p>
+        <p class="sd-text">Der er ingen spil, der passer til din søgning. Prøv et andet ord.</p>
       </div>
     </section>
   </main>
@@ -187,27 +243,27 @@
 const games = [
   { title: "Danske Antonymer", description: "Øv modsætningsord med quiz og par-spil.", level: "B1–B2", type: "Ordforråd",
     url: "./danish-antonyms-game.html", sprite: "modsat", color: "#FF4D5E", bg: "#FF7481", dark: "#451D21" },
-  { title: "Verb-glosekort", description: "Vend kortene og lær danske verbers former.", level: "A2–B1", type: "Verber",
+  { title: "Verb-glosekort", description: "Vend kortene og lær de danske verbers former.", level: "A2–B1", type: "Verber",
     url: "./danish_flashcards/danish_flashcards_game/index.html", sprite: "kort", color: "#FFDF2E", bg: "#FFE65C", dark: "#453E17" },
-  { title: "Magiske Verber", description: "Træn bøjning af verber i alle tider.", level: "A2–B1", type: "Verber",
+  { title: "Magiske Verber", description: "Træn verbernes bøjning i alle tider.", level: "A2–B1", type: "Verber",
     url: "./magiske_verber.html", sprite: "tryllestav", color: "#B66BFF", bg: "#C68CFF", dark: "#352445" },
-  { title: "Præpositions-Mester", description: "Slå de drilske småord: i, på, til, af …", level: "A2–B1", type: "Grammatik",
+  { title: "Præpositionsmester", description: "Få styr på de drilske småord: i, på, til, af …", level: "A2–B1", type: "Grammatik",
     url: "./dansk-praepositioner.html", sprite: "pin", color: "#2ED0EE", bg: "#5CDAF2", dark: "#173A41" },
-  { title: "Dansk Mester", description: "Lær hverdagsvendinger — fra hilsner til småsnak.", level: "A1–A2", type: "Vendinger",
+  { title: "Dansk Mester", description: "Lær hverdagsvendinger – fra hilsner til småsnak.", level: "A1–A2", type: "Vendinger",
     url: "./danske-phraser/dansk-mester.html", sprite: "snak", color: "#FF8226", bg: "#FF9E56", dark: "#452915" },
-  { title: "En/Et-træner", description: "Stop med at gætte: lær hvilke ord der er en- og et-ord.", level: "A1–A2", type: "Grammatik",
+  { title: "En/Et-træner", description: "Hold op med at gætte: lær, hvilke ord der er en-ord, og hvilke der er et-ord.", level: "A1–A2", type: "Grammatik",
     url: "./en%20og%20et/index.html", sprite: "terning", color: "#3FD35F", bg: "#69DD82", dark: "#1A3B21" },
-  { title: "Konjunktion Crush", description: "Bind sætninger sammen med de rigtige konjunktioner.", level: "B1", type: "Grammatik",
+  { title: "Konjunktion Crush", description: "Bind sætningerne sammen med de rigtige konjunktioner.", level: "B1", type: "Grammatik",
     url: "./konjunktioner/konjunktioner.html", sprite: "slik", color: "#8E8CFF", bg: "#A7A5FF", dark: "#2C2B45" },
-  { title: "Ordstillingsdetektiven", description: "Knæk V2-reglen ved at sætte rodede sætninger i orden.", level: "B1–B2", type: "Grammatik",
+  { title: "Ordstillingsdetektiven", description: "Knæk V2-reglen ved at få rodede sætninger på plads.", level: "B1–B2", type: "Grammatik",
     url: "./ordstilling-detektiv/index.html", sprite: "lup", color: "#E65CE6", bg: "#EC80EC", dark: "#3F213F" },
-  { title: "Forbindeord", description: "Gitterpuslespil: forbind ordene mod uret.", level: "B1", type: "Ordforråd",
+  { title: "Forbindeord", description: "Vælg det rigtige forbindeord, og få sætningerne til at hænge sammen.", level: "B1", type: "Ordforråd",
     url: "./forbindenor/Forbindenor.html", sprite: "net", color: "#A8E02E", bg: "#BBE75C", dark: "#313E17" },
-  { title: "Idiomjægeren", description: "Jagt på danske idiomer — og hvad de egentlig betyder.", level: "B2", type: "Vendinger",
+  { title: "Idiomjægeren", description: "Jagten på danske idiomer – og hvad de egentlig betyder.", level: "B2", type: "Vendinger",
     url: "./idiomjaeger.html", sprite: "kiste", color: "#26D9A6", bg: "#56E1BA", dark: "#153C31" },
-  { title: "Bøjningsværkstedet", description: "Bøj hele navneleddet: flertal, bestemthed, tillægsord og komparation.", level: "A1–B2", type: "Grammatik",
+  { title: "Bøjningsværkstedet", description: "Bøj hele navneleddet: flertal, bestemt form, tillægsord og komparation.", level: "A1–B2", type: "Grammatik",
     url: "./boejningsvaerkstedet/index.html", sprite: "tandhjul", color: "#FF7BC0", bg: "#FF98CE", dark: "#452837" },
-  { title: "Adverbier & Konnektorer", description: "Byg danske sætninger med adverbier og bindeord.", level: "B1–B2", type: "Grammatik",
+  { title: "Adverbier og bindeord", description: "Byg danske sætninger med adverbier og bindeord.", level: "B1–B2", type: "Grammatik",
     url: "./adverbs.html", sprite: "ur", color: "#4C93FF", bg: "#73ABFF", dark: "#1D2D45" }
 ];
 

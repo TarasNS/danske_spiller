@@ -3,7 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FORBINDEORD // Grid Protocol</title>
+<title>Forbindeord — øv bindeord og overgangsord | Sjovt Dansk</title>
+<meta name="description" content="Vælg det rigtige forbindeord i sætningerne og lær, hvordan danske sætninger hænger sammen. Gratis ordforrådsøvelser på B1-niveau." />
+<meta property="og:title" content="Forbindeord — øv bindeord og overgangsord | Sjovt Dansk" />
+<meta property="og:description" content="Vælg det rigtige forbindeord i sætningerne og lær, hvordan danske sætninger hænger sammen. Gratis ordforrådsøvelser på B1-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/forbindenor/Forbindenor.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/forbindenor/Forbindenor.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Forbindeord",
+  "description": "Forbind danske ord i dette gitterpuslespil.",
+  "url": "https://sjovtdansk.dk/forbindenor/Forbindenor.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Dansk ordforråd", "Ord netværk", "Puslespil"],
+  "educationalLevel": "B1",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Forbindeord",
+      "item": "https://sjovtdansk.dk/forbindenor/Forbindenor.html"
+    }
+  ]
+}
+</script>
 <style>
 :root{
   --bg:#02060d; --bg2:#04101c; --grid:#0a3a4a;
@@ -164,10 +208,10 @@ h1 .o{color:var(--orange);text-shadow:0 0 10px var(--orange-hot)}
     <div><h1>FORBIND<span class="o">EORD</span></h1>
   <div class="sub">Danske forbindeord</div></div></div>
   <div class="hud">
-    <div class="chip score">Score<b id="score">0</b></div>
-    <div class="chip streak">Streak<b id="streak">0</b></div>
+    <div class="chip score">Point<b id="score">0</b></div>
+    <div class="chip streak">Serie<b id="streak">0</b></div>
     <div class="chip lives">Energi<b id="lives">6</b></div>
-    <div class="chip best">Best<b id="best">0</b></div>
+    <div class="chip best">Rekord<b id="best">0</b></div>
     <button class="weak-btn" id="weakBtn" type="button">Svage forbindeord</button>
   </div>
   <div class="weak-banner" id="weakBanner">
@@ -183,7 +227,7 @@ h1 .o{color:var(--orange);text-shadow:0 0 10px var(--orange-hot)}
     </div>
     <div class="opts" id="opts"></div>
     <div class="reveal" id="reveal">
-      <div class="lbl">Overs&aelig;ttelse / Translation</div>
+      <div class="lbl">Overs&aelig;ttelse</div>
       <div class="tr" id="tr"></div>
       <div class="note" id="note"></div>
     </div>
@@ -208,375 +252,375 @@ h1 .o{color:var(--orange);text-shadow:0 0 10px var(--orange-hot)}
 const DATA = [];
 function s(cat, ans, da, en, note, lvl){ DATA.push([cat, ans, da, en, note, lvl]); }
 // ---- TID ----
-s("Tid","foerst","{} stod jeg op, og bagefter lavede jeg kaffe.","First I got up, and afterwards I made coffee.","'foerst' marks the first action in a time sequence (inversion: verb before subject).","A2");
-s("Tid","foerst","{} skal vi laese teksten igennem en gang.","First we'll read the text through once.","Opens a sequence of steps in time.","A2");
-s("Tid","foerst","Vi taler om planen, men {} skal alle have spist.","We'll talk about the plan, but first everyone must have eaten.","Signals what happens before anything else.","A2");
-s("Tid","foerst","{} laerer man reglerne, og saa oever man dem.","First you learn the rules, and then you practise them.","Beginning of an ordered process.","A2");
-s("Tid","bagefter","Vi saa filmen, og {} gik vi en tur.","We watched the film, and afterwards we went for a walk.","'bagefter' = afterwards; the next thing in time (inversion).","A2");
-s("Tid","bagefter","Spis din mad nu; du kan lege {}.","Eat your food now; you can play afterwards.","Points to a later moment after the current one.","A2");
-s("Tid","bagefter","Moedet var langt, og {} var alle traette.","The meeting was long, and afterwards everyone was tired.","Marks the result-moment in time after an event.","A2");
-s("Tid","bagefter","Vi laeste op, og {} talte vi om historien.","We read aloud, and afterwards we talked about the story.","Marks what comes next in time.","A2");
-s("Tid","derefter","Hun laeste op, og {} stillede vi spoergsmaal.","She read aloud, and then we asked questions.","'derefter' = thereafter / next (inversion follows).","B1");
-s("Tid","derefter","Bland melet i, og roer dejen {} godt sammen.","Add the flour, and then stir the dough well.","Next step in an instruction sequence.","B1");
-s("Tid","derefter","Foerst kom forretten, og {} kom hovedretten.","First came the starter, and then came the main course.","Connects two events in chronological order.","B1");
-s("Tid","derefter","Tag et dybt vejr, og svar {} roligt.","Take a deep breath, and then answer calmly.","Marks the following action.","B1");
-s("Tid","derpaa","Han pakkede tasken, og {} forlod han huset.","He packed his bag, and thereupon he left the house.","'derpaa' = thereupon; immediately after (inversion).","B1");
-s("Tid","derpaa","Vi underskrev kontrakten, og {} fik vi noeglerne.","We signed the contract, and after that we got the keys.","Marks the immediately following event.","B1");
-s("Tid","derpaa","Lyset blinkede, og {} gik stroemmen.","The light flickered, and thereupon the power went out.","Sequential, slightly formal time link.","B1");
-s("Tid","derpaa","Hun taendte lyset, og {} satte hun sig ned.","She turned on the light, and thereupon she sat down.","Marks the next immediate step.","B1");
-s("Tid","dernaest","Foerst praesenterer jeg tallene; {} forklarer jeg dem.","First I present the figures; next I explain them.","'dernaest' = next in a sequence (inversion).","B1");
-s("Tid","dernaest","Vi besoegte museet, og {} tog vi til parken.","We visited the museum, and next we went to the park.","Marks the following item in an itinerary.","B1");
-s("Tid","dernaest","Skaer groentsagerne, og {} koger du dem.","Cut the vegetables, and next you boil them.","Step-by-step ordering.","B1");
-s("Tid","dernaest","Vi maaler braettet, og {} saver vi det.","We measure the board, and next we saw it.","Next step in a procedure.","B1");
-s("Tid","saa","Jeg vaagnede, og {} tog jeg et bad.","I woke up, and then I took a shower.","'saa' = then; the next thing in time (inversion).","A1");
-s("Tid","saa","Vi spiste, og {} saa vi fjernsyn.","We ate, and then we watched television.","Common everyday sequencer.","A1");
-s("Tid","saa","Laes spoergsmaalet, og {} svarer du.","Read the question, and then you answer.","Links action and the following action.","A1");
-s("Tid","saa","Tael til tre, og {} springer vi.","Count to three, and then we jump.","Marks the next moment in time.","A1");
-s("Tid","kort efter","Toget koerte, og {} begyndte det at regne.","The train left, and shortly after it began to rain.","'kort efter' = shortly afterwards (inversion).","B1");
-s("Tid","kort efter","Hun ringede, og {} stod hun ved doeren.","She called, and shortly after she was at the door.","A short interval after the previous event.","B1");
-s("Tid","kort efter","Doeren smaekkede, og {} hoerte vi skridt.","The door slammed, and shortly after we heard footsteps.","A short time after an event.","B1");
-s("Tid","senere","Vi ses i morgen, og vi taler {} om detaljerne.","See you tomorrow, and we'll talk later about the details.","'senere' = later; a less-defined future point.","A2");
-s("Tid","senere","Han startede stille, men {} blev han chef.","He started quietly, but later he became the boss.","A point further ahead in time.","A2");
-s("Tid","senere","Gem dokumentet, saa kan du aabne det {}.","Save the document so you can open it later.","Refers to a future moment.","A2");
-s("Tid","senere","Vi maa tales ved {} paa ugen.","We'll talk later in the week.","A later, unspecified time.","A2");
-s("Tid","til sidst","Vi proevede laenge, og {} lykkedes det.","We tried for a long time, and in the end it worked.","'til sidst' = finally/at last in a time sequence (inversion).","B1");
-s("Tid","til sidst","Foerst var hun nervoes, men {} slappede hun af.","At first she was nervous, but in the end she relaxed.","Closes a temporal sequence.","B1");
-s("Tid","til sidst","Vi ryddede op, og {} laaste vi doeren.","We tidied up, and finally we locked the door.","The last action in a series of events.","B1");
-s("Tid","til sidst","Han tvivlede laenge, men {} sagde han ja.","He doubted for a long time, but in the end he said yes.","Marks the final outcome in time.","B1");
-s("Tid","foer","Jeg kendte hende ikke {}, men nu er vi venner.","I didn't know her before, but now we are friends.","'foer' = before/earlier (contrasts with the present).","A2");
-s("Tid","foer","Vask haender {} du spiser.","Wash your hands before you eat.","Marks an earlier point in time.","A2");
-s("Tid","foer","Han har boet her {}, saa han kender byen.","He has lived here before, so he knows the city.","Refers to an earlier period.","A2");
-s("Tid","foer","Tjek spejlet {} du skifter vognbane.","Check the mirror before you change lanes.","An earlier point relative to an action.","A2");
-s("Tid","tidligere","{} tog vi toget, men nu cykler vi.","Earlier we took the train, but now we cycle.","'tidligere' = earlier/previously (inversion).","A2");
-s("Tid","tidligere","Som naevnt {} er sagen kompliceret.","As mentioned earlier, the matter is complicated.","Points back to a prior moment.","A2");
-s("Tid","tidligere","Hun arbejdede {} som laerer.","She previously worked as a teacher.","An earlier period of time.","A2");
-s("Tid","tidligere","Butikken aabnede {} end normalt i dag.","The shop opened earlier than usual today.","Marks a point further back in time.","A2");
-s("Tid","nu","Foer var jeg i tvivl, men {} er jeg sikker.","Before I was unsure, but now I am certain.","'nu' = now; the present moment (inversion).","A1");
-s("Tid","nu","Vi har ventet laenge; {} er det vores tur.","We've waited a long time; now it's our turn.","Marks the current moment.","A1");
-s("Tid","nu","{} forstaar jeg, hvad du mener.","Now I understand what you mean.","The present, often after a change.","A1");
-s("Tid","nu","Foer boede de i byen; {} bor de paa landet.","Before they lived in the city; now they live in the countryside.","Contrasts the present with the past.","A1");
-s("Tid","i dag","I gaar regnede det, men {} skinner solen.","Yesterday it rained, but today the sun is shining.","'i dag' = today (inversion).","A1");
-s("Tid","i dag","{} er det fredag, og vi holder fri.","Today it's Friday, and we have the day off.","Refers to the present day.","A1");
-s("Tid","i dag","Vi var i skole i gaar, men {} bliver vi hjemme.","We were at school yesterday, but today we stay home.","The current day in contrast to another.","A1");
+s("Tid","foerst","{} stod jeg op, og bagefter lavede jeg kaffe.","First I got up, and afterwards I made coffee.","»Først« markerer det første led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","foerst","{} skal vi laese teksten igennem en gang.","First we'll read the text through once.","»Først« markerer det første led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","foerst","Vi taler om planen, men {} skal alle have spist.","We'll talk about the plan, but first everyone must have eaten.","»Først« markerer det første led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","foerst","{} laerer man reglerne, og saa oever man dem.","First you learn the rules, and then you practise them.","»Først« markerer det første led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","bagefter","Vi saa filmen, og {} gik vi en tur.","We watched the film, and afterwards we went for a walk.","»Bagefter« peger på noget, der sker senere end det nævnte. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","bagefter","Spis din mad nu; du kan lege {}.","Eat your food now; you can play afterwards.","»Bagefter« peger på noget, der sker senere end det nævnte. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","bagefter","Moedet var langt, og {} var alle traette.","The meeting was long, and afterwards everyone was tired.","»Bagefter« peger på noget, der sker senere end det nævnte. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","bagefter","Vi laeste op, og {} talte vi om historien.","We read aloud, and afterwards we talked about the story.","»Bagefter« peger på noget, der sker senere end det nævnte. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","derefter","Hun laeste op, og {} stillede vi spoergsmaal.","She read aloud, and then we asked questions.","»Derefter« er næste led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derefter","Bland melet i, og roer dejen {} godt sammen.","Add the flour, and then stir the dough well.","»Derefter« er næste led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derefter","Foerst kom forretten, og {} kom hovedretten.","First came the starter, and then came the main course.","»Derefter« er næste led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derefter","Tag et dybt vejr, og svar {} roligt.","Take a deep breath, and then answer calmly.","»Derefter« er næste led i en rækkefølge. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derpaa","Han pakkede tasken, og {} forlod han huset.","He packed his bag, and thereupon he left the house.","»Derpå« betyder »umiddelbart efter« og lyder lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derpaa","Vi underskrev kontrakten, og {} fik vi noeglerne.","We signed the contract, and after that we got the keys.","»Derpå« betyder »umiddelbart efter« og lyder lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derpaa","Lyset blinkede, og {} gik stroemmen.","The light flickered, and thereupon the power went out.","»Derpå« betyder »umiddelbart efter« og lyder lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","derpaa","Hun taendte lyset, og {} satte hun sig ned.","She turned on the light, and thereupon she sat down.","»Derpå« betyder »umiddelbart efter« og lyder lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","dernaest","Foerst praesenterer jeg tallene; {} forklarer jeg dem.","First I present the figures; next I explain them.","»Dernæst« angiver næste punkt i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","dernaest","Vi besoegte museet, og {} tog vi til parken.","We visited the museum, and next we went to the park.","»Dernæst« angiver næste punkt i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","dernaest","Skaer groentsagerne, og {} koger du dem.","Cut the vegetables, and next you boil them.","»Dernæst« angiver næste punkt i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","dernaest","Vi maaler braettet, og {} saver vi det.","We measure the board, and next we saw it.","»Dernæst« angiver næste punkt i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","saa","Jeg vaagnede, og {} tog jeg et bad.","I woke up, and then I took a shower.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","saa","Vi spiste, og {} saa vi fjernsyn.","We ate, and then we watched television.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","saa","Laes spoergsmaalet, og {} svarer du.","Read the question, and then you answer.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","saa","Tael til tre, og {} springer vi.","Count to three, and then we jump.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","kort efter","Toget koerte, og {} begyndte det at regne.","The train left, and shortly after it began to rain.","»Kort efter« markerer et lille tidsrum efter en hændelse. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","kort efter","Hun ringede, og {} stod hun ved doeren.","She called, and shortly after she was at the door.","»Kort efter« markerer et lille tidsrum efter en hændelse. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","kort efter","Doeren smaekkede, og {} hoerte vi skridt.","The door slammed, and shortly after we heard footsteps.","»Kort efter« markerer et lille tidsrum efter en hændelse. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","senere","Vi ses i morgen, og vi taler {} om detaljerne.","See you tomorrow, and we'll talk later about the details.","»Senere« peger på et ubestemt tidspunkt, der ligger længere fremme.","A2");
+s("Tid","senere","Han startede stille, men {} blev han chef.","He started quietly, but later he became the boss.","»Senere« peger på et ubestemt tidspunkt, der ligger længere fremme.","A2");
+s("Tid","senere","Gem dokumentet, saa kan du aabne det {}.","Save the document so you can open it later.","»Senere« peger på et ubestemt tidspunkt, der ligger længere fremme.","A2");
+s("Tid","senere","Vi maa tales ved {} paa ugen.","We'll talk later in the week.","»Senere« peger på et ubestemt tidspunkt, der ligger længere fremme.","A2");
+s("Tid","til sidst","Vi proevede laenge, og {} lykkedes det.","We tried for a long time, and in the end it worked.","»Til sidst« afslutter en række af hændelser. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","til sidst","Foerst var hun nervoes, men {} slappede hun af.","At first she was nervous, but in the end she relaxed.","»Til sidst« afslutter en række af hændelser. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","til sidst","Vi ryddede op, og {} laaste vi doeren.","We tidied up, and finally we locked the door.","»Til sidst« afslutter en række af hændelser. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","til sidst","Han tvivlede laenge, men {} sagde han ja.","He doubted for a long time, but in the end he said yes.","»Til sidst« afslutter en række af hændelser. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tid","foer","Jeg kendte hende ikke {}, men nu er vi venner.","I didn't know her before, but now we are friends.","»Før« peger på et tidligere tidspunkt.","A2");
+s("Tid","foer","Vask haender {} du spiser.","Wash your hands before you eat.","»Før« peger på et tidligere tidspunkt.","A2");
+s("Tid","foer","Han har boet her {}, saa han kender byen.","He has lived here before, so he knows the city.","»Før« peger på et tidligere tidspunkt.","A2");
+s("Tid","foer","Tjek spejlet {} du skifter vognbane.","Check the mirror before you change lanes.","»Før« peger på et tidligere tidspunkt.","A2");
+s("Tid","tidligere","{} tog vi toget, men nu cykler vi.","Earlier we took the train, but now we cycle.","»Tidligere« peger tilbage på et tidligere tidspunkt. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","tidligere","Som naevnt {} er sagen kompliceret.","As mentioned earlier, the matter is complicated.","»Tidligere« peger tilbage på et tidligere tidspunkt. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","tidligere","Hun arbejdede {} som laerer.","She previously worked as a teacher.","»Tidligere« peger tilbage på et tidligere tidspunkt. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","tidligere","Butikken aabnede {} end normalt i dag.","The shop opened earlier than usual today.","»Tidligere« peger tilbage på et tidligere tidspunkt. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tid","nu","Foer var jeg i tvivl, men {} er jeg sikker.","Before I was unsure, but now I am certain.","»Nu« markerer det aktuelle tidspunkt, ofte i modsætning til før. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","nu","Vi har ventet laenge; {} er det vores tur.","We've waited a long time; now it's our turn.","»Nu« markerer det aktuelle tidspunkt, ofte i modsætning til før. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","nu","{} forstaar jeg, hvad du mener.","Now I understand what you mean.","»Nu« markerer det aktuelle tidspunkt, ofte i modsætning til før. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","nu","Foer boede de i byen; {} bor de paa landet.","Before they lived in the city; now they live in the countryside.","»Nu« markerer det aktuelle tidspunkt, ofte i modsætning til før. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","i dag","I gaar regnede det, men {} skinner solen.","Yesterday it rained, but today the sun is shining.","»I dag« henviser til den nuværende dag. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","i dag","{} er det fredag, og vi holder fri.","Today it's Friday, and we have the day off.","»I dag« henviser til den nuværende dag. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Tid","i dag","Vi var i skole i gaar, men {} bliver vi hjemme.","We were at school yesterday, but today we stay home.","»I dag« henviser til den nuværende dag. Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
 // ---- RAEKKEFOELGE ----
-s("Raekkefoelge","for det foerste","{} er det for dyrt, og for det andet er det grimt.","Firstly it's too expensive, and secondly it's ugly.","'for det foerste' opens a numbered list of reasons (inversion).","B1");
-s("Raekkefoelge","for det foerste","Jeg siger nej. {} har jeg ikke tid.","I'm saying no. Firstly, I don't have time.","First point in an argument.","B1");
-s("Raekkefoelge","for det foerste","{} skal vi spare penge, og dernaest skal vi planlaegge.","Firstly we must save money, and next we must plan.","Begins an ordered list of points.","B1");
-s("Raekkefoelge","for det foerste","{} er kvaliteten god, og for det andet er prisen lav.","Firstly the quality is good, and secondly the price is low.","Opens an enumerated argument.","B1");
-s("Raekkefoelge","for det andet","For det foerste er den hurtig, og {} er den billig.","Firstly it's fast, and secondly it's cheap.","'for det andet' = secondly; the second listed point (inversion).","B1");
-s("Raekkefoelge","for det andet","Jeg blev hjemme. {} var jeg syg.","I stayed home. Secondly, I was ill.","Second item in a list of reasons.","B1");
-s("Raekkefoelge","for det andet","{} boer vi taenke paa miljoeet.","Secondly, we should think about the environment.","Adds the next point in sequence.","B1");
-s("Raekkefoelge","for det andet","Pladsen er lille, og {} er den dyr.","The space is small, and secondly it's expensive.","Second listed objection.","B1");
-s("Raekkefoelge","endelig","Vi pakkede, vi tjekkede ind, og {} lettede flyet.","We packed, we checked in, and finally the plane took off.","'endelig' = finally; the last item in a sequence (inversion).","B1");
-s("Raekkefoelge","endelig","Foerst tre forretter, saa hovedretten, og {} desserten.","First three starters, then the main, and finally dessert.","Closes a list of steps.","B1");
-s("Raekkefoelge","endelig","{} vil jeg takke alle for hjaelpen.","Finally, I'd like to thank everyone for their help.","Last point in a structured speech.","B1");
-s("Raekkefoelge","endelig","Vi skrev, vi ringede, og {} fik vi svar.","We wrote, we called, and finally we got an answer.","The last step in a sequence.","B1");
-s("Raekkefoelge","dels","Han kom for sent {} paa grund af trafikken, dels fordi han sov over sig.","He was late partly because of traffic, partly because he overslept.","'dels ... dels' = partly ... partly; splits a reason in two.","B1");
-s("Raekkefoelge","dels","Pengene gaar {} til mad, dels til husleje.","The money goes partly to food, partly to rent.","Divides something into two parts.","B1");
-s("Raekkefoelge","dels","Vi rejser {} for at slappe af, dels for at se familie.","We travel partly to relax, partly to see family.","Pairs two coordinated parts.","B1");
-s("Raekkefoelge","dels","Beslutningen var svaer {} af oekonomiske, dels af personlige grunde.","The decision was hard partly for financial, partly for personal reasons.","Splits a cause into two halves.","B1");
-s("Raekkefoelge","foerst og fremmest","{} handler det om sikkerhed, ikke om penge.","First and foremost it's about safety, not money.","'foerst og fremmest' = above all; the most important thing (inversion).","B1");
-s("Raekkefoelge","foerst og fremmest","Vi mangler tid, men {} mangler vi folk.","We lack time, but above all we lack people.","Stresses the primary point.","B1");
-s("Raekkefoelge","foerst og fremmest","{} skal du huske at traekke vejret roligt.","First and foremost, remember to breathe calmly.","Marks the top priority.","B1");
-s("Raekkefoelge","foerst og fremmest","{} er det et spoergsmaal om tillid.","First and foremost it's a question of trust.","Foregrounds the main issue.","B1");
-s("Raekkefoelge","samtidig","Hun lavede mad og {} hjalp hun boernene med lektier.","She cooked and at the same time helped the kids with homework.","'samtidig' = at the same time; two things happen together (inversion).","B1");
-s("Raekkefoelge","samtidig","Han talte i telefon, og {} skrev han en mail.","He was on the phone, and at the same time wrote an email.","Marks simultaneity of two actions.","B1");
-s("Raekkefoelge","samtidig","Vi sparede penge, og {} fik vi det bedre produkt.","We saved money, and at the same time got the better product.","Two outcomes occurring together.","B1");
+s("Raekkefoelge","for det foerste","{} er det for dyrt, og for det andet er det grimt.","Firstly it's too expensive, and secondly it's ugly.","»For det første« åbner en nummereret række af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det foerste","Jeg siger nej. {} har jeg ikke tid.","I'm saying no. Firstly, I don't have time.","»For det første« åbner en nummereret række af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det foerste","{} skal vi spare penge, og dernaest skal vi planlaegge.","Firstly we must save money, and next we must plan.","»For det første« åbner en nummereret række af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det foerste","{} er kvaliteten god, og for det andet er prisen lav.","Firstly the quality is good, and secondly the price is low.","»For det første« åbner en nummereret række af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det andet","For det foerste er den hurtig, og {} er den billig.","Firstly it's fast, and secondly it's cheap.","»For det andet« er det næste punkt i rækken af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det andet","Jeg blev hjemme. {} var jeg syg.","I stayed home. Secondly, I was ill.","»For det andet« er det næste punkt i rækken af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det andet","{} boer vi taenke paa miljoeet.","Secondly, we should think about the environment.","»For det andet« er det næste punkt i rækken af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","for det andet","Pladsen er lille, og {} er den dyr.","The space is small, and secondly it's expensive.","»For det andet« er det næste punkt i rækken af argumenter. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","endelig","Vi pakkede, vi tjekkede ind, og {} lettede flyet.","We packed, we checked in, and finally the plane took off.","»Endelig« markerer det sidste led i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","endelig","Foerst tre forretter, saa hovedretten, og {} desserten.","First three starters, then the main, and finally dessert.","»Endelig« markerer det sidste led i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","endelig","{} vil jeg takke alle for hjaelpen.","Finally, I'd like to thank everyone for their help.","»Endelig« markerer det sidste led i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","endelig","Vi skrev, vi ringede, og {} fik vi svar.","We wrote, we called, and finally we got an answer.","»Endelig« markerer det sidste led i en række. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","dels","Han kom for sent {} paa grund af trafikken, dels fordi han sov over sig.","He was late partly because of traffic, partly because he overslept.","»Dels … dels …« deler en forklaring op i to dele.","B1");
+s("Raekkefoelge","dels","Pengene gaar {} til mad, dels til husleje.","The money goes partly to food, partly to rent.","»Dels … dels …« deler en forklaring op i to dele.","B1");
+s("Raekkefoelge","dels","Vi rejser {} for at slappe af, dels for at se familie.","We travel partly to relax, partly to see family.","»Dels … dels …« deler en forklaring op i to dele.","B1");
+s("Raekkefoelge","dels","Beslutningen var svaer {} af oekonomiske, dels af personlige grunde.","The decision was hard partly for financial, partly for personal reasons.","»Dels … dels …« deler en forklaring op i to dele.","B1");
+s("Raekkefoelge","foerst og fremmest","{} handler det om sikkerhed, ikke om penge.","First and foremost it's about safety, not money.","»Først og fremmest« fremhæver det vigtigste punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","foerst og fremmest","Vi mangler tid, men {} mangler vi folk.","We lack time, but above all we lack people.","»Først og fremmest« fremhæver det vigtigste punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","foerst og fremmest","{} skal du huske at traekke vejret roligt.","First and foremost, remember to breathe calmly.","»Først og fremmest« fremhæver det vigtigste punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","foerst og fremmest","{} er det et spoergsmaal om tillid.","First and foremost it's a question of trust.","»Først og fremmest« fremhæver det vigtigste punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","samtidig","Hun lavede mad og {} hjalp hun boernene med lektier.","She cooked and at the same time helped the kids with homework.","»Samtidig« viser, at to ting sker på én gang. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","samtidig","Han talte i telefon, og {} skrev han en mail.","He was on the phone, and at the same time wrote an email.","»Samtidig« viser, at to ting sker på én gang. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Raekkefoelge","samtidig","Vi sparede penge, og {} fik vi det bedre produkt.","We saved money, and at the same time got the better product.","»Samtidig« viser, at to ting sker på én gang. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
 // ---- TILFOEJELSE ----
-s("Tilfoejelse","ogsaa","Hun spiller klaver, og hun synger {}.","She plays the piano, and she sings too.","'ogsaa' = also/too; adds another point.","A2");
-s("Tilfoejelse","ogsaa","Vi koebte broed, og vi tog {} lidt ost med.","We bought bread, and we took some cheese too.","Adds an extra item.","A2");
-s("Tilfoejelse","ogsaa","Han er dygtig, og han er {} flink.","He is skilled, and he is also kind.","Adds a further quality.","A2");
-s("Tilfoejelse","ogsaa","Vi inviterede naboerne, og vennerne kom {}.","We invited the neighbours, and the friends came too.","Adds another party.","A2");
-s("Tilfoejelse","heller ikke","Jeg kan ikke svoemme, og jeg kan {} dykke.","I can't swim, and I can't dive either.","'heller ikke' = not ... either; adds a negative point.","A2");
-s("Tilfoejelse","heller ikke","Han kom ikke, og han ringede {}.","He didn't come, and he didn't call either.","Adds another negation.","A2");
-s("Tilfoejelse","heller ikke","Vi har ikke tid, og vi har {} raad.","We don't have time, and we can't afford it either.","Negative addition.","A2");
-s("Tilfoejelse","heller ikke","Hun spiste ikke, og hun drak {}.","She didn't eat, and she didn't drink either.","Adds a further negative.","A2");
-s("Tilfoejelse","desuden","Lejligheden er stor, og {} er den billig.","The flat is large, and besides it's cheap.","'desuden' = besides/moreover; adds info (inversion).","B1");
-s("Tilfoejelse","desuden","Maden var god, og {} var betjeningen venlig.","The food was good, and besides the service was friendly.","Adds a supporting point.","B1");
-s("Tilfoejelse","desuden","Han er erfaren, og {} taler han tre sprog.","He's experienced, and besides he speaks three languages.","Extra reinforcing information.","B1");
-s("Tilfoejelse","desuden","Cyklen er hurtig, og {} er den miljoevenlig.","The bike is fast, and besides it's eco-friendly.","Adds a further advantage.","B1");
-s("Tilfoejelse","derudover","Kurset er gratis, og {} faar du et bevis.","The course is free, and on top of that you get a certificate.","'derudover' = in addition (inversion).","B2");
-s("Tilfoejelse","derudover","Vi tilbyder mad, og {} soerger vi for musik.","We provide food, and in addition we arrange music.","Adds another offering.","B2");
-s("Tilfoejelse","derudover","Hun maler, og {} laver hun keramik.","She paints, and in addition she makes ceramics.","Further item beyond the first.","B2");
-s("Tilfoejelse","derudover","Vi laver mad, og {} bager vi kage.","We cook, and in addition we bake a cake.","Adds an extra activity.","B2");
-s("Tilfoejelse","endvidere","Rapporten er faerdig, og {} er den korrekturlaest.","The report is done, and furthermore it's been proofread.","'endvidere' = furthermore (formal; inversion).","C1");
-s("Tilfoejelse","endvidere","Reglerne gaelder for alle, og {} haandhaeves de strengt.","The rules apply to all, and furthermore they're strictly enforced.","Adds a formal extra point.","C1");
-s("Tilfoejelse","endvidere","Produktet er testet, og {} er det godkendt.","The product is tested, and furthermore it's approved.","Additional formal information.","C1");
-s("Tilfoejelse","endvidere","Ansoegningen er modtaget, og {} er den behandlet.","The application is received, and furthermore it's been processed.","Adds a further formal step.","C1");
-s("Tilfoejelse","ydermere","Planen er dyr, og {} er den urealistisk.","The plan is expensive, and what's more it's unrealistic.","'ydermere' = moreover (formal; inversion).","C1");
-s("Tilfoejelse","ydermere","Han kom for sent, og {} havde han glemt mappen.","He was late, and moreover he'd forgotten the folder.","Stronger formal addition.","C1");
-s("Tilfoejelse","ydermere","Bygningen er gammel, og {} traenger den til renovering.","The building is old, and moreover it needs renovation.","Adds an emphatic point.","C1");
-s("Tilfoejelse","ydermere","Forslaget er dyrt, og {} mangler der opbakning.","The proposal is expensive, and moreover it lacks support.","Adds another formal objection.","C1");
-s("Tilfoejelse","yderligere","Vi har solgt alt, og {} har vi faaet nye ordrer.","We've sold everything, and additionally we've got new orders.","'yderligere' = additionally / further.","B2");
-s("Tilfoejelse","yderligere","Der kommer {} oplysninger i naeste uge.","Further information will come next week.","Marks something extra/more.","B2");
-s("Tilfoejelse","yderligere","Bilen skal {} undersoeges af en mekaniker.","The car needs to be further examined by a mechanic.","Indicates an additional amount/step.","B2");
-s("Tilfoejelse","ligeledes","Far hjaelper til, og mor goer {}.","Dad helps out, and mum does likewise.","'ligeledes' = likewise; adds in the same way.","B2");
-s("Tilfoejelse","ligeledes","De ansatte fik fri, og cheferne {}.","The staff got time off, and the bosses likewise.","Adds a parallel case.","B2");
-s("Tilfoejelse","ligeledes","Vi takker vaerterne og {} musikerne.","We thank the hosts and likewise the musicians.","Adds another in the same manner.","B2");
-s("Tilfoejelse","ligeledes","Laereren roste eleverne, og rektoren {}.","The teacher praised the pupils, and the principal likewise.","Adds a matching case.","B2");
-s("Tilfoejelse","tilmed","Han huskede gaven, og {} havde han pakket den fint ind.","He remembered the gift, and what's more he'd wrapped it nicely.","'tilmed' = even/what's more; an intensifying addition (inversion).","B2");
-s("Tilfoejelse","tilmed","Hun bestod proeven, og {} fik hun topkarakter.","She passed the test, and even got top marks.","Adds a surprising extra.","B2");
-s("Tilfoejelse","tilmed","Vejret var fint, og {} var stranden tom.","The weather was nice, and on top of that the beach was empty.","Reinforcing, somewhat surprising addition.","B2");
-s("Tilfoejelse","tilmed","Han loeste opgaven, og {} hjalp han de andre.","He solved the task, and what's more he helped the others.","Adds an impressive extra.","B2");
-s("Tilfoejelse","endda","Han loeb hele vejen, {} i regnen.","He ran the whole way, even in the rain.","'endda' = even; emphasises an extreme added case.","B2");
-s("Tilfoejelse","endda","Hun svarede roligt, {} med et smil.","She answered calmly, even with a smile.","Adds an intensifying detail.","B2");
-s("Tilfoejelse","endda","Moedet varede laenge, {} laengere end sidst.","The meeting lasted long, even longer than last time.","Stresses a stronger degree.","B2");
-s("Tilfoejelse","endda","Hun arbejdede hele weekenden, {} om soendagen.","She worked all weekend, even on Sunday.","Adds an extreme case.","B2");
-s("Tilfoejelse","ovenikoebet","Han tabte spillet, og {} grinede han ad det.","He lost the game, and on top of that he laughed about it.","'ovenikoebet' = on top of that (intensifier; inversion).","B2");
-s("Tilfoejelse","ovenikoebet","Maden var billig, og {} smagte den fantastisk.","The food was cheap, and on top of that it tasted amazing.","Adds an emphatic bonus point.","B2");
-s("Tilfoejelse","ovenikoebet","Hun kom for sent og var {} uforberedt.","She was late and on top of that unprepared.","Reinforcing, surprising addition.","B2");
-s("Tilfoejelse","ovenikoebet","Turen var gratis, og {} fik vi frokost.","The trip was free, and on top of that we got lunch.","Adds a surprising bonus.","B2");
+s("Tilfoejelse","ogsaa","Hun spiller klaver, og hun synger {}.","She plays the piano, and she sings too.","»Også« tilføjer endnu et led.","A2");
+s("Tilfoejelse","ogsaa","Vi koebte broed, og vi tog {} lidt ost med.","We bought bread, and we took some cheese too.","»Også« tilføjer endnu et led.","A2");
+s("Tilfoejelse","ogsaa","Han er dygtig, og han er {} flink.","He is skilled, and he is also kind.","»Også« tilføjer endnu et led.","A2");
+s("Tilfoejelse","ogsaa","Vi inviterede naboerne, og vennerne kom {}.","We invited the neighbours, and the friends came too.","»Også« tilføjer endnu et led.","A2");
+s("Tilfoejelse","heller ikke","Jeg kan ikke svoemme, og jeg kan {} dykke.","I can't swim, and I can't dive either.","»Heller ikke« tilføjer endnu en benægtelse. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tilfoejelse","heller ikke","Han kom ikke, og han ringede {}.","He didn't come, and he didn't call either.","»Heller ikke« tilføjer endnu en benægtelse. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tilfoejelse","heller ikke","Vi har ikke tid, og vi har {} raad.","We don't have time, and we can't afford it either.","»Heller ikke« tilføjer endnu en benægtelse. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tilfoejelse","heller ikke","Hun spiste ikke, og hun drak {}.","She didn't eat, and she didn't drink either.","»Heller ikke« tilføjer endnu en benægtelse. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Tilfoejelse","desuden","Lejligheden er stor, og {} er den billig.","The flat is large, and besides it's cheap.","»Desuden« tilføjer et ekstra, understøttende punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tilfoejelse","desuden","Maden var god, og {} var betjeningen venlig.","The food was good, and besides the service was friendly.","»Desuden« tilføjer et ekstra, understøttende punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tilfoejelse","desuden","Han er erfaren, og {} taler han tre sprog.","He's experienced, and besides he speaks three languages.","»Desuden« tilføjer et ekstra, understøttende punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tilfoejelse","desuden","Cyklen er hurtig, og {} er den miljoevenlig.","The bike is fast, and besides it's eco-friendly.","»Desuden« tilføjer et ekstra, understøttende punkt. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Tilfoejelse","derudover","Kurset er gratis, og {} faar du et bevis.","The course is free, and on top of that you get a certificate.","»Derudover« tilføjer noget ud over det, der allerede er nævnt. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","derudover","Vi tilbyder mad, og {} soerger vi for musik.","We provide food, and in addition we arrange music.","»Derudover« tilføjer noget ud over det, der allerede er nævnt. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","derudover","Hun maler, og {} laver hun keramik.","She paints, and in addition she makes ceramics.","»Derudover« tilføjer noget ud over det, der allerede er nævnt. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","derudover","Vi laver mad, og {} bager vi kage.","We cook, and in addition we bake a cake.","»Derudover« tilføjer noget ud over det, der allerede er nævnt. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","endvidere","Rapporten er faerdig, og {} er den korrekturlaest.","The report is done, and furthermore it's been proofread.","»Endvidere« tilføjer et punkt og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","endvidere","Reglerne gaelder for alle, og {} haandhaeves de strengt.","The rules apply to all, and furthermore they're strictly enforced.","»Endvidere« tilføjer et punkt og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","endvidere","Produktet er testet, og {} er det godkendt.","The product is tested, and furthermore it's approved.","»Endvidere« tilføjer et punkt og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","endvidere","Ansoegningen er modtaget, og {} er den behandlet.","The application is received, and furthermore it's been processed.","»Endvidere« tilføjer et punkt og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","ydermere","Planen er dyr, og {} er den urealistisk.","The plan is expensive, and what's more it's unrealistic.","»Ydermere« er en formel og lidt stærkere tilføjelse. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","ydermere","Han kom for sent, og {} havde han glemt mappen.","He was late, and moreover he'd forgotten the folder.","»Ydermere« er en formel og lidt stærkere tilføjelse. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","ydermere","Bygningen er gammel, og {} traenger den til renovering.","The building is old, and moreover it needs renovation.","»Ydermere« er en formel og lidt stærkere tilføjelse. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","ydermere","Forslaget er dyrt, og {} mangler der opbakning.","The proposal is expensive, and moreover it lacks support.","»Ydermere« er en formel og lidt stærkere tilføjelse. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Tilfoejelse","yderligere","Vi har solgt alt, og {} har vi faaet nye ordrer.","We've sold everything, and additionally we've got new orders.","»Yderligere« markerer, at der kommer noget mere.","B2");
+s("Tilfoejelse","yderligere","Der kommer {} oplysninger i naeste uge.","Further information will come next week.","»Yderligere« markerer, at der kommer noget mere.","B2");
+s("Tilfoejelse","yderligere","Bilen skal {} undersoeges af en mekaniker.","The car needs to be further examined by a mechanic.","»Yderligere« markerer, at der kommer noget mere.","B2");
+s("Tilfoejelse","ligeledes","Far hjaelper til, og mor goer {}.","Dad helps out, and mum does likewise.","»Ligeledes« tilføjer et tilsvarende tilfælde.","B2");
+s("Tilfoejelse","ligeledes","De ansatte fik fri, og cheferne {}.","The staff got time off, and the bosses likewise.","»Ligeledes« tilføjer et tilsvarende tilfælde.","B2");
+s("Tilfoejelse","ligeledes","Vi takker vaerterne og {} musikerne.","We thank the hosts and likewise the musicians.","»Ligeledes« tilføjer et tilsvarende tilfælde.","B2");
+s("Tilfoejelse","ligeledes","Laereren roste eleverne, og rektoren {}.","The teacher praised the pupils, and the principal likewise.","»Ligeledes« tilføjer et tilsvarende tilfælde.","B2");
+s("Tilfoejelse","tilmed","Han huskede gaven, og {} havde han pakket den fint ind.","He remembered the gift, and what's more he'd wrapped it nicely.","»Tilmed« tilføjer en forstærkende, ofte overraskende detalje. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","tilmed","Hun bestod proeven, og {} fik hun topkarakter.","She passed the test, and even got top marks.","»Tilmed« tilføjer en forstærkende, ofte overraskende detalje. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","tilmed","Vejret var fint, og {} var stranden tom.","The weather was nice, and on top of that the beach was empty.","»Tilmed« tilføjer en forstærkende, ofte overraskende detalje. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","tilmed","Han loeste opgaven, og {} hjalp han de andre.","He solved the task, and what's more he helped the others.","»Tilmed« tilføjer en forstærkende, ofte overraskende detalje. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","endda","Han loeb hele vejen, {} i regnen.","He ran the whole way, even in the rain.","»Endda« understreger et ekstremt eller stærkere tilfælde.","B2");
+s("Tilfoejelse","endda","Hun svarede roligt, {} med et smil.","She answered calmly, even with a smile.","»Endda« understreger et ekstremt eller stærkere tilfælde.","B2");
+s("Tilfoejelse","endda","Moedet varede laenge, {} laengere end sidst.","The meeting lasted long, even longer than last time.","»Endda« understreger et ekstremt eller stærkere tilfælde.","B2");
+s("Tilfoejelse","endda","Hun arbejdede hele weekenden, {} om soendagen.","She worked all weekend, even on Sunday.","»Endda« understreger et ekstremt eller stærkere tilfælde.","B2");
+s("Tilfoejelse","ovenikoebet","Han tabte spillet, og {} grinede han ad det.","He lost the game, and on top of that he laughed about it.","»Oven i købet« lægger endnu et punkt oveni og forstærker. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","ovenikoebet","Maden var billig, og {} smagte den fantastisk.","The food was cheap, and on top of that it tasted amazing.","»Oven i købet« lægger endnu et punkt oveni og forstærker. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","ovenikoebet","Hun kom for sent og var {} uforberedt.","She was late and on top of that unprepared.","»Oven i købet« lægger endnu et punkt oveni og forstærker. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Tilfoejelse","ovenikoebet","Turen var gratis, og {} fik vi frokost.","The trip was free, and on top of that we got lunch.","»Oven i købet« lægger endnu et punkt oveni og forstærker. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
 // ---- FORKLARING ----
-s("Forklaring","fordi","Jeg blev hjemme, {} jeg var syg.","I stayed home because I was ill.","'fordi' = because; gives the direct cause.","A2");
-s("Forklaring","fordi","Hun smilede, {} hun var glad.","She smiled because she was happy.","Introduces the reason.","A2");
-s("Forklaring","fordi","Vi tog jakker paa, {} det var koldt.","We put on jackets because it was cold.","States the cause of an action.","A2");
-s("Forklaring","fordi","Vi tog paraply med, {} der var meldt regn.","We brought an umbrella because rain was forecast.","Gives the reason for an action.","A2");
-s("Forklaring","da","Vi gik indenfor, {} det begyndte at regne.","We went inside, as it started to rain.","'da' = as/since; gives a known reason.","B1");
-s("Forklaring","da","Han fik ferie, {} han havde arbejdet haardt.","He got a holiday, as he had worked hard.","Causal 'as', slightly formal.","B1");
-s("Forklaring","da","{} bussen var forsinket, kom vi for sent.","As the bus was late, we arrived late.","Reason placed before the result.","B1");
-s("Forklaring","da","{} det blev moerkt, taendte vi lyset.","As it got dark, we turned on the lights.","Reason leading the sentence.","B1");
-s("Forklaring","eftersom","Vi aflyste turen, {} vejret var daarligt.","We cancelled the trip, since the weather was bad.","'eftersom' = since; introduces a reason.","C1");
-s("Forklaring","eftersom","{} alle var enige, vedtog vi planen.","Since everyone agreed, we adopted the plan.","Reason for a decision.","C1");
-s("Forklaring","eftersom","Han fik jobbet, {} han var bedst kvalificeret.","He got the job, since he was best qualified.","Explains the basis for an outcome.","C1");
-s("Forklaring","eftersom","{} han var syg, blev moedet udskudt.","Since he was ill, the meeting was postponed.","Gives the reason up front.","C1");
-s("Forklaring","idet","Hun roedmede, {} hun forstod fejlen.","She blushed, as she realised the mistake.","'idet' = as/in that; reason or simultaneous cause.","C1");
-s("Forklaring","idet","Projektet lykkedes, {} alle bidrog.","The project succeeded, in that everyone contributed.","Gives an explanatory reason.","C1");
-s("Forklaring","idet","Han vandt, {} de andre lavede fejl.","He won, in that the others made mistakes.","Explains how/why something happened.","C1");
-s("Forklaring","for","Tag en paraply med, {} det kommer til at regne.","Take an umbrella, for it's going to rain.","'for' = for; gives a reason (coordinating, no inversion).","A1");
-s("Forklaring","for","Vi maa skynde os, {} toget koerer snart.","We must hurry, for the train leaves soon.","Adds a justifying reason.","A1");
-s("Forklaring","for","Han var glad, {} han havde bestaaet.","He was happy, for he had passed.","Reason, slightly literary.","A1");
-s("Forklaring","for","Luk vinduet, {} det traekker.","Close the window, for there's a draught.","Gives the reason after the request.","A1");
-s("Forklaring","nemlig","Hun kom ikke; hun var {} blevet syg.","She didn't come; she had, you see, fallen ill.","'nemlig' = you see/namely; clarifies the precise reason.","B2");
-s("Forklaring","nemlig","Vi maatte vente. Bussen var {} forsinket.","We had to wait. The bus was, namely, delayed.","Specifies the explanation.","B2");
-s("Forklaring","nemlig","Planen virkede ikke; den var {} for dyr.","The plan didn't work; it was, you see, too expensive.","Pinpoints the reason.","B2");
-s("Forklaring","nemlig","Vi vandt; vi havde {} oevet i ugevis.","We won; we had, you see, practised for weeks.","States the underlying reason.","B2");
-s("Forklaring","pga.","Kampen blev aflyst {} det daarlige vejr.","The match was cancelled because of the bad weather.","'pga.' = because of (paa grund af); cause as a noun phrase.","B2");
-s("Forklaring","pga.","Vejen var lukket {} et uheld.","The road was closed because of an accident.","Gives the cause as a thing.","B2");
-s("Forklaring","pga.","Han var traet {} den lange rejse.","He was tired because of the long journey.","Noun-based cause.","B2");
-s("Forklaring","pga.","Flyet blev forsinket {} taagen.","The plane was delayed because of the fog.","Cause expressed as a noun.","B2");
+s("Forklaring","fordi","Jeg blev hjemme, {} jeg var syg.","I stayed home because I was ill.","»Fordi« angiver den direkte årsag og indleder en bisætning.","A2");
+s("Forklaring","fordi","Hun smilede, {} hun var glad.","She smiled because she was happy.","»Fordi« angiver den direkte årsag og indleder en bisætning.","A2");
+s("Forklaring","fordi","Vi tog jakker paa, {} det var koldt.","We put on jackets because it was cold.","»Fordi« angiver den direkte årsag og indleder en bisætning.","A2");
+s("Forklaring","fordi","Vi tog paraply med, {} der var meldt regn.","We brought an umbrella because rain was forecast.","»Fordi« angiver den direkte årsag og indleder en bisætning.","A2");
+s("Forklaring","da","Vi gik indenfor, {} det begyndte at regne.","We went inside, as it started to rain.","»Da« angiver en kendt årsag (»eftersom«) og indleder en bisætning.","B1");
+s("Forklaring","da","Han fik ferie, {} han havde arbejdet haardt.","He got a holiday, as he had worked hard.","»Da« angiver en kendt årsag (»eftersom«) og indleder en bisætning.","B1");
+s("Forklaring","da","{} bussen var forsinket, kom vi for sent.","As the bus was late, we arrived late.","»Da« angiver en kendt årsag (»eftersom«) og indleder en bisætning.","B1");
+s("Forklaring","da","{} det blev moerkt, taendte vi lyset.","As it got dark, we turned on the lights.","»Da« angiver en kendt årsag (»eftersom«) og indleder en bisætning.","B1");
+s("Forklaring","eftersom","Vi aflyste turen, {} vejret var daarligt.","We cancelled the trip, since the weather was bad.","»Eftersom« indleder en begrundelse i en bisætning.","C1");
+s("Forklaring","eftersom","{} alle var enige, vedtog vi planen.","Since everyone agreed, we adopted the plan.","»Eftersom« indleder en begrundelse i en bisætning.","C1");
+s("Forklaring","eftersom","Han fik jobbet, {} han var bedst kvalificeret.","He got the job, since he was best qualified.","»Eftersom« indleder en begrundelse i en bisætning.","C1");
+s("Forklaring","eftersom","{} han var syg, blev moedet udskudt.","Since he was ill, the meeting was postponed.","»Eftersom« indleder en begrundelse i en bisætning.","C1");
+s("Forklaring","idet","Hun roedmede, {} hun forstod fejlen.","She blushed, as she realised the mistake.","»Idet« angiver en grund eller en samtidig omstændighed og er lidt formelt.","C1");
+s("Forklaring","idet","Projektet lykkedes, {} alle bidrog.","The project succeeded, in that everyone contributed.","»Idet« angiver en grund eller en samtidig omstændighed og er lidt formelt.","C1");
+s("Forklaring","idet","Han vandt, {} de andre lavede fejl.","He won, in that the others made mistakes.","»Idet« angiver en grund eller en samtidig omstændighed og er lidt formelt.","C1");
+s("Forklaring","for","Tag en paraply med, {} det kommer til at regne.","Take an umbrella, for it's going to rain.","»For« angiver en grund og binder to hovedsætninger sammen uden omvendt ordstilling.","A1");
+s("Forklaring","for","Vi maa skynde os, {} toget koerer snart.","We must hurry, for the train leaves soon.","»For« angiver en grund og binder to hovedsætninger sammen uden omvendt ordstilling.","A1");
+s("Forklaring","for","Han var glad, {} han havde bestaaet.","He was happy, for he had passed.","»For« angiver en grund og binder to hovedsætninger sammen uden omvendt ordstilling.","A1");
+s("Forklaring","for","Luk vinduet, {} det traekker.","Close the window, for there's a draught.","»For« angiver en grund og binder to hovedsætninger sammen uden omvendt ordstilling.","A1");
+s("Forklaring","nemlig","Hun kom ikke; hun var {} blevet syg.","She didn't come; she had, you see, fallen ill.","»Nemlig« uddyber årsagen og står inde i sætningen.","B2");
+s("Forklaring","nemlig","Vi maatte vente. Bussen var {} forsinket.","We had to wait. The bus was, namely, delayed.","»Nemlig« uddyber årsagen og står inde i sætningen.","B2");
+s("Forklaring","nemlig","Planen virkede ikke; den var {} for dyr.","The plan didn't work; it was, you see, too expensive.","»Nemlig« uddyber årsagen og står inde i sætningen.","B2");
+s("Forklaring","nemlig","Vi vandt; vi havde {} oevet i ugevis.","We won; we had, you see, practised for weeks.","»Nemlig« uddyber årsagen og står inde i sætningen.","B2");
+s("Forklaring","pga.","Kampen blev aflyst {} det daarlige vejr.","The match was cancelled because of the bad weather.","»Pga.« (på grund af) angiver årsagen med et navneled.","B2");
+s("Forklaring","pga.","Vejen var lukket {} et uheld.","The road was closed because of an accident.","»Pga.« (på grund af) angiver årsagen med et navneled.","B2");
+s("Forklaring","pga.","Han var traet {} den lange rejse.","He was tired because of the long journey.","»Pga.« (på grund af) angiver årsagen med et navneled.","B2");
+s("Forklaring","pga.","Flyet blev forsinket {} taagen.","The plane was delayed because of the fog.","»Pga.« (på grund af) angiver årsagen med et navneled.","B2");
 // ---- KONSEKVENS ----
-s("Konsekvens","saa","Det regnede, {} vi blev hjemme.","It was raining, so we stayed home.","'saa' = so; introduces a consequence.","A1");
-s("Konsekvens","saa","Han traenede haardt, {} han vandt.","He trained hard, so he won.","Result of the previous statement.","A1");
-s("Konsekvens","saa","Vi var sultne, {} vi lavede mad.","We were hungry, so we cooked.","Everyday consequence link.","A1");
-s("Konsekvens","saa","Vejen var glat, {} koerte vi langsomt.","The road was slippery, so we drove slowly.","Marks the resulting action.","A1");
-s("Konsekvens","derfor","Toget var aflyst, og {} koerte vi i bil.","The train was cancelled, so therefore we drove.","'derfor' = therefore; states the consequence (inversion).","B2");
-s("Konsekvens","derfor","Hun var dygtig, og {} fik hun jobbet.","She was skilled, and therefore she got the job.","Marks a logical result.","B2");
-s("Konsekvens","derfor","Det var farligt, og {} stoppede vi.","It was dangerous, and therefore we stopped.","Result of the reason given.","B2");
-s("Konsekvens","derfor","Han broed reglerne, og {} blev han diskvalificeret.","He broke the rules, and therefore he was disqualified.","States the consequence.","B2");
-s("Konsekvens","dermed","Han scorede, og {} vandt holdet.","He scored, and thereby the team won.","'dermed' = thereby; immediate result (inversion).","B2");
-s("Konsekvens","dermed","Vi underskrev, og {} var aftalen gyldig.","We signed, and thereby the agreement was valid.","Marks the direct effect.","B2");
-s("Konsekvens","dermed","Hun sagde op, og {} sluttede et kapitel.","She resigned, and thereby a chapter ended.","Consequence that follows directly.","B2");
-s("Konsekvens","dermed","Maalet faldt, og {} var kampen afgjort.","The goal was scored, and thereby the match was decided.","Direct outcome of the event.","B2");
-s("Konsekvens","saaledes","Reglerne blev aendret, og {} blev alt nemmere.","The rules were changed, and thus everything got easier.","'saaledes' = thus; formal consequence (inversion).","C1");
-s("Konsekvens","saaledes","Han forberedte sig, og {} klarede han proeven.","He prepared, and thus he passed the test.","Logical, formal result.","C1");
-s("Konsekvens","saaledes","Vi sparede op, og {} kunne vi rejse.","We saved up, and thus we could travel.","Marks the outcome formally.","C1");
-s("Konsekvens","saaledes","Vi delte opgaverne, og {} blev arbejdet let.","We shared the tasks, and thus the work became easy.","States the formal result.","C1");
-s("Konsekvens","foelgelig","Efterspoergslen steg, og {} steg priserne.","Demand rose, and consequently prices rose.","'foelgelig' = consequently (formal; inversion).","C1");
-s("Konsekvens","foelgelig","Beviset manglede, og {} blev sagen droppet.","The evidence was missing, and consequently the case was dropped.","Formal logical consequence.","C1");
-s("Konsekvens","foelgelig","Maskinen gik i staa, og {} stoppede produktionen.","The machine stalled, and consequently production stopped.","States the resulting effect.","C1");
-s("Konsekvens","foelgelig","Renterne steg, og {} faldt boligpriserne.","Interest rates rose, and consequently house prices fell.","Marks a formal consequence.","C1");
-s("Konsekvens","af den grund","Han loej for os, og {} stoler vi ikke paa ham.","He lied to us, and for that reason we don't trust him.","'af den grund' = for that reason (inversion).","C1");
-s("Konsekvens","af den grund","Vejret var farligt, og {} aflyste vi turen.","The weather was dangerous, and for that reason we cancelled.","Points back to the stated cause.","C1");
-s("Konsekvens","af den grund","Hun var bedst, og {} valgte vi hende.","She was the best, and for that reason we chose her.","Gives the reason for the result.","C1");
-s("Konsekvens","af den grund","Han moedte aldrig op, og {} mistede han jobbet.","He never showed up, and for that reason he lost the job.","Links cause to consequence.","C1");
+s("Konsekvens","saa","Det regnede, {} vi blev hjemme.","It was raining, so we stayed home.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Konsekvens","saa","Han traenede haardt, {} han vandt.","He trained hard, so he won.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Konsekvens","saa","Vi var sultne, {} vi lavede mad.","We were hungry, so we cooked.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Konsekvens","saa","Vejen var glat, {} koerte vi langsomt.","The road was slippery, so we drove slowly.","»Så« bruges i hverdagssproget om det, der sker efterfølgende (og om følgen af noget). Står ordet først i sætningen, kommer verbet før grundleddet.","A1");
+s("Konsekvens","derfor","Toget var aflyst, og {} koerte vi i bil.","The train was cancelled, so therefore we drove.","»Derfor« angiver følgen af det forrige. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","derfor","Hun var dygtig, og {} fik hun jobbet.","She was skilled, and therefore she got the job.","»Derfor« angiver følgen af det forrige. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","derfor","Det var farligt, og {} stoppede vi.","It was dangerous, and therefore we stopped.","»Derfor« angiver følgen af det forrige. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","derfor","Han broed reglerne, og {} blev han diskvalificeret.","He broke the rules, and therefore he was disqualified.","»Derfor« angiver følgen af det forrige. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","dermed","Han scorede, og {} vandt holdet.","He scored, and thereby the team won.","»Dermed« angiver, at noget følger som resultat. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","dermed","Vi underskrev, og {} var aftalen gyldig.","We signed, and thereby the agreement was valid.","»Dermed« angiver, at noget følger som resultat. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","dermed","Hun sagde op, og {} sluttede et kapitel.","She resigned, and thereby a chapter ended.","»Dermed« angiver, at noget følger som resultat. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","dermed","Maalet faldt, og {} var kampen afgjort.","The goal was scored, and thereby the match was decided.","»Dermed« angiver, at noget følger som resultat. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Konsekvens","saaledes","Reglerne blev aendret, og {} blev alt nemmere.","The rules were changed, and thus everything got easier.","»Således« bruges formelt om en følge eller en måde. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","saaledes","Han forberedte sig, og {} klarede han proeven.","He prepared, and thus he passed the test.","»Således« bruges formelt om en følge eller en måde. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","saaledes","Vi sparede op, og {} kunne vi rejse.","We saved up, and thus we could travel.","»Således« bruges formelt om en følge eller en måde. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","saaledes","Vi delte opgaverne, og {} blev arbejdet let.","We shared the tasks, and thus the work became easy.","»Således« bruges formelt om en følge eller en måde. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","foelgelig","Efterspoergslen steg, og {} steg priserne.","Demand rose, and consequently prices rose.","»Følgelig« angiver en logisk konsekvens og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","foelgelig","Beviset manglede, og {} blev sagen droppet.","The evidence was missing, and consequently the case was dropped.","»Følgelig« angiver en logisk konsekvens og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","foelgelig","Maskinen gik i staa, og {} stoppede produktionen.","The machine stalled, and consequently production stopped.","»Følgelig« angiver en logisk konsekvens og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","foelgelig","Renterne steg, og {} faldt boligpriserne.","Interest rates rose, and consequently house prices fell.","»Følgelig« angiver en logisk konsekvens og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","af den grund","Han loej for os, og {} stoler vi ikke paa ham.","He lied to us, and for that reason we don't trust him.","»Af den grund« henviser tilbage til årsagen. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","af den grund","Vejret var farligt, og {} aflyste vi turen.","The weather was dangerous, and for that reason we cancelled.","»Af den grund« henviser tilbage til årsagen. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","af den grund","Hun var bedst, og {} valgte vi hende.","She was the best, and for that reason we chose her.","»Af den grund« henviser tilbage til årsagen. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Konsekvens","af den grund","Han moedte aldrig op, og {} mistede han jobbet.","He never showed up, and for that reason he lost the job.","»Af den grund« henviser tilbage til årsagen. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
 // ---- SAMMENLIGNING ----
-s("Sammenligning","baade","Han taler {} engelsk og tysk.","He speaks both English and German.","'baade ... og' = both ... and; positive similarity, two things.","A2");
-s("Sammenligning","baade","Vi var {} traette og sultne efter turen.","We were both tired and hungry after the trip.","Joins two equal positives.","A2");
-s("Sammenligning","baade","Filmen var {} sjov og spaendende.","The film was both funny and exciting.","Two qualities held together.","A2");
-s("Sammenligning","baade","Hun er {} klog og venlig.","She is both clever and kind.","Joins two positive traits.","A2");
-s("Sammenligning","begge","De fik {} en praemie for indsatsen.","They both got a prize for the effort.","'begge' = both (two); refers to two together.","B1");
-s("Sammenligning","begge","{} forslag er gode, saa det er svaert at vaelge.","Both proposals are good, so it's hard to choose.","Covers the two items equally.","B1");
-s("Sammenligning","begge","Vi var {} enige om beslutningen.","We both agreed on the decision.","Two parties in agreement.","B1");
-s("Sammenligning","begge","{} hold spillede godt i kampen.","Both teams played well in the match.","Refers to two together.","B1");
-s("Sammenligning","alle","{} elever bestod den svaere proeve.","All students passed the difficult test.","'alle' = all; total positive similarity.","A2");
-s("Sammenligning","alle","Maden var god, og {} var maette.","The food was good, and everyone was full.","Refers to the whole group alike.","A2");
-s("Sammenligning","alle","{} i familien kan lide at rejse.","Everyone in the family likes to travel.","Whole set sharing a trait.","A2");
-s("Sammenligning","hverken","Han kunne {} hoere eller se noget.","He could neither hear nor see anything.","'hverken ... eller' = neither ... nor; negative similarity.","B1");
-s("Sammenligning","hverken","Vi havde {} tid eller penge til rejsen.","We had neither time nor money for the trip.","Two negatives joined.","B1");
-s("Sammenligning","hverken","Hun var {} sur eller glad, bare ligeglad.","She was neither angry nor happy, just indifferent.","Excludes both options.","B1");
-s("Sammenligning","hverken","Han ville {} spise eller sove.","He wanted neither to eat nor to sleep.","Negates both alternatives.","B1");
-s("Sammenligning","ingen af dem","Jeg spurgte begge drenge, men {} vidste svaret.","I asked both boys, but neither of them knew the answer.","'ingen af dem' = neither/none of them; shared negative.","B1");
-s("Sammenligning","ingen af dem","Vi proevede to cafeer, men {} var aabne.","We tried two cafes, but neither was open.","Negates the whole pair.","B1");
-s("Sammenligning","ingen af dem","Der var to forslag, men {} duede.","There were two proposals, but neither was any good.","Both fail alike.","B1");
-s("Sammenligning","ingen af dem","Vi kontaktede to firmaer, men {} svarede.","We contacted two companies, but neither replied.","Both behave the same way.","B1");
-s("Sammenligning","til sammenligning","Danmark er lille; {} er Rusland enormt.","Denmark is small; by comparison Russia is enormous.","'til sammenligning' = by/in comparison (inversion).","B2");
-s("Sammenligning","til sammenligning","Vores by har 50.000; {} har hovedstaden millioner.","Our town has 50,000; by comparison the capital has millions.","Sets two figures side by side.","B2");
-s("Sammenligning","til sammenligning","Han loeber 5 km; {} loeber hun maraton.","He runs 5 km; by comparison she runs marathons.","Frames a comparison.","B2");
-s("Sammenligning","til sammenligning","En myre er lillebitte; {} er en elefant kaempe.","An ant is tiny; by comparison an elephant is huge.","Places two sizes next to each other.","B2");
-s("Sammenligning","ligesom","Hun maler smukt, {} sin mor gjorde.","She paints beautifully, just like her mother did.","'ligesom' = just like; marks similarity.","B1");
-s("Sammenligning","ligesom","{} sidste aar tager vi til stranden i juli.","Just like last year, we go to the beach in July.","Compares to a parallel case.","B1");
-s("Sammenligning","ligesom","Han arbejder haardt, {} de andre paa holdet.","He works hard, just like the others on the team.","States a likeness.","B1");
-s("Sammenligning","ligesom","Han synger smukt, {} sin far.","He sings beautifully, just like his father.","Draws a direct parallel.","B1");
+s("Sammenligning","baade","Han taler {} engelsk og tysk.","He speaks both English and German.","»Både … og …« forbinder to ligeværdige led.","A2");
+s("Sammenligning","baade","Vi var {} traette og sultne efter turen.","We were both tired and hungry after the trip.","»Både … og …« forbinder to ligeværdige led.","A2");
+s("Sammenligning","baade","Filmen var {} sjov og spaendende.","The film was both funny and exciting.","»Både … og …« forbinder to ligeværdige led.","A2");
+s("Sammenligning","baade","Hun er {} klog og venlig.","She is both clever and kind.","»Både … og …« forbinder to ligeværdige led.","A2");
+s("Sammenligning","begge","De fik {} en praemie for indsatsen.","They both got a prize for the effort.","»Begge« henviser til to personer eller ting.","B1");
+s("Sammenligning","begge","{} forslag er gode, saa det er svaert at vaelge.","Both proposals are good, so it's hard to choose.","»Begge« henviser til to personer eller ting.","B1");
+s("Sammenligning","begge","Vi var {} enige om beslutningen.","We both agreed on the decision.","»Begge« henviser til to personer eller ting.","B1");
+s("Sammenligning","begge","{} hold spillede godt i kampen.","Both teams played well in the match.","»Begge« henviser til to personer eller ting.","B1");
+s("Sammenligning","alle","{} elever bestod den svaere proeve.","All students passed the difficult test.","»Alle« henviser til hele gruppen.","A2");
+s("Sammenligning","alle","Maden var god, og {} var maette.","The food was good, and everyone was full.","»Alle« henviser til hele gruppen.","A2");
+s("Sammenligning","alle","{} i familien kan lide at rejse.","Everyone in the family likes to travel.","»Alle« henviser til hele gruppen.","A2");
+s("Sammenligning","hverken","Han kunne {} hoere eller se noget.","He could neither hear nor see anything.","»Hverken … eller …« benægter begge led.","B1");
+s("Sammenligning","hverken","Vi havde {} tid eller penge til rejsen.","We had neither time nor money for the trip.","»Hverken … eller …« benægter begge led.","B1");
+s("Sammenligning","hverken","Hun var {} sur eller glad, bare ligeglad.","She was neither angry nor happy, just indifferent.","»Hverken … eller …« benægter begge led.","B1");
+s("Sammenligning","hverken","Han ville {} spise eller sove.","He wanted neither to eat nor to sleep.","»Hverken … eller …« benægter begge led.","B1");
+s("Sammenligning","ingen af dem","Jeg spurgte begge drenge, men {} vidste svaret.","I asked both boys, but neither of them knew the answer.","»Ingen af dem« benægter, at nogen af de nævnte gælder.","B1");
+s("Sammenligning","ingen af dem","Vi proevede to cafeer, men {} var aabne.","We tried two cafes, but neither was open.","»Ingen af dem« benægter, at nogen af de nævnte gælder.","B1");
+s("Sammenligning","ingen af dem","Der var to forslag, men {} duede.","There were two proposals, but neither was any good.","»Ingen af dem« benægter, at nogen af de nævnte gælder.","B1");
+s("Sammenligning","ingen af dem","Vi kontaktede to firmaer, men {} svarede.","We contacted two companies, but neither replied.","»Ingen af dem« benægter, at nogen af de nævnte gælder.","B1");
+s("Sammenligning","til sammenligning","Danmark er lille; {} er Rusland enormt.","Denmark is small; by comparison Russia is enormous.","»Til sammenligning« indleder en sammenligning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Sammenligning","til sammenligning","Vores by har 50.000; {} har hovedstaden millioner.","Our town has 50,000; by comparison the capital has millions.","»Til sammenligning« indleder en sammenligning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Sammenligning","til sammenligning","Han loeber 5 km; {} loeber hun maraton.","He runs 5 km; by comparison she runs marathons.","»Til sammenligning« indleder en sammenligning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Sammenligning","til sammenligning","En myre er lillebitte; {} er en elefant kaempe.","An ant is tiny; by comparison an elephant is huge.","»Til sammenligning« indleder en sammenligning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Sammenligning","ligesom","Hun maler smukt, {} sin mor gjorde.","She paints beautifully, just like her mother did.","»Ligesom« indleder en sammenligning.","B1");
+s("Sammenligning","ligesom","{} sidste aar tager vi til stranden i juli.","Just like last year, we go to the beach in July.","»Ligesom« indleder en sammenligning.","B1");
+s("Sammenligning","ligesom","Han arbejder haardt, {} de andre paa holdet.","He works hard, just like the others on the team.","»Ligesom« indleder en sammenligning.","B1");
+s("Sammenligning","ligesom","Han synger smukt, {} sin far.","He sings beautifully, just like his father.","»Ligesom« indleder en sammenligning.","B1");
 // ---- MODSAETNING ----
-s("Modsaetning","men","Jeg ville gerne med, {} jeg havde ikke tid.","I'd have liked to come, but I didn't have time.","'men' = but; simple contrast.","A1");
-s("Modsaetning","men","Huset er gammelt, {} det er charmerende.","The house is old, but it's charming.","Joins two opposing ideas.","A1");
-s("Modsaetning","men","Hun proevede haardt, {} det lykkedes ikke.","She tried hard, but it didn't work.","Marks an opposed result.","A1");
-s("Modsaetning","men","Vi ledte overalt, {} vi fandt ikke noeglerne.","We looked everywhere, but we didn't find the keys.","Marks the opposing outcome.","A1");
-s("Modsaetning","imidlertid","Planen loed god; {} var den for dyr.","The plan sounded good; however, it was too expensive.","'imidlertid' = however (formal; inversion).","C1");
-s("Modsaetning","imidlertid","Han lovede at komme; {} dukkede han aldrig op.","He promised to come; however, he never showed up.","Formal contrast marker.","C1");
-s("Modsaetning","imidlertid","Tallene steg; {} faldt overskuddet.","The figures rose; however, the profit fell.","Marks an unexpected opposition.","C1");
-s("Modsaetning","imidlertid","Aftalen var klar; {} sprang han fra.","The deal was set; however, he backed out.","Formal, unexpected reversal.","C1");
-s("Modsaetning","dog","Det var svaert; vi klarede det {}.","It was hard; we managed it though.","'dog' = however/though; mild contrast.","A2");
-s("Modsaetning","dog","Hun er ung; {} er hun meget moden.","She is young; however, she is very mature.","Softens a contrast (inversion when fronted).","A2");
-s("Modsaetning","dog","Maden var dyr; den var {} god.","The food was expensive; it was good though.","Concedes an opposing point.","A2");
-s("Modsaetning","paa den ene side","{} vil jeg gerne rejse, paa den anden side er det dyrt.","On the one hand I'd like to travel, on the other hand it's expensive.","'paa den ene side' opens a two-sided weighing (inversion).","B2");
-s("Modsaetning","paa den ene side","{} er byen livlig, paa den anden side er den larmende.","On the one hand the city is lively, on the other it's noisy.","First side of a balanced view.","B2");
-s("Modsaetning","paa den ene side","{} sparer vi tid, paa den anden side koster det mere.","On the one hand we save time, on the other it costs more.","Presents the first of two perspectives.","B2");
-s("Modsaetning","paa den ene side","{} er bilen praktisk, paa den anden side forurener den.","On the one hand the car is practical, on the other it pollutes.","Opens a pro-and-con weighing.","B2");
-s("Modsaetning","paa den anden side","Det er risikabelt; {} kan det give stort udbytte.","It's risky; on the other hand it could give a big return.","'paa den anden side' = on the other hand (inversion).","B2");
-s("Modsaetning","paa den anden side","Jobbet er haardt; {} er loennen god.","The job is hard; on the other hand the pay is good.","Second side of the weighing.","B2");
-s("Modsaetning","paa den anden side","Hun er streng; {} er hun retfaerdig.","She is strict; on the other hand she is fair.","Balances the first point.","B2");
-s("Modsaetning","paa den anden side","Ferien var dyr; {} var den uforglemmelig.","The holiday was expensive; on the other hand it was unforgettable.","Weighs an upside against a downside.","B2");
-s("Modsaetning","mens","Jeg kan lide te, {} min bror foretraekker kaffe.","I like tea, while my brother prefers coffee.","'mens' = while/whereas; contrasts two parties.","A2");
-s("Modsaetning","mens","Nogle sparede op, {} andre brugte loes.","Some saved up, while others spent freely.","Sets two behaviours against each other.","A2");
-s("Modsaetning","mens","Han er udadvendt, {} hun er stille.","He is outgoing, while she is quiet.","Marks a direct contrast.","A2");
-s("Modsaetning","mens","Jeg foretraekker sommer, {} hun elsker vinter.","I prefer summer, while she loves winter.","Contrasts two preferences.","A2");
-s("Modsaetning","hvorimod","Katte er selvstaendige, {} hunde soeger selskab.","Cats are independent, whereas dogs seek company.","'hvorimod' = whereas; sharper contrast.","C1");
-s("Modsaetning","hvorimod","Han bruger penge, {} hun sparer dem.","He spends money, whereas she saves it.","Strong opposition between two.","C1");
-s("Modsaetning","hvorimod","Sommeren er travl, {} vinteren er stille.","Summer is busy, whereas winter is quiet.","Contrasts two situations.","C1");
-s("Modsaetning","hvorimod","Byen er hektisk, {} landet er fredeligt.","The city is hectic, whereas the countryside is peaceful.","Sets two places in contrast.","C1");
-s("Modsaetning","omvendt","Nogle bliver glade af regn; for mig er det {}.","Some are cheered by rain; for me it's the opposite.","'omvendt' = the other way round / conversely.","B2");
-s("Modsaetning","omvendt","Han troede, jeg var sur, men {} var jeg lettet.","He thought I was angry, but conversely I was relieved.","Marks a reversed situation (inversion).","B2");
-s("Modsaetning","omvendt","Normalt hjaelper hun mig; i dag var det {}.","Usually she helps me; today it was the other way round.","States a reversal.","B2");
-s("Modsaetning","omvendt","Man tror, store hunde er farlige; ofte er det {}.","People think big dogs are dangerous; often it's the opposite.","Marks the reverse of expectation.","B2");
-s("Modsaetning","i modsaetning til","{} sin bror er hun meget rolig.","Unlike her brother, she is very calm.","'i modsaetning til' = unlike/in contrast to (inversion).","B2");
-s("Modsaetning","i modsaetning til","{} sidste aar blev festen aflyst i aar.","In contrast to last year, the party was cancelled this year.","Contrasts with a named thing.","B2");
-s("Modsaetning","i modsaetning til","{} de andre gav han aldrig op.","Unlike the others, he never gave up.","Sets one apart from a group.","B2");
-s("Modsaetning","i modsaetning til","{} de fleste kan han lide kulde.","Unlike most people, he likes the cold.","Contrasts one with the majority.","B2");
-s("Modsaetning","alligevel","Det regnede, men vi tog {} paa stranden.","It was raining, but we went to the beach anyway.","'alligevel' = anyway/nevertheless; unexpected result.","B1");
-s("Modsaetning","alligevel","Han var traet; {} blev han oppe og laeste.","He was tired; nevertheless he stayed up reading.","Marks an unexpected continuation (inversion when fronted).","B1");
-s("Modsaetning","alligevel","Vi havde tabt, men vi var {} stolte.","We had lost, but we were proud anyway.","Concedes against expectation.","B1");
-s("Modsaetning","alligevel","Forretningen gik skidt, men de gav {} ikke op.","Business went badly, but they didn't give up anyway.","Marks persistence against the odds.","B1");
-s("Modsaetning","ikke desto mindre","Opgaven var svaer; {} blev den loest.","The task was hard; nonetheless it was solved.","'ikke desto mindre' = nonetheless (formal; inversion).","C1");
-s("Modsaetning","ikke desto mindre","Beviserne var faa; {} blev han doemt.","The evidence was scarce; nonetheless he was convicted.","Strong, formal concessive.","C1");
-s("Modsaetning","ikke desto mindre","Det var dyrt; {} koebte vi det.","It was expensive; nonetheless we bought it.","Marks a result despite the obstacle.","C1");
-s("Modsaetning","ikke desto mindre","Holdet var lille; {} vandt de turneringen.","The team was small; nonetheless they won the tournament.","Result against expectation, formal.","C1");
-s("Modsaetning","selvom","{} det var koldt, gik vi en lang tur.","Even though it was cold, we took a long walk.","'selvom' = even though; introduces a concession.","A2");
-s("Modsaetning","selvom","Hun smilede, {} hun var skuffet.","She smiled, even though she was disappointed.","Marks something illogical/unexpected.","A2");
-s("Modsaetning","selvom","{} han oevede meget, tabte han.","Even though he practised a lot, he lost.","Concedes a surprising outcome.","A2");
-s("Modsaetning","selvom","{} hun var traet, blev hun ved.","Even though she was tired, she kept going.","Introduces a concession.","A2");
-s("Modsaetning","derimod","Min soester elsker sport; jeg {} hader det.","My sister loves sport; I, on the contrary, hate it.","'derimod' = on the contrary; highlights one of two (inversion).","B2");
-s("Modsaetning","derimod","Te beroliger mig; kaffe goer mig {} urolig.","Tea calms me; coffee, by contrast, makes me restless.","Emphasises a contrasting case.","B2");
-s("Modsaetning","derimod","Hun kom til tiden; han {} kom for sent.","She arrived on time; he, by contrast, came late.","Points up a difference.","B2");
-s("Modsaetning","derimod","Han kan lide larm; jeg {} soeger ro.","He likes noise; I, by contrast, seek quiet.","Highlights an opposing case.","B2");
-s("Modsaetning","til gengaeld","Jobbet er haardt, men {} er loennen hoej.","The job is hard, but in return the pay is high.","'til gengaeld' = in return/on the other hand; a balancing plus (inversion).","B2");
-s("Modsaetning","til gengaeld","Lejligheden er lille; {} ligger den centralt.","The flat is small; on the other hand it's centrally located.","Offsets a drawback with an upside.","B2");
-s("Modsaetning","til gengaeld","Han taler lidt; {} lytter han godt.","He speaks little; in return he listens well.","Highlights a compensating quality.","B2");
-s("Modsaetning","til gengaeld","Vinteren er moerk; {} er sommeren lys og lang.","The winter is dark; in return the summer is bright and long.","Balances a downside with an upside.","B2");
+s("Modsaetning","men","Jeg ville gerne med, {} jeg havde ikke tid.","I'd have liked to come, but I didn't have time.","»Men« binder to hovedsætninger sammen uden omvendt ordstilling og angiver modsætning.","A1");
+s("Modsaetning","men","Huset er gammelt, {} det er charmerende.","The house is old, but it's charming.","»Men« binder to hovedsætninger sammen uden omvendt ordstilling og angiver modsætning.","A1");
+s("Modsaetning","men","Hun proevede haardt, {} det lykkedes ikke.","She tried hard, but it didn't work.","»Men« binder to hovedsætninger sammen uden omvendt ordstilling og angiver modsætning.","A1");
+s("Modsaetning","men","Vi ledte overalt, {} vi fandt ikke noeglerne.","We looked everywhere, but we didn't find the keys.","»Men« binder to hovedsætninger sammen uden omvendt ordstilling og angiver modsætning.","A1");
+s("Modsaetning","imidlertid","Planen loed god; {} var den for dyr.","The plan sounded good; however, it was too expensive.","»Imidlertid« angiver en modsætning eller overgang og er lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","imidlertid","Han lovede at komme; {} dukkede han aldrig op.","He promised to come; however, he never showed up.","»Imidlertid« angiver en modsætning eller overgang og er lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","imidlertid","Tallene steg; {} faldt overskuddet.","The figures rose; however, the profit fell.","»Imidlertid« angiver en modsætning eller overgang og er lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","imidlertid","Aftalen var klar; {} sprang han fra.","The deal was set; however, he backed out.","»Imidlertid« angiver en modsætning eller overgang og er lidt formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","dog","Det var svaert; vi klarede det {}.","It was hard; we managed it though.","»Dog« angiver en modsætning eller et forbehold. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Modsaetning","dog","Hun er ung; {} er hun meget moden.","She is young; however, she is very mature.","»Dog« angiver en modsætning eller et forbehold. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Modsaetning","dog","Maden var dyr; den var {} god.","The food was expensive; it was good though.","»Dog« angiver en modsætning eller et forbehold. Står ordet først i sætningen, kommer verbet før grundleddet.","A2");
+s("Modsaetning","paa den ene side","{} vil jeg gerne rejse, paa den anden side er det dyrt.","On the one hand I'd like to travel, on the other hand it's expensive.","»På den ene side … på den anden side …« stiller to synspunkter op mod hinanden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den ene side","{} er byen livlig, paa den anden side er den larmende.","On the one hand the city is lively, on the other it's noisy.","»På den ene side … på den anden side …« stiller to synspunkter op mod hinanden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den ene side","{} sparer vi tid, paa den anden side koster det mere.","On the one hand we save time, on the other it costs more.","»På den ene side … på den anden side …« stiller to synspunkter op mod hinanden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den ene side","{} er bilen praktisk, paa den anden side forurener den.","On the one hand the car is practical, on the other it pollutes.","»På den ene side … på den anden side …« stiller to synspunkter op mod hinanden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den anden side","Det er risikabelt; {} kan det give stort udbytte.","It's risky; on the other hand it could give a big return.","»På den anden side« er modstykket til »på den ene side«. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den anden side","Jobbet er haardt; {} er loennen god.","The job is hard; on the other hand the pay is good.","»På den anden side« er modstykket til »på den ene side«. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den anden side","Hun er streng; {} er hun retfaerdig.","She is strict; on the other hand she is fair.","»På den anden side« er modstykket til »på den ene side«. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","paa den anden side","Ferien var dyr; {} var den uforglemmelig.","The holiday was expensive; on the other hand it was unforgettable.","»På den anden side« er modstykket til »på den ene side«. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","mens","Jeg kan lide te, {} min bror foretraekker kaffe.","I like tea, while my brother prefers coffee.","»Mens« indleder en bisætning, der kan angive samtidighed eller modsætning.","A2");
+s("Modsaetning","mens","Nogle sparede op, {} andre brugte loes.","Some saved up, while others spent freely.","»Mens« indleder en bisætning, der kan angive samtidighed eller modsætning.","A2");
+s("Modsaetning","mens","Han er udadvendt, {} hun er stille.","He is outgoing, while she is quiet.","»Mens« indleder en bisætning, der kan angive samtidighed eller modsætning.","A2");
+s("Modsaetning","mens","Jeg foretraekker sommer, {} hun elsker vinter.","I prefer summer, while she loves winter.","»Mens« indleder en bisætning, der kan angive samtidighed eller modsætning.","A2");
+s("Modsaetning","hvorimod","Katte er selvstaendige, {} hunde soeger selskab.","Cats are independent, whereas dogs seek company.","»Hvorimod« indleder en modsætning i en bisætning.","C1");
+s("Modsaetning","hvorimod","Han bruger penge, {} hun sparer dem.","He spends money, whereas she saves it.","»Hvorimod« indleder en modsætning i en bisætning.","C1");
+s("Modsaetning","hvorimod","Sommeren er travl, {} vinteren er stille.","Summer is busy, whereas winter is quiet.","»Hvorimod« indleder en modsætning i en bisætning.","C1");
+s("Modsaetning","hvorimod","Byen er hektisk, {} landet er fredeligt.","The city is hectic, whereas the countryside is peaceful.","»Hvorimod« indleder en modsætning i en bisætning.","C1");
+s("Modsaetning","omvendt","Nogle bliver glade af regn; for mig er det {}.","Some are cheered by rain; for me it's the opposite.","»Omvendt« viser den modsatte situation. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","omvendt","Han troede, jeg var sur, men {} var jeg lettet.","He thought I was angry, but conversely I was relieved.","»Omvendt« viser den modsatte situation. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","omvendt","Normalt hjaelper hun mig; i dag var det {}.","Usually she helps me; today it was the other way round.","»Omvendt« viser den modsatte situation. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","omvendt","Man tror, store hunde er farlige; ofte er det {}.","People think big dogs are dangerous; often it's the opposite.","»Omvendt« viser den modsatte situation. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","i modsaetning til","{} sin bror er hun meget rolig.","Unlike her brother, she is very calm.","»I modsætning til« stiller to ting op mod hinanden.","B2");
+s("Modsaetning","i modsaetning til","{} sidste aar blev festen aflyst i aar.","In contrast to last year, the party was cancelled this year.","»I modsætning til« stiller to ting op mod hinanden.","B2");
+s("Modsaetning","i modsaetning til","{} de andre gav han aldrig op.","Unlike the others, he never gave up.","»I modsætning til« stiller to ting op mod hinanden.","B2");
+s("Modsaetning","i modsaetning til","{} de fleste kan han lide kulde.","Unlike most people, he likes the cold.","»I modsætning til« stiller to ting op mod hinanden.","B2");
+s("Modsaetning","alligevel","Det regnede, men vi tog {} paa stranden.","It was raining, but we went to the beach anyway.","»Alligevel« angiver, at noget sker trods en forhindring. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Modsaetning","alligevel","Han var traet; {} blev han oppe og laeste.","He was tired; nevertheless he stayed up reading.","»Alligevel« angiver, at noget sker trods en forhindring. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Modsaetning","alligevel","Vi havde tabt, men vi var {} stolte.","We had lost, but we were proud anyway.","»Alligevel« angiver, at noget sker trods en forhindring. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Modsaetning","alligevel","Forretningen gik skidt, men de gav {} ikke op.","Business went badly, but they didn't give up anyway.","»Alligevel« angiver, at noget sker trods en forhindring. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Modsaetning","ikke desto mindre","Opgaven var svaer; {} blev den loest.","The task was hard; nonetheless it was solved.","»Ikke desto mindre« betyder »trods det« og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","ikke desto mindre","Beviserne var faa; {} blev han doemt.","The evidence was scarce; nonetheless he was convicted.","»Ikke desto mindre« betyder »trods det« og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","ikke desto mindre","Det var dyrt; {} koebte vi det.","It was expensive; nonetheless we bought it.","»Ikke desto mindre« betyder »trods det« og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","ikke desto mindre","Holdet var lille; {} vandt de turneringen.","The team was small; nonetheless they won the tournament.","»Ikke desto mindre« betyder »trods det« og er formelt. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Modsaetning","selvom","{} det var koldt, gik vi en lang tur.","Even though it was cold, we took a long walk.","»Selvom« indleder en indrømmelse i en bisætning.","A2");
+s("Modsaetning","selvom","Hun smilede, {} hun var skuffet.","She smiled, even though she was disappointed.","»Selvom« indleder en indrømmelse i en bisætning.","A2");
+s("Modsaetning","selvom","{} han oevede meget, tabte han.","Even though he practised a lot, he lost.","»Selvom« indleder en indrømmelse i en bisætning.","A2");
+s("Modsaetning","selvom","{} hun var traet, blev hun ved.","Even though she was tired, she kept going.","»Selvom« indleder en indrømmelse i en bisætning.","A2");
+s("Modsaetning","derimod","Min soester elsker sport; jeg {} hader det.","My sister loves sport; I, on the contrary, hate it.","»Derimod« stiller noget op som en modsætning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","derimod","Te beroliger mig; kaffe goer mig {} urolig.","Tea calms me; coffee, by contrast, makes me restless.","»Derimod« stiller noget op som en modsætning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","derimod","Hun kom til tiden; han {} kom for sent.","She arrived on time; he, by contrast, came late.","»Derimod« stiller noget op som en modsætning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","derimod","Han kan lide larm; jeg {} soeger ro.","He likes noise; I, by contrast, seek quiet.","»Derimod« stiller noget op som en modsætning. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","til gengaeld","Jobbet er haardt, men {} er loennen hoej.","The job is hard, but in return the pay is high.","»Til gengæld« opvejer en ulempe med en fordel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","til gengaeld","Lejligheden er lille; {} ligger den centralt.","The flat is small; on the other hand it's centrally located.","»Til gengæld« opvejer en ulempe med en fordel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","til gengaeld","Han taler lidt; {} lytter han godt.","He speaks little; in return he listens well.","»Til gengæld« opvejer en ulempe med en fordel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Modsaetning","til gengaeld","Vinteren er moerk; {} er sommeren lys og lang.","The winter is dark; in return the summer is bright and long.","»Til gengæld« opvejer en ulempe med en fordel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
 // ---- EKSEMPEL ----
-s("Eksempel","eksempelvis","Mange frugter er sunde, {} aebler og baer.","Many fruits are healthy, for example apples and berries.","'eksempelvis' = for example; introduces an instance.","B2");
-s("Eksempel","eksempelvis","Du kan spare paa flere maader, {} ved at cykle.","You can save in several ways, for example by cycling.","Gives a concrete case.","B2");
-s("Eksempel","eksempelvis","Vaelg en aktivitet, {} svoemning eller loeb.","Choose an activity, for example swimming or running.","Offers an illustrative option.","B2");
-s("Eksempel","eksempelvis","Mange dyr er truede, {} isbjoernen.","Many animals are endangered, for example the polar bear.","Gives one illustrative case.","B2");
-s("Eksempel","fx","Tag noget varmt paa, {} en hue.","Put on something warm, e.g. a hat.","'fx' = e.g. (for eksempel); a short example marker.","B1");
-s("Eksempel","fx","Vi kan moedes en hverdag, {} paa onsdag.","We can meet on a weekday, e.g. on Wednesday.","Introduces a quick example.","B1");
-s("Eksempel","fx","Brug en sund olie, {} olivenolie.","Use a healthy oil, e.g. olive oil.","Gives a specific instance.","B1");
-s("Eksempel","fx","Spis noget groent, {} broccoli.","Eat something green, e.g. broccoli.","A quick concrete example.","B1");
-s("Eksempel","bl.a.","Festen boed paa mange ting, {} musik og dans.","The party offered many things, among other things music and dancing.","'bl.a.' = among other things (blandt andet).","B2");
-s("Eksempel","bl.a.","Hun har boet flere steder, {} i Paris.","She has lived in several places, among others in Paris.","Names one of several.","B2");
-s("Eksempel","bl.a.","Moedet handlede {} om budgettet.","The meeting was about, among other things, the budget.","Picks out one item from many.","B2");
-s("Eksempel","bl.a.","Hun taler flere sprog, {} spansk og italiensk.","She speaks several languages, among others Spanish and Italian.","Lists some out of more.","B2");
-s("Eksempel","som","Store byer {} Koebenhavn er dyre at bo i.","Big cities like Copenhagen are expensive to live in.","'som' = such as/like; introduces an example.","B1");
-s("Eksempel","som","Sportsgrene {} fodbold kraever et hold.","Sports such as football require a team.","Gives a representative example.","B1");
-s("Eksempel","som","Dyr {} loever lever i flok.","Animals such as lions live in groups.","Illustrates a category.","B1");
-s("Eksempel","som","Frugter {} appelsiner indeholder C-vitamin.","Fruits such as oranges contain vitamin C.","Gives an example of a category.","B1");
-s("Eksempel","isaer","Jeg kan lide frugt, {} jordbaer.","I like fruit, especially strawberries.","'isaer' = especially; singles out the main example.","B1");
-s("Eksempel","isaer","Det er koldt om vinteren, {} om natten.","It's cold in winter, especially at night.","Highlights the foremost case.","B1");
-s("Eksempel","isaer","Han er god til sprog, {} fransk.","He's good at languages, especially French.","Points to the chief instance.","B1");
-s("Eksempel","isaer","Vejret er ustabilt, {} om efteraaret.","The weather is unstable, especially in autumn.","Singles out the main case.","B1");
-s("Eksempel","specielt","Filmen var god, {} slutningen.","The film was good, particularly the ending.","'specielt' = particularly; foregrounds one example.","B2");
-s("Eksempel","specielt","Vi nyder ferier, {} ved havet.","We enjoy holidays, particularly by the sea.","Emphasises a specific case.","B2");
-s("Eksempel","specielt","Byen er smuk, {} om foraaret.","The city is beautiful, particularly in spring.","Singles out a standout example.","B2");
+s("Eksempel","eksempelvis","Mange frugter er sunde, {} aebler og baer.","Many fruits are healthy, for example apples and berries.","»Eksempelvis« indleder et eksempel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Eksempel","eksempelvis","Du kan spare paa flere maader, {} ved at cykle.","You can save in several ways, for example by cycling.","»Eksempelvis« indleder et eksempel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Eksempel","eksempelvis","Vaelg en aktivitet, {} svoemning eller loeb.","Choose an activity, for example swimming or running.","»Eksempelvis« indleder et eksempel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Eksempel","eksempelvis","Mange dyr er truede, {} isbjoernen.","Many animals are endangered, for example the polar bear.","»Eksempelvis« indleder et eksempel. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Eksempel","fx","Tag noget varmt paa, {} en hue.","Put on something warm, e.g. a hat.","»Fx« er en forkortelse for »for eksempel«.","B1");
+s("Eksempel","fx","Vi kan moedes en hverdag, {} paa onsdag.","We can meet on a weekday, e.g. on Wednesday.","»Fx« er en forkortelse for »for eksempel«.","B1");
+s("Eksempel","fx","Brug en sund olie, {} olivenolie.","Use a healthy oil, e.g. olive oil.","»Fx« er en forkortelse for »for eksempel«.","B1");
+s("Eksempel","fx","Spis noget groent, {} broccoli.","Eat something green, e.g. broccoli.","»Fx« er en forkortelse for »for eksempel«.","B1");
+s("Eksempel","bl.a.","Festen boed paa mange ting, {} musik og dans.","The party offered many things, among other things music and dancing.","»Bl.a.« (blandt andet) nævner nogle få af flere ting.","B2");
+s("Eksempel","bl.a.","Hun har boet flere steder, {} i Paris.","She has lived in several places, among others in Paris.","»Bl.a.« (blandt andet) nævner nogle få af flere ting.","B2");
+s("Eksempel","bl.a.","Moedet handlede {} om budgettet.","The meeting was about, among other things, the budget.","»Bl.a.« (blandt andet) nævner nogle få af flere ting.","B2");
+s("Eksempel","bl.a.","Hun taler flere sprog, {} spansk og italiensk.","She speaks several languages, among others Spanish and Italian.","»Bl.a.« (blandt andet) nævner nogle få af flere ting.","B2");
+s("Eksempel","som","Store byer {} Koebenhavn er dyre at bo i.","Big cities like Copenhagen are expensive to live in.","»Som« indleder et eksempel eller en sammenligning.","B1");
+s("Eksempel","som","Sportsgrene {} fodbold kraever et hold.","Sports such as football require a team.","»Som« indleder et eksempel eller en sammenligning.","B1");
+s("Eksempel","som","Dyr {} loever lever i flok.","Animals such as lions live in groups.","»Som« indleder et eksempel eller en sammenligning.","B1");
+s("Eksempel","som","Frugter {} appelsiner indeholder C-vitamin.","Fruits such as oranges contain vitamin C.","»Som« indleder et eksempel eller en sammenligning.","B1");
+s("Eksempel","isaer","Jeg kan lide frugt, {} jordbaer.","I like fruit, especially strawberries.","»Især« fremhæver et tilfælde.","B1");
+s("Eksempel","isaer","Det er koldt om vinteren, {} om natten.","It's cold in winter, especially at night.","»Især« fremhæver et tilfælde.","B1");
+s("Eksempel","isaer","Han er god til sprog, {} fransk.","He's good at languages, especially French.","»Især« fremhæver et tilfælde.","B1");
+s("Eksempel","isaer","Vejret er ustabilt, {} om efteraaret.","The weather is unstable, especially in autumn.","»Især« fremhæver et tilfælde.","B1");
+s("Eksempel","specielt","Filmen var god, {} slutningen.","The film was good, particularly the ending.","»Specielt« fremhæver et tilfælde.","B2");
+s("Eksempel","specielt","Vi nyder ferier, {} ved havet.","We enjoy holidays, particularly by the sea.","»Specielt« fremhæver et tilfælde.","B2");
+s("Eksempel","specielt","Byen er smuk, {} om foraaret.","The city is beautiful, particularly in spring.","»Specielt« fremhæver et tilfælde.","B2");
 // ---- UDDYBNING ----
-s("Uddybning","dvs.","Han er pensionist, {} han arbejder ikke laengere.","He's a pensioner, i.e. he no longer works.","'dvs.' = that is (det vil sige); restates more precisely.","B2");
-s("Uddybning","dvs.","Moedet er flyttet, {} vi ses foerst paa mandag.","The meeting is moved, i.e. we won't meet until Monday.","Clarifies what something means.","B2");
-s("Uddybning","dvs.","Butikken har lukket, {} vi maa handle et andet sted.","The shop has closed, i.e. we must shop elsewhere.","Spells out the implication.","B2");
-s("Uddybning","dvs.","Han er selvstaendig, {} han har sit eget firma.","He's self-employed, i.e. he has his own company.","Restates the point precisely.","B2");
-s("Uddybning","det betyder","Kursen er faldet, og {}, at vi taber penge.","The rate has dropped, and it means we lose money.","'det betyder' = it means; explains the consequence.","B2");
-s("Uddybning","det betyder","Han sagde ja, og {}, at projektet gaar videre.","He said yes, and it means the project continues.","Makes the meaning explicit.","B2");
-s("Uddybning","det betyder","Vejen er lukket, og {}, at vi maa koere udenom.","The road is closed, and it means we must drive around.","Unpacks the effect.","B2");
-s("Uddybning","det betyder","Budgettet er skaaret ned, og {}, at vi maa prioritere.","The budget is cut, and it means we have to prioritise.","Explains what follows.","B2");
-s("Uddybning","m.a.o.","Han svarede ikke, {} han var ikke interesseret.","He didn't reply, in other words he wasn't interested.","'m.a.o.' = in other words (med andre ord).","B2");
-s("Uddybning","m.a.o.","Tallene falder, {} vi maa spare.","The figures are falling, in other words we must cut back.","Rephrases the point.","B2");
-s("Uddybning","m.a.o.","Hun blev forfremmet, {} hun klarede sig godt.","She was promoted, in other words she did well.","Restates in plainer terms.","B2");
-s("Uddybning","m.a.o.","Hun naaede alle maal, {} hun gjorde det godt.","She met all the goals, in other words she did well.","Sums up in other words.","B2");
-s("Uddybning","altsaa","Vi mangler folk og penge; {} kan vi ikke fortsaette.","We lack people and money; so we can't continue.","'altsaa' = so/thus; draws the point together (inversion).","B1");
-s("Uddybning","altsaa","Han kom aldrig; han havde {} glemt det.","He never came; so he had forgotten it.","Marks a clarifying conclusion.","B1");
-s("Uddybning","altsaa","Doeren var laast; vi maatte {} vente udenfor.","The door was locked; so we had to wait outside.","Sums up what follows.","B1");
-s("Uddybning","altsaa","Toget var aflyst; vi maatte {} finde en anden vej.","The train was cancelled; so we had to find another way.","Draws a conclusion.","B1");
-s("Uddybning","faktisk","Han virkede sur, men han var {} bare traet.","He seemed angry, but he was actually just tired.","'faktisk' = actually; contrary to expectation.","B1");
-s("Uddybning","faktisk","Proeven saa svaer ud, men den var {} nem.","The test looked hard, but it was actually easy.","Corrects an assumption.","B1");
-s("Uddybning","faktisk","Vi troede, det var dyrt, men det var {} gratis.","We thought it was expensive, but it was actually free.","Marks a surprising truth.","B1");
+s("Uddybning","dvs.","Han er pensionist, {} han arbejder ikke laengere.","He's a pensioner, i.e. he no longer works.","»Dvs.« (det vil sige) indleder en uddybning.","B2");
+s("Uddybning","dvs.","Moedet er flyttet, {} vi ses foerst paa mandag.","The meeting is moved, i.e. we won't meet until Monday.","»Dvs.« (det vil sige) indleder en uddybning.","B2");
+s("Uddybning","dvs.","Butikken har lukket, {} vi maa handle et andet sted.","The shop has closed, i.e. we must shop elsewhere.","»Dvs.« (det vil sige) indleder en uddybning.","B2");
+s("Uddybning","dvs.","Han er selvstaendig, {} han har sit eget firma.","He's self-employed, i.e. he has his own company.","»Dvs.« (det vil sige) indleder en uddybning.","B2");
+s("Uddybning","det betyder","Kursen er faldet, og {}, at vi taber penge.","The rate has dropped, and it means we lose money.","»Det betyder« indleder en forklaring eller konsekvens.","B2");
+s("Uddybning","det betyder","Han sagde ja, og {}, at projektet gaar videre.","He said yes, and it means the project continues.","»Det betyder« indleder en forklaring eller konsekvens.","B2");
+s("Uddybning","det betyder","Vejen er lukket, og {}, at vi maa koere udenom.","The road is closed, and it means we must drive around.","»Det betyder« indleder en forklaring eller konsekvens.","B2");
+s("Uddybning","det betyder","Budgettet er skaaret ned, og {}, at vi maa prioritere.","The budget is cut, and it means we have to prioritise.","»Det betyder« indleder en forklaring eller konsekvens.","B2");
+s("Uddybning","m.a.o.","Han svarede ikke, {} han var ikke interesseret.","He didn't reply, in other words he wasn't interested.","»M.a.o.« (med andre ord) omformulerer det foregående.","B2");
+s("Uddybning","m.a.o.","Tallene falder, {} vi maa spare.","The figures are falling, in other words we must cut back.","»M.a.o.« (med andre ord) omformulerer det foregående.","B2");
+s("Uddybning","m.a.o.","Hun blev forfremmet, {} hun klarede sig godt.","She was promoted, in other words she did well.","»M.a.o.« (med andre ord) omformulerer det foregående.","B2");
+s("Uddybning","m.a.o.","Hun naaede alle maal, {} hun gjorde det godt.","She met all the goals, in other words she did well.","»M.a.o.« (med andre ord) omformulerer det foregående.","B2");
+s("Uddybning","altsaa","Vi mangler folk og penge; {} kan vi ikke fortsaette.","We lack people and money; so we can't continue.","»Altså« opsummerer eller drager en konklusion.","B1");
+s("Uddybning","altsaa","Han kom aldrig; han havde {} glemt det.","He never came; so he had forgotten it.","»Altså« opsummerer eller drager en konklusion.","B1");
+s("Uddybning","altsaa","Doeren var laast; vi maatte {} vente udenfor.","The door was locked; so we had to wait outside.","»Altså« opsummerer eller drager en konklusion.","B1");
+s("Uddybning","altsaa","Toget var aflyst; vi maatte {} finde en anden vej.","The train was cancelled; so we had to find another way.","»Altså« opsummerer eller drager en konklusion.","B1");
+s("Uddybning","faktisk","Han virkede sur, men han var {} bare traet.","He seemed angry, but he was actually just tired.","»Faktisk« bekræfter eller korrigerer noget.","B1");
+s("Uddybning","faktisk","Proeven saa svaer ud, men den var {} nem.","The test looked hard, but it was actually easy.","»Faktisk« bekræfter eller korrigerer noget.","B1");
+s("Uddybning","faktisk","Vi troede, det var dyrt, men det var {} gratis.","We thought it was expensive, but it was actually free.","»Faktisk« bekræfter eller korrigerer noget.","B1");
 // ---- HOLDNING ----
-s("Holdning","selvfoelgelig","{} hjaelper jeg dig med flytningen.","Of course I'll help you with the move.","'selvfoelgelig' = of course; expresses obviousness (inversion).","A2");
-s("Holdning","selvfoelgelig","Du maa {} laane min bil.","Of course you may borrow my car.","Marks something taken for granted.","A2");
-s("Holdning","selvfoelgelig","{} var hun ked af det efter tabet.","Of course she was sad after the loss.","Signals an expected stance.","A2");
-s("Holdning","selvfoelgelig","{} kommer jeg til din fest.","Of course I'll come to your party.","Marks an obvious intention.","A2");
-s("Holdning","naturligvis","{} betaler vi for skaden.","Naturally we'll pay for the damage.","'naturligvis' = naturally/of course (inversion).","A2");
-s("Holdning","naturligvis","Han kom {} for sent igen.","Naturally he was late again.","Marks the unsurprising.","A2");
-s("Holdning","naturligvis","Du er {} velkommen til festen.","You're naturally welcome at the party.","Expresses obvious acceptance.","A2");
-s("Holdning","naturligvis","Hun fik {} ret til sidst.","Naturally she turned out to be right in the end.","Marks an expected outcome.","A2");
-s("Holdning","heldigvis","{} kom hjaelpen hurtigt frem.","Fortunately help arrived quickly.","'heldigvis' = fortunately; a positive stance (inversion).","A2");
-s("Holdning","heldigvis","Bilen broed sammen, men {} var vi taet paa.","The car broke down, but fortunately we were close by.","Marks a lucky circumstance.","A2");
-s("Holdning","heldigvis","{} var der ingen, der kom til skade.","Fortunately no one was hurt.","Expresses relief.","A2");
-s("Holdning","heldigvis","Vi for vild, men {} havde vi et kort.","We got lost, but fortunately we had a map.","Marks a lucky detail.","A2");
-s("Holdning","uheldigvis","{} mistede vi det sidste tog.","Unfortunately we missed the last train.","'uheldigvis' = unfortunately; a negative stance (inversion).","A2");
-s("Holdning","uheldigvis","Planen var god, men {} regnede det.","The plan was good, but unfortunately it rained.","Marks a bad turn of events.","A2");
-s("Holdning","uheldigvis","{} var butikken allerede lukket.","Unfortunately the shop was already closed.","Expresses regret.","A2");
-s("Holdning","uheldigvis","{} gik computeren ned midt i arbejdet.","Unfortunately the computer crashed in the middle of the work.","Marks an unlucky event.","A2");
-s("Holdning","desvaerre","{} kan jeg ikke naa moedet i dag.","Unfortunately I can't make the meeting today.","'desvaerre' = unfortunately/sadly (inversion).","A2");
-s("Holdning","desvaerre","Vi proevede, men {} lykkedes det ikke.","We tried, but unfortunately it didn't work.","Marks a regrettable fact.","A2");
-s("Holdning","desvaerre","Billetterne er {} udsolgt.","The tickets are unfortunately sold out.","Conveys disappointment.","A2");
-s("Holdning","desvaerre","{} maa jeg melde afbud i aften.","Unfortunately I have to cancel tonight.","Expresses regret about a decision.","A2");
-s("Holdning","forhaabentlig","{} bliver vejret bedre i morgen.","Hopefully the weather will be better tomorrow.","'forhaabentlig' = hopefully; expresses a wish (inversion).","A2");
-s("Holdning","forhaabentlig","Vi har oevet meget, saa {} gaar det godt.","We've practised a lot, so hopefully it'll go well.","Marks an optimistic stance.","A2");
-s("Holdning","forhaabentlig","{} husker han at ringe.","Hopefully he remembers to call.","Voices a hope.","A2");
-s("Holdning","forhaabentlig","{} naar vi toget, hvis vi skynder os.","Hopefully we'll catch the train if we hurry.","Expresses a hopeful expectation.","A2");
-s("Holdning","maaske","{} kommer jeg til festen, jeg ved det ikke endnu.","Maybe I'll come to the party, I don't know yet.","'maaske' = maybe; low certainty (inversion).","A2");
-s("Holdning","maaske","Det er skyet; {} regner det senere.","It's cloudy; maybe it'll rain later.","Marks a possibility.","A2");
-s("Holdning","maaske","{} har du ret i det.","Maybe you're right about that.","Expresses tentative agreement.","A2");
-s("Holdning","maaske","{} ringer hun senere i dag.","Maybe she'll call later today.","Marks an uncertain prediction.","A2");
-s("Holdning","muligvis","Moedet bliver {} udskudt til naeste uge.","The meeting will possibly be postponed to next week.","'muligvis' = possibly; uncertain but possible.","B1");
-s("Holdning","muligvis","Han er {} allerede taget hjem.","He has possibly already gone home.","Marks a guarded possibility.","B1");
-s("Holdning","muligvis","Vi naar det {}, hvis vi skynder os.","We'll possibly make it if we hurry.","Indicates conditional possibility.","B1");
-s("Holdning","muligvis","Vi er {} noedt til at udskyde turen.","We possibly have to postpone the trip.","Marks a tentative necessity.","B1");
-s("Holdning","formodentlig","Toget er {} forsinket paa grund af sneen.","The train is presumably delayed because of the snow.","'formodentlig' = presumably; a fairly likely guess.","B2");
-s("Holdning","formodentlig","Hun er {} hjemme nu.","She's presumably home now.","Marks a reasonable assumption.","B2");
-s("Holdning","formodentlig","Det bliver {} dyrere naeste aar.","It'll presumably be more expensive next year.","Expresses a likely expectation.","B2");
-s("Holdning","formodentlig","Butikken er {} lukket paa denne tid.","The shop is presumably closed at this hour.","A reasonable guess.","B2");
-s("Holdning","formentlig","Pakken kommer {} i morgen.","The parcel will probably arrive tomorrow.","'formentlig' = probably; likely outcome.","B1");
-s("Holdning","formentlig","Han har {} glemt aftalen.","He has probably forgotten the appointment.","Marks a probable explanation.","B1");
-s("Holdning","formentlig","Vi er {} fremme ved middagstid.","We'll probably arrive around noon.","Indicates a likely estimate.","B1");
-s("Holdning","formentlig","Vejret bliver {} bedre i weekenden.","The weather will probably be better at the weekend.","Marks a probable outcome.","B1");
-s("Holdning","sandsynligvis","Det bliver {} en god hoest i aar.","It'll most likely be a good harvest this year.","'sandsynligvis' = most likely (fairly sure).","B2");
-s("Holdning","sandsynligvis","Hun vinder {} valget.","She'll most likely win the election.","Marks high probability.","B2");
-s("Holdning","sandsynligvis","Vi flytter {} til sommer.","We'll most likely move in the summer.","Expresses a confident expectation.","B2");
-s("Holdning","sandsynligvis","Projektet bliver {} forlaenget.","The project will most likely be extended.","Marks a strong likelihood.","B2");
-s("Holdning","omsider","Efter en lang rejse var vi {} fremme.","After a long journey we finally arrived.","'omsider' = finally/at last (after a long wait; inversion).","B2");
-s("Holdning","omsider","Vi ventede i timevis, og {} kom svaret.","We waited for hours, and at last the answer came.","Marks relief after delay.","B2");
-s("Holdning","omsider","{} forstod han, hvad der var sket.","At last he understood what had happened.","Conveys a long-awaited result.","B2");
-s("Holdning","omsider","Efter mange forsoeg lykkedes det {}.","After many attempts it finally succeeded.","Marks success after a long effort.","B2");
+s("Holdning","selvfoelgelig","{} hjaelper jeg dig med flytningen.","Of course I'll help you with the move.","»Selvfølgelig« udtrykker, at noget er indlysende.","A2");
+s("Holdning","selvfoelgelig","Du maa {} laane min bil.","Of course you may borrow my car.","»Selvfølgelig« udtrykker, at noget er indlysende.","A2");
+s("Holdning","selvfoelgelig","{} var hun ked af det efter tabet.","Of course she was sad after the loss.","»Selvfølgelig« udtrykker, at noget er indlysende.","A2");
+s("Holdning","selvfoelgelig","{} kommer jeg til din fest.","Of course I'll come to your party.","»Selvfølgelig« udtrykker, at noget er indlysende.","A2");
+s("Holdning","naturligvis","{} betaler vi for skaden.","Naturally we'll pay for the damage.","»Naturligvis« udtrykker, at noget er en selvfølge.","A2");
+s("Holdning","naturligvis","Han kom {} for sent igen.","Naturally he was late again.","»Naturligvis« udtrykker, at noget er en selvfølge.","A2");
+s("Holdning","naturligvis","Du er {} velkommen til festen.","You're naturally welcome at the party.","»Naturligvis« udtrykker, at noget er en selvfølge.","A2");
+s("Holdning","naturligvis","Hun fik {} ret til sidst.","Naturally she turned out to be right in the end.","»Naturligvis« udtrykker, at noget er en selvfølge.","A2");
+s("Holdning","heldigvis","{} kom hjaelpen hurtigt frem.","Fortunately help arrived quickly.","»Heldigvis« udtrykker lettelse over noget.","A2");
+s("Holdning","heldigvis","Bilen broed sammen, men {} var vi taet paa.","The car broke down, but fortunately we were close by.","»Heldigvis« udtrykker lettelse over noget.","A2");
+s("Holdning","heldigvis","{} var der ingen, der kom til skade.","Fortunately no one was hurt.","»Heldigvis« udtrykker lettelse over noget.","A2");
+s("Holdning","heldigvis","Vi for vild, men {} havde vi et kort.","We got lost, but fortunately we had a map.","»Heldigvis« udtrykker lettelse over noget.","A2");
+s("Holdning","uheldigvis","{} mistede vi det sidste tog.","Unfortunately we missed the last train.","»Uheldigvis« udtrykker beklagelse over noget.","A2");
+s("Holdning","uheldigvis","Planen var god, men {} regnede det.","The plan was good, but unfortunately it rained.","»Uheldigvis« udtrykker beklagelse over noget.","A2");
+s("Holdning","uheldigvis","{} var butikken allerede lukket.","Unfortunately the shop was already closed.","»Uheldigvis« udtrykker beklagelse over noget.","A2");
+s("Holdning","uheldigvis","{} gik computeren ned midt i arbejdet.","Unfortunately the computer crashed in the middle of the work.","»Uheldigvis« udtrykker beklagelse over noget.","A2");
+s("Holdning","desvaerre","{} kan jeg ikke naa moedet i dag.","Unfortunately I can't make the meeting today.","»Desværre« udtrykker beklagelse.","A2");
+s("Holdning","desvaerre","Vi proevede, men {} lykkedes det ikke.","We tried, but unfortunately it didn't work.","»Desværre« udtrykker beklagelse.","A2");
+s("Holdning","desvaerre","Billetterne er {} udsolgt.","The tickets are unfortunately sold out.","»Desværre« udtrykker beklagelse.","A2");
+s("Holdning","desvaerre","{} maa jeg melde afbud i aften.","Unfortunately I have to cancel tonight.","»Desværre« udtrykker beklagelse.","A2");
+s("Holdning","forhaabentlig","{} bliver vejret bedre i morgen.","Hopefully the weather will be better tomorrow.","»Forhåbentlig« udtrykker et håb.","A2");
+s("Holdning","forhaabentlig","Vi har oevet meget, saa {} gaar det godt.","We've practised a lot, so hopefully it'll go well.","»Forhåbentlig« udtrykker et håb.","A2");
+s("Holdning","forhaabentlig","{} husker han at ringe.","Hopefully he remembers to call.","»Forhåbentlig« udtrykker et håb.","A2");
+s("Holdning","forhaabentlig","{} naar vi toget, hvis vi skynder os.","Hopefully we'll catch the train if we hurry.","»Forhåbentlig« udtrykker et håb.","A2");
+s("Holdning","maaske","{} kommer jeg til festen, jeg ved det ikke endnu.","Maybe I'll come to the party, I don't know yet.","»Måske« udtrykker usikkerhed.","A2");
+s("Holdning","maaske","Det er skyet; {} regner det senere.","It's cloudy; maybe it'll rain later.","»Måske« udtrykker usikkerhed.","A2");
+s("Holdning","maaske","{} har du ret i det.","Maybe you're right about that.","»Måske« udtrykker usikkerhed.","A2");
+s("Holdning","maaske","{} ringer hun senere i dag.","Maybe she'll call later today.","»Måske« udtrykker usikkerhed.","A2");
+s("Holdning","muligvis","Moedet bliver {} udskudt til naeste uge.","The meeting will possibly be postponed to next week.","»Muligvis« udtrykker, at noget er muligt.","B1");
+s("Holdning","muligvis","Han er {} allerede taget hjem.","He has possibly already gone home.","»Muligvis« udtrykker, at noget er muligt.","B1");
+s("Holdning","muligvis","Vi naar det {}, hvis vi skynder os.","We'll possibly make it if we hurry.","»Muligvis« udtrykker, at noget er muligt.","B1");
+s("Holdning","muligvis","Vi er {} noedt til at udskyde turen.","We possibly have to postpone the trip.","»Muligvis« udtrykker, at noget er muligt.","B1");
+s("Holdning","formodentlig","Toget er {} forsinket paa grund af sneen.","The train is presumably delayed because of the snow.","»Formodentlig« udtrykker en antagelse.","B2");
+s("Holdning","formodentlig","Hun er {} hjemme nu.","She's presumably home now.","»Formodentlig« udtrykker en antagelse.","B2");
+s("Holdning","formodentlig","Det bliver {} dyrere naeste aar.","It'll presumably be more expensive next year.","»Formodentlig« udtrykker en antagelse.","B2");
+s("Holdning","formodentlig","Butikken er {} lukket paa denne tid.","The shop is presumably closed at this hour.","»Formodentlig« udtrykker en antagelse.","B2");
+s("Holdning","formentlig","Pakken kommer {} i morgen.","The parcel will probably arrive tomorrow.","»Formentlig« udtrykker en antagelse.","B1");
+s("Holdning","formentlig","Han har {} glemt aftalen.","He has probably forgotten the appointment.","»Formentlig« udtrykker en antagelse.","B1");
+s("Holdning","formentlig","Vi er {} fremme ved middagstid.","We'll probably arrive around noon.","»Formentlig« udtrykker en antagelse.","B1");
+s("Holdning","formentlig","Vejret bliver {} bedre i weekenden.","The weather will probably be better at the weekend.","»Formentlig« udtrykker en antagelse.","B1");
+s("Holdning","sandsynligvis","Det bliver {} en god hoest i aar.","It'll most likely be a good harvest this year.","»Sandsynligvis« udtrykker, at noget er sandsynligt.","B2");
+s("Holdning","sandsynligvis","Hun vinder {} valget.","She'll most likely win the election.","»Sandsynligvis« udtrykker, at noget er sandsynligt.","B2");
+s("Holdning","sandsynligvis","Vi flytter {} til sommer.","We'll most likely move in the summer.","»Sandsynligvis« udtrykker, at noget er sandsynligt.","B2");
+s("Holdning","sandsynligvis","Projektet bliver {} forlaenget.","The project will most likely be extended.","»Sandsynligvis« udtrykker, at noget er sandsynligt.","B2");
+s("Holdning","omsider","Efter en lang rejse var vi {} fremme.","After a long journey we finally arrived.","»Omsider« udtrykker, at noget sker efter lang tids ventetid.","B2");
+s("Holdning","omsider","Vi ventede i timevis, og {} kom svaret.","We waited for hours, and at last the answer came.","»Omsider« udtrykker, at noget sker efter lang tids ventetid.","B2");
+s("Holdning","omsider","{} forstod han, hvad der var sket.","At last he understood what had happened.","»Omsider« udtrykker, at noget sker efter lang tids ventetid.","B2");
+s("Holdning","omsider","Efter mange forsoeg lykkedes det {}.","After many attempts it finally succeeded.","»Omsider« udtrykker, at noget sker efter lang tids ventetid.","B2");
 // ---- OPSUMMERING ----
-s("Opsummering","alt i alt","Der var smaa fejl, men {} var dagen god.","There were small mistakes, but all in all the day was good.","'alt i alt' = all in all; sums up (inversion).","B2");
-s("Opsummering","alt i alt","{} var rejsen pengene vaerd.","All in all the trip was worth the money.","Weighs everything together.","B2");
-s("Opsummering","alt i alt","{} klarede holdet sig flot i turneringen.","All in all the team did well in the tournament.","Gives an overall verdict.","B2");
-s("Opsummering","alt i alt","{} var det en laererig oplevelse.","All in all it was an instructive experience.","Sums up the whole thing.","B2");
-s("Opsummering","kort sagt","{} var festen en stor succes.","In short, the party was a great success.","'kort sagt' = in short; condenses the point (inversion).","B2");
-s("Opsummering","kort sagt","Han kom for sent, glemte talen og tabte papirerne; {} gik det galt.","He was late, forgot the speech and dropped the papers; in short, it went wrong.","Sums up briefly.","B2");
-s("Opsummering","kort sagt","{} boer vi vaelge den billigste loesning.","In short, we should choose the cheapest solution.","Compresses an argument.","B2");
-s("Opsummering","kort sagt","{} kan vi ikke naa det til tiden.","In short, we can't make it on time.","Condenses to one point.","B2");
-s("Opsummering","sammenfattende kan man sige","{}, at projektet var en succes.","Summing up, one can say that the project was a success.","'sammenfattende kan man sige' = summing up, one can say.","C1");
-s("Opsummering","sammenfattende kan man sige","{}, at vi naaede de fleste maal.","Summing up, one can say that we reached most goals.","Formal closing summary.","C1");
-s("Opsummering","sammenfattende kan man sige","{}, at indsatsen var det vaerd.","Summing up, one can say the effort was worth it.","Wraps up the discussion.","C1");
-s("Opsummering","sammenfattende kan man sige","{}, at samarbejdet fungerede godt.","Summing up, one can say the collaboration worked well.","Concludes with a summary.","C1");
-s("Opsummering","afslutningsvis","{} vil jeg takke for jeres opmaerksomhed.","In conclusion, I'd like to thank you for your attention.","'afslutningsvis' = in conclusion (inversion).","C1");
-s("Opsummering","afslutningsvis","{} skal det naevnes, at alle bidrog.","In conclusion, it should be noted that everyone contributed.","Marks the closing point.","C1");
-s("Opsummering","afslutningsvis","{} haaber jeg, vi ses igen snart.","In conclusion, I hope we'll meet again soon.","Ends a speech or text.","C1");
-s("Opsummering","afslutningsvis","{} vil jeg opfordre jer til at stemme.","In conclusion, I'd encourage you to vote.","Closes with a call to action.","C1");
-s("Opsummering","til slut","Vi spiste, vi dansede, og {} sang vi sammen.","We ate, we danced, and finally we sang together.","'til slut' = finally/at the end (inversion).","B1");
-s("Opsummering","til slut","{} vil jeg oenske jer en god rejse.","Finally, I wish you a good journey.","Closes a sequence or talk.","B1");
-s("Opsummering","til slut","{} ryddede vi op og slukkede lyset.","Finally we tidied up and turned off the light.","The last step at the end.","B1");
-s("Opsummering","til slut","{} takkede vi af og gik hjem.","Finally we said goodbye and went home.","Marks the very last action.","B1");
+s("Opsummering","alt i alt","Der var smaa fejl, men {} var dagen god.","There were small mistakes, but all in all the day was good.","»Alt i alt« opsummerer helheden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","alt i alt","{} var rejsen pengene vaerd.","All in all the trip was worth the money.","»Alt i alt« opsummerer helheden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","alt i alt","{} klarede holdet sig flot i turneringen.","All in all the team did well in the tournament.","»Alt i alt« opsummerer helheden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","alt i alt","{} var det en laererig oplevelse.","All in all it was an instructive experience.","»Alt i alt« opsummerer helheden. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","kort sagt","{} var festen en stor succes.","In short, the party was a great success.","»Kort sagt« opsummerer kort. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","kort sagt","Han kom for sent, glemte talen og tabte papirerne; {} gik det galt.","He was late, forgot the speech and dropped the papers; in short, it went wrong.","»Kort sagt« opsummerer kort. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","kort sagt","{} boer vi vaelge den billigste loesning.","In short, we should choose the cheapest solution.","»Kort sagt« opsummerer kort. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","kort sagt","{} kan vi ikke naa det til tiden.","In short, we can't make it on time.","»Kort sagt« opsummerer kort. Står ordet først i sætningen, kommer verbet før grundleddet.","B2");
+s("Opsummering","sammenfattende kan man sige","{}, at projektet var en succes.","Summing up, one can say that the project was a success.","»Sammenfattende kan man sige« indleder en samlet konklusion og er formelt.","C1");
+s("Opsummering","sammenfattende kan man sige","{}, at vi naaede de fleste maal.","Summing up, one can say that we reached most goals.","»Sammenfattende kan man sige« indleder en samlet konklusion og er formelt.","C1");
+s("Opsummering","sammenfattende kan man sige","{}, at indsatsen var det vaerd.","Summing up, one can say the effort was worth it.","»Sammenfattende kan man sige« indleder en samlet konklusion og er formelt.","C1");
+s("Opsummering","sammenfattende kan man sige","{}, at samarbejdet fungerede godt.","Summing up, one can say the collaboration worked well.","»Sammenfattende kan man sige« indleder en samlet konklusion og er formelt.","C1");
+s("Opsummering","afslutningsvis","{} vil jeg takke for jeres opmaerksomhed.","In conclusion, I'd like to thank you for your attention.","»Afslutningsvis« markerer afslutningen på en fremstilling. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Opsummering","afslutningsvis","{} skal det naevnes, at alle bidrog.","In conclusion, it should be noted that everyone contributed.","»Afslutningsvis« markerer afslutningen på en fremstilling. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Opsummering","afslutningsvis","{} haaber jeg, vi ses igen snart.","In conclusion, I hope we'll meet again soon.","»Afslutningsvis« markerer afslutningen på en fremstilling. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Opsummering","afslutningsvis","{} vil jeg opfordre jer til at stemme.","In conclusion, I'd encourage you to vote.","»Afslutningsvis« markerer afslutningen på en fremstilling. Står ordet først i sætningen, kommer verbet før grundleddet.","C1");
+s("Opsummering","til slut","Vi spiste, vi dansede, og {} sang vi sammen.","We ate, we danced, and finally we sang together.","»Til slut« markerer afslutningen. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Opsummering","til slut","{} vil jeg oenske jer en god rejse.","Finally, I wish you a good journey.","»Til slut« markerer afslutningen. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Opsummering","til slut","{} ryddede vi op og slukkede lyset.","Finally we tidied up and turned off the light.","»Til slut« markerer afslutningen. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
+s("Opsummering","til slut","{} takkede vi af og gik hjem.","Finally we said goodbye and went home.","»Til slut« markerer afslutningen. Står ordet først i sætningen, kommer verbet før grundleddet.","B1");
 /* ============================================================
    BUILD  -  convert ASCII -> proper Danish, group, run game
    ============================================================ */

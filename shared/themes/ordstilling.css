@@ -145,7 +145,7 @@ html.sd-page .answer {
   min-height: 72px; gap: 8px; padding: 12px; border: 0; border-radius: 0; margin: 4px 4px 20px;
   background: var(--sd-panel-2); box-shadow: var(--sd-box), inset 4px 4px 0 rgba(16,16,16,.1);
 }
-html.sd-page .answer.empty::before { content: "Tap the words below in the correct order…"; color: var(--sd-text-soft); font-style: normal; font-size: 15px; }
+html.sd-page .answer.empty::before { content: "Tryk på ordene nedenfor i den rigtige rækkefølge …"; color: var(--sd-text-soft); font-style: normal; font-size: 15px; }
 html.sd-page .answer.ok { background: #CFF1C9; box-shadow: var(--sd-box-ok); }
 html.sd-page .answer.no { background: #FFD0DE; box-shadow: var(--sd-box-bad); }
 html.sd-page .answer.ok::after, html.sd-page .answer.no::after {

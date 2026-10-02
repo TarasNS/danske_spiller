@@ -1,9 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dansk Mester — Learn Danish</title>
+<title>Dansk Mester — lær hverdagsvendinger og verber med præposition | Sjovt Dansk</title>
+<meta name="description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser for begyndere på A1–A2-niveau." />
+<meta property="og:title" content="Dansk Mester — lær hverdagsvendinger og verber med præposition | Sjovt Dansk" />
+<meta property="og:description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser for begyndere på A1–A2-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/danske-phraser/dansk-mester.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/danske-phraser/dansk-mester.html" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Dansk Mester",
+  "description": "Lær danske hverdagsvendinger og verber med præposition.",
+  "url": "https://sjovtdansk.dk/danske-phraser/dansk-mester.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": ["Danske fraser", "Hverdagsdansk", "Vendinger"],
+  "educationalLevel": "A1 A2",
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Dansk Mester",
+      "item": "https://sjovtdansk.dk/danske-phraser/dansk-mester.html"
+    }
+  ]
+}
+</script>
 <style>
 :root{
   --bg:#0f1626;
@@ -290,196 +334,196 @@ body{
 ========================================================= */
 const DATA = {
   verbs:{
-    label:"Verb Combinations", icon:"🔗",
-    blurb:"verb + preposition expressions",
+    label:"Verbalkombinationer", icon:"🔗",
+    blurb:"verber med præposition",
     categories:[
-      {name:"Daily Actions", icon:"☀️", items:[
-        {da:"stå op", en:"get up", cefr:"A1", note:"Literally 'stand up' — used for getting out of bed or rising in the morning."},
-        {da:"gå ud", en:"go out", cefr:"A1", note:"Literally 'walk out' — used for leaving the house, e.g. to socialize."},
-        {da:"komme ind", en:"come in", cefr:"A1", note:"Literally 'come in' — invite someone inside or describe entering a place."},
-        {da:"komme tilbage", en:"come back", cefr:"A1", note:"Literally 'come back' — return to a place after being away."},
-        {da:"tage af sted", en:"leave", cefr:"A2", note:"'Tage af sted' means to set off or depart — often used about starting a trip."},
-        {da:"holde op", en:"stop", cefr:"A2", note:"Literally 'hold up' — used to tell someone to stop doing something."},
-        {da:"blive ved", en:"continue", cefr:"A2", note:"Literally 'stay by/with' — means to keep going or persist with an action."},
-        {da:"gå i gang", en:"get started", cefr:"A2", note:"Literally 'go in motion' — a common phrase for starting a task or project."},
+      {name:"Dagligdagen", icon:"☀️", items:[
+        {da:"stå op", en:"get up", cefr:"A1", note:"Bruges om at komme ud af sengen om morgenen."},
+        {da:"gå ud", en:"go out", cefr:"A1", note:"Bruges om at forlade hjemmet, fx for at være sammen med andre."},
+        {da:"komme ind", en:"come in", cefr:"A1", note:"Bruges både om at træde ind og om at bede nogen komme indenfor."},
+        {da:"komme tilbage", en:"come back", cefr:"A1", note:"At vende tilbage til et sted, man har været væk fra."},
+        {da:"tage af sted", en:"leave", cefr:"A2", note:"At drage afsted – ofte når man begynder på en tur."},
+        {da:"holde op", en:"stop", cefr:"A2", note:"Bruges til at få nogen til at stoppe med noget: »Hold op!«"},
+        {da:"blive ved", en:"continue", cefr:"A2", note:"At fortsætte med noget og ikke give op."},
+        {da:"gå i gang", en:"get started", cefr:"A2", note:"Det almindelige udtryk for at begynde på en opgave eller et projekt."},
       ]},
-      {name:"Communication", icon:"💬", items:[
-        {da:"tale om", en:"talk about (formally / discuss)", cefr:"A2", note:"More formal than 'snakke om' — used for discussing a topic seriously."},
-        {da:"snakke om", en:"chat about (casually)", cefr:"A1", note:"The everyday, casual version of talking about something with friends."},
-        {da:"spørge om", en:"ask about", cefr:"A1", note:"Used when asking a question concerning a specific topic or thing."},
-        {da:"bede om", en:"ask for", cefr:"A2", note:"Used when requesting something, not just asking a question — e.g. asking for help."},
-        {da:"høre om", en:"hear about", cefr:"A2", note:"Used when you've heard news or information about something."},
-        {da:"komme med", en:"come along / suggest", cefr:"B1", note:"Tricky double meaning — can mean joining someone or contributing an idea/suggestion."},
-        {da:"tænke på", en:"think about", cefr:"A2", note:"Used for having someone or something in your thoughts."},
-        {da:"tænke over", en:"think over", cefr:"B1", note:"More deliberate than 'tænke på' — means to carefully consider or reflect on something."},
+      {name:"Kommunikation", icon:"💬", items:[
+        {da:"tale om", en:"talk about (formally / discuss)", cefr:"A2", note:"Lidt mere formelt end »snakke om« – bruges, når man drøfter et emne alvorligt."},
+        {da:"snakke om", en:"chat about (casually)", cefr:"A1", note:"Hverdagsudgaven, når man taler løst om noget med venner."},
+        {da:"spørge om", en:"ask about", cefr:"A1", note:"Bruges, når man stiller et spørgsmål om et bestemt emne eller en bestemt ting."},
+        {da:"bede om", en:"ask for", cefr:"A2", note:"Bruges, når man anmoder om noget, fx hjælp – ikke bare stiller et spørgsmål."},
+        {da:"høre om", en:"hear about", cefr:"A2", note:"Bruges, når man har fået nyheder eller oplysninger om noget."},
+        {da:"komme med", en:"come along / suggest", cefr:"B1", note:"Har to betydninger: at tage med nogen eller at byde ind med en idé eller et forslag."},
+        {da:"tænke på", en:"think about", cefr:"A2", note:"At have nogen eller noget i tankerne."},
+        {da:"tænke over", en:"think over", cefr:"B1", note:"Mere eftertænksomt end »tænke på« – at overveje noget grundigt."},
       ]},
-      {name:"Work & Business", icon:"💼", items:[
-        {da:"arbejde med", en:"work with", cefr:"A1", note:"Used for working with a person, tool, or project."},
-        {da:"begynde på", en:"start", cefr:"A2", note:"Used when starting a specific task — note the preposition 'på', not 'med'."},
-        {da:"fortsætte med", en:"continue with", cefr:"A2", note:"Used for continuing an activity that's already underway."},
-        {da:"deltage i", en:"participate in", cefr:"B1", note:"A slightly formal verb for taking part in an event, meeting, or activity."},
-        {da:"lykkes med", en:"succeed in", cefr:"B1", note:"Used impersonally in Danish — e.g. 'det lykkedes mig med' (I succeeded in)."},
-        {da:"hjælpe med", en:"help with", cefr:"A1", note:"Used for helping someone with a task — pairs with 'med' not 'til'."},
-        {da:"sørge for", en:"make sure", cefr:"B1", note:"Means to ensure or take care that something happens — common in workplace Danish."},
-        {da:"afhænge af", en:"depend on", cefr:"B1", note:"Used for things that are conditional on something else, e.g. 'det afhænger af vejret'."},
+      {name:"Arbejde og erhverv", icon:"💼", items:[
+        {da:"arbejde med", en:"work with", cefr:"A1", note:"Bruges om at arbejde sammen med en person eller med et værktøj eller projekt."},
+        {da:"begynde på", en:"start", cefr:"A2", note:"Bruges om at gå i gang med en bestemt opgave – husk præpositionen »på«, ikke »med«."},
+        {da:"fortsætte med", en:"continue with", cefr:"A2", note:"Bruges om at føre noget videre, som allerede er i gang."},
+        {da:"deltage i", en:"participate in", cefr:"B1", note:"Lidt formelt verbum for at tage del i en begivenhed, et møde eller en aktivitet."},
+        {da:"lykkes med", en:"succeed in", cefr:"B1", note:"Bruges upersonligt: »Det lykkedes mig at …« eller »Det lykkedes med projektet.«"},
+        {da:"hjælpe med", en:"help with", cefr:"A1", note:"Bruges om at hjælpe nogen med en opgave – med »med«, ikke »til«."},
+        {da:"sørge for", en:"make sure", cefr:"B1", note:"At sikre sig, at noget bliver gjort – meget almindeligt på arbejdspladsen."},
+        {da:"afhænge af", en:"depend on", cefr:"B1", note:"Bruges om noget, der afhænger af noget andet, fx »Det afhænger af vejret«."},
       ]},
-      {name:"Feelings & Thinking", icon:"💭", items:[
-        {da:"være interesseret i", en:"be interested in", cefr:"A2", note:"Used to express interest in a topic, hobby, or person."},
-        {da:"være god til", en:"be good at", cefr:"A1", note:"Used for skills or talents — note 'til', not 'i' or 'med'."},
-        {da:"være dårlig til", en:"be bad at", cefr:"A1", note:"The opposite of 'være god til' — same preposition pattern with 'til'."},
-        {da:"være bange for", en:"be afraid of", cefr:"A2", note:"Used to describe fear of something specific, with preposition 'for'."},
-        {da:"være glad for", en:"be happy about", cefr:"A1", note:"A very common everyday phrase for expressing happiness about something."},
-        {da:"være træt af", en:"be tired of", cefr:"A2", note:"Used for being fed up with something, not physically tired — note 'af'."},
-        {da:"tro på", en:"believe in", cefr:"A2", note:"Used for believing in an idea, person, or possibility."},
-        {da:"drømme om", en:"dream about", cefr:"A2", note:"Used both for literal dreams while sleeping and for hopes/aspirations."},
-        {da:"stole på", en:"trust", cefr:"B1", note:"Means to rely on or have confidence in someone or something."},
+      {name:"Følelser og tanker", icon:"💭", items:[
+        {da:"være interesseret i", en:"be interested in", cefr:"A2", note:"Bruges om interesse for et emne, en hobby eller et menneske."},
+        {da:"være god til", en:"be good at", cefr:"A1", note:"Bruges om evner og talenter – husk »til«, ikke »i« eller »med«."},
+        {da:"være dårlig til", en:"be bad at", cefr:"A1", note:"Det modsatte af »være god til« – samme præposition »til«."},
+        {da:"være bange for", en:"be afraid of", cefr:"A2", note:"Bruges om frygt for noget bestemt, med præpositionen »for«."},
+        {da:"være glad for", en:"be happy about", cefr:"A1", note:"Et meget almindeligt udtryk for at være glad for noget."},
+        {da:"være træt af", en:"be tired of", cefr:"A2", note:"Bruges om at have fået nok af noget – ikke om at være fysisk træt. Husk »af«."},
+        {da:"tro på", en:"believe in", cefr:"A2", note:"At have tillid til en idé, en person eller en mulighed."},
+        {da:"drømme om", en:"dream about", cefr:"A2", note:"Bruges både om rigtige drømme, når man sover, og om håb og forhåbninger."},
+        {da:"stole på", en:"trust", cefr:"B1", note:"At kunne regne med nogen eller have tillid til nogen eller noget."},
       ]},
-      {name:"Social Life", icon:"🤝", items:[
-        {da:"være med", en:"participate", cefr:"A1", note:"A simple, very common phrase meaning to join in or be part of something."},
-        {da:"tage med", en:"bring along", cefr:"A2", note:"Used when bringing someone or something with you."},
-        {da:"gå med", en:"join", cefr:"A2", note:"Literally 'walk with' — used for joining someone, an activity, or agreeing to a plan."},
-        {da:"være enig i", en:"agree with", cefr:"B1", note:"Used for agreeing with an opinion or statement — note 'i', not 'med'."},
-        {da:"være uenig i", en:"disagree with", cefr:"B1", note:"The negative of 'være enig i' — same preposition pattern."},
-        {da:"passe på", en:"take care of", cefr:"A2", note:"Used both as 'watch out!' and as looking after someone or something."},
-        {da:"tage sig af", en:"take care of", cefr:"B1", note:"A more reflexive, slightly formal way to say take responsibility for someone/something."},
-        {da:"høre til", en:"belong to", cefr:"B2", note:"Used for belonging to a group or category — more abstract than physical possession."},
+      {name:"Socialt liv", icon:"🤝", items:[
+        {da:"være med", en:"participate", cefr:"A1", note:"Et enkelt og meget almindeligt udtryk for at deltage i noget."},
+        {da:"tage med", en:"bring along", cefr:"A2", note:"Bruges, når man tager nogen eller noget med sig."},
+        {da:"gå med", en:"join", cefr:"A2", note:"Bruges om at følge med nogen, deltage i en aktivitet eller sige ja til en plan."},
+        {da:"være enig i", en:"agree with", cefr:"B1", note:"Bruges, når man er enig i en holdning eller et udsagn – husk »i«, ikke »med«."},
+        {da:"være uenig i", en:"disagree with", cefr:"B1", note:"Det modsatte af »være enig i« – samme præposition."},
+        {da:"passe på", en:"take care of", cefr:"A2", note:"Bruges både som advarsel (»Pas på!«) og om at tage sig af nogen eller noget."},
+        {da:"tage sig af", en:"take care of", cefr:"B1", note:"En lidt mere formel måde at sige, at man tager ansvar for nogen eller noget."},
+        {da:"høre til", en:"belong to", cefr:"B2", note:"Bruges om at tilhøre en gruppe eller kategori – mere abstrakt end at eje noget."},
       ]},
-      {name:"Advanced Mixed Review", icon:"🎓", items:[
-        {da:"vente på", en:"wait for", cefr:"A2", note:"Used for waiting for a person, event, or thing — note 'på'."},
-        {da:"lede efter", en:"look for", cefr:"A2", note:"Used for actively searching for something you've lost or need."},
-        {da:"søge efter", en:"search for", cefr:"B1", note:"A more formal synonym of 'lede efter', often used for jobs or information."},
-        {da:"kigge på", en:"look at", cefr:"A1", note:"A casual, everyday way to say 'look at' something."},
-        {da:"se på", en:"look at / watch", cefr:"A1", note:"Similar to 'kigge på' but also used for watching, e.g. TV or a situation."},
-        {da:"finde ud af", en:"figure out", cefr:"B1", note:"A very common three-part verb meaning to discover or work something out."},
-        {da:"gå efter", en:"go for", cefr:"B1", note:"Used for pursuing a goal or choosing an option, e.g. 'gå efter drømmen'."},
-        {da:"komme over", en:"get over", cefr:"B2", note:"Used figuratively for overcoming a hardship, illness, or difficult emotion."},
-        {da:"slippe af med", en:"get rid of", cefr:"B2", note:"A three-part idiomatic verb for discarding or freeing yourself of something."},
+      {name:"Blandet repetition for øvede", icon:"🎓", items:[
+        {da:"vente på", en:"wait for", cefr:"A2", note:"Bruges om at vente på en person, en begivenhed eller en ting – husk »på«."},
+        {da:"lede efter", en:"look for", cefr:"A2", note:"Bruges om aktivt at lede efter noget, man har mistet eller har brug for."},
+        {da:"søge efter", en:"search for", cefr:"B1", note:"Mere formelt end »lede efter« – bruges ofte om job eller oplysninger."},
+        {da:"kigge på", en:"look at", cefr:"A1", note:"Den afslappede hverdagsudgave af »se på«."},
+        {da:"se på", en:"look at / watch", cefr:"A1", note:"Ligner »kigge på«, men bruges også om at følge med i fx tv eller en situation."},
+        {da:"finde ud af", en:"figure out", cefr:"B1", note:"Et meget almindeligt udtryk, hvor tre småord hører sammen: at opdage eller regne noget ud."},
+        {da:"gå efter", en:"go for", cefr:"B1", note:"Bruges om at jagte et mål eller vælge en bestemt mulighed, fx »gå efter drømmen«."},
+        {da:"komme over", en:"get over", cefr:"B2", note:"Bruges overført om at komme sig over en modgang, en sygdom eller en svær følelse."},
+        {da:"slippe af med", en:"get rid of", cefr:"B2", note:"Et idiomatisk udtryk med tre dele: at blive fri for noget eller skille sig af med det."},
       ]},
     ]
   },
   phrases:{
-    label:"Idiomatic Expressions & Phrases", icon:"🗣️",
-    blurb:"idioms & fixed everyday phrases",
+    label:"Vendinger og faste udtryk", icon:"🗣️",
+    blurb:"idiomer og faste hverdagsudtryk",
     categories:[
-      {name:"Everyday Reactions", icon:"⚡", items:[
-        {da:"Det kan godt være", en:"That may be true", cefr:"A2", note:"A non-committal response that softly acknowledges a possibility without fully agreeing."},
-        {da:"Det kommer an på", en:"It depends", cefr:"A2", note:"One of the most common hedging phrases — always followed by hvad/hvem/om to specify what it depends on."},
-        {da:"Det går nok", en:"It'll probably be okay", cefr:"A2", note:"A characteristically Danish reassurance — calm optimism with a hint of 'don't worry about it'."},
-        {da:"Det er lige meget", en:"It doesn't matter", cefr:"A1", note:"Used constantly for 'never mind' or 'it makes no difference' — a must-know dismissal phrase."},
-        {da:"Det er i orden", en:"That's okay", cefr:"A1", note:"The go-to phrase for signaling acceptance or giving permission — equivalent to 'that's fine'."},
-        {da:"Det lyder godt", en:"Sounds good", cefr:"A1", note:"A friendly affirmation used to agree to a plan or respond positively to a suggestion."},
-        {da:"Det giver mening", en:"That makes sense", cefr:"A2", note:"Used to confirm you've understood an explanation — 'giver mening' literally means 'gives meaning'."},
-        {da:"Det er klart", en:"Of course", cefr:"A2", note:"A confident affirmation meaning 'obviously' or 'naturally' — similar to French 'bien sûr'."},
-        {da:"Det er fair nok", en:"Fair enough", cefr:"A2", note:"Borrowed from English but completely naturalised in Danish — signals reluctant acceptance."},
-        {da:"Helt sikkert", en:"Definitely", cefr:"A1", note:"Literally 'completely certain' — a strong, emphatic yes used in both formal and casual speech."},
+      {name:"Hverdagsreaktioner", icon:"⚡", items:[
+        {da:"Det kan godt være", en:"That may be true", cefr:"A2", note:"Et uforpligtende svar, der høfligt anerkender en mulighed uden helt at give sig."},
+        {da:"Det kommer an på", en:"It depends", cefr:"A2", note:"Et af de mest almindelige forbehold – efterfølges af hvad, hvem eller om."},
+        {da:"Det går nok", en:"It'll probably be okay", cefr:"A2", note:"En typisk dansk beroligelse: rolig optimisme med en undertone af »det skal nok gå«."},
+        {da:"Det er lige meget", en:"It doesn't matter", cefr:"A1", note:"Bruges hele tiden for »lad det være« eller »det gør ingen forskel«."},
+        {da:"Det er i orden", en:"That's okay", cefr:"A1", note:"Det faste udtryk for at acceptere noget eller give tilladelse."},
+        {da:"Det lyder godt", en:"Sounds good", cefr:"A1", note:"En venlig bekræftelse, når man siger ja til en plan eller et forslag."},
+        {da:"Det giver mening", en:"That makes sense", cefr:"A2", note:"Bruges, når man har forstået en forklaring."},
+        {da:"Det er klart", en:"Of course", cefr:"A2", note:"En sikker bekræftelse: »selvfølgelig« eller »naturligvis«."},
+        {da:"Det er fair nok", en:"Fair enough", cefr:"A2", note:"Lånt fra engelsk, men helt almindeligt på dansk – bruges, når man accepterer noget uden at være begejstret."},
+        {da:"Helt sikkert", en:"Definitely", cefr:"A1", note:"Et stærkt, eftertrykkeligt ja, der bruges både formelt og afslappet."},
       ]},
-      {name:"Agreement & Disagreement", icon:"⚖️", items:[
-        {da:"Det er jeg enig i", en:"I agree", cefr:"A2", note:"Note the preposition 'i' not 'med' — this is the standard structure for expressing agreement in Danish."},
-        {da:"Det er jeg ikke enig i", en:"I disagree", cefr:"A2", note:"The direct negation of 'enig i' — polite and neutral, suitable for professional contexts."},
-        {da:"Du har ret", en:"You're right", cefr:"A1", note:"One of the most basic agreement phrases — 'ret' means 'right' and 'har ret' means 'is correct'."},
-        {da:"Det tror jeg ikke", en:"I don't believe that", cefr:"A2", note:"A soft, personal disagreement — 'tror' expresses belief rather than certainty, keeping it polite."},
-        {da:"Det kan du have ret i", en:"You may be right", cefr:"B1", note:"A diplomatic concession phrase — 'kan' (can/may) softens it into a possibility rather than full agreement."},
-        {da:"Det synes jeg også", en:"I think so too", cefr:"A2", note:"'Synes' expresses opinion rather than factual belief — used for sharing personal views."},
-        {da:"Det synes jeg ikke", en:"I don't think so (in my opinion)", cefr:"A2", note:"The negative of 'synes jeg' — a polite, opinion-based disagreement that doesn't sound blunt."},
-        {da:"Det er jeg med på", en:"I'm on board", cefr:"B1", note:"Literally 'I am with on that' — an informal phrase meaning you're willing to join or support something."},
-        {da:"Det er en god idé", en:"That's a good idea", cefr:"A1", note:"Simple, common affirmation — 'idé' is the Danish spelling of 'idea'."},
-        {da:"Det er ikke så enkelt", en:"It's not that simple", cefr:"B1", note:"Used to push back on an oversimplified proposal or argument — signals complexity diplomatically."},
+      {name:"Enighed og uenighed", icon:"⚖️", items:[
+        {da:"Det er jeg enig i", en:"I agree", cefr:"A2", note:"Læg mærke til »i«, ikke »med« – det er den faste konstruktion, når man er enig."},
+        {da:"Det er jeg ikke enig i", en:"I disagree", cefr:"A2", note:"Den direkte benægtelse af »enig i« – høflig og neutral, også på arbejdet."},
+        {da:"Du har ret", en:"You're right", cefr:"A1", note:"Et af de mest grundlæggende udtryk for enighed – man »har ret«."},
+        {da:"Det tror jeg ikke", en:"I don't believe that", cefr:"A2", note:"En blød, personlig uenighed – »tror« udtrykker en formodning og lyder høfligt."},
+        {da:"Det kan du have ret i", en:"You may be right", cefr:"B1", note:"En diplomatisk indrømmelse – »kan« gør det til en mulighed frem for fuld enighed."},
+        {da:"Det synes jeg også", en:"I think so too", cefr:"A2", note:"»Synes« bruges om meninger og personlige synspunkter."},
+        {da:"Det synes jeg ikke", en:"I don't think so (in my opinion)", cefr:"A2", note:"Det negative modstykke til »synes jeg« – en høflig uenighed, der ikke lyder skarp."},
+        {da:"Det er jeg med på", en:"I'm on board", cefr:"B1", note:"Uformelt udtryk for, at man gerne vil deltage eller bakke op."},
+        {da:"Det er en god idé", en:"That's a good idea", cefr:"A1", note:"En enkel og almindelig bekræftelse."},
+        {da:"Det er ikke så enkelt", en:"It's not that simple", cefr:"B1", note:"Bruges til høfligt at sige, at et forslag forenkler tingene for meget."},
       ]},
-      {name:"Work & Meetings", icon:"📋", items:[
-        {da:"Lad os komme i gang", en:"Let's get started", cefr:"A2", note:"'Komme i gang' is the idiomatic way to say 'get going' — heard at the start of almost every Danish meeting."},
-        {da:"Vi tager den senere", en:"We'll take it later", cefr:"A2", note:"A deferral phrase used to table a topic until a later point in the discussion."},
-        {da:"Vi følger op på det", en:"We'll follow up", cefr:"B1", note:"'Følge op' is a direct calque of English 'follow up' — widely used in professional Danish settings."},
-        {da:"Vi holder kontakten", en:"We'll stay in touch", cefr:"A2", note:"Literally 'we keep the contact' — a warm, professional sign-off for emails and meetings."},
-        {da:"Hvad tænker du", en:"What do you think", cefr:"A2", note:"A simple invitation for input — 'tænker' here means 'think/feel' rather than a factual opinion."},
-        {da:"Det skal vi se på", en:"We'll look into it", cefr:"A2", note:"A polite commitment to investigate something — 'se på' literally means 'look at'."},
-        {da:"Det er på plads", en:"It's sorted", cefr:"B1", note:"Literally 'it is in place' — a very common phrase confirming that something has been arranged or resolved."},
-        {da:"Vi er på rette spor", en:"We're on the right track", cefr:"B1", note:"Literally 'on the right rail' — a motivational phrase used when progress is going in the right direction."},
-        {da:"Det kræver lidt arbejde", en:"It needs some work", cefr:"A2", note:"A diplomatic way to say something is not quite ready — 'kræver' means 'requires'."},
-        {da:"Der er styr på det", en:"It's under control", cefr:"B1", note:"Literally 'there is control on it' — a reassuring phrase used to indicate everything is organised."},
+      {name:"Arbejde og møder", icon:"📋", items:[
+        {da:"Lad os komme i gang", en:"Let's get started", cefr:"A2", note:"Det idiomatiske udtryk for at begynde – høres i starten af næsten alle danske møder."},
+        {da:"Vi tager den senere", en:"We'll take it later", cefr:"A2", note:"Bruges til at udskyde et punkt til senere i drøftelsen."},
+        {da:"Vi følger op på det", en:"We'll follow up", cefr:"B1", note:"»Følge op« bruges meget i det danske arbejdssprog."},
+        {da:"Vi holder kontakten", en:"We'll stay in touch", cefr:"A2", note:"En varm afslutning på mails og møder."},
+        {da:"Hvad tænker du", en:"What do you think", cefr:"A2", note:"En enkel opfordring til at sige sin mening – »tænker« betyder her »mener« eller »føler«."},
+        {da:"Det skal vi se på", en:"We'll look into it", cefr:"A2", note:"Et høfligt løfte om at undersøge sagen – »se på« betyder her »undersøge«."},
+        {da:"Det er på plads", en:"It's sorted", cefr:"B1", note:"Et meget almindeligt udtryk for, at noget er ordnet eller afklaret."},
+        {da:"Vi er på rette spor", en:"We're on the right track", cefr:"B1", note:"Bruges, når tingene går i den rigtige retning."},
+        {da:"Det kræver lidt arbejde", en:"It needs some work", cefr:"A2", note:"En diplomatisk måde at sige, at noget ikke er helt færdigt."},
+        {da:"Der er styr på det", en:"It's under control", cefr:"B1", note:"En beroligende vending, der viser, at alt er under kontrol."},
       ]},
-      {name:"Common Idioms", icon:"🎭", items:[
-        {da:"At have travlt", en:"To be busy", cefr:"A1", note:"'Travlt' comes from 'travlhed' (busyness) — this is the standard phrase for being busy, not 'at være optaget'."},
-        {da:"At være på farten", en:"To be on the go", cefr:"A2", note:"Literally 'to be on the journey' — describes someone who is always moving and active."},
-        {da:"At slå to fluer med ét smæk", en:"Kill two birds with one stone", cefr:"B2", note:"Literally 'hit two flies with one smack' — the Danish version of the English idiom, with flies instead of birds."},
-        {da:"At tage tyren ved hornene", en:"Take the bull by the horns", cefr:"B2", note:"Identical metaphor to English — used when boldly tackling a difficult problem head-on."},
-        {da:"At gå lige til sagen", en:"Get straight to the point", cefr:"B1", note:"Literally 'go directly to the matter' — reflects the Danish directness valued in communication."},
-        {da:"At have ben i næsen", en:"Be determined", cefr:"B2", note:"Literally 'to have bones in the nose' — a colourful idiom meaning someone has backbone and determination."},
-        {da:"At have is i maven", en:"Stay calm under pressure", cefr:"B2", note:"Literally 'to have ice in the stomach' — describes someone who remains cool and composed in stressful situations."},
-        {da:"At være på tynd is", en:"Be on thin ice", cefr:"B1", note:"Shares the same metaphor as English — being in a risky or precarious situation."},
-        {da:"At få kolde fødder", en:"Get cold feet", cefr:"B1", note:"Same idiom as English — to lose nerve or hesitate before committing to something."},
-        {da:"At gå over gevind", en:"Go too far", cefr:"B2", note:"Literally 'to go over thread' (as in a screw stripped of its thread) — means to overstep or exaggerate."},
+      {name:"Almindelige idiomer", icon:"🎭", items:[
+        {da:"At have travlt", en:"To be busy", cefr:"A1", note:"Det almindelige udtryk for at have meget at lave – ikke »at være optaget«."},
+        {da:"At være på farten", en:"To be on the go", cefr:"A2", note:"Bruges om en, der altid er i bevægelse og aktiv."},
+        {da:"At slå to fluer med ét smæk", en:"Kill two birds with one stone", cefr:"B2", note:"Den danske version af idiomet – med fluer, ikke fugle."},
+        {da:"At tage tyren ved hornene", en:"Take the bull by the horns", cefr:"B2", note:"Bruges, når man dristigt går i kødet på et svært problem."},
+        {da:"At gå lige til sagen", en:"Get straight to the point", cefr:"B1", note:"Afspejler den danske direkthed i kommunikationen."},
+        {da:"At have ben i næsen", en:"Be determined", cefr:"B2", note:"Et farverigt idiom om en, der har rygrad og viljestyrke."},
+        {da:"At have is i maven", en:"Stay calm under pressure", cefr:"B2", note:"Beskriver en, der bevarer roen under pres."},
+        {da:"At være på tynd is", en:"Be on thin ice", cefr:"B1", note:"Bruges om at være i en risikabel eller usikker situation."},
+        {da:"At få kolde fødder", en:"Get cold feet", cefr:"B1", note:"At miste modet eller tøve, inden man forpligter sig."},
+        {da:"At gå over gevind", en:"Go too far", cefr:"B2", note:"Ordret »at gå over gevindet« (som en skrue) – bruges om at gå for vidt eller overdrive."},
       ]},
-      {name:"Very Danish Expressions", icon:"🇩🇰", items:[
-        {da:"Pyt", en:"Never mind", cefr:"A1", note:"Uniquely Danish — a one-word expression for brushing off minor annoyances; 'pyt med det' is the fuller form."},
-        {da:"Nå", en:"Oh, I see", cefr:"A1", note:"A versatile interjection expressing realisation, mild surprise, or a conversational transition — very Danish."},
-        {da:"Nå ja", en:"Oh right", cefr:"A1", note:"'Nå' + 'ja' combined — used when you suddenly remember or acknowledge something you had overlooked."},
-        {da:"Nå okay", en:"Alright then", cefr:"A1", note:"A casual acceptance or acknowledgement — softer than just 'okay', signals you're processing information."},
-        {da:"Sådan er det", en:"That's how it is", cefr:"A2", note:"A stoic Danish phrase for accepting an unchangeable reality — similar to 'c'est la vie'."},
-        {da:"Det må tiden vise", en:"Time will tell", cefr:"B1", note:"Literally 'time must show it' — used when the outcome is uncertain and only future events will reveal the answer."},
-        {da:"Det er ikke så ringe endda", en:"Not bad at all", cefr:"B1", note:"'Ringe' means 'poor/weak', so this double negative means surprisingly good — a characteristically understated Danish compliment."},
-        {da:"Det kunne være værre", en:"Could be worse", cefr:"A2", note:"A classic Danish understated optimism — accepting an imperfect situation without complaining."},
-        {da:"Ingen ko på isen", en:"No need to worry", cefr:"B2", note:"Literally 'no cow on the ice' — a quirky idiom meaning no cause for concern; the full form is 'der er ingen ko på isen'."},
-        {da:"Det går fremad", en:"Things are improving", cefr:"A2", note:"Literally 'it goes forward' — an optimistic phrase used to indicate progress is being made."},
+      {name:"Typisk danske udtryk", icon:"🇩🇰", items:[
+        {da:"Pyt", en:"Never mind", cefr:"A1", note:"Et typisk dansk udtryk, når man vil lade en lille irritation ligge – »pyt med det« er den fulde form."},
+        {da:"Nå", en:"Oh, I see", cefr:"A1", note:"Et alsidigt udråbsord for forståelse, lille overraskelse eller overgang i samtalen."},
+        {da:"Nå ja", en:"Oh right", cefr:"A1", note:"Bruges, når man pludselig kommer i tanke om noget eller erkender, at man havde glemt det."},
+        {da:"Nå okay", en:"Alright then", cefr:"A1", note:"En afslappet accept – blødere end blot »okay«, og viser, at man tager det til sig."},
+        {da:"Sådan er det", en:"That's how it is", cefr:"A2", note:"En afdæmpet dansk måde at acceptere noget, man ikke kan ændre."},
+        {da:"Det må tiden vise", en:"Time will tell", cefr:"B1", note:"Bruges, når udfaldet er uvist, og kun fremtiden kan give svaret."},
+        {da:"Det er ikke så ringe endda", en:"Not bad at all", cefr:"B1", note:"»Ringe« betyder »dårlig«, så dobbelt benægtelse betyder overraskende godt – typisk dansk underdrivelse."},
+        {da:"Det kunne være værre", en:"Could be worse", cefr:"A2", note:"Typisk dansk afdæmpet optimisme – man tager en ufuldkommen situation uden at klage."},
+        {da:"Ingen ko på isen", en:"No need to worry", cefr:"B2", note:"Bruges, når der ikke er grund til bekymring. Hele udtrykket er »Der er ingen ko på isen«."},
+        {da:"Det går fremad", en:"Things are improving", cefr:"A2", note:"Et optimistisk udtryk for, at tingene skrider frem."},
       ]},
-      {name:"Problem Solving", icon:"🧩", items:[
-        {da:"Finde ud af det", en:"Figure it out", cefr:"A2", note:"'Finde ud af' is a three-part separable verb — one of the most common ways to say 'work something out'."},
-        {da:"Tage hånd om noget", en:"Take care of something", cefr:"B1", note:"Literally 'take hand around something' — implies personal, active responsibility rather than passive oversight."},
-        {da:"Komme til bunds i noget", en:"Get to the bottom of something", cefr:"B2", note:"Literally 'come to the bottom of something' — used for thorough investigation of a problem."},
-        {da:"Få styr på noget", en:"Get something under control", cefr:"B1", note:"'Styr' means control/grip — 'få styr på' is essential workplace Danish for organising or mastering something."},
-        {da:"Løse problemet", en:"Solve the problem", cefr:"A2", note:"'Løse' (to solve/loosen) + 'problemet' — a direct, simple phrase used in both casual and professional contexts."},
-        {da:"Tage ansvar", en:"Take responsibility", cefr:"B1", note:"'Ansvar' means responsibility — this phrase is common in Danish workplace culture which prizes accountability."},
-        {da:"Tage en beslutning", en:"Make a decision", cefr:"A2", note:"'Beslutning' is the noun for decision — note that Danish 'tager' (takes) a decision where English 'makes' one."},
-        {da:"Holde hovedet koldt", en:"Keep a cool head", cefr:"B1", note:"Literally 'hold the head cold' — equivalent to the English idiom, used for staying rational under pressure."},
-        {da:"Komme videre", en:"Move on", cefr:"A2", note:"Literally 'come further' — used for progressing past a problem, a difficult period, or the current step."},
-        {da:"Se mulighederne", en:"See the opportunities", cefr:"B1", note:"'Muligheder' (opportunities/possibilities) — encourages a solution-focused mindset rather than dwelling on obstacles."},
+      {name:"Problemløsning", icon:"🧩", items:[
+        {da:"Finde ud af det", en:"Figure it out", cefr:"A2", note:"»Finde ud af« er et af de mest almindelige udtryk for at regne noget ud."},
+        {da:"Tage hånd om noget", en:"Take care of something", cefr:"B1", note:"Betyder, at man selv aktivt tager ansvar for noget."},
+        {da:"Komme til bunds i noget", en:"Get to the bottom of something", cefr:"B2", note:"Bruges om at undersøge et problem grundigt."},
+        {da:"Få styr på noget", en:"Get something under control", cefr:"B1", note:"»Styr« betyder kontrol – et vigtigt udtryk på danske arbejdspladser om at få orden på noget."},
+        {da:"Løse problemet", en:"Solve the problem", cefr:"A2", note:"Et enkelt og direkte udtryk, der bruges både i hverdagen og på arbejdet."},
+        {da:"Tage ansvar", en:"Take responsibility", cefr:"B1", note:"Et almindeligt udtryk i dansk arbejdskultur, hvor man sætter pris på ansvarlighed."},
+        {da:"Tage en beslutning", en:"Make a decision", cefr:"A2", note:"På dansk »tager« man en beslutning – ikke »laver« eller »gør« den."},
+        {da:"Holde hovedet koldt", en:"Keep a cool head", cefr:"B1", note:"Bruges om at bevare overblikket og tænke klart under pres."},
+        {da:"Komme videre", en:"Move on", cefr:"A2", note:"Bruges om at komme videre efter et problem, en svær periode eller det nuværende trin."},
+        {da:"Se mulighederne", en:"See the opportunities", cefr:"B1", note:"Opfordrer til at fokusere på løsninger frem for forhindringer."},
       ]},
-      {name:"Social Situations", icon:"🎉", items:[
-        {da:"Hvordan går det", en:"How are you", cefr:"A1", note:"Literally 'how goes it' — the standard casual greeting, equivalent to 'how are you?' in everyday conversation."},
-        {da:"Hvad så", en:"What's up", cefr:"A1", note:"A very informal greeting among friends — literally 'what then', used like 'what's up?' or 'so, what's new?'"},
-        {da:"Det var hyggeligt", en:"That was nice", cefr:"A2", note:"'Hyggelig' (cosy/pleasant) in past tense — said after a social gathering to express that you enjoyed it."},
-        {da:"Vi ses", en:"See you", cefr:"A1", note:"Literally 'we see each other' — the standard casual goodbye, equivalent to 'see you later'."},
-        {da:"Pas på dig selv", en:"Take care", cefr:"A2", note:"Literally 'take care of yourself' — a warm farewell used with people you care about."},
-        {da:"Hav en god dag", en:"Have a nice day", cefr:"A1", note:"A polite, friendly send-off — 'hav' is the imperative of 'have', equivalent to English 'have a nice day'."},
-        {da:"God arbejdslyst", en:"Enjoy your work", cefr:"B1", note:"Literally 'good work-enjoyment' — a uniquely Danish goodbye said to someone about to start working."},
-        {da:"Velbekomme", en:"You're welcome / enjoy your meal", cefr:"A2", note:"A multi-purpose word: said after someone thanks you, or as 'bon appétit' before a meal — uniquely Danish."},
-        {da:"Det var så lidt", en:"My pleasure", cefr:"A2", note:"Literally 'that was so little' — the modest Danish response to thanks, downplaying the effort made."},
-        {da:"Tak for sidst", en:"Nice seeing you last time", cefr:"B1", note:"Literally 'thanks for last time' — a charming Danish custom of thanking someone for the most recent time you met."},
+      {name:"Sociale situationer", icon:"🎉", items:[
+        {da:"Hvordan går det", en:"How are you", cefr:"A1", note:"Den almindelige, afslappede hilsen – »hvordan har du det?« i hverdagen."},
+        {da:"Hvad så", en:"What's up", cefr:"A1", note:"En meget uformel hilsen mellem venner – »hvad nyt?«"},
+        {da:"Det var hyggeligt", en:"That was nice", cefr:"A2", note:"»Hyggelig« i datid – siges efter en social sammenkomst for at vise, at man nød den."},
+        {da:"Vi ses", en:"See you", cefr:"A1", note:"Den almindelige, afslappede afsked – »vi ses senere«."},
+        {da:"Pas på dig selv", en:"Take care", cefr:"A2", note:"En varm afsked til mennesker, man holder af."},
+        {da:"Hav en god dag", en:"Have a nice day", cefr:"A1", note:"En høflig og venlig afsked – »hav« er bydemåde af »have«."},
+        {da:"God arbejdslyst", en:"Enjoy your work", cefr:"B1", note:"En typisk dansk afsked til en, der skal i gang med at arbejde."},
+        {da:"Velbekomme", en:"You're welcome / enjoy your meal", cefr:"A2", note:"Bruges både som svar på tak og som ønske om god appetit før et måltid."},
+        {da:"Det var så lidt", en:"My pleasure", cefr:"A2", note:"Det beskedne danske svar på tak, der gør indsatsen mindre, end den var."},
+        {da:"Tak for sidst", en:"Nice seeing you last time", cefr:"B1", note:"En venlig dansk skik: man takker for sidste gang, man mødtes."},
       ]},
-      {name:"Strong Native-Like Phrases", icon:"💪", items:[
-        {da:"Det er ikke min kop te", en:"It's not my cup of tea", cefr:"B1", note:"Borrowed directly from English — used exactly the same way to politely express that something isn't to your taste."},
-        {da:"Der er noget om snakken", en:"There's something to it", cefr:"B2", note:"Literally 'there is something about the talk' — used to acknowledge that a claim or rumour has some truth to it."},
-        {da:"Det er lettere sagt end gjort", en:"Easier said than done", cefr:"B1", note:"Identical structure to English — acknowledges that a suggestion is simple in theory but difficult in practice."},
-        {da:"Man skal ikke male fanden på væggen", en:"Don't imagine the worst", cefr:"C1", note:"Literally 'one should not paint the devil on the wall' — a vivid warning against catastrophising or jinxing things."},
-        {da:"Rom blev ikke bygget på én dag", en:"Rome wasn't built in a day", cefr:"B1", note:"The Danish equivalent of the English proverb — used to encourage patience when something takes a long time."},
-        {da:"Øvelse gør mester", en:"Practice makes perfect", cefr:"A2", note:"Literally 'practice makes master' — the classic Danish motivational proverb used to encourage perseverance."},
-        {da:"Bedre sent end aldrig", en:"Better late than never", cefr:"A2", note:"Word-for-word equivalent of the English proverb — used to excuse or accept lateness or delay."},
-        {da:"Ingen regel uden undtagelse", en:"No rule without exception", cefr:"B2", note:"A philosophical phrase acknowledging that every rule has edge cases — used to justify an exception."},
-        {da:"Tiden flyver", en:"Time flies", cefr:"A2", note:"Literally 'the time flies' — used when time has passed surprisingly quickly, equivalent to 'tempus fugit'."},
-        {da:"Små skridt tæller også", en:"Small steps count too", cefr:"A2", note:"An encouraging phrase for progress-in-progress — reminds that incremental effort still moves you forward."},
+      {name:"Stærke, modersmålsagtige vendinger", icon:"💪", items:[
+        {da:"Det er ikke min kop te", en:"It's not my cup of tea", cefr:"B1", note:"Lånt fra engelsk – bruges på samme måde om noget, man ikke er så vild med."},
+        {da:"Der er noget om snakken", en:"There's something to it", cefr:"B2", note:"Bruges til at anerkende, at en påstand eller et rygte har noget på sig."},
+        {da:"Det er lettere sagt end gjort", en:"Easier said than done", cefr:"B1", note:"Samme opbygning som på engelsk – let i teorien, men svært i praksis."},
+        {da:"Man skal ikke male fanden på væggen", en:"Don't imagine the worst", cefr:"C1", note:"Ordret »man skal ikke male fanden på væggen« – en advarsel mod at forestille sig det værste."},
+        {da:"Rom blev ikke bygget på én dag", en:"Rome wasn't built in a day", cefr:"B1", note:"Det danske ordsprog bruges til at opmuntre til tålmodighed."},
+        {da:"Øvelse gør mester", en:"Practice makes perfect", cefr:"A2", note:"Det klassiske ordsprog, der opmuntrer til at holde ved."},
+        {da:"Bedre sent end aldrig", en:"Better late than never", cefr:"A2", note:"Ordsproget bruges, når nogen kommer for sent, men dog kommer."},
+        {da:"Ingen regel uden undtagelse", en:"No rule without exception", cefr:"B2", note:"Et tankevækkende udtryk om, at alle regler har undtagelser."},
+        {da:"Tiden flyver", en:"Time flies", cefr:"A2", note:"Bruges, når tiden er gået overraskende hurtigt."},
+        {da:"Små skridt tæller også", en:"Small steps count too", cefr:"A2", note:"Et opmuntrende udtryk: selv små fremskridt tæller."},
       ]},
-      {name:"Workplace Danish", icon:"🏢", items:[
-        {da:"Jeg vender tilbage", en:"I'll get back to you", cefr:"B1", note:"Literally 'I turn back' — the standard professional phrase for promising a follow-up response."},
-        {da:"Lad os tage et møde", en:"Let's have a meeting", cefr:"A2", note:"Literally 'let us take a meeting' — note 'tage et møde' (take) not 'holde et møde' (hold), both are used."},
-        {da:"Vi er enige om retningen", en:"We agree on the direction", cefr:"B1", note:"A strategic sign-off used to confirm alignment on a course of action without specifying every detail."},
-        {da:"Hvad er status", en:"What's the status", cefr:"A2", note:"A direct, efficient question in Danish workplace culture — used to ask for a progress update on a task."},
-        {da:"Det er en prioritet", en:"It's a priority", cefr:"A2", note:"'Prioritet' is borrowed from English — used to signal that something should be addressed urgently."},
-        {da:"Vi er næsten i mål", en:"We're almost there", cefr:"B1", note:"Literally 'we are almost at the goal' — a motivating phrase used to signal that completion is near."},
-        {da:"Vi mangler lige det sidste", en:"We're just missing the last bit", cefr:"B1", note:"'Mangler' means 'are missing/lack' — signals you're very close to done with just one remaining step."},
-        {da:"Det ser lovende ud", en:"It looks promising", cefr:"B1", note:"'Lovende' means 'promising' (from 'love' = to promise) — used for early-stage optimism about a project or idea."},
-        {da:"Det er et godt spørgsmål", en:"That's a good question", cefr:"A2", note:"A universal stall tactic and genuine compliment — buys time to think while acknowledging the question."},
-        {da:"Lad os holde det simpelt", en:"Let's keep it simple", cefr:"A2", note:"'Holde simpelt' — reflects Danish work culture's preference for pragmatic, no-frills solutions."},
+      {name:"Dansk på arbejdspladsen", icon:"🏢", items:[
+        {da:"Jeg vender tilbage", en:"I'll get back to you", cefr:"B1", note:"Det faste udtryk på arbejdet, når man lover at svare senere."},
+        {da:"Lad os tage et møde", en:"Let's have a meeting", cefr:"A2", note:"Man kan både »tage« og »holde« et møde – begge dele bruges."},
+        {da:"Vi er enige om retningen", en:"We agree on the direction", cefr:"B1", note:"Bruges til at bekræfte, at man er enige om kursen, uden at gå i detaljer."},
+        {da:"Hvad er status", en:"What's the status", cefr:"A2", note:"Et direkte og effektivt spørgsmål på danske arbejdspladser om, hvor langt man er."},
+        {da:"Det er en prioritet", en:"It's a priority", cefr:"A2", note:"Bruges, når noget skal tages hånd om hurtigt."},
+        {da:"Vi er næsten i mål", en:"We're almost there", cefr:"B1", note:"En motiverende vending, når man snart er færdig."},
+        {da:"Vi mangler lige det sidste", en:"We're just missing the last bit", cefr:"B1", note:"»Mangler« betyder »savner« – der er kun ét trin tilbage."},
+        {da:"Det ser lovende ud", en:"It looks promising", cefr:"B1", note:"»Lovende« kommer af »love« – bruges om tidlig optimisme omkring et projekt."},
+        {da:"Det er et godt spørgsmål", en:"That's a good question", cefr:"A2", note:"Både en høflig anerkendelse og en måde at få tid til at tænke sig om."},
+        {da:"Lad os holde det simpelt", en:"Let's keep it simple", cefr:"A2", note:"Afspejler, at danske arbejdspladser foretrækker praktiske løsninger uden unødig pynt."},
       ]},
-      {name:"Expressions You'll Hear Constantly", icon:"🔁", items:[
-        {da:"Det skal nok gå", en:"It'll work out fine", cefr:"A2", note:"A reassuring filler phrase — the Danish equivalent of 'it'll be alright' or 'don't worry, it'll sort itself out'."},
-        {da:"Det tror jeg", en:"I think so", cefr:"A1", note:"A simple confirmation of belief — 'tror' expresses personal belief/trust rather than objective certainty."},
-        {da:"Det ved jeg ikke", en:"I don't know", cefr:"A1", note:"One of the most essential phrases — 'ved' comes from 'vide' (to know), not 'tænke' (to think)."},
-        {da:"Det har du ret i", en:"You're right about that", cefr:"A2", note:"A slightly more emphatic agreement than 'du har ret' — 'i' at the end refers back to what was said."},
-        {da:"Det kan jeg godt forstå", en:"I can understand that", cefr:"A2", note:"An empathetic response showing comprehension — 'godt' here softens and strengthens the phrase simultaneously."},
-        {da:"Det er helt fint", en:"It's totally fine", cefr:"A1", note:"'Helt' means 'completely/totally' — a reassuring phrase to put someone at ease about a concern."},
-        {da:"Det passer ikke", en:"That's not right", cefr:"A2", note:"Literally 'that doesn't fit/match' — used to correct a factual error; less confrontational than 'du tager fejl'."},
-        {da:"Hvad mener du", en:"What do you mean", cefr:"A2", note:"'Mener' means 'mean/intend' — used to ask for clarification when something is unclear or ambiguous."},
-        {da:"Det er ikke sikkert", en:"It's not certain", cefr:"A2", note:"Useful for expressing uncertainty — 'sikkert' means 'certain/safe', so this hedges a claim effectively."},
-        {da:"Nu giver det mening", en:"Now it makes sense", cefr:"A2", note:"'Nu' (now) + 'giver mening' (makes sense) — an 'aha moment' phrase when an explanation finally clicks."},
+      {name:"Udtryk, du hører hele tiden", icon:"🔁", items:[
+        {da:"Det skal nok gå", en:"It'll work out fine", cefr:"A2", note:"En beroligende vending: »det skal nok ordne sig«."},
+        {da:"Det tror jeg", en:"I think so", cefr:"A1", note:"En enkel bekræftelse – »tror« udtrykker personlig overbevisning, ikke sikker viden."},
+        {da:"Det ved jeg ikke", en:"I don't know", cefr:"A1", note:"Et af de vigtigste udtryk – »ved« kommer af »vide«, ikke af »tænke«."},
+        {da:"Det har du ret i", en:"You're right about that", cefr:"A2", note:"Lidt mere eftertrykkeligt end »du har ret« – »i« peger tilbage på det, der blev sagt."},
+        {da:"Det kan jeg godt forstå", en:"I can understand that", cefr:"A2", note:"Et medfølende svar, der viser forståelse – »godt« afdæmper og understreger på én gang."},
+        {da:"Det er helt fint", en:"It's totally fine", cefr:"A1", note:"»Helt« betyder »fuldstændig« – bruges til at berolige nogen."},
+        {da:"Det passer ikke", en:"That's not right", cefr:"A2", note:"Bruges til at rette en faktuel fejl – mindre konfronterende end »du tager fejl«."},
+        {da:"Hvad mener du", en:"What do you mean", cefr:"A2", note:"Bruges, når man vil have noget uddybet, fordi det er uklart."},
+        {da:"Det er ikke sikkert", en:"It's not certain", cefr:"A2", note:"Nyttigt til at udtrykke usikkerhed – det tager forbehold for en påstand."},
+        {da:"Nu giver det mening", en:"Now it makes sense", cefr:"A2", note:"Bruges, når en forklaring endelig falder på plads."},
       ]},
     ]
   }
@@ -608,23 +652,23 @@ function overallAccuracy(){return P.totalAnswered? Math.round(P.totalCorrect/P.t
    ACHIEVEMENTS
 ========================================================= */
 const ACHS=[
-  {id:"first",  ico:"🌱", name:"First Steps", test:()=>P.totalAnswered>=1},
+  {id:"first",  ico:"🌱", name:"Første skridt", test:()=>P.totalAnswered>=1},
   {id:"xp100",  ico:"⭐", name:"100 XP", test:()=>P.xp>=100},
   {id:"xp500",  ico:"🌟", name:"500 XP", test:()=>P.xp>=500},
-  {id:"streak3",ico:"🔥", name:"3-Day Streak", test:()=>P.bestStreak>=3},
-  {id:"streak7",ico:"🏆", name:"7-Day Streak", test:()=>P.bestStreak>=7},
-  {id:"acc90",  ico:"🎯", name:"90% Accuracy", test:()=>P.totalAnswered>=20&&overallAccuracy()>=90},
-  {id:"verbcat",ico:"🔗", name:"Verb Novice", test:()=>catMastery('verbs',0)>=80},
-  {id:"phrcat", ico:"🗣️", name:"Phrase Novice", test:()=>catMastery('phrases',0)>=80},
-  {id:"verbmas",ico:"💎", name:"Verb Master", test:()=>pathMastery('verbs')>=100},
-  {id:"phrmas", ico:"👑", name:"Phrase Master", test:()=>pathMastery('phrases')>=100},
-  {id:"learn50",ico:"📚", name:"50 Learned", test:()=>pathLearned('verbs')+pathLearned('phrases')>=50},
-  {id:"perfect",ico:"✨", name:"Perfect Round", test:()=>P._perfect===true},
+  {id:"streak3",ico:"🔥", name:"3 dage i træk", test:()=>P.bestStreak>=3},
+  {id:"streak7",ico:"🏆", name:"7 dage i træk", test:()=>P.bestStreak>=7},
+  {id:"acc90",  ico:"🎯", name:"90 % rigtige", test:()=>P.totalAnswered>=20&&overallAccuracy()>=90},
+  {id:"verbcat",ico:"🔗", name:"Verbernybegynder", test:()=>catMastery('verbs',0)>=80},
+  {id:"phrcat", ico:"🗣️", name:"Vendingsnybegynder", test:()=>catMastery('phrases',0)>=80},
+  {id:"verbmas",ico:"💎", name:"Verbermester", test:()=>pathMastery('verbs')>=100},
+  {id:"phrmas", ico:"👑", name:"Vendingsmester", test:()=>pathMastery('phrases')>=100},
+  {id:"learn50",ico:"📚", name:"50 lært", test:()=>pathLearned('verbs')+pathLearned('phrases')>=50},
+  {id:"perfect",ico:"✨", name:"Perfekt runde", test:()=>P._perfect===true},
 ];
 function checkAchievements(){
   const newly=[];
   ACHS.forEach(a=>{ if(!P.badges.includes(a.id) && a.test()){P.badges.push(a.id);newly.push(a);} });
-  if(newly.length){save(); newly.forEach((a,i)=>setTimeout(()=>toast("🎉 Badge: "+a.name),i*1200));}
+  if(newly.length){save(); newly.forEach((a,i)=>setTimeout(()=>toast("🎉 Nyt emblem: "+a.name),i*1200));}
 }
 
 /* =========================================================
@@ -689,7 +733,7 @@ function speakerBtn(text,cls){
   b.className="speaker "+(cls||"");
   b.type="button";
   b.textContent="🔊";
-  b.setAttribute("aria-label","Pronounce");
+  b.setAttribute("aria-label","Udtal");
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -711,12 +755,12 @@ function topbar(){
     <div class="brand"><span data-sd-sprite="flag" data-scale="3" aria-hidden="true"></span> Dansk Mester</div>
     <div class="spacer"></div>
     <div class="stat-chip xp" role="img" aria-label="XP: ${P.xp}"><span class="ico" data-sd-sprite="stjerne" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.xp}</span></div>
-    <div class="stat-chip streak" role="img" aria-label="Day streak: ${P.currentStreak}"><span class="ico" data-sd-sprite="molle" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.currentStreak}</span></div>
+    <div class="stat-chip streak" role="img" aria-label="Dage i træk: ${P.currentStreak}"><span class="ico" data-sd-sprite="molle" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.currentStreak}</span></div>
   </div>`;
 }
 function bottomnav(active){
   const b=(n,ico,lbl)=>`<button class="navbtn ${active===n?'active':''}" onclick="go('${n}')"><span class="nico" data-sd-sprite="${ico}" data-scale="2" aria-hidden="true"></span>${lbl}</button>`;
-  return `<div class="bottomnav">${b('home','snak','Home')}${b('stats','pokal','Stats')}${b('badges','stjerne','Badges')}</div>`;
+  return `<div class="bottomnav">${b('home','snak','Hjem')}${b('stats','pokal','Statistik')}${b('badges','stjerne','Emblemer')}</div>`;
 }
 
 function render(){
@@ -742,11 +786,11 @@ function screenHome(){
       <div class="glow"></div>
       <div class="pico" data-sd-sprite="${key==='verbs'?'cykel':'snegl'}" data-scale="5" aria-hidden="true"></div>
       <h3>${d.label}</h3>
-      <p>${d.blurb} • ${tot} items</p>
+      <p>${d.blurb} • ${tot} udtryk</p>
       <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
         ${bar(m)}<span class="pct">${m}%</span>
       </div>
-      <p style="margin-top:8px;font-size:.82rem">${learned}/${tot} mastered</p>
+      <p style="margin-top:8px;font-size:.82rem">${learned}/${tot} mestret</p>
     </div>`;
   };
   let cont="";
@@ -755,30 +799,30 @@ function screenHome(){
     cont=`<div class="card" style="margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <div data-sd-sprite="flag" data-scale="3" aria-hidden="true"></div>
       <div style="flex:1;min-width:140px">
-        <div style="font-weight:900">Continue where you left off</div>
+        <div style="font-weight:900">Fortsæt, hvor du slap</div>
         <div class="muted" style="font-size:.9rem">${d.label} — ${c?c.name:''}</div>
       </div>
-      <button class="btn small" onclick="go('modes',{path:'${P.last.path}',ci:${P.last.cat}})">Continue ▸</button>
+      <button class="btn small" onclick="go('modes',{path:'${P.last.path}',ci:${P.last.cat}})">Fortsæt ▸</button>
     </div>`;
   }
-  return `<div class="dm-welcome"><span data-sd-sprite="snak" data-scale="6" class="sd-bob" aria-hidden="true"></span><div class="h1">Hej! Ready to learn Danish?</div></div>
-    <p class="sub">Master verb combinations & native phrases. Choose a path to begin.</p>
+  return `<div class="dm-welcome"><span data-sd-sprite="snak" data-scale="6" class="sd-bob" aria-hidden="true"></span><div class="h1">Hej! Er du klar til at lære dansk?</div></div>
+    <p class="sub">Lær verber med præposition og hverdagsvendinger, som danskerne bruger dem. Vælg et forløb for at komme i gang.</p>
     ${cont}
     <div class="path-grid">${pc('verbs')}${pc('phrases')}</div>
-    <div class="section-title">🔥 Quick practice</div>
+    <div class="section-title">🔥 Hurtig øvelse</div>
     <div class="btn-row">
-      <button class="btn secondary small" onclick="quickMixed()">🎲 Mixed Review (everything)</button>
-      <button class="btn secondary small" onclick="quickWeak()">🩹 Weak Words</button>
+      <button class="btn secondary small" onclick="quickMixed()">🎲 Blandet repetition (alt)</button>
+      <button class="btn secondary small" onclick="quickWeak()">🩹 Svage ord</button>
     </div>`;
 }
 function quickMixed(){
   const pool=shuffle(allItems('verbs').concat(allItems('phrases'))).slice(0,15);
-  go('quiz',{cfg:{mode:'mc',pool,title:'Mixed Review',isMixed:true,ret:{name:'home'}}});
+  go('quiz',{cfg:{mode:'mc',pool,title:'Blandet repetition',isMixed:true,ret:{name:'home'}}});
 }
 function quickWeak(){
   let pool=weakItems('verbs').concat(weakItems('phrases'));
-  if(pool.length<4){toast("Practice more first to find weak words!");return;}
-  go('quiz',{cfg:{mode:'mc',pool:pool.slice(0,15),title:'Weak Words',ret:{name:'home'}}});
+  if(pool.length<4){toast("Øv dig lidt mere først, så finder vi dine svage ord.");return;}
+  go('quiz',{cfg:{mode:'mc',pool:pool.slice(0,15),title:'Svage ord',ret:{name:'home'}}});
 }
 
 /* =========================================================
@@ -788,27 +832,27 @@ function screenPath(path){
   const d=DATA[path];
   let cats=d.categories.map((c,ci)=>{
     const unlocked=catUnlocked(path,ci), m=catProgress(path,ci), done=m>=80;
-    return `<div class="cat ${unlocked?'':'locked'}" onclick="${unlocked?`go('modes',{path:'${path}',ci:${ci}})`:`toast('🔒 Reach 80% in the previous category to unlock')`}">
+    return `<div class="cat ${unlocked?'':'locked'}" onclick="${unlocked?`go('modes',{path:'${path}',ci:${ci}})`:`toast('🔒 Få 80 % i den forrige kategori for at låse op')`}">
       <div class="num">${unlocked?(ci+1):'🔒'}</div>
       <div class="cbody">
-        <div class="cname">${c.icon} ${c.name} ${done?'<span class="badge-done">DONE</span>':''}</div>
-        <div class="cmeta">${c.items.length} items ${bar(m)} <span class="pct">${m}%</span></div>
+        <div class="cname">${c.icon} ${c.name} ${done?'<span class="badge-done">KLARET</span>':''}</div>
+        <div class="cmeta">${c.items.length} udtryk ${bar(m)} <span class="pct">${m}%</span></div>
       </div>
       <div class="chev">›</div>
     </div>`;
   }).join("");
-  const cefrOpts=["all","A1","A2","B1","B2","C1"].map(v=>`<option value="${v}" ${cefrFilter===v?"selected":""}>${v==="all"?"All levels":v}</option>`).join("");
-  return `<div class="back" onclick="go('home')">‹ Back</div>
+  const cefrOpts=["all","A1","A2","B1","B2","C1"].map(v=>`<option value="${v}" ${cefrFilter===v?"selected":""}>${v==="all"?"Alle niveauer":v}</option>`).join("");
+  return `<div class="back" onclick="go('home')">‹ Tilbage</div>
     <div class="h1">${d.icon} ${d.label}</div>
-    <p class="sub">Overall mastery ${pathMastery(path)}% — unlock categories by reaching 80%.</p>
+    <p class="sub">Samlet beherskelse: ${pathMastery(path)} % – nye kategorier låses op ved 80 %.</p>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-      <label style="font-weight:800;font-size:.9rem;color:var(--muted)">🎓 CEFR level:</label>
+      <label style="font-weight:800;font-size:.9rem;color:var(--muted)">🎓 CEFR-niveau:</label>
       <select onchange="setCefrFilter(this.value)" style="background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:inherit;font-weight:800;font-size:.9rem;cursor:pointer">${cefrOpts}</select>
-      ${cefrFilter!=="all"?`<span style="font-size:.82rem;color:var(--muted);font-weight:600">Filtering items by ${cefrFilter}</span>`:""}
+      ${cefrFilter!=="all"?`<span style="font-size:.82rem;color:var(--muted);font-weight:600">Viser kun niveau ${cefrFilter}</span>`:""}
     </div>
     <div class="btn-row" style="margin-bottom:16px">
-      <button class="btn small" onclick="go('modes',{path:'${path}',ci:0})">▶ Start from Category 1</button>
-      <button class="btn secondary small" onclick="go('quiz',{cfg:{mode:'mc',pool:shuffle(filteredItems('${path}')).slice(0,15),title:'${d.label} — Mixed',isMixed:true,ret:{name:'path',path:'${path}'}}})">🎲 Mixed Review</button>
+      <button class="btn small" onclick="go('modes',{path:'${path}',ci:0})">▶ Start med kategori 1</button>
+      <button class="btn secondary small" onclick="go('quiz',{cfg:{mode:'mc',pool:shuffle(filteredItems('${path}')).slice(0,15),title:'${d.label} — blandet',isMixed:true,ret:{name:'path',path:'${path}'}}})">🎲 Blandet repetition</button>
     </div>
     ${cats}`;
 }
@@ -821,20 +865,20 @@ function screenModes(path,ci){
   P.last={path,cat:ci}; save();
   const d=DATA[path], c=d.categories[ci];
   const modes=[
-    {id:"mc",   ico:"✅", name:"Multiple Choice", desc:"Pick the right meaning"},
-    {id:"flash",ico:"🃏", name:"Flash Cards", desc:"Flip & self-check"},
-    {id:"match",ico:"🧲", name:"Match Pairs", desc:"Connect DA ↔ EN"},
-    {id:"timed",ico:"⏱️", name:"Timed Challenge", desc:"Beat the clock"},
-    {id:"mixed",ico:"🎲", name:"Mixed Review", desc:"Whole path mixed"},
-    {id:"sr",   ico:"🧠", name:"Spaced Repetition", desc:"Review what's due"},
-    {id:"weak", ico:"🩹", name:"Weak Words", desc:"Fix your trouble spots"},
+    {id:"mc",   ico:"✅", name:"Flervalg", desc:"Vælg den rigtige betydning"},
+    {id:"flash",ico:"🃏", name:"Vendekort", desc:"Vend kortet og tjek dig selv"},
+    {id:"match",ico:"🧲", name:"Find par", desc:"Forbind dansk ↔ engelsk"},
+    {id:"timed",ico:"⏱️", name:"Tidsudfordring", desc:"Slå uret"},
+    {id:"mixed",ico:"🎲", name:"Blandet repetition", desc:"Hele forløbet blandet"},
+    {id:"sr",   ico:"🧠", name:"Intervalrepetition", desc:"Gentag det, der er på tide"},
+    {id:"weak", ico:"🩹", name:"Svage ord", desc:"Ret op på de svage punkter"},
   ];
   const cells=modes.map(m=>`<div class="mode" onclick="launchMode('${path}',${ci},'${m.id}')">
       <div class="mico" data-sd-sprite="${MODE_SPR[m.id]||'stjerne'}" data-scale="4" aria-hidden="true"></div><div class="mname">${m.name}</div><div class="mdesc">${m.desc}</div>
     </div>`).join("");
   return `<div class="back" onclick="go('path',{path:'${path}'})">‹ ${d.label}</div>
     <div class="h1">${c.icon} ${c.name}</div>
-    <p class="sub">${c.items.length} items • progress ${catProgress(path,ci)}% • choose a game mode</p>
+    <p class="sub">${c.items.length} udtryk • fremgang ${catProgress(path,ci)} % • vælg en spiltype</p>
     <div class="mode-grid">${cells}</div>`;
 }
 
@@ -844,7 +888,7 @@ function launchMode(path,ci,mode){
   const rawCatItems=c.items.filter(it=>cefrFilter==="all"||it.cefr===cefrFilter);
   const catPool=rawCatItems.map(it=>({path,ci,it}));
   if(catPool.length<2&&(mode==='mc'||mode==='timed'||mode==='flash'||mode==='match')){
-    toast("No items match that CEFR filter in this category — try 'All levels'.");return;
+    toast("Ingen udtryk i denne kategori passer til niveauet – prøv »Alle niveauer«.");return;
   }
   if(mode==='mc'||mode==='timed'){
     go('quiz',{cfg:{mode:(mode==='timed'?'timed':'mc'),pool:shuffle(catPool),title:c.name,path,ci,ret}});
@@ -854,17 +898,17 @@ function launchMode(path,ci,mode){
     go('quiz',{cfg:{mode:'match',pool:shuffle(catPool),title:c.name,path,ci,ret}});
   }else if(mode==='mixed'){
     const pool=filteredItems(path);
-    if(pool.length<2){toast("No items match that CEFR filter — try 'All levels'.");return;}
-    go('quiz',{cfg:{mode:'mc',pool:shuffle(pool).slice(0,15),title:d.label+' — Mixed',isMixed:true,path,ci,ret}});
+    if(pool.length<2){toast("Ingen udtryk passer til niveauet – prøv »Alle niveauer«.");return;}
+    go('quiz',{cfg:{mode:'mc',pool:shuffle(pool).slice(0,15),title:d.label+' — blandet',isMixed:true,path,ci,ret}});
   }else if(mode==='sr'){
     let pool=dueItems(path).filter(x=>cefrFilter==="all"||x.it.cefr===cefrFilter);
     if(pool.length<1)pool=shuffle(filteredItems(path));
-    if(pool.length<1){toast("No items match that CEFR filter — try 'All levels'.");return;}
-    go('quiz',{cfg:{mode:'mc',pool:pool.slice(0,15),title:'Spaced Repetition',path,ci,ret,sr:true}});
+    if(pool.length<1){toast("Ingen udtryk passer til niveauet – prøv »Alle niveauer«.");return;}
+    go('quiz',{cfg:{mode:'mc',pool:pool.slice(0,15),title:'Intervalrepetition',path,ci,ret,sr:true}});
   }else if(mode==='weak'){
     let pool=weakItems(path).filter(x=>cefrFilter==="all"||x.it.cefr===cefrFilter);
-    if(pool.length<4){toast("Not enough weak words yet — keep practicing!");return;}
-    go('quiz',{cfg:{mode:'mc',pool:pool.slice(0,15),title:'Weak Words',path,ci,ret}});
+    if(pool.length<4){toast("Der er ikke nok svage ord endnu – øv dig videre!");return;}
+    go('quiz',{cfg:{mode:'mc',pool:pool.slice(0,15),title:'Svage ord',path,ci,ret}});
   }
 }
 
@@ -880,7 +924,7 @@ function startGame(cfg){
 }
 function gameHead(extra){
   const prog=Math.round(G.idx/ (G.cfg.pool.length||1) *100);
-  return `<div class="back" onclick="quitGame()">‹ Quit</div>
+  return `<div class="back" onclick="quitGame()">‹ Afslut</div>
     <div class="quiz-head">
       ${bar(prog)}
       ${extra||''}
@@ -908,7 +952,7 @@ function nextQuestion(){
     `<div class="prompt">
       <div class="lbl">${cfg.title}</div>
       <div class="word" id="promptWord">${esc(promptText)}</div>
-      <div class="dir-tag">${ask==='da2en'?'Danish → English':'English → Danish'}</div>
+      <div class="dir-tag">${ask==='da2en'?'Dansk → engelsk':'Engelsk → dansk'}</div>
     </div>
     <div class="options" id="opts"></div>
     <div class="feedback" id="fb"></div>`;
@@ -940,7 +984,7 @@ function updateTimer(){const p=$("#tpill"); if(p){p.textContent="⏱️ "+G._tim
 function timeoutMC(){
   G._answered=true;
   document.querySelectorAll("#opts .opt").forEach(b=>{b.disabled=true; if(b.textContent===G._answer)b.classList.add("correct");});
-  finishAnswer(false,"⏰ Time's up!");
+  finishAnswer(false,"⏰ Tiden er gået!");
 }
 function answerMC(btn,chosen){
   if(G._answered) return;
@@ -983,14 +1027,14 @@ function renderFlash(){
   G._q=q; G._flipped=false;
   const wrap=$("#gamewrap");
   wrap.innerHTML=gameHead(`<span class="muted" style="font-weight:800">${G.idx+1}/${cfg.pool.length}</span>`)+
-    `<div class="prompt" style="padding:14px"><div class="lbl">${cfg.title} • tap card to flip</div></div>
+    `<div class="prompt" style="padding:14px"><div class="lbl">${cfg.title} • tryk på kortet for at vende det</div></div>
      <div class="flash-wrap"><div class="flash" id="flash" onclick="flipCard()">
-        <div class="face front"><div class="lbl">Danish</div><div class="ftext">${esc(q.it.da)}</div><div class="hint">tap to reveal</div></div>
-        <div class="face back"><div class="lbl">English</div><div class="ftext">${esc(q.it.en)}</div><div class="hint">did you know it?</div></div>
+        <div class="face front"><div class="lbl">Dansk</div><div class="ftext">${esc(q.it.da)}</div><div class="hint">tryk for at se svaret</div></div>
+        <div class="face back"><div class="lbl">Engelsk</div><div class="ftext">${esc(q.it.en)}</div><div class="hint">vidste du det?</div></div>
      </div></div>
      <div class="btn-row" style="justify-content:center" id="flashbtns" style="opacity:.4">
-       <button class="btn secondary" onclick="gradeFlash(false)">😕 Still learning</button>
-       <button class="btn" onclick="gradeFlash(true)">😎 I knew it</button>
+       <button class="btn secondary" onclick="gradeFlash(false)">😕 Jeg øver stadig</button>
+       <button class="btn" onclick="gradeFlash(true)">😎 Det vidste jeg</button>
      </div>`;
   const frontFace=$("#flash .face.front");
   if(frontFace){
@@ -1020,9 +1064,9 @@ function renderMatch(){
   const right=shuffle(round.map(x=>({txt:x.it.en,key:x.it.da,x})));
   const cell=(item,side)=>`<button class="match-cell" data-key="${esc(item.key)}" data-side="${side}" onclick="pickMatch(this)">${esc(item.txt)}</button>`;
   const wrap=$("#gamewrap");
-  wrap.innerHTML=`<div class="back" onclick="quitGame()">‹ Quit</div>
-    <div class="h1" style="font-size:1.3rem">🧲 Match Pairs</div>
-    <p class="sub">${cfg.title} — tap a Danish word, then its English match.</p>
+  wrap.innerHTML=`<div class="back" onclick="quitGame()">‹ Afslut</div>
+    <div class="h1" style="font-size:1.3rem">🧲 Find par</div>
+    <p class="sub">${cfg.title} – tryk på et dansk udtryk og derefter på den engelske betydning.</p>
     <div class="match-grid">
       <div id="matchLeft">${left.map(i=>cell(i,'da')).join("")}</div>
       <div>${right.map(i=>cell(i,'en')).join("")}</div>
@@ -1058,7 +1102,7 @@ function pickMatch(btn){
     recordAnswer(item.path,item.it,true,10);
     G._matched++; G._sel=null;
     if(G._matched>=G._matchTotal){
-      const fb=$("#fb");fb.className="feedback good";fb.textContent="Fremragende! Alle par fundet! 🎉";
+      const fb=$("#fb");fb.className="feedback good";fb.textContent="Fremragende! Alle par er fundet! 🎉";
       setTimeout(()=>{ // advance to next round or finish
         G.idx+=6;
         if(G.idx<G.cfg.pool.length) renderMatch();
@@ -1077,8 +1121,8 @@ function finishMatch(){
   const acc=overallAccuracy();
   $("#gamewrap").innerHTML=`<div class="card result">
     <div class="big"><span data-sd-sprite="stjerne" data-scale="8" class="sd-hop" aria-hidden="true"></span><span data-sd-sprite="snak" data-scale="6" class="sd-bob" aria-hidden="true"></span></div>
-    <h2 style="margin:0 0 6px">All pairs matched!</h2>
-    <p class="muted">Great memory work in "${esc(G.cfg.title)}".</p>
+    <h2 style="margin:0 0 6px">Alle par er fundet!</h2>
+    <p class="muted">Flot husket i »${esc(G.cfg.title)}«.</p>
     <div class="btn-row" style="justify-content:center;margin-top:18px" id="matchContinueRow"></div></div>`;
   // Build Continue button with closure over ret (avoids JSON.stringify in inline onclick)
   const matchContinueBtn=document.createElement("button");
@@ -1097,7 +1141,7 @@ function finishGame(){
   const pct = G.total? Math.round(G.correct/G.total*100):0;
   P._perfect = (G.total>=5 && pct===100);
   // record best session score for this category (drives unlocking)
-  if(G.cfg.path!=null && G.cfg.ci!=null && !G.cfg.isMixed && G.cfg.title!=='Weak Words' && G.cfg.title!=='Spaced Repetition'){
+  if(G.cfg.path!=null && G.cfg.ci!=null && !G.cfg.isMixed && G.cfg.title!=='Svage ord' && G.cfg.title!=='Intervalrepetition'){
     const ck=G.cfg.path+":"+G.cfg.ci;
     P.catScore[ck]=Math.max(P.catScore[ck]||0, pct);
   }
@@ -1118,24 +1162,24 @@ function finishGame(){
     <h2 style="margin:2px 0 4px">${headline}</h2>
     <p class="muted">${esc(G.cfg.title)}</p>
     <div style="max-width:340px;margin:16px auto 0;text-align:left">
-      <div class="kv"><span class="k">Correct</span><span class="v">${G.correct}/${G.total}</span></div>
-      <div class="kv"><span class="k">Accuracy</span><span class="v">${pct}%</span></div>
-      <div class="kv"><span class="k">XP earned</span><span class="v" style="color:var(--gold)">+${xpEarned}</span></div>
-      <div class="kv"><span class="k">Current streak</span><span class="v" style="color:#ff8f5e">🔥 ${P.currentStreak}</span></div>
+      <div class="kv"><span class="k">Rigtige</span><span class="v">${G.correct}/${G.total}</span></div>
+      <div class="kv"><span class="k">Træfsikkerhed</span><span class="v">${pct}%</span></div>
+      <div class="kv"><span class="k">Optjent XP</span><span class="v" style="color:var(--gold)">+${xpEarned}</span></div>
+      <div class="kv"><span class="k">Dage i træk</span><span class="v" style="color:#ff8f5e">🔥 ${P.currentStreak}</span></div>
     </div>
-    ${nextUnlocked?`<div style="margin-top:16px;background:rgba(51,209,122,.12);border:1px solid var(--accent);border-radius:14px;padding:12px;font-weight:800">🔓 Unlocked: ${esc(nextName)}!</div>`:''}
+    ${nextUnlocked?`<div style="margin-top:16px;background:rgba(51,209,122,.12);border:1px solid var(--accent);border-radius:14px;padding:12px;font-weight:800">🔓 Låst op: ${esc(nextName)}</div>`:''}
     <div class="btn-row" style="justify-content:center;margin-top:18px" id="finishBtnRow"></div>
   </div>`;
   // Build result buttons with proper event listeners (avoids JSON.stringify in inline onclick)
   const finishRow=document.getElementById("finishBtnRow");
   const retryBtn=document.createElement("button");
   retryBtn.className="btn";
-  retryBtn.textContent="↻ Play again";
+  retryBtn.textContent="↻ Spil igen";
   retryBtn.addEventListener("click",()=>retryGame());
   finishRow.appendChild(retryBtn);
   const contBtn=document.createElement("button");
   contBtn.className="btn secondary";
-  contBtn.textContent="Continue ▸";
+  contBtn.textContent="Fortsæt ▸";
   const finishRet=G.cfg.ret;
   contBtn.addEventListener("click",()=>go(finishRet.name,finishRet));
   finishRow.appendChild(contBtn);
@@ -1166,7 +1210,7 @@ function screenStats(){
   const spark=days.map(d=>{
     const k=d.toISOString().slice(0,10);const v=P.daily[k]?P.daily[k].answered:0;
     const h=Math.round(v/maxd*72);
-    return `<div class="col"><div class="colbar" style="height:${h}px" title="${v} answers"></div><div class="colday">${["S","M","T","W","T","F","S"][d.getDay()]}</div></div>`;
+    return `<div class="col"><div class="colbar" style="height:${h}px" title="${v} svar"></div><div class="colday">${["S","M","T","O","T","F","L"][d.getDay()]}</div></div>`;
   }).join("");
 
   const li=(x)=>{
@@ -1174,26 +1218,26 @@ function screenStats(){
     return `<div class="list-item"><div><div class="da">${esc(x.it.da)}</div><div class="en">${esc(x.it.en)}</div></div>
       <span class="acc-tag ${a>=70?'acc-good':'acc-bad'}">${a}%</span></div>`;
   };
-  return `<div class="h1">📊 Your Statistics</div>
-    <p class="sub">${P.sessions} sessions played</p>
+  return `<div class="h1">📊 Din statistik</div>
+    <p class="sub">${P.sessions} runder spillet</p>
     <div class="stat-grid">
-      <div class="stat-box"><div class="num" style="color:var(--accent)">${learned}</div><div class="lbl">Total learned</div></div>
-      <div class="stat-box"><div class="num" style="color:var(--blue)">${acc}%</div><div class="lbl">Accuracy</div></div>
-      <div class="stat-box"><div class="num" style="color:#ff8f5e">🔥 ${P.bestStreak}</div><div class="lbl">Best streak</div></div>
-      <div class="stat-box"><div class="num" style="color:var(--gold)">${P.xp}</div><div class="lbl">Total XP</div></div>
-      <div class="stat-box"><div class="num">${catsDone}/${catsTot}</div><div class="lbl">Categories done</div></div>
-      <div class="stat-box"><div class="num">${Math.round(learned/totItems*100)}%</div><div class="lbl">Overall mastery</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--accent)">${learned}</div><div class="lbl">Lært i alt</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--blue)">${acc}%</div><div class="lbl">Træfsikkerhed</div></div>
+      <div class="stat-box"><div class="num" style="color:#ff8f5e">🔥 ${P.bestStreak}</div><div class="lbl">Bedste serie</div></div>
+      <div class="stat-box"><div class="num" style="color:var(--gold)">${P.xp}</div><div class="lbl">XP i alt</div></div>
+      <div class="stat-box"><div class="num">${catsDone}/${catsTot}</div><div class="lbl">Kategorier klaret</div></div>
+      <div class="stat-box"><div class="num">${Math.round(learned/totItems*100)}%</div><div class="lbl">Samlet beherskelse</div></div>
     </div>
-    <div class="section-title">📅 Daily progress (answers / day)</div>
+    <div class="section-title">📅 Daglig fremgang (svar pr. dag)</div>
     <div class="card"><div class="spark">${spark}</div></div>
-    <div class="section-title">🩹 Weakest phrases</div>
-    <div class="card">${weakest.length?weakest.map(li).join(""):'<p class="muted center" style="margin:6px">Play a few rounds to see your weak spots.</p>'}</div>
-    <div class="section-title">💪 Strongest phrases</div>
-    <div class="card">${strongest.length?strongest.map(li).join(""):'<p class="muted center" style="margin:6px">No data yet — start practicing!</p>'}</div>
+    <div class="section-title">🩹 Dine svageste udtryk</div>
+    <div class="card">${weakest.length?weakest.map(li).join(""):'<p class="muted center" style="margin:6px">Spil et par runder for at se, hvor du skal øve dig mere.</p>'}</div>
+    <div class="section-title">💪 Dine stærkeste udtryk</div>
+    <div class="card">${strongest.length?strongest.map(li).join(""):'<p class="muted center" style="margin:6px">Ingen data endnu – kom i gang med at øve!</p>'}</div>
     <div class="section-title">⚙️ Data</div>
-    <button class="btn ghost small" onclick="resetAll()">Reset all progress</button>`;
+    <button class="btn ghost small" onclick="resetAll()">Nulstil alle fremskridt</button>`;
 }
-function resetAll(){ if(confirm("Reset ALL progress, XP and streaks?")){P=blankProgress();save();toast("Progress reset");go('home');} }
+function resetAll(){ if(confirm("Vil du nulstille alle fremskridt, al XP og alle dage i træk?")){P=blankProgress();save();toast("Fremskridt nulstillet");go('home');} }
 
 /* =========================================================
    BADGES
@@ -1203,8 +1247,8 @@ function screenBadges(){
   const cells=ACHS.map(a=>{const un=P.badges.includes(a.id);
     return `<div class="ach ${un?'un':''}"><div class="aico" data-sd-sprite="${BADGE_SPR[ACHS.indexOf(a)%BADGE_SPR.length]}" data-scale="4" aria-hidden="true"></div><div class="aname">${a.name}</div></div>`;}).join("");
   const got=P.badges.length;
-  return `<div class="h1">🏅 Achievements</div>
-    <p class="sub">${got}/${ACHS.length} badges earned</p>
+  return `<div class="h1">🏅 Emblemer</div>
+    <p class="sub">${got}/${ACHS.length} emblemer optjent</p>
     <div class="card" style="margin-bottom:18px">${bar(Math.round(got/ACHS.length*100))}</div>
     <div class="badge-grid">${cells}</div>`;
 }
@@ -1239,11 +1283,11 @@ render();
   function polish(){
     SD.hydrate(app);
     app.querySelectorAll('.h1,.section-title,.cname,.mname,.btn:not(.opt),.timer-pill').forEach(stripLead);
-    app.querySelectorAll('.cat.locked .num').forEach(function(n){ if(n.textContent.trim()!=='LOCK') n.textContent='LOCK'; });
+    app.querySelectorAll('.cat.locked .num').forEach(function(n){ if(n.textContent.trim()!=='LÅST') n.textContent='LÅST'; });
     app.querySelectorAll('.path-card,.cat,.mode,.back:not(.face),#flash').forEach(function(el){
       if(!el.hasAttribute('tabindex')){ el.setAttribute('tabindex','0'); el.setAttribute('role','button'); }
       if(el.classList.contains('locked')) el.setAttribute('aria-disabled','true');
-      if(el.id==='flash') el.setAttribute('aria-label','Flash card: press Enter to flip');
+      if(el.id==='flash') el.setAttribute('aria-label','Vendekort: tryk på Enter for at vende kortet');
     });
     var scr=app.querySelector('.screen'); if(scr&&scr!==lastScreen){ lastScreen=scr; SD.fx.enter(scr); }
     var w=document.getElementById('promptWord'), pr=app.querySelector('.prompt'), ft=app.querySelector('#flash .face.front .ftext');
