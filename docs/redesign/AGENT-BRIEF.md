@@ -5,13 +5,22 @@ The design system is DONE and frozen. Read: `shared/sjovt.css` (tokens + compone
 `index.html` (reference implementation of the look), `docs/sjovt-sprites.html`.
 
 ## Visual identity (match it)
-Mustard `#E1AD12` field + faint 32px grid, vivid orange `#F94F37` primary buttons/accents, cream `#FFC25A` highlights, black `#101010`
-4px notched pixel frames (`box-shadow: var(--sd-box)`) with hard offset drop shadows (`var(--sd-drop)`), warm paper panels `#FFF4D6`
-for reading text. Fonts: `--sd-font-display` (Pixelify Sans) for headings/buttons/labels, `--sd-font-body` (JetBrains Mono) for ALL reading text,
-digits, level badges, and anything where B/0, 1/I, 2/8 must be unambiguous. `--sd-font-logo` ONLY for the SJOVT DANSK wordmark (its Ø looks like 0).
-No border-radius, no soft/blurred shadows, no gradients except pixel stripes, animations use `steps()`. Sprites via `Sjovt.sprite(name,{scale})`
-or `<span data-sd-sprite="polle" data-scale="6">` (names: polle snegl molle cykel stjerne hjerte pokal hat flag). Replace decorative emoji with sprites where easy.
-Dark mode: tokens flip automatically via `prefers-color-scheme` / `[data-theme=dark]`. If the game has its own theme toggle, make it set `data-theme` on `<html>`.
+Each game has ONE colour, set once in its theme file as `--game` (e.g. Præpositioner `#2ED0EE`); the theme maps it onto the tokens
+(`--sd-primary`, `--sd-bg`, `--sd-panel`, `--sd-line`, dark-mode variants). The portal and the shared bar keep the brand mustard `#E1AD12` / orange `#F94F37` / cream `#FFC25A`.
+Look at an existing theme (`shared/themes/praepositioner.css`) before writing a new one. Black `#101010` 4px notched pixel frames (`box-shadow: var(--sd-box)`) with hard
+offset drop shadows (`var(--sd-drop)`), a faint 32px grid (painted on `<html>` and `<body>`), warm panels (`--sd-panel`) for reading text.
+Buttons: `.sd-btn` (game-coloured primary, ink frame, bevel); the portal "Vælg spil" and card buttons use it too.
+Fonts (all local in `shared/fonts/`, never Google Fonts): `--sd-font-display` and `--sd-font-body` are both **SD Mono** (JetBrains Mono, bold for headings/buttons/labels, regular for reading text,
+digits and level badges, so B/0, 1/I, 2/8 stay unambiguous). `--sd-font-logo` (Press Start 2P) ONLY for the SJOVT DANSK wordmark (its Ø looks like 0). There is no Pixelify Sans.
+No border-radius, no soft/blurred shadows, no gradients except pixel stripes, animations use `steps()`.
+Sprites: all are 32x32 shaded grids (one density everywhere). `Sjovt.sprite(name,{scale})` or `<span data-sd-sprite="polle" data-scale="4">`.
+Names: `Sjovt.sprites` lists them; meanings are in `docs/redesign/icon-map.md` (one meaning per sprite; pick from the map, e.g. `stopur` speed, `bland` mixed, `statistik` stats, `vend` flip).
+Scale note: `spriteSVG` renders a 32px grid at half the scale, rounded up, so use even scales (2, 4, 6); scale 2 gives a 32px box. Replace decorative emoji with sprites where easy.
+Arrows: never type ← → ▶ ▼ as text where it can be avoided (fonts lack them). Use `<span class="sd-arr" aria-hidden="true"></span>` (`sd-arr--r`, `--d`, `--u` for other directions).
+Shared parts to reuse instead of restyling per game: `.sd-gap` (sentence blank), `.sd-badge--panel` (neutral level badge; green/red are only for correct/wrong), `select.sd-select` (pixel chevron) and
+`.sd-surface` (dark-mode-safe card) from `shared/sd-extras.css`; `.dc-tts-button` (the one Lyt button) from `shared/tts-button.css`; `.sd-results*` (results screen look) from `shared/sjovt.css`.
+Dark mode rule: cards and tiles use panel tokens (`--sd-panel`, `--sd-text`, `--sd-line`), never hard-coded white/pastel fills; game colour is an accent only. Anything on a cream hover/selected fill sets `color:#101010`.
+Dark mode: tokens flip automatically via `prefers-color-scheme` / `[data-theme=dark]`. Theme and sound are controlled ONLY by the shared bar (`sd:theme`, `dc:sound-enabled`); do not add per-game toggles.
 
 ## How to integrate (per game)
 1. In `<head>`, AFTER the game's own `<style>` blocks (so cascade wins) add (paths relative to the game file):
@@ -22,8 +31,8 @@ Dark mode: tokens flip automatically via `prefers-color-scheme` / `[data-theme=d
    variables onto `--sd-*` tokens and overriding component rules (use `html.sd-page` prefix for specificity, `!important` only when fighting inline styles).
    You may also edit the game's own inline CSS directly where cleaner. You MAY edit game HTML/JS minimally to: add hooks for fx, swap emoji for sprites,
    add accessible labels. You MUST NOT change learning content, data, rules, scoring, SRS/progress logic, or localStorage/DanskCore keys.
-3. The shared bar (`← MENU` + wordmark) is auto-injected at top of body (48px, sticky). Fix any `100vh` layouts so nothing is clipped/scrolls twice
-   (use `calc(100dvh - var(--sd-bar-h))`). Don't duplicate a back-to-menu control unless the game already needs one for in-game “quit”.
+3. The shared bar (arrow + MENU, wordmark, MØRK and LYD buttons) is auto-injected at top of body (sticky). `--sd-bar-h` is set to its measured height (56px by default). Fix any `100vh` layouts so nothing is clipped/scrolls twice
+   (use `calc(100dvh - var(--sd-bar-h))`). Don't duplicate a back-to-menu control unless the game already needs one for in-game “quit”; in-game back is "← TILBAGE" and ✕ only quits a round.
 4. Animations (lightweight, reduced-motion safe — the helpers already no-op under reduced motion):
    - screen/panel changes: `Sjovt.watchScreens("<selector for screens>")` or `Sjovt.fx.enter(el)`
    - correct answer: `Sjovt.fx.correct(buttonEl)`; wrong: `Sjovt.fx.wrong(buttonEl)`; score/streak change: `Sjovt.fx.bump(scoreEl)`; finished/results: `Sjovt.fx.celebrate()` + a sprite (pokal/stjerne)
@@ -37,7 +46,7 @@ Dark mode: tokens flip automatically via `prefers-color-scheme` / `[data-theme=d
 5b. Keep every game's own text language; do not translate learning content.
 
 ## DO NOT TOUCH
-`shared/sjovt.css`, `shared/sjovt.js`, `shared/fonts/`, `index.html`, other games' files, `prd.md`, `specs.md`, `PROGRESS.md`, `improvements.md`.
+`shared/sjovt.css`, `shared/sjovt.js`, `shared/sd-extras.css`, `shared/tts-button.css`, `shared/fonts/`, `index.html`, other games' files, `prd.md`, `specs.md`, `PROGRESS.md`, `improvements.md`.
 Need a shared change? Don't make it — put the override in your theme file and list the request in your report.
 Do NOT run git commands that write (no add/commit/stash/checkout) — the lead commits. Shared `shared/dansk-core.js` / `shared/data/*` : read-only unless the game truly needs it (tell me).
 
