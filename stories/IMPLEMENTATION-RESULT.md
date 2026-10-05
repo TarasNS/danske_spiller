@@ -73,7 +73,7 @@ Owner = file owner agent (one per game). "Verification" = independent verifier v
 | US-037 Layout polish | 8 owners + retries | **VERIFIED** | |
 | US-038 Icon system polish | W-ICONS + 14 owners | IMPLEMENTED BUT NOT VERIFIED (partial) | icon map + identity sprites done; redraw of generic sprites BLOCKED (frozen `sjovt.js`) |
 | US-039 Shared UI parts | W-SHARED + 14 owners | IMPLEMENTED BUT NOT VERIFIED (partial) | gap/badge/select/surface/small TTS/back wording done; bar arrow, portal, grid token, results component BLOCKED |
-| US-040 Theme/sound controls | none | **BLOCKED** | frozen `index.html`, `sjovt.js`; depends on US-026 |
+| US-040 Theme/sound controls | shared bar + 5 games + portal | IMPLEMENTED BUT NOT VERIFIED | theme (`sd:theme`) and mute (`dc:sound-enabled`) in the `.sd-bar` on every bar page; per-game toggles removed; portal themeBtn persists; U-06: no auto-play found |
 | US-041 Cancel timers | W-ANT, W-BOEJ, W-DM | **VERIFIED** | |
 | US-042 Missed items first | W-PRON, W-BOEJ | **VERIFIED** | |
 | US-043 Glosekort polish | W-GLOSE | **VERIFIED** | |
@@ -94,7 +94,6 @@ Owner = file owner agent (one per game). "Verification" = independent verifier v
 |---|---|---|
 | US-026 | where the shared feedback helper lives; frozen `shared/sjovt.js` | owner decision (or approval to edit `sjovt.js`) |
 | US-027 | `specs.md` decision; native-reviewed content | owner decision + native speaker |
-| US-040 | frozen `index.html` / `sjovt.js`; depends on US-026 | owner approval |
 | US-052 | decide: remove from deploy set or reskin | owner decision |
 | US-053 | docs under owner control (`AGENT-BRIEF`, `CLAUDE.md`) | owner approval |
 | US-038 remainder | redraw of the 9 generic sprites (32 px stats/difficulty/stopwatch) | approval to edit frozen `shared/sjovt.js` |
@@ -166,6 +165,7 @@ All implementable P0/P1 stories are fixed; their machine-checkable criteria were
 
 - **Decisions #15-40** in `stories/DECISIONS.md` cover every story that was BLOCKED: US-026 (#15-18), US-027 (#19-22), US-040 (#23-26), US-052 (#27), US-053 (#28-31), US-038 remainder (#32-34), US-039 remainder (#35-37), US-050 portal slice (#38-40). Frozen-file approvals are scoped to the named story only.
 - **US-052:** done. `pixel-animation.html` moved to `docs/redesign/pixel-animation.html` (design reference, out of the published root). Status IMPLEMENTED.
+- **US-040 report (IMPLEMENTED BUT NOT VERIFIED):** theme (`sd:theme`, OS default) and sound-effects mute (`dc:sound-enabled`) live in the shared `.sd-bar` (`shared/sjovt.js` + `sjovt.css`), applied before first paint; `DanskCore.ui.darkMode/sound` delegate to the same keys. Removed: Adverbier `#darkToggle`, Bøjningsværkstedet/Pronomenmysteriet/Tidsmaskinen `btn-dark`/`btn-sound`, Antonymer `#setSound` (its TTS is no longer gated). The portal has no bar, so its `themeBtn` stays and now persists through `Sjovt.theme`. Headless Edge check (8 pages): reload persistence, portal carry-over, mute persistence, 44 px targets, blocked storage: all pass. `tests/pronomenmysteriet.mjs` 66/66, `tests/tidsmaskinen.mjs` (persist/kbd/theme/boot) 51/51, both updated to the new bar button ids; the full tidsmaskinen suite exceeds 9 min and its "auto-advance 700-1000 ms" check is timing-flaky on this machine (max 1.6-1.8 s outliers). U-06: no TTS auto-play without a gesture found.
 - **Now READY FOR DEVELOPMENT:** US-026, US-027, US-040, US-053, and the remainders of US-038, US-039 and the US-050 portal slice.
 - **US-053 progress:** the "Pixelify Sans" fallback is already absent from `shared/explainer/modal.css` (no change needed); `CLAUDE.md` gets the stale `lærerene` note removed and is committed (decision #30). `AGENT-BRIEF.md` / `TEST-REPORT.md` rewrite follows the US-040/039/038 work so the brief describes the final design.
 - **Still open (owner):** US-051 authoring (~920 Sætningsmaskinen items, after release); US-029 acceptance of the 32 px visible / 44 px hit-area listen button. US-027 still needs the `specs.md` wording (owner, or explicit approval).

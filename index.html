@@ -295,16 +295,11 @@ function renderGames() {
 }
 $("#search").addEventListener("input", (e) => { searchTerm = e.target.value; renderGames(); });
 
-/* Light / dark (follows the OS until the user chooses; choice kept for the session) */
+/* Light / dark: follows the OS until the user chooses; the choice is saved (sd:theme) and shared with every game via Sjovt.theme */
 const themeBtn = $("#themeBtn");
-function isDark() {
-  const c = document.documentElement.getAttribute("data-theme");
-  return c === "dark" || (c !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-}
-function paintTheme() { const d = isDark(); themeBtn.textContent = d ? "LYS" : "MØRK"; themeBtn.setAttribute("aria-pressed", String(d)); }
-themeBtn.addEventListener("click", () => {
-  document.documentElement.setAttribute("data-theme", isDark() ? "light" : "dark"); paintTheme();
-});
+function paintTheme() { const d = Sjovt.theme.isDark(); themeBtn.textContent = d ? "LYS" : "MØRK"; themeBtn.setAttribute("aria-pressed", String(d)); }
+themeBtn.addEventListener("click", () => { Sjovt.theme.toggle(); });
+window.addEventListener("sd:themechange", paintTheme);
 paintTheme();
 renderGames();
 </script>

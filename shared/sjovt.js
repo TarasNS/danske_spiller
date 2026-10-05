@@ -17,6 +17,42 @@
 
   root.classList.add("sd-page");
 
+  /* ------------------------------------------------- theme + sound (US-040)
+     One source of truth for every page. Theme: `sd:theme` = "dark" | "light"
+     (raw string); absent = follow the OS. Applied here, synchronously in <head>,
+     so the first paint already has the right theme. Sound effects: `dc:sound-enabled`
+     (JSON true/false, same key DanskCore.ui.sound uses). Mute never affects TTS. */
+  var THEME_KEY = "sd:theme", SOUND_KEY = "dc:sound-enabled";
+  function lsGet(k) { try { return win.localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { win.localStorage.setItem(k, v); } catch (e) { /* storage blocked: choice lasts for this page only */ } }
+  var osDark = win.matchMedia ? win.matchMedia("(prefers-color-scheme: dark)") : { matches: false };
+  function savedTheme() { var t = lsGet(THEME_KEY); return (t === "dark" || t === "light") ? t : null; }
+  function applyTheme() { var t = savedTheme(); if (t) root.setAttribute("data-theme", t); }
+  function themeIsDark() {
+    var c = root.getAttribute("data-theme");
+    return c === "dark" || (c !== "light" && !!osDark.matches);
+  }
+  function notify(name) {
+    try { win.dispatchEvent(new CustomEvent(name)); } catch (e) { /* old browser */ }
+  }
+  var theme = {
+    isDark: themeIsDark,
+    get: function () { return themeIsDark() ? "dark" : "light"; },
+    set: function (mode) {
+      if (mode !== "dark" && mode !== "light") return theme.get();
+      root.setAttribute("data-theme", mode); lsSet(THEME_KEY, mode); notify("sd:themechange"); return mode;
+    },
+    toggle: function () { return theme.set(themeIsDark() ? "light" : "dark"); }
+  };
+  function soundOn() { return lsGet(SOUND_KEY) !== "false"; }
+  var sound = {
+    isEnabled: soundOn,
+    set: function (on) { lsSet(SOUND_KEY, on ? "true" : "false"); notify("sd:soundchange"); return !!on; },
+    toggle: function () { return sound.set(!soundOn()); }
+  };
+  applyTheme();
+  if (osDark.addEventListener) osDark.addEventListener("change", function () { notify("sd:themechange"); });
+
   /* ------------------------------------------------------------ sprites */
   var PAL = { K: "#101010", W: "#FFFFFF", O: "#F94F37", Y: "#E1AD12", C: "#FFC25A", A: "#FD9E4F",
               B: "#8A4A1C", R: "#D7263D", T: "#EDB366", G: "#148A3C", L: "#2B3FD6", P: "#FFE9B0", S: "#8E8E8E",
@@ -765,7 +801,19 @@
     var bar = doc.createElement("nav");
     bar.className = "sd-bar"; bar.setAttribute("aria-label", "Sjovt Dansk");
     bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '">← MENU</a>' +
-      '<span class="sd-bar-logo">' + '<span class="sd-sprite">' + spriteSVG("polle", 2) + '</span><span class="t">SJOVT <b>DANSK</b></span></span>';
+      '<span class="sd-bar-logo">' + '<span class="sd-sprite">' + spriteSVG("polle", 2) + '</span><span class="t">SJOVT <b>DANSK</b></span></span>' +
+      '<button type="button" class="sd-bar-btn" id="sd-theme-btn" aria-label="Mørk tilstand" title="Skift mellem lys og mørk tilstand">MØRK</button>' +
+      '<button type="button" class="sd-bar-btn" id="sd-sound-btn" aria-label="Lydeffekter" title="Slå lydeffekter til eller fra (oplæsning med Lyt er upåvirket)">LYD</button>';
+    var tb = bar.querySelector("#sd-theme-btn"), sb = bar.querySelector("#sd-sound-btn");
+    function paint() {
+      tb.setAttribute("aria-pressed", String(themeIsDark()));
+      var on = soundOn(); sb.setAttribute("aria-pressed", String(on)); sb.textContent = on ? "LYD" : "LYD ✗";
+    }
+    tb.addEventListener("click", function () { theme.toggle(); });
+    sb.addEventListener("click", function () { sound.toggle(); });
+    win.addEventListener("sd:themechange", paint); win.addEventListener("sd:soundchange", paint);
+    win.addEventListener("storage", function (e) { if (e.key === THEME_KEY) { applyTheme(); paint(); } else if (e.key === SOUND_KEY) paint(); });
+    paint();
     doc.body.insertBefore(bar, doc.body.firstChild);
     root.style.setProperty("--sd-bar-h", "48px");
   }
@@ -824,7 +872,7 @@
 
   win.Sjovt = {
     sprite: sprite, spriteSVG: spriteSVG, hydrate: hydrateSprites, sprites: Object.keys(SPR), fx: fx,
-    watchScreens: watchScreens, reduced: reduced, homeUrl: homeUrl,
+    watchScreens: watchScreens, reduced: reduced, homeUrl: homeUrl, theme: theme, sound: sound,
     hold: function (p) { preState.holds.push(Promise.resolve(p).catch(function () {})); },   // keep curtain until p settles
     ready: function () { finishPre(); }
   };

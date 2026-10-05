@@ -358,8 +358,6 @@
 <div class="shell">
   <header class="topbar">
     <div class="brand">Bøjningsværkstedet</div>
-    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
-    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
   </header>
 
   <!-- ================= START SCREEN ================= -->
@@ -486,8 +484,7 @@
 
   // ---- init settings ----
   DC.ui.darkMode.init();
-  DC.ui.sound.init(prefs.get('sound') !== false);
-  syncSoundIcon();
+  DC.ui.sound.init(true);   // US-040: mute lives in the shared bar (dc:sound-enabled)
 
   // restore last mode/levels if present
   var savedMode = prefs.get('mode');
@@ -498,16 +495,6 @@
     if (!state.levels.length) state.levels = LEVELS.slice();
   }
 
-  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
-  document.getElementById('btn-sound').addEventListener('click', function(){
-    var on = DC.ui.sound.toggle();
-    prefs.set('sound', on);
-    syncSoundIcon();
-    if (on) SOUND.select();
-  });
-  function syncSoundIcon(){
-    document.getElementById('btn-sound').textContent = DC.ui.sound.isEnabled() ? 'LYD' : 'LYD ✗';
-  }
 
   // US-030: reset only this game's SRS progress, after a Danish confirmation.
   // Storage failures are swallowed by DC.store; confirm() failures count as "cancel".

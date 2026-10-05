@@ -651,18 +651,18 @@ try {
     note('modal pattern keys', patKeys.join(' ; '));
     rec('pattern keys follow pattern:tidsmaskinen:<type>:<a>:<b>', patKeys.length > 0 && patKeys.every(k => /^pattern:tidsmaskinen:[a-z-]+:[^:]+:[^:]+$/.test(k)), patKeys.slice(0, 3).join(' ; '));
     // mute persists + silent
-    note('sound state before mute click', await page.evaluate(() => document.getElementById('btn-sound').textContent + ' dc=' + localStorage.getItem('dc:sound-enabled')));
-    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#btn-sound'); await sleep(100);
-    const snd = await page.$eval('#btn-sound', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
+    note('sound state before mute click', await page.evaluate(() => document.getElementById('sd-sound-btn').textContent + ' dc=' + localStorage.getItem('dc:sound-enabled')));
+    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#sd-sound-btn'); await sleep(100);
+    const snd = await page.$eval('#sd-sound-btn', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
     await page.reload({ waitUntil: 'load' }); await sleep(1500);
-    const snd2 = await page.$eval('#btn-sound', n => n.textContent);
+    const snd2 = await page.$eval('#sd-sound-btn', n => n.textContent);
     await page.click('#btn-play'); await sleep(250);
     const o0 = await page.evaluate(() => window.__osc);
     await playItem(page, 'c'); await playItem(page, 'w');
     const o1 = await page.evaluate(() => window.__osc);
     rec('mute: label changes, persists across reload, no audio nodes created', /✗/.test(snd) && /✗/.test(snd2) && o1 === o0, `${snd} reload=${snd2} osc ${o0}->${o1}`);
     await page.keyboard.press('Escape'); await sleep(150);
-    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#btn-sound'); await page.click('#btn-play'); await sleep(250);
+    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#sd-sound-btn'); await page.click('#btn-play'); await sleep(250);
     const o2 = await page.evaluate(() => window.__osc); await playItem(page, 'c'); const o3 = await page.evaluate(() => window.__osc);
     rec('unmuted: audio nodes created (sanity)', o3 > o2, `${o2}->${o3}`);
     // TTS replay click calls speechSynthesis
@@ -688,7 +688,7 @@ try {
     const order = [];
     for (let i = 0; i < 22; i++) { await page.keyboard.press('Tab'); order.push(await page.evaluate(() => { const e = document.activeElement; return e.id || (e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 18) || e.tagName; })); }
     console.log('tab order:', order.join(' > '));
-    rec('start: Tab reaches header, all 9 modes, 4 levels, 2 pace chips, Spil', ['btn-dark', 'btn-sound', 'btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-9][^0-9]/.test(o)).length === 9 && ['A2', 'B1', 'B2', 'C1', 'Træning', 'Med tid'].every(x => order.some(o => o.replace('✓ ', '') === x)), order.join(' > '));
+    rec('start: Tab reaches header, all 9 modes, 4 levels, 2 pace chips, Spil', ['sd-theme-btn', 'sd-sound-btn', 'btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-9][^0-9]/.test(o)).length === 9 && ['A2', 'B1', 'B2', 'C1', 'Træning', 'Med tid'].every(x => order.some(o => o.replace('✓ ', '') === x)), order.join(' > '));
     const fr = await focusRingProblems(page, 22);
     rec('start: focus ring visible on every focus stop', fr.length === 0, fr.join(','));
     for (let mi = 0; mi < 9; mi++) {
@@ -827,10 +827,10 @@ try {
   if (want('theme')) {
     let r = await openGame(browser, FILE, { viewport: 'mobile', colorScheme: 'dark', init: INIT });
     let p = r.page; await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await sleep(1500);
-    const th1 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    await p.click('#btn-dark'); const th2 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    await p.click('#btn-dark'); const th3 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    rec('dark: prefers-color-scheme applies data-theme; toggle button flips both ways', th1 === 'dark' && th2 !== th1 && th3 === th1, `${th1} -> ${th2} -> ${th3}`);
+    const th1 = await p.evaluate(() => document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); // US-040: no attribute until the user chooses (OS drives CSS)
+    await p.click('#sd-theme-btn'); const th2 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    await p.click('#sd-theme-btn'); const th3 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    rec('dark: prefers-color-scheme drives the theme; bar toggle flips both ways', th1 === 'dark' && th2 !== th1 && th3 === th1, `${th1} -> ${th2} -> ${th3}`);
     await p.close();
     r = await openGame(browser, FILE, { viewport: 'mobile', reducedMotion: true, init: INIT }); p = r.page;
     await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await sleep(1500);

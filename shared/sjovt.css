@@ -207,6 +207,11 @@ html.sd-page ::selection { background: var(--sd-ink); color: var(--sd-cream); }
 .sd-bar a:hover { background: var(--sd-orange); color: #101010; }
 .sd-bar .sd-bar-logo { margin-left: auto; font-family: var(--sd-font-logo); font-size: 12px; display: inline-flex; align-items: center; gap: 8px; color: var(--sd-cream); }
 .sd-bar .sd-bar-logo b { font-weight: 400; color: var(--sd-orange); }
+.sd-bar .sd-bar-btn { min-width: 44px; min-height: 44px; padding: 0 10px; border: 2px solid var(--sd-cream); background: transparent; color: var(--sd-cream); font: inherit; font-size: 14px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; cursor: pointer; }
+.sd-bar .sd-bar-btn:hover { background: var(--sd-orange); color: #101010; border-color: var(--sd-orange); }
+.sd-bar .sd-bar-btn[aria-pressed="true"] { background: var(--sd-cream); color: #101010; }
+.sd-bar .sd-bar-btn:focus-visible, .sd-bar a:focus-visible { outline: 3px solid var(--sd-orange); outline-offset: 2px; }
+@media (max-width: 420px) { .sd-bar { gap: 4px; padding: 4px 6px; } .sd-bar .sd-bar-btn { padding: 0 6px; font-size: 13px; } .sd-bar a { padding: 0 6px; } }
 @media (max-width: 420px) { .sd-bar .sd-bar-logo span.t { display: none; } }
 
 /* --------------------------------------------------------- sprite animations */

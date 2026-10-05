@@ -60,7 +60,7 @@
 | US-037 | P3 | Mobile / UI | Dansk Mester, Præpositioner, Ordstillingsdetektiven, Antonymer, Magiske Verber, Bøjningsværkstedet, Pronomenmysteriet, Glosekort, Idiomjæger, Tidsmaskinen | — | VERIFIED |
 | US-038 | P3 | Visual | Shared sprites; Tidsmaskinen, Bøjningsværkstedet, Dansk Mester + mode menus | Owner approval (frozen `sjovt.js`) | IMPLEMENTED BUT NOT VERIFIED (partial; frozen-file remainder BLOCKED) |
 | US-039 | P3 | Visual / Cross-game | Shared chrome + several games + Portal | Owner approval (frozen `sjovt.css`/`sjovt.js`/`index.html`) | IMPLEMENTED BUT NOT VERIFIED (partial; frozen-file remainder BLOCKED) |
-| US-040 | P3 | Cross-game / UI | Portal + all games | Owner approval (frozen `index.html`, `sjovt.js`) | BLOCKED |
+| US-040 | P3 | Cross-game / UI | Portal + all games | Owner approval (frozen `index.html`, `sjovt.js`) | IMPLEMENTED BUT NOT VERIFIED |
 | US-041 | P3 | Gameplay | Antonymer, Bøjningsværkstedet, Dansk Mester | — | VERIFIED |
 | US-042 | P3 | Gameplay | Bøjningsværkstedet, Pronomenmysteriet | US-001 | VERIFIED |
 | US-043 | P3 | Gameplay | Glosekort | US-011 | VERIFIED |
@@ -2355,7 +2355,9 @@ Reload test; cross-page test; smoke.
 
 **Owner decisions (2026-10-05):** #23-26 in `stories/DECISIONS.md`: frozen `index.html` + `shared/sjovt.js` approved for this story; OS default + saved `sd:theme` override; mute = sound effects only; per-game toggles removed in favour of the bar.
 
-**Status:** READY FOR DEVELOPMENT
+**Implementation (2026-10-05):** `shared/sjovt.js` applies `sd:theme` in `<head>` before first paint and exposes `Sjovt.theme` / `Sjovt.sound`; the `.sd-bar` now has a theme button (`#sd-theme-btn`, "MØRK", `aria-pressed` = dark) and a sound-effects button (`#sd-sound-btn`, "LYD" / "LYD ✗", `aria-pressed` = on), both 44 px, Danish labels. `DanskCore.ui.darkMode` reads/writes `sd:theme` and `DanskCore.ui.sound` always re-reads `dc:sound-enabled` (no duplicate keys; `dc:dark-mode` and Adverbier `danishDarkMode` are retired). Per-game toggles removed from Adverbier, Bøjningsværkstedet, Pronomenmysteriet, Tidsmaskinen and Antonymer (`#setSound`; its TTS is no longer gated). The portal keeps its own `themeBtn` (the portal has no bar) wired to `Sjovt.theme`. U-06: no `speechSynthesis.speak` fires on load or after the first start click in any of the 15 pages (spy); static review shows speak is only called from "Lyt" buttons, Antonymer in-round prompts after the learner has started a round, and Adverbier listening mode (gated by `userActive`). Mute does not affect TTS (decision #25), so nothing needs to respect it.
+
+**Status:** IMPLEMENTED BUT NOT VERIFIED
 
 ---
 

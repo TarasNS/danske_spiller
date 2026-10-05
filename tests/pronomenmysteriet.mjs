@@ -202,7 +202,7 @@ try {
   const order = [];
   for (let i = 0; i < 14; i++) { await page.keyboard.press('Tab'); order.push(await page.evaluate(() => { const e = document.activeElement; return e.id || (e.textContent || '').trim().slice(0, 14) || e.tagName; })); }
   console.log('tab order:', order.join(' > '));
-  rec('tab order reaches mode/level/Spil/header buttons', ['btn-dark','btn-sound','btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-6]/.test(o)).length >= 6, order.join(' > '));
+  rec('tab order reaches mode/level/Spil/header buttons', ['sd-theme-btn','sd-sound-btn','btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-6]/.test(o)).length >= 6, order.join(' > '));
   await page.focus('#btn-play'); await page.keyboard.press('Enter'); await sleep(300);
   const playVisible = await page.$eval('#play-screen', n => !n.classList.contains('hidden'));
   const focusedOpt = await page.evaluate(() => document.activeElement.className);
@@ -230,9 +230,9 @@ try {
   // ---------- mute
   await page.evaluate(() => localStorage.clear());
   await page.reload({ waitUntil: 'load' }); await sleep(1500);
-  const sndBefore = await page.$eval('#btn-sound', n => n.textContent);
-  await page.click('#btn-sound');
-  const sndAfter = await page.$eval('#btn-sound', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
+  const sndBefore = await page.$eval('#sd-sound-btn', n => n.textContent);
+  await page.click('#sd-sound-btn');
+  const sndAfter = await page.$eval('#sd-sound-btn', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
   const stored = await page.evaluate(() => [localStorage.getItem('dc:sound-enabled'), localStorage.getItem('pronomenmysteriet:sound')]);
   // wrap audio: count oscillators created when playing while muted
   await page.evaluate(() => { window.__osc = 0; const AC = window.AudioContext || window.webkitAudioContext; if (AC) { const o = AC.prototype.createOscillator; AC.prototype.createOscillator = function () { window.__osc++; return o.apply(this, arguments); }; const b = AC.prototype.createBufferSource; AC.prototype.createBufferSource = function () { window.__osc++; return b.apply(this, arguments); }; } });
@@ -241,7 +241,7 @@ try {
   await (await page.$$('#item-host .opt'))[o2.findIndex(v => v === it2.correct)].click(); await sleep(300);
   const oscMuted = await page.evaluate(() => window.__osc);
   rec('mute: label changes, persisted, no audio nodes created', sndBefore === 'LYD' && /✗/.test(sndAfter) && oscMuted === 0, `${sndBefore} -> ${sndAfter}; stored=${stored}; osc=${oscMuted}`);
-  await page.click('#btn-back'); await page.click('#btn-sound'); await page.click('#btn-play'); await sleep(300);
+  await page.click('#btn-back'); await page.click('#sd-sound-btn'); await page.click('#btn-play'); await sleep(300);
   const it3 = await lookup(page); const o3 = await page.$$eval('#item-host .opt', ns => ns.map(n => n.getAttribute('data-value')));
   await sleep(1000);
   await (await page.$$('#item-host .opt'))[o3.findIndex(v => v === it3.correct)].click(); await sleep(300);
