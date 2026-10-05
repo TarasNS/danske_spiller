@@ -6,7 +6,7 @@
   an IIFE that extends the same window.DanskCore object — never redefine it.
 
   Module 1: store, tts, srs, diff.
-  Module 2: level, ui (darkMode, motion, sound, ttsButton, focusTrap, announce), quiz.
+  Module 2: level, ui (darkMode, motion, sound, ttsButton, focusTrap, announce), quiz (mc, freeText, tiles, summary, feedback).
 */
 (function () {
   'use strict';
@@ -442,6 +442,9 @@
       '.dc-quiz-input{flex:1 1 10em;min-height:44px;padding:.5em .7em;border:1px solid var(--dc-border,currentColor);border-radius:8px;font:inherit;background:var(--dc-input-bg,transparent);color:var(--dc-fg,inherit);}',
       '.dc-quiz-submit{min-height:44px;min-width:44px;padding:.5em 1em;border:1px solid var(--dc-border,currentColor);border-radius:8px;background:var(--dc-accent,#4E82A6);color:var(--dc-accent-fg,#fff);cursor:pointer;font:inherit;}',
       '.dc-quiz-note{margin-top:.5em;font-size:.9em;}',
+      '.dc-feedback{display:flex;flex-direction:column;gap:.5em;margin-top:.75em;}',
+      '.dc-feedback-answer{font-weight:700;}',
+      '.dc-feedback-actions{display:flex;gap:.5em;align-items:center;flex-wrap:wrap;}',
       '.dc-tiles-bank,.dc-tiles-slots{display:flex;flex-wrap:wrap;gap:.5em;}',
       '.dc-tiles-slots{margin-top:.75em;min-height:44px;padding:.5em;border:1px dashed var(--dc-border,currentColor);border-radius:8px;}',
       '.dc-tile{min-height:44px;min-width:44px;padding:.5em .8em;border:1px solid var(--dc-border,currentColor);border-radius:8px;background:var(--dc-btn-bg,transparent);color:var(--dc-fg,inherit);cursor:pointer;font:inherit;}',
@@ -986,11 +989,103 @@
     container.appendChild(wrap);
   }
 
+  // -- quiz.feedback: the shared answer-feedback contract (US-026, PRD) ------
+  // correct: animation + sound + auto-advance after ~800 ms, NO text.
+  // wrong:   the correct answer + one grammar note + a TTS replay + ONE focused "Næste" button, no encouragement.
+  // Honors mute (dc:sound-enabled) and reduced motion (Sjovt.fx already no-ops). Only one feedback is pending at a time.
+  //   DanskCore.quiz.feedback({ correct, el, answer, note, speak, container, onNext, delay, render, autoAdvance, nextLabel })
+  //     el         element to animate (Sjovt.fx.correct / wrong)
+  //     answer     text shown on wrong ("Rigtigt svar: …"); speak = text for the TTS button (default: answer)
+  //     note       the one Danish grammar note (wrong only)
+  //     container  where the wrong-panel is appended; render:false skips the panel (game draws its own) but keeps sound, fx and timing
+  //     onNext     called after the auto-advance (correct) or when "Næste" is pressed (wrong)
+  //     delay      ms before auto-advance (default 800); autoAdvance:false disables it (e.g. timed modes that pace themselves)
+  //   Returns { cancel() }. DanskCore.quiz.feedback.cancel() cancels whatever is pending (call it when leaving a screen).
+  var QUIZ_SOUNDS = {
+    correct: [
+      { type: 'square', frequency: 220, duration: 0.06, gain: 0.05 },
+      { type: 'triangle', frequency: 330, duration: 0.07, gain: 0.06, delay: 0.07 },
+      { type: 'sine', frequency: 494, duration: 0.10, gain: 0.05, delay: 0.14 }
+    ],
+    wrong: [{ type: 'triangle', frequency: 140, duration: 0.15, gain: 0.04 }]
+  };
+  var feedbackTimer = null;
+  var feedbackPanel = null;
+
+  function feedbackCancel() {
+    if (feedbackTimer !== null) { window.clearTimeout(feedbackTimer); feedbackTimer = null; }
+    if (feedbackPanel && feedbackPanel.parentNode) feedbackPanel.parentNode.removeChild(feedbackPanel);
+    feedbackPanel = null;
+  }
+
+  function quizFeedback(opts) {
+    opts = opts || {};
+    feedbackCancel();
+    var fx = window.Sjovt && window.Sjovt.fx;
+    var onNext = typeof opts.onNext === 'function' ? opts.onNext : null;
+    var handle = { cancel: feedbackCancel };
+    var done = false;
+    function next() {
+      if (done) return;
+      done = true;
+      feedbackCancel();
+      if (onNext) onNext();
+    }
+
+    if (opts.correct) {
+      try { if (fx && opts.el) fx.correct(opts.el); } catch (err) { /* decoration only */ }
+      // start the clock before the sound: the first AudioContext can take a moment to create
+      if (onNext && opts.autoAdvance !== false) {
+        feedbackTimer = window.setTimeout(function () { feedbackTimer = null; next(); }, typeof opts.delay === 'number' ? opts.delay : 800);
+      }
+      soundSequence(QUIZ_SOUNDS.correct);
+      return handle;
+    }
+
+    try { if (fx && opts.el) fx.wrong(opts.el); } catch (err) { /* decoration only */ }
+    soundSequence(QUIZ_SOUNDS.wrong);
+    if (opts.render === false || !opts.container) return handle;
+
+    injectBaseStyles();
+    var panel = document.createElement('div');
+    panel.className = 'dc-feedback';
+    panel.setAttribute('role', 'status');
+    if (opts.answer) {
+      var answerEl = document.createElement('div');
+      answerEl.className = 'dc-feedback-answer';
+      answerEl.textContent = 'Rigtigt svar: ' + opts.answer;
+      panel.appendChild(answerEl);
+    }
+    if (opts.note) {
+      var noteEl = document.createElement('div');
+      noteEl.className = 'dc-quiz-note';
+      noteEl.textContent = opts.note;
+      panel.appendChild(noteEl);
+    }
+    var actions = document.createElement('div');
+    actions.className = 'dc-feedback-actions';
+    var speakText = opts.speak || opts.answer;
+    if (speakText) ttsButton(speakText, actions);
+    var nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'dc-quiz-submit dc-feedback-next sd-btn sd-btn--sm';
+    nextBtn.textContent = opts.nextLabel || 'Næste';
+    nextBtn.addEventListener('click', next);
+    actions.appendChild(nextBtn);
+    panel.appendChild(actions);
+    opts.container.appendChild(panel);
+    feedbackPanel = panel;
+    try { nextBtn.focus({ preventScroll: false }); } catch (err) { nextBtn.focus(); }
+    return handle;
+  }
+  quizFeedback.cancel = feedbackCancel;
+
   DanskCore.quiz = {
     mc: { render: quizMcRender },
     freeText: { render: quizFreeTextRender },
     tiles: { render: quizTilesRender },
-    summary: { render: quizSummaryRender }
+    summary: { render: quizSummaryRender },
+    feedback: quizFeedback
   };
 
 })();
