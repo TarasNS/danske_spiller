@@ -23,6 +23,20 @@ node shared/validate.js
 
 There is no single-test runner beyond `smoke.mjs` per game. `build-loop.sh` is an unattended-agent runner (hardcoded Windows path, needs `NTFY_TOPIC` in gitignored `.build-env`) — don't run it casually.
 
+## Execution policy (FAST is the default)
+
+Pick the cheapest sufficient path. When unsure between FAST and STANDARD, choose FAST unless a concrete risk trigger below applies. Don't announce the level unless asked.
+
+- **FAST** (default): typo/data fix, one function, one CSS rule, copy/docs, single-mode tweak, small diff with no `shared/` / frozen file / schema / storage-key change. Edit directly in the main session: no subagent, no reviewer, no worktree, no PR/history investigation. Run one targeted check for what you touched (`node --check`, `node shared/validate.js` for data, or one `smoke.mjs <that game>` for visible UI), once.
+- **STANDARD**: new mode, game logic, multi-file fix, theme for one game. Implement directly or with one `coder`/`designer` (more than one only for disjoint, independent file sets). One final verification (tester scoped to changed paths, or the implementer's own targeted run if no tester is needed).
+- **HIGH-RISK**: `shared/dansk-core.js`, `shared/sjovt.*`, storage-key/SRS schema, bulk data (~200+ items), multi-game refactor, anything outward-facing or irreversible. Full PM/orchestrator flow, worktree, tester, and a reviewer where it adds independent value.
+
+Rules at every level:
+- Never run the same verification twice at the same SHA; cite the earlier result. Re-check only what changed afterwards.
+- Never spawn a subagent or reviewer merely because one exists, or for work that is faster to do directly.
+- Advisory findings (`NOT VERIFIED`, `FLAKY`, style, reviewer comments, optional checks) are reported, not blocking. A blocker is a failed acceptance criterion, a console error, a spec conflict, a broken invariant, or an explicit rule in this repo.
+- Safety/product constraints in this file, `prd.md` and `specs.md` apply at every level.
+
 ## Architecture
 
 - **Games** are self-contained: a folder with `index.html` (+ optional `data.js`), or a single root-level `.html` (older games: `adverbs.html`, `magiske_verber.html`, `idiomjaeger.html`, `dansk-praepositioner.html`, `danish-antonyms-game.html`; others live in folders like `forbindenor/`, `konjunktioner/`, `danske-phraser/`, `en og et/`). `index.html` at the root is the portal/homepage.

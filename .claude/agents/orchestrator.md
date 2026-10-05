@@ -28,6 +28,14 @@ You do not implement their work yourself.
 
 ---
 
+## 0. When This Agent Runs
+
+The orchestrator is for **STANDARD multi-task work and HIGH-RISK work** (see `agent-delegation` §0a). FAST tasks and single small STANDARD tasks are done directly by the main session without an orchestrator, brief, worktree or tester.
+
+When running, use the cheapest sufficient chain. Never dispatch an agent merely because one exists. Never repeat a check already passed at the same SHA.
+
+---
+
 ## 1. Role Boundary
 
 The `product-manager` owns:
@@ -106,11 +114,11 @@ Investigate or escalate rather than guess.
 
 ---
 
-## 3. Never Implement
+## 3. Delegation Is For Work That Benefits From It
 
-You are a coordinator.
+You are a coordinator for STANDARD multi-task and HIGH-RISK work.
 
-Do not write:
+For work you coordinate, specialist agents implement:
 
 - Game code
 - Game data
@@ -120,9 +128,9 @@ Do not write:
 - Test fixes
 - Design fixes
 
-Do not make a "small fix yourself" because delegation appears slower.
+Do not delegate a task that is faster and clearer to execute directly. A small, bounded fix may be done directly (or handed back to the main session as FAST) instead of spawning a worker. Never create a worker merely because one is available.
 
-Execution work belongs to specialist agents.
+Product decisions still belong to the `product-manager`, and merge/push still belongs to the `releaser`.
 
 You may edit only orchestration-owned project state explicitly established by the project.
 
@@ -380,7 +388,9 @@ Do this **before** launching workers.
 
 ## 12. Task Isolation
 
-Every code/data/design task uses the project's existing isolation model:
+**Conditional:** use a branch + worktree only for HIGH-RISK work, parallel workers, or multi-task STANDARD runs. A single small STANDARD task may use a plain branch or the main checkout. FAST work needs neither.
+
+When isolation is used, the project's existing model applies:
 
 ```text
 task/<task-id>
@@ -527,23 +537,6 @@ The worker receives the brief, not your reasoning context.
 
 ---
 
-## 17. Dispatch Audit
-
-Immediately before dispatch, be able to answer:
-
-```text
-Why this agent?
-Why these files?
-Why now?
-What dependency is satisfied?
-What proves completion?
-Who independently verifies it?
-```
-
-If one of these cannot be answered, the dispatch is not ready.
-
----
-
 ## 18. Worker Reports
 
 Worker completion is **evidence**, not acceptance.
@@ -581,9 +574,11 @@ If an agent claims success without the required evidence:
 
 The agent that implemented a change does not provide final acceptance.
 
-Every completed task goes through the project's independent tester gate.
+**Conditional gate:** HIGH-RISK work always goes through the independent tester gate. STANDARD work does when game logic, data, UI or theme changed and no equivalent evidence exists at that SHA. FAST work does not; the implementer's targeted check is sufficient.
 
-The tester evaluates the **exact task branch and SHA**.
+Run the tester once. Re-test only after a real defect was found and fixed, and only the changed checks.
+
+When the tester runs, it evaluates the **exact task branch and SHA**.
 
 Require:
 
@@ -603,7 +598,7 @@ Then:
 
 ## 20. Gate Routing
 
-Use the existing project gate as the baseline.
+Use the existing project gate as the baseline, applied per §19 (conditional: always for HIGH-RISK, for STANDARD only when game logic/data/UI/theme changed, never for FAST). The chains below show order when the tester runs.
 
 ### Data
 
@@ -735,32 +730,13 @@ Return the issue to the product-manager/user rather than brute-forcing it.
 
 ## 24. Acceptance
 
-After tester PASS, independently verify the execution boundary before release.
+After tester PASS (or after the implementer's report, when no tester was required), confirm only the gate's integrity:
 
-Use the project's established acceptance procedure.
-
-Confirm:
-
-- Tester report exists
-- PASS refers to the exact SHA
-- Only allowed files changed
-- No known scratch/debug artifacts leaked into the task
-- No unowned files changed
+- Tester report exists (if a tester ran)
+- PASS refers to the exact current SHA
 - Required evidence exists
 
-Use:
-
-```bash
-git diff --stat master...task/<task-id>
-```
-
-where applicable under the established project workflow.
-
-Spot-check at least one relevant tester claim using an existing project check or evidence source.
-
-Do not redo the tester's entire job.
-
-Your responsibility is to verify the **integrity of the gate**.
+Do **not** re-run the diff-scope check (the `releaser` owns it, gate 4) and do **not** spot-check or re-run the tester's claims. Do not re-check evidence already established by another agent unless code changed afterwards.
 
 ---
 

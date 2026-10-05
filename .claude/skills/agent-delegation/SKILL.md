@@ -84,16 +84,33 @@ Never fill an information gap with a plausible assumption.
 
 ---
 
+## 0a. Execution level (FAST is the default)
+
+Classify first; when unsure between FAST and STANDARD choose FAST unless a concrete risk trigger applies.
+
+| Level | Use for | Delegation | Verification |
+|---|---|---|---|
+| **FAST** (default) | typo/data fix, one function, one CSS rule, copy/docs, single-mode tweak, small diff without `shared/`, frozen files, schema or storage-key changes | **None.** Do it directly in the main session. No brief, worktree, reviewer or PR/history digging. | One targeted check of what changed, once |
+| **STANDARD** | new mode, game logic, multi-file fix, one-game theme | Agents **only when useful**: one `coder`/`designer`, or several for disjoint, independent file sets. Otherwise do it directly. | Implementer's targeted checks + **one** final verification (scoped tester, or the implementer's own run if no tester is needed). A second verification only if the first found a real defect, and then only the changed checks. |
+| **HIGH-RISK** | `shared/dansk-core.js`, `shared/sjovt.*`, storage-key/SRS schema, bulk data (~200+ items), multi-game refactor, outward-facing or irreversible actions | **Full orchestration**: PM/orchestrator split, worktree, tester, reviewer where it adds independent value | Broader tests per changed area; regression on other games for `shared/` changes |
+
+Everything below (briefs, file ownership, gate order, retry limits) applies to **STANDARD when agents are used, and HIGH-RISK**. It does not apply to FAST.
+
+Blocker vs advisory: only a failed acceptance criterion, a console error, a spec conflict, a broken invariant, or an explicit repository rule (CLAUDE.md, prd/specs, CI, branch protection, or the user) blocks work. `NOT VERIFIED`, `FLAKY`, style, reviewer comments and optional checks are reported, never blocking.
+
+---
+
 ## 1. Decide: Delegate or Do It Yourself
 
-Delegate when the task:
+**Default: do it yourself.** Delegate only when the task:
 
 - Has a clear deliverable
 - Touches a bounded file set
 - Is independently verifiable
 - Fits a verified agent role
+- **And** delegating is faster, parallel, or needs independent verification. Never spawn an agent or reviewer merely because one exists, or for work that is faster to do directly.
 
-Do it yourself on `master` only for coordination files you own:
+FAST and small STANDARD tasks (game code, data, CSS included) are done directly in the main session. Coordination files you may always edit directly:
 
 - `PROGRESS.md`
 - `SCRATCHPAD.md`
@@ -101,13 +118,9 @@ Do it yourself on `master` only for coordination files you own:
 - `.claude/skills/`
 - `.claude/hooks/`
 
-These paths come from the current project rules. Do not generalize this permission to other files.
+These paths come from the current project rules.
 
-Never directly write:
-
-- Game code
-- Game data
-- CSS
+Frozen files (`prd.md`, `specs.md`, `shared/sjovt.*`, `shared/fonts/`, root `index.html`) are never edited by anyone without the user's approval.
 
 Ask the user instead of dispatching when the decision is theirs, including:
 
@@ -606,3 +619,7 @@ is better than a plausible invention.
 
 ## 12. Review gate
 Never convert advisory review signals into blocking gates unless they are explicitly required by repository policy, CI, GitHub branch protection, or the user.
+
+Advisory (report, never block): `NOT VERIFIED` or `FLAKY` on checks outside the acceptance criteria, style and commit-message-format findings, reviewer comments, `PASS WITH ISSUES` minor/major notes, optional checks. Blocking: a failed acceptance criterion, a console error, a spec conflict, a broken invariant (frozen files, storage keys, scoring), or an explicit repository rule.
+
+Do not run a second verification unless the first found a real defect, and then re-check only what changed. Never run the same check twice at the same SHA; cite the earlier result.
