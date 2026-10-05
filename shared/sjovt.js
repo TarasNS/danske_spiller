@@ -800,7 +800,7 @@
     if (root.hasAttribute("data-sd-nobar") || doc.querySelector(".sd-bar") || doc.body.hasAttribute("data-sd-home")) return;
     var bar = doc.createElement("nav");
     bar.className = "sd-bar"; bar.setAttribute("aria-label", "Sjovt Dansk");
-    bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '">← MENU</a>' +
+    bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '"><span class="sd-arr" aria-hidden="true"></span>MENU</a>' +
       '<span class="sd-bar-logo">' + '<span class="sd-sprite">' + spriteSVG("polle", 2) + '</span><span class="t">SJOVT <b>DANSK</b></span></span>' +
       '<button type="button" class="sd-bar-btn" id="sd-theme-btn" aria-label="Mørk tilstand" title="Skift mellem lys og mørk tilstand">MØRK</button>' +
       '<button type="button" class="sd-bar-btn" id="sd-sound-btn" aria-label="Lydeffekter" title="Slå lydeffekter til eller fra (oplæsning med Lyt er upåvirket)">LYD</button>';
@@ -815,7 +815,10 @@
     win.addEventListener("storage", function (e) { if (e.key === THEME_KEY) { applyTheme(); paint(); } else if (e.key === SOUND_KEY) paint(); });
     paint();
     doc.body.insertBefore(bar, doc.body.firstChild);
-    root.style.setProperty("--sd-bar-h", "48px");
+    // --sd-bar-h = the rendered bar height (it can grow if the bar wraps on narrow screens)
+    function measureBar() { var h = Math.round(bar.getBoundingClientRect().height); if (h > 0) root.style.setProperty("--sd-bar-h", h + "px"); }
+    measureBar();
+    if (win.ResizeObserver) new win.ResizeObserver(measureBar).observe(bar); else win.addEventListener("resize", measureBar);
   }
 
   /* ----------------------------------------------------------------- fx */

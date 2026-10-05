@@ -65,7 +65,7 @@
 
   /* top bar */
   .theme-btn { min-width: 48px; min-height: 48px; padding: 0 12px; background: var(--sd-cream); color: #101010; border: 0; font-family: var(--sd-font-display); font-weight: 700; font-size: 16px; cursor: pointer;
-    box-shadow: 0 -4px 0 #FFC25A, 0 4px 0 #FFC25A, -4px 0 0 #FFC25A, 4px 0 0 #FFC25A; margin: 4px; }
+    box-shadow: 0 -4px 0 #101010, 0 4px 0 #101010, -4px 0 0 #101010, 4px 0 0 #101010; margin: 4px; }   /* ink frame, as on .sd-btn */
   .theme-btn:hover { background: #fff; }
   .theme-btn:active { transform: translateY(2px); }
   .hero .theme-btn { position: absolute; top: 24px; right: 28px; z-index: 5; margin: 4px; }
@@ -160,7 +160,7 @@
         <div class="hero-text">
           <h1 id="h1"><span>Sjovt</span><span>Dansk</span><em>ved at spille</em></h1>
           <p>Ordforråd, grammatik og vendinger i små, hurtige spil. Vælg et spil, tryk på knappen, og kom i gang på et øjeblik.</p>
-          <a class="sd-btn sd-btn--ink sd-btn--lg" href="#spil" data-sd-nofx>Vælg spil ▼</a>
+          <a class="sd-btn sd-btn--ink sd-btn--lg" href="#spil" data-sd-nofx>Vælg spil <span class="sd-arr sd-arr--d" aria-hidden="true"></span></a>
         </div>
         <div class="gb-wrap" aria-hidden="true">
           <div class="gb">
@@ -218,8 +218,8 @@
       </div>
     </section>
 
-    <section style="margin: 32px 4px; padding: 24px 28px; background: var(--sd-cream); border: 2px solid var(--sd-orange); border-radius: 12px; box-shadow: var(--sd-box);">
-      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--sd-ink);">Sjovt Dansk er gratis online spil der hjælper dig med at lære dansk grammatik, ordforråd og vendinger. Hver øvelse er designet til at være sjov, hurtig og effektiv — perfekt for A1–B2 niveau dansk som andetsprog. Spil på egen hånd eller brug Sjovt Dansk til at supplere din dansk undervisning.</p>
+    <section class="sd-panel sd-panel--hl" style="margin: 32px 4px; padding: 24px 28px;">
+      <p style="margin: 0; font-size: 16px; line-height: 1.6;">Sjovt Dansk er gratis online spil der hjælper dig med at lære dansk grammatik, ordforråd og vendinger. Hver øvelse er designet til at være sjov, hurtig og effektiv — perfekt for A1–B2 niveau dansk som andetsprog. Spil på egen hånd eller brug Sjovt Dansk til at supplere din dansk undervisning.</p>
     </section>
   </main>
 
@@ -282,7 +282,7 @@ function cardHTML(g) {
         <h3>${esc(g.title)}</h3>
         <div class="tags"><span class="sd-badge">${esc(g.type)}</span></div>
         <p class="desc">${esc(g.description)}</p>
-        <span class="sd-btn sd-btn--sm open">Spil →</span>
+        <span class="sd-btn sd-btn--sm open">Spil <span class="sd-arr sd-arr--r" aria-hidden="true"></span></span>
       </div>
     </a>`;
 }

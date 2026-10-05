@@ -72,14 +72,14 @@ html.sd-page .sentence { font-family: var(--sd-font-body); font-size: clamp(18px
 /* options */
 html.sd-page .opts { gap: 16px; margin-top: 24px; }
 html.sd-page .opt {
-  margin: 4px; min-height: 52px; border: 0; border-radius: 0; background: var(--sd-white); color: #101010;
+  margin: 4px; min-height: 52px; border: 0; border-radius: 0; background: var(--sd-panel); color: var(--sd-text);
   font-family: var(--sd-font-body); font-weight: 700; font-size: 17px; letter-spacing: 0; padding: 12px 14px; overflow-wrap: anywhere;
   box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); transition: none;
 }
 html.sd-page .opt::before { color: var(--sd-orange); font-family: var(--sd-font-display); margin-right: 10px; }
-html.sd-page .opt:hover:not(:disabled) { transform: translate(-2px, -2px); background: var(--sd-cream); border: 0; box-shadow: var(--sd-box), 6px 6px 0 0 var(--sd-ink); }
+html.sd-page .opt:hover:not(:disabled) { transform: translate(-2px, -2px); background: var(--sd-cream); color: #101010; border: 0; box-shadow: var(--sd-box), 6px 6px 0 0 var(--sd-ink); }
 html.sd-page .opt:disabled { color: #101010; opacity: 1; }
-html.sd-page .opt:disabled:not(.correct):not(.wrong) { background: #E8DFC6; color: #4a4434; box-shadow: var(--sd-box); }
+html.sd-page .opt:disabled:not(.correct):not(.wrong) { background: var(--sd-panel-2); color: var(--sd-text-soft); box-shadow: var(--sd-box); }
 html.sd-page .opt.correct { background: #CFF1C9; color: #0b3d1a; box-shadow: var(--sd-box-ok), 4px 4px 0 0 var(--sd-ok); }
 html.sd-page .opt.correct::before { color: var(--sd-ok); }
 html.sd-page .opt.wrong { background: #FFD0DE; color: #5a0a26; box-shadow: var(--sd-box-bad), 4px 4px 0 0 var(--sd-bad); animation: none; }
