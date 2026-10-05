@@ -123,11 +123,11 @@ html.sd-page .sentence[style*="blue-d"] { color: var(--sd-text) !important; }
 /* options */
 html.sd-page .opts { gap: 16px; padding: 4px; }
 html.sd-page .opt {
-  min-height: 56px; padding: 12px; margin: 4px; background: var(--sd-white); color: #101010; border: 0;
+  min-height: 56px; padding: 12px; margin: 4px; background: var(--sd-panel); color: var(--sd-text); border: 0;
   font-family: var(--sd-font-body); font-weight: 700; font-size: 20px; overflow-wrap: anywhere;
   box-shadow: var(--sd-box), var(--sd-bevel), 0 12px 0 -4px var(--sd-ink); transition: transform .08s steps(2);
 }
-html.sd-page .opt:hover { border: 0; transform: translateY(-2px); background: var(--sd-cream); }
+html.sd-page .opt:hover { border: 0; transform: translateY(-2px); background: var(--sd-cream); color: #101010; }
 html.sd-page .opt:active { transform: translateY(3px); }
 html.sd-page .opt.correct { background: var(--sd-ok-bg); color: var(--sd-text); border: 0; box-shadow: var(--sd-box-ok), 0 12px 0 -4px var(--sd-ok); }
 html.sd-page .opt.wrong   { background: var(--sd-bad-bg); color: var(--sd-text); border: 0; box-shadow: var(--sd-box-bad), 0 12px 0 -4px var(--sd-bad); }
@@ -145,8 +145,8 @@ html.sd-page .chip {
 html.sd-page .chip:hover { background: #fff; }
 html.sd-page .chip:active { transform: translateY(3px); }
 html.sd-page .chip.used { opacity: .5; }
-html.sd-page .drop { border: 0; box-shadow: var(--sd-box); background: var(--sd-white); color: #101010; min-height: 44px; min-width: 96px; padding: 6px 10px; margin: 0 4px; }
-html.sd-page .drop.over { background: var(--sd-cream); }
+html.sd-page .drop { border: 0; box-shadow: var(--sd-box); background: var(--sd-panel); color: var(--sd-text); min-height: 44px; min-width: 96px; padding: 6px 10px; margin: 0 4px; }
+html.sd-page .drop.over { background: var(--sd-cream); color: #101010; }
 html.sd-page .drop.filled { background: var(--sd-ok-bg); color: var(--sd-text); border: 0; box-shadow: var(--sd-box-ok); }
 html.sd-page .drop.filled[style] { color: var(--sd-text) !important; background: var(--sd-bad-bg) !important; box-shadow: var(--sd-box-bad) !important; }
 

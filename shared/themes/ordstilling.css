@@ -85,10 +85,10 @@ html.sd-page .stamp {
 }
 html.sd-page .casebtn .best { font-family: var(--sd-font-body); font-size: 13px; color: #3A3326; left: 64px; bottom: 8px; }
 html.sd-page .casebtn.done { padding-bottom: 30px; }
-html.sd-page .final-card { padding: 16px 14px; text-align: center; background: var(--sd-cream); }
+html.sd-page .final-card { padding: 16px 14px; text-align: center; background: var(--sd-cream); color: #101010; }
 html.sd-page .final-card .ct { padding-right: 0; }
 html.sd-page .final-card .lvl { position: static; display: inline-block; margin-bottom: 6px; }
-html.sd-page .final-card.locked { filter: none; background: #DCD3B8; }
+html.sd-page .final-card.locked { filter: none; background: var(--sd-panel-2); color: var(--sd-text-soft); }
 html.sd-page .progress-note { font-family: var(--sd-font-display); font-weight: 700; color: var(--sd-text); font-size: 16px; letter-spacing: .04em; margin: 22px 0 6px; }
 html.sd-page .bar, html.sd-page .qbar { height: 20px; background: var(--sd-panel-2); border: 0; border-radius: 0; box-shadow: var(--sd-box); overflow: hidden; margin: 10px auto 4px; max-width: none; }
 html.sd-page .bar { max-width: 380px; }
@@ -149,14 +149,14 @@ html.sd-page .answer.no::after { content: "✗ FORKERT"; background: #D4145A; }
 html.sd-page .pool { gap: 12px; margin: 4px 4px 12px; }
 html.sd-page .tile {
   font-family: var(--sd-font-body); font-weight: 700; font-size: 17px; min-height: 48px; padding: 8px 14px; border: 0; border-radius: 0; margin: 4px;
-  background: var(--sd-white); color: #101010; box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); transition: none; cursor: pointer;
+  background: var(--sd-panel-2); color: var(--sd-text); box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); transition: none; cursor: pointer;
 }
-html.sd-page .tile:hover { transform: translate(-2px, -2px); background: var(--sd-cream); box-shadow: var(--sd-box), 5px 5px 0 0 var(--sd-ink); }
+html.sd-page .tile:hover { transform: translate(-2px, -2px); background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 5px 5px 0 0 var(--sd-ink); }
 html.sd-page .tile:active { transform: translate(2px, 2px); box-shadow: var(--sd-box); }
-html.sd-page .tile.inans { background: var(--sd-cream); box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); }
+html.sd-page .tile.inans { background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); }
 html.sd-page .tile.used { opacity: 0; width: 0; min-width: 0; min-height: 0; height: 0; padding: 0; margin: 0; box-shadow: none; overflow: hidden; }
 html.sd-page .tile.locked { pointer-events: none; }
-html.sd-page .answer.ok .tile.inans, html.sd-page .answer.no .tile.inans { background: var(--sd-white); }
+html.sd-page .answer.ok .tile.inans, html.sd-page .answer.no .tile.inans { background: var(--sd-white); color: #101010; }
 
 html.sd-page .controls { gap: 16px; margin-top: 16px; flex-wrap: wrap; }
 html.sd-page .btn {
