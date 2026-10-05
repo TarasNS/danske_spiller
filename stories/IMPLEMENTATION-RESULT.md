@@ -161,3 +161,12 @@ All implementable P0/P1 stories are fixed; their machine-checkable criteria were
 - **Story status now (53 stories in `QA-USER-STORIES.md`):** 43 VERIFIED, 2 VERIFIED-partial (US-050 portal slice and US-051 authoring are BLOCKED), 1 IMPLEMENTED BUT NOT VERIFIED (US-029: the small inline listen button is 32 px visible with a 44 px hit area), 2 IMPLEMENTED BUT NOT VERIFIED-partial (US-038, US-039: frozen-file remainder BLOCKED), 5 BLOCKED (US-026, 027, 040, 052, 053).
 - **Verdict:** the native-review condition is met; remaining work before publishing is the blocked stories (owner decisions / frozen files), US-058..061, and the pre-existing items listed above. Updated verdict: **READY FOR FINAL MANUAL QA** (manual play-through on real devices is the last step that was never done).
 - Pull requests: fork #3 (round 1, draft), fork #4 (round 2, stacked on #3), upstream **tasio1/danske_spiller#10** (both rounds, draft).
+
+## Update 2026-10-05 (later): owner decisions unblock the remaining stories
+
+- **Decisions #15-40** in `stories/DECISIONS.md` cover every story that was BLOCKED: US-026 (#15-18), US-027 (#19-22), US-040 (#23-26), US-052 (#27), US-053 (#28-31), US-038 remainder (#32-34), US-039 remainder (#35-37), US-050 portal slice (#38-40). Frozen-file approvals are scoped to the named story only.
+- **US-052:** done. `pixel-animation.html` moved to `docs/redesign/pixel-animation.html` (design reference, out of the published root). Status IMPLEMENTED.
+- **Now READY FOR DEVELOPMENT:** US-026, US-027, US-040, US-053, and the remainders of US-038, US-039 and the US-050 portal slice.
+- **US-053 progress:** the "Pixelify Sans" fallback is already absent from `shared/explainer/modal.css` (no change needed); `CLAUDE.md` gets the stale `lærerene` note removed and is committed (decision #30). `AGENT-BRIEF.md` / `TEST-REPORT.md` rewrite follows the US-040/039/038 work so the brief describes the final design.
+- **Still open (owner):** US-051 authoring (~920 Sætningsmaskinen items, after release); US-029 acceptance of the 32 px visible / 44 px hit-area listen button. US-027 still needs the `specs.md` wording (owner, or explicit approval).
+- **Planned order:** US-040 → US-039 → US-038 → US-050 portal → US-053 docs (shared files, sequential); US-026 helper then per-game rollout (one PR per game, folding in each game's recorded focus/Enter/Næste/"Fortsæt ▸"/reset issues); US-058..061 and US-027 content in parallel; then the unstoried issues, final regression, manual device play-through, and the PRs marked ready.

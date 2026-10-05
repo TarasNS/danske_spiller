@@ -1567,7 +1567,9 @@ Owner decision on helper location. If the helper must live in `shared/sjovt.js`,
 **Validation:**  
 Per game: smoke, an auto-advance timing probe, a `speechSynthesis`/AudioContext spy, and a grep for the praise strings.
 
-**Status:** BLOCKED
+**Owner decisions (2026-10-05):** #15-18 in `stories/DECISIONS.md`: helper in `dansk-core.js`; full contract in all 12 games (Complete games signed off); per-game LYD toggle until US-040; timed modes keep their pacing.
+
+**Status:** READY FOR DEVELOPMENT
 
 ---
 
@@ -1620,7 +1622,9 @@ Large content task; split per game. Keep the English fields for the hint.
 **Validation:**  
 Smoke; spot review.
 
-**Status:** BLOCKED
+**Owner decisions (2026-10-05):** #19-22 in `stories/DECISIONS.md`: Danish first in all three games, English behind "Vis engelsk"; agents draft (`verify:true`), native reviewer signs off. Scope confirmed by the owner (first criterion); `specs.md` wording still to be added by the owner or with explicit approval.
+
+**Status:** READY FOR DEVELOPMENT
 
 ---
 
@@ -2219,7 +2223,9 @@ Split into "identity sprites" (quick) and "redraw generic set" (art task).
 **Validation:**  
 Screenshots of mode menus and headers.
 
-**Status:** IMPLEMENTED BUT NOT VERIFIED (partial; frozen-file remainder BLOCKED)
+**Owner decisions (2026-10-05):** #32-34 in `stories/DECISIONS.md`: frozen `sjovt.js` approved for this story; redraw the 9 generic sprites at 32 px; add ~3-4 new sprites for one-meaning icons; agents judge the art.
+
+**Status:** IMPLEMENTED BUT NOT VERIFIED (partial; remainder READY FOR DEVELOPMENT)
 
 ---
 
@@ -2291,7 +2297,9 @@ Split into "frozen shared" and "per-game theme" PRs.
 **Validation:**  
 VIS `audit.cjs` re-run; screenshots.
 
-**Status:** IMPLEMENTED BUT NOT VERIFIED (partial; frozen-file remainder BLOCKED)
+**Owner decisions (2026-10-05):** #35-37 in `stories/DECISIONS.md`: frozen `sjovt.css`/`sjovt.js`/`index.html` approved for this story; pixel-art arrow sprites; results = shared CSS classes only (the "one component" criterion is narrowed to shared styles).
+
+**Status:** IMPLEMENTED BUT NOT VERIFIED (partial; remainder READY FOR DEVELOPMENT)
 
 ---
 
@@ -2345,7 +2353,9 @@ Theme and mute toggles sit in the shared `.sd-bar`, stored in one key (`sd:theme
 **Validation:**  
 Reload test; cross-page test; smoke.
 
-**Status:** BLOCKED
+**Owner decisions (2026-10-05):** #23-26 in `stories/DECISIONS.md`: frozen `index.html` + `shared/sjovt.js` approved for this story; OS default + saved `sd:theme` override; mute = sound effects only; per-game toggles removed in favour of the bar.
+
+**Status:** READY FOR DEVELOPMENT
 
 ---
 
@@ -2915,7 +2925,9 @@ Split into one PR per game.
 **Validation:**  
 Per-game smoke; validate.js.
 
-**Status:** VERIFIED (partial; portal slice BLOCKED)
+**Owner decisions (2026-10-05):** #38-40 in `stories/DECISIONS.md`: frozen `index.html` approved for the portal slice; card levels show the full item range (Konjunktion Crush A1–B2, Ordstillingsdetektiven A1–B2, Forbindeord A1–C1); no extra native review for the portal wording.
+
+**Status:** VERIFIED (partial; portal slice READY FOR DEVELOPMENT)
 
 ---
 
@@ -3040,7 +3052,9 @@ Owner decision.
 **Validation:**  
 Smoke (if kept).
 
-**Status:** BLOCKED
+**Owner decision (2026-10-05):** #27 in `stories/DECISIONS.md`: option (a). Done: `git mv pixel-animation.html docs/redesign/pixel-animation.html` (standalone file, no external references; not in the portal, sitemap or any deploy list).
+
+**Status:** IMPLEMENTED
 
 ---
 
@@ -3090,7 +3104,9 @@ Docs only, apart from the CSS fallback line.
 **Validation:**  
 Review.
 
-**Status:** BLOCKED
+**Owner decisions (2026-10-05):** #28-31 in `stories/DECISIONS.md`: rewrite the brief; edit TEST-REPORT in place; fix and commit CLAUDE.md; drop the Pixelify fallbacks.
+
+**Status:** READY FOR DEVELOPMENT
 
 ---
 
