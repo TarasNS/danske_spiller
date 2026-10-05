@@ -767,7 +767,7 @@ function start(){
 
 function renderLives(){
   const el=$('lives'); el.innerHTML=''; el.setAttribute('aria-label',lives+' liv tilbage'); el.setAttribute('role','img');
-  for(let i=0;i<5;i++){ const s=document.createElement('span'); s.className='life'+(i<lives?'':' lost'); s.innerHTML=window.Sjovt?Sjovt.spriteSVG('hjerte',3):''; el.appendChild(s); }
+  for(let i=0;i<5;i++){ const s=document.createElement('span'); s.className='life'+(i<lives?'':' lost'); s.innerHTML=window.Sjovt?Sjovt.spriteSVG('hjerte',2):''; el.appendChild(s); }
 }
 function updateHud(){
   $('scoreVal').textContent=score;

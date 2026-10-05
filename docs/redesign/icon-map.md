@@ -1,38 +1,54 @@
 # Sjovt icon map (US-038)
 
-Scope: documentation of which existing sprite means what, and the per-game change list. Uses ONLY sprites that exist in `shared/sjovt.js` (frozen). No new art. Line numbers refer to the working tree on 2026-10-04.
+Scope: which sprite means what, and the per-game change list. Updated for US-038 remainder (owner decisions #32-34): the 9 generic sprites were redrawn as shaded 32x32 and 4 new sprites were added to `SPR` in `shared/sjovt.js`. Game menus are NOT yet rewritten; section 7 is the change list. Line numbers in sections 2 and 5 refer to the working tree on 2026-10-04.
 
-## 1. Sprite inventory (what each sprite actually depicts)
+## 1. Sprite inventory (all 32x32 shaded now)
 
-Pixel density: `spriteSVG` halves the scale of grids >= 32 wide (`sjovt.js:619`). At the same `data-scale` s both families have the same footprint (16 x s), but a 16px sprite has pixels of s px and a 32px sprite pixels of s/2 px. That is the VIS-004 mix. Contact sheet (light and dark, scale 4): scratchpad `impl/w-icons/sheet-light.png`, `sheet-dark.png`.
+Every sprite is a 32x32 grid, 1px ink outline, light from top-left, ramps from `PAL`. `spriteSVG` halves the scale for 32px grids, so footprint = 16 x `data-scale` px (scale 2 = 32px box, scale 4 = 64px, scale 6 = 96px); odd scales round up (3 renders like 4). The minimum is 32px (scale 1 or 2). Subjects are centred, so the visible art is roughly 24-28px of the box. Contact sheet (light and dark, scale 4/8): scratchpad `sheet-real.png`.
 
-| Sprite | Grid | Family | Actually depicts | Portal card of |
-|---|---|---|---|---|
-| polle | 16x16 | flat | Hot-dog mascot with a smiling face | brand / hero |
-| snegl | 14x14 | flat | Cinnamon roll (a brown spiral disc) | none |
-| molle | 16x16 | flat | Red windmill with white crossed blades | none |
-| cykel | 16x10 | flat | Bicycle, black outline only. Nearly invisible in dark mode (black on dark) | none |
-| stjerne | 9x10 | flat | Small gold star | none (reward) |
-| hjerte | 11x9 | flat | Red heart | none (lives) |
-| pokal | 11x12 | flat | Gold trophy cup | none (results) |
-| hat | 12x8 | flat | Small grey bowler hat with red band. Dark outline vanishes in dark mode | none (portal empty-state only) |
-| flag | 17x12 | flat | Danish flag | none (language) |
-| modsat | 32 | shaded | Blue arrow right over red arrow left | Antonymer |
-| kort | 32 | shaded | White "Vb." card over a red card | Glosekort |
-| tryllestav | 32 | shaded | Purple magic wand with gold star and sparkles | Magiske Verber |
-| pin | 32 | shaded | Red map pin with four black arrows (pointer to one spot) | Præpositioner |
-| snak | 32 | shaded | White speech bubble with three typing dots | Dansk Mester |
-| terning | 32 | shaded | Two cards "en" (blue) and "et" (red) with sparkles (not a die) | En/Et |
-| slik | 32 | shaded | Blue and red candy blobs joined (twins) | Konjunktioner |
-| lup | 32 | shaded | Magnifying glass with spectacles | Ordstillingsdetektiven |
-| net | 32 | shaded | Blue and red capsule joined by a gold ring (connector) | Forbindeord |
-| kiste | 32 | shaded | Wooden treasure chest with a lock and a small scroll/roll | Idiomjæger |
-| tandhjul | 32 | shaded | Grey gears with an "A" card (workshop) | Bøjningsværkstedet |
-| ur | 32 | shaded | Two chat bubbles joined by a red chain link (NOT a clock) | Adverbier |
-| bog | 32 | shaded | White "?" speech bubble with a blue person (NOT a book) | Pronomenmysteriet |
-| tidsstjerne | 32 | shaded | Gold star with eyes (the "time machine" star) | Tidsmaskinen |
+Generic family (redrawn, same names and meaning):
 
-There is no clock, stopwatch, bolt, bar chart, flip-card or dice sprite. Names are misleading for `ur`, `bog`, `terning`, `net`, `slik`.
+| Sprite | Actually depicts | One meaning |
+|---|---|---|
+| polle | Hot-dog mascot (bun, sausage, smiling face, feet) | brand / home only (bar logo, preloader) |
+| snegl | Cinnamon roll, spiral | retired from mode rows (no meaning), decorative only |
+| molle | Windmill, white sails | streak |
+| cykel | Bicycle with red frame, blue wheels (readable on dark) | retired from mode rows (no meaning) |
+| stjerne | Gold faceted star | XP / coins / reward / difficulty stars |
+| hjerte | Red heart with gloss | lives |
+| pokal | Gold trophy with star, orange plinth | level / results / achievements |
+| hat | Grey bowler hat, red band (readable on dark) | portal empty state only; retired from mode rows |
+| flag | Danish flag, Dannebrog cross shaded | Danish / language only (now a literal grid, no longer generated) |
+
+New (one meaning each):
+
+| Sprite | Depicts | One meaning |
+|---|---|---|
+| stopur | Blue stopwatch with crown, side button, red elapsed wedge | speed / timed rounds (replaces `tryllestav` as "speed") |
+| bland | Blue and orange arrow crossing (shuffle) | mixed / shuffled / random order |
+| statistik | Four coloured bars on a grey baseline | stats / progress / results page |
+| vend | Blue card back with an orange turn arrow below | flip card (Vendekort) |
+
+Per-game family (unchanged):
+
+| Sprite | Actually depicts | Portal card of |
+|---|---|---|
+| modsat | Blue arrow right over red arrow left | Antonymer |
+| kort | White "Vb." card over a red card | Glosekort |
+| tryllestav | Purple magic wand with gold star and sparkles | Magiske Verber |
+| pin | Red map pin with four black arrows (pointer to one spot) | Præpositioner |
+| snak | White speech bubble with three typing dots | Dansk Mester |
+| terning | Two cards "en" (blue) and "et" (red) with sparkles (not a die) | En/Et |
+| slik | Blue and red candy blobs joined (twins) | Konjunktioner |
+| lup | Magnifying glass with spectacles | Ordstillingsdetektiven |
+| net | Blue and red capsule joined by a gold ring (connector) | Forbindeord |
+| kiste | Wooden treasure chest with a lock and a small scroll | Idiomjæger |
+| tandhjul | Grey gears with an "A" card (workshop) | Bøjningsværkstedet |
+| ur | Two chat bubbles joined by a red chain link (NOT a clock) | Adverbier |
+| bog | White "?" speech bubble with a blue person (NOT a book) | Pronomenmysteriet |
+| tidsstjerne | Gold star with eyes (the "time machine" star) | Tidsmaskinen |
+
+Names still misleading (kept so existing uses work): `ur`, `bog`, `terning`, `net`, `slik`. Use the new sprites for the missing roles instead of stretching these names (section 7).
 
 ## 2. Current usage (mode menus and headers)
 
@@ -93,10 +109,10 @@ Rule: a mode row uses ONLY the shaded 32px family. Each role has one sprite; a s
 | quiz / multiple choice | `bog` ("?" bubble) | question | Flervalg, Vælg modsætningen, Verbumarenaen, En/Et Style: Quiz (same) |
 | typing / fill-in | `snak` (bubble with typing dots) | you type | Udfyld hullet, Det manglende ord, En/Et Dronningens gåder (same) |
 | pairs / matching | `net` (two halves joined by a ring) | join two | Find par everywhere, En/Et Find par (same) |
-| speed / timed | `tryllestav` | NO good sprite exists (no clock). Least bad 32px, chosen by the En/Et worker | Hurtigrunde, Lynrunde, Hurtigduellen, Tidsudfordring, En/Et Kaninens ræs (same) |
+| speed / timed | `stopur` | stopwatch (was `tryllestav`, a compromise; En/Et Kaninens ræs may keep its pick or move to `stopur`) | Hurtigrunde, Lynrunde, Hurtigduellen, Tidsudfordring, En/Et Kaninens ræs (same) |
 | review / weak spots | `lup` | find weak points | Gentag fejl(ene), Svage ord/Idiomer, En/Et Svage ord (same) |
-| flip cards / learn by cards | `kort` | card | Vendekort, Lærings-tilstand, irregular verbs card. En/Et exception: Vendekort = `terning` (kort is already En/Et Flertal) |
-| mixed / random | `terning` | "random" for all games except En/Et, whose cards `terning` is its identity | Blandet repetition, Øve-tilstand |
+| flip cards | `vend` | card with turn arrow | Vendekort, Lærings-tilstand, irregular verbs card. En/Et exception: Vendekort = `terning` (kort is already En/Et Flertal) |
+| mixed / random | `bland` | crossing arrows (was `terning`, which is En/Et's identity) | Blandet repetition, Øve-tilstand |
 | translation / direction | `modsat` (two opposite arrows) | EN to DA | Oversættelse, Omvendt oversættelse. En/Et Spejlordene (same sprite, "opposite") |
 | confusable / twin pairs | `slik` (twins) | twins | Forvekslingspar. En/Et Tvillingordene (same) |
 | error-hunt / detective | `pin` (marks the spot) | mark the faulty word. En/Et Bestemt form also `pin` ("this one exact thing"); same idea | Find fejlen, Verbumdetektiven |
@@ -106,10 +122,10 @@ Rule: a mode row uses ONLY the shaded 32px family. Each role has one sprite; a s
 | collection / category / dictionary / SRS box | `kiste` | chest = Leitner box, topic set | Øv efter emne, Idiom-ordbog, Intervalrepetition |
 | definite form | `pin` | En/Et only | Bestemt form |
 | plural | `kort` | En/Et only (two cards) | Flertal |
-| difficulty | `stjerne` x1/2/3 at one scale | NO 32px sprite. Least bad: stars; or `tidsstjerne` as a one-off | Nem/Mellem/Svær, Øv efter sværhedsgrad |
-| stats / results | `pokal` | NO 32px sprite (BLOCKED, art task). Interim: render at half the `data-scale` of the row (2px pixels) | Statistik, results hero |
+| difficulty | `stjerne` x1/2/3 at one scale | stars, now 32px shaded like the rest | Nem/Mellem/Svær, Øv efter sværhedsgrad |
+| stats | `statistik` | bar chart (`pokal` stays for level / results / achievements) | Statistik, results hero |
 
-Chip/HUD context (small, scale 1-2, all flat F family, one density per chip row):
+Chip/HUD context (scale 2 = 32px box; all sprites share one density now):
 - `molle` = streak only, `hjerte` = lives only, `stjerne` = XP / coins / reward star, `pokal` = level, results and achievement badges only, `flag` = Danish / language only (never accuracy: use text "%"), `polle` = brand / home only.
 - Badge grids use `stjerne` and `pokal` only (one density), not nine different sprites.
 - `snegl`, `cykel`, `hat` are retired from mode rows (no meaning, `cykel` and `hat` unreadable in dark mode). `hat` is still used by the frozen portal empty state.
@@ -150,9 +166,32 @@ Header and title sprite = the sprite of the game's portal card (`index.html:241-
 
 Note on Præpositioner: 10 rows need 10 distinct 32px sprites. `drag` has no matching sprite; least bad is `tandhjul` (move the parts), and `correct` takes `ur` (reassemble the sentence). The header `pin` no longer repeats in the grid because `fill` becomes `snak`.
 
-## 6. BLOCKED (needs a new or redrawn sprite in frozen `sjovt.js`)
-- Stats / results icon at 32px shaded (`pokal` is flat 11px). Interim: render at half scale so pixels match, or accept one flat icon per context.
-- Difficulty icon (stars, flat `stjerne`) and speed icon (a real stopwatch; `tryllestav` is a compromise).
-- Chip/HUD sprites (`molle`, `hjerte`, `pokal`, `stjerne`, `flag`) stay flat; the story's "redraw the 9 generic sprites at 32px" is the art task and not possible without owner approval.
-- `cykel` has no fill and disappears in dark mode; retire it from the UI (done in the map).
-- Portal `index.html:216` (empty-state `hat`) and `:228` (footer `flag`, fine) are frozen.
+## 6. Was BLOCKED, now resolved
+All items of the old BLOCKED list are resolved by the redraw and the four new sprites (stats = `statistik`, speed = `stopur`, flip = `vend`, mixed = `bland`, chips and difficulty are 32px shaded, `cykel` and `hat` are visible in dark mode). Still frozen and unchanged: portal `index.html:216` (empty-state `hat`) and `:228` (footer `flag`).
+
+## 7. Change list for the approximate uses (game menus are not rewritten yet)
+
+| Where | Slot | Now | Replace with |
+|---|---|---|---|
+| Antonymer `MODES.emoji` | Hurtigrunde | stjerne / tryllestav | `stopur` |
+| | Øv efter sværhedsgrad | hat | `stjerne` (stars) |
+| | Statistik (if present) | pokal | `statistik` |
+| Præpositioner `MODE_SPR` | speed | molle / tryllestav | `stopur` |
+| | stats | pokal | `statistik` |
+| Magiske Verber `GAME_SPR` | Hurtigduellen | stjerne / tryllestav | `stopur` |
+| | Blandet repetition | pokal / terning | `bland` |
+| Idiomjæger menu | Øve-tilstand (mixed) | terning | `bland` |
+| | Statistik | pokal | `statistik` |
+| Dansk Mester `MODE_SPR` | timed | cykel / tryllestav | `stopur` |
+| | mixed | molle / terning | `bland` |
+| | flash (Vendekort) | snegl / kort | `vend` |
+| Dansk Mester bottom nav | Statistik | pokal | `statistik` |
+| En/Et | Kaninens ræs (speed) | tryllestav | `stopur` (optional, owner call) |
+| | Vendekort | terning | `vend` (optional; today `terning` is its identity pick) |
+| Anywhere | clock / timer meaning | `ur` | `stopur` (`ur` is two chat bubbles and a chain; Adverbier identity only) |
+| Anywhere | random / shuffle meaning | `terning` | `bland` (`terning` stays En/Et identity) |
+| Anywhere | pairs meaning | `net` | keep (it is Forbindeord identity and reads as "join") |
+| Anywhere | twins meaning | `slik` | keep for Konjunktioner / Forvekslingspar |
+| Anywhere | quiz meaning | `bog` | keep (a "?" bubble; name is misleading, art is right) |
+
+Chip scale changes already applied in this task (32px grids grow smaller old footprints): `konjunktioner` lives `hjerte` 3 to 2, `idiomjaeger` memory card back `stjerne` 3 to 2, `ordstilling-detektiv` result `pokal` and `stjerne` 3 to 2, `danish_flashcards` result `pokal` 5 to 4. Chips at scale 2 are now 32px boxes (were 18-22px for stjerne/hjerte/pokal) and cannot go smaller; checked at 360px, no overflow.
