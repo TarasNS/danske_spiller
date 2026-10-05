@@ -6,7 +6,7 @@ Tested in headless Chrome 153 (puppeteer-core) from `file://` at 390×844 (mobil
 - beigeforce.com: inspected live. Mustard `#E1AD12`, pure-black pixel grid, boxed "PLAY!" button, monospace type. Fonts there: Monaspace Neon + Kongtext.
 - andrewalfordcreative.com: inspected live. Preloader is `#F94F37` with stacked, outlined `#FFC25A` words (also `#FD9E4F`).
 - The supplied screenshot/CSS was **not visible to me**, so the palette is sampled from the two live sites. Compare it against your screenshot and tell me which swatches to adjust (tokens are at the top of `shared/sjovt.css`).
-- Fonts are bundled locally (Pixelify Sans for UI labels, JetBrains Mono for reading text, Press Start 2P for the wordmark only). Press Start 2P draws Ø like a zero, so it is not used for Danish words.
+- Fonts are bundled locally (JetBrains Mono, loaded as "SD Mono", for UI labels and reading text; Press Start 2P for the wordmark only). Press Start 2P draws Ø like a zero, so it is not used for Danish words.
 
 ## Shared system
 `shared/sjovt.css` (tokens, buttons, panels, forms, feedback, preloader), `shared/sjovt.js` (sprites, preloader with real progress, page curtain, game bar, fx helpers), `shared/themes/<game>.css` (12 themes), `shared/fonts/`.
