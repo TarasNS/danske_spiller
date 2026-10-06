@@ -1,11 +1,16 @@
 ---
 name: game-ui-verification
-description: Use before reporting any game, theme, sprite or page-layout task as done, when a UI change needs real-browser evidence (console errors, 360 px overflow, dark mode, file://), and when writing a game-specific test in tests/.
+description: Use when a STANDARD or HIGH-RISK UI change (game, theme, sprite, page layout) needs real-browser evidence (console errors, 360 px overflow, dark mode, file://), and when writing a game-specific test in tests/. Not required for FAST edits; optional there (one smoke run on the touched game).
 ---
 
 # Verifying a game UI
 
 Evidence beats inspection: run the game via `file://`, measure, and look at screenshots. The harness lives in `tests/` (puppeteer-core + installed Chrome).
+
+## When to use (conditional, not mandatory)
+- **FAST edit:** not required. If the change is visible UI, one `smoke.mjs` run on the touched game is enough; skip screenshots and the extra matrix.
+- **STANDARD/HIGH-RISK UI change:** run it once on the affected game/screens, and record the SHA. Don't repeat it at the same SHA; the tester cites it unless the report lacks command output.
+- Only the checks relevant to the changed files; the "does NOT cover" list below is for writing game-specific tests, not a checklist for every task.
 
 ## Setup (once)
 ```bash

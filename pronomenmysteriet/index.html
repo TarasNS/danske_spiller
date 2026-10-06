@@ -176,8 +176,6 @@
 <div class="shell">
   <header class="topbar">
     <div class="brand"><span data-sd-sprite="bog" data-scale="3" aria-hidden="true"></span> Pronomenmysteriet</div>
-    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
-    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
     <button class="icon-btn" id="btn-reset" type="button" aria-label="Nulstil fremskridt" title="Nulstil fremskridt">NULSTIL</button>
   </header>
 
@@ -281,8 +279,7 @@
   };
 
   DC.ui.darkMode.init();
-  DC.ui.sound.init(prefs.get('sound') !== false);
-  syncSoundLabel();
+  DC.ui.sound.init(true);   // US-040: mute lives in the shared bar (dc:sound-enabled)
 
   var savedMode = prefs.get('mode');
   if (savedMode && MODE_BY_KEY[savedMode]) state.mode = savedMode;
@@ -292,19 +289,6 @@
     if (ok.length) state.levels = ok;
   }
 
-  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
-  document.getElementById('btn-sound').addEventListener('click', function(){
-    var on = DC.ui.sound.toggle();
-    prefs.set('sound', on);
-    syncSoundLabel();
-    if (on) SOUND.select();
-  });
-  function syncSoundLabel(){
-    var on = DC.ui.sound.isEnabled();
-    var b = document.getElementById('btn-sound');
-    b.textContent = on ? 'LYD' : 'LYD ✗';
-    b.setAttribute('aria-pressed', String(!on));
-  }
   // reset progress (US-030): confirm, then clear only this game's SRS record (keeps mode/level/sound prefs)
   document.getElementById('btn-reset').addEventListener('click', function(){
     var ok = true;

@@ -73,7 +73,7 @@
 
   /* top bar */
   .theme-btn { min-width: 48px; min-height: 48px; padding: 0 12px; background: var(--sd-cream); color: #101010; border: 0; font-family: var(--sd-font-display); font-weight: 700; font-size: 16px; cursor: pointer;
-    box-shadow: 0 -4px 0 #FFC25A, 0 4px 0 #FFC25A, -4px 0 0 #FFC25A, 4px 0 0 #FFC25A; margin: 4px; }
+    box-shadow: 0 -4px 0 #101010, 0 4px 0 #101010, -4px 0 0 #101010, 4px 0 0 #101010; margin: 4px; }   /* ink frame, as on .sd-btn */
   .theme-btn:hover { background: #fff; }
   .theme-btn:active { transform: translateY(2px); }
   .hero .theme-btn { position: absolute; top: 24px; right: 28px; z-index: 5; margin: 4px; }
@@ -168,7 +168,7 @@
         <div class="hero-text">
           <h1 id="h1"><span>Sjovt</span><span>Dansk</span><em>ved at spille</em></h1>
           <p>Ordforråd, grammatik og vendinger i små, hurtige spil. Vælg et spil, tryk på knappen, og kom i gang på et øjeblik.</p>
-          <a class="sd-btn sd-btn--ink sd-btn--lg" href="#spil" data-sd-nofx>Vælg spil ▼</a>
+          <a class="sd-btn sd-btn--ink sd-btn--lg" href="#spil" data-sd-nofx>Vælg spil <span class="sd-arr sd-arr--d" aria-hidden="true"></span></a>
         </div>
         <div class="gb-wrap" aria-hidden="true">
           <div class="gb">
@@ -242,10 +242,10 @@
       </div>
     </section>
 
-    <section style="margin: 32px 4px; padding: 24px 28px; background: var(--sd-cream); border: 2px solid var(--sd-orange); border-radius: 12px; box-shadow: var(--sd-box);">
-      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--sd-ink);">Sjovt Dansk er gratis online spil der hjælper dig med at lære dansk grammatik, ordforråd og vendinger. Hver øvelse er designet til at være sjov, hurtig og effektiv — perfekt for A1–B2 niveau dansk som andetsprog. Spil på egen hånd eller brug Sjovt Dansk til at supplere din dansk undervisning.</p>
-      <p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: var(--sd-ink);"><a href="blog/index.html" lang="en" style="color: var(--sd-ink); font-weight: 700;">Blog: Danish grammar explained simply (in English) →</a></p>
-      <p style="margin: 8px 0 0; font-size: 16px; line-height: 1.6; color: var(--sd-ink);"><a href="en/index.html" lang="en" hreflang="en" style="color: var(--sd-ink); font-weight: 700;">In English: grammar guides and all games →</a></p>
+    <section class="sd-panel sd-panel--hl" style="margin: 32px 4px; padding: 24px 28px;">
+      <p style="margin: 0; font-size: 16px; line-height: 1.6;">Sjovt Dansk er gratis onlinespil, der hjælper dig med at lære dansk grammatik, ordforråd og vendinger. Hver øvelse er designet til at være sjov, hurtig og effektiv — perfekt til dansk som andetsprog på A1–B2-niveau. Spil på egen hånd eller brug Sjovt Dansk til at supplere din danskundervisning.</p>
+      <p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6;"><a href="blog/index.html" lang="en" style="color: inherit; font-weight: 700;">Blog: Danish grammar explained simply (in English) →</a></p>
+      <p style="margin: 8px 0 0; font-size: 16px; line-height: 1.6;"><a href="en/index.html" lang="en" hreflang="en" style="color: inherit; font-weight: 700;">In English: grammar guides and all games →</a></p>
     </section>
   </main>
 
@@ -275,11 +275,11 @@ const games = [
     url: "./danske-phraser/dansk-mester.html", sprite: "snak", color: "#FF8226", bg: "#FF9E56", dark: "#452915" },
   { title: "En/Et-træner", description: "Hold op med at gætte: lær, hvilke ord der er en-ord, og hvilke der er et-ord.", level: "A1–A2", type: "Grammatik",
     url: "./en-og-et/index.html", sprite: "terning", color: "#3FD35F", bg: "#69DD82", dark: "#1A3B21" },
-  { title: "Konjunktion Crush", description: "Bind sætningerne sammen med de rigtige konjunktioner.", level: "B1", type: "Grammatik",
+  { title: "Konjunktion Crush", description: "Bind sætningerne sammen med de rigtige konjunktioner.", level: "A1–B2", type: "Grammatik",
     url: "./konjunktioner/konjunktioner.html", sprite: "slik", color: "#8E8CFF", bg: "#A7A5FF", dark: "#2C2B45" },
-  { title: "Ordstillingsdetektiven", description: "Knæk V2-reglen ved at få rodede sætninger på plads.", level: "B1–B2", type: "Grammatik",
+  { title: "Ordstillingsdetektiven", description: "Knæk V2-reglen ved at få rodede sætninger på plads.", level: "A1–B2", type: "Grammatik",
     url: "./ordstilling-detektiv/index.html", sprite: "lup", color: "#E65CE6", bg: "#EC80EC", dark: "#3F213F" },
-  { title: "Forbindeord", description: "Vælg det rigtige forbindeord, og få sætningerne til at hænge sammen.", level: "B1", type: "Ordforråd",
+  { title: "Forbindeord", description: "Vælg det rigtige forbindeord, og få sætningerne til at hænge sammen.", level: "A1–C1", type: "Ordforråd",
     url: "./forbindenor/Forbindenor.html", sprite: "net", color: "#A8E02E", bg: "#BBE75C", dark: "#313E17" },
   { title: "Idiomjægeren", description: "Jagten på danske idiomer – og hvad de egentlig betyder.", level: "B2", type: "Vendinger",
     url: "./idiomjaeger.html", sprite: "kiste", color: "#26D9A6", bg: "#56E1BA", dark: "#153C31" },
@@ -308,7 +308,7 @@ function cardHTML(g) {
         <h3>${esc(g.title)}</h3>
         <div class="tags"><span class="sd-badge">${esc(g.type)}</span></div>
         <p class="desc">${esc(g.description)}</p>
-        <span class="sd-btn sd-btn--sm open">Spil →</span>
+        <span class="sd-btn sd-btn--sm open">Spil <span class="sd-arr sd-arr--r" aria-hidden="true"></span></span>
       </div>
     </a>`;
 }
@@ -321,16 +321,11 @@ function renderGames() {
 }
 $("#search").addEventListener("input", (e) => { searchTerm = e.target.value; renderGames(); });
 
-/* Light / dark (follows the OS until the user chooses; choice kept for the session) */
+/* Light / dark: follows the OS until the user chooses; the choice is saved (sd:theme) and shared with every game via Sjovt.theme */
 const themeBtn = $("#themeBtn");
-function isDark() {
-  const c = document.documentElement.getAttribute("data-theme");
-  return c === "dark" || (c !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-}
-function paintTheme() { const d = isDark(); themeBtn.textContent = d ? "LYS" : "MØRK"; themeBtn.setAttribute("aria-pressed", String(d)); }
-themeBtn.addEventListener("click", () => {
-  document.documentElement.setAttribute("data-theme", isDark() ? "light" : "dark"); paintTheme();
-});
+function paintTheme() { const d = Sjovt.theme.isDark(); themeBtn.textContent = d ? "LYS" : "MØRK"; themeBtn.setAttribute("aria-pressed", String(d)); }
+themeBtn.addEventListener("click", () => { Sjovt.theme.toggle(); });
+window.addEventListener("sd:themechange", paintTheme);
 paintTheme();
 renderGames();
 </script>

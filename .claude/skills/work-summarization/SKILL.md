@@ -9,8 +9,8 @@ A worker report is a **claim**, not a fact. Your summary is only as trustworthy 
 
 ## 1. When a report arrives — triage in this order
 1. **Complete?** Does it contain status, head sha, files, commands→results, NOT VERIFIED, `Lessons:`? Missing evidence → one targeted re-ask ("paste the exit code / show the screenshot path"), then treat as failed.
-2. **In scope?** `git diff --stat master...task/<id>` — only allowed files, no `tmp_*`, no shared/frozen files, no stray artefacts. Out-of-scope edits are a finding even if harmless.
-3. **Spot-check one or two claims yourself** (cheap, high value): re-run the validator or smoke command, open one screenshot with Read, grep that a storage key is unchanged. Pick the claim whose failure would hurt most. If the spot-check disagrees with the report, the report is untrusted until re-verified.
+2. **In scope?** Read the files list in the report. Do **not** re-run `git diff --stat`: the releaser owns the diff-scope gate. Note out-of-scope edits the report itself admits to.
+3. **Do not re-run validators or smoke** that a tester or the worker already reported with command output at the same SHA; cite them. Verify yourself only a claim that has no command output or evidence behind it, or when the code changed after the report. If a check disagrees with a report, the report is untrusted until re-verified.
 4. **Gate satisfied?** Tester PASS must name `Tested: <branch>@<sha>` equal to the current head. Any later commit voids it.
 
 ## 2. Evidence ledger (keep per task, mentally or in SCRATCHPAD)

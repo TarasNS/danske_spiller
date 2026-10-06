@@ -17,113 +17,286 @@
 
   root.classList.add("sd-page");
 
+  /* ------------------------------------------------- theme + sound (US-040)
+     One source of truth for every page. Theme: `sd:theme` = "dark" | "light"
+     (raw string); absent = follow the OS. Applied here, synchronously in <head>,
+     so the first paint already has the right theme. Sound effects: `dc:sound-enabled`
+     (JSON true/false, same key DanskCore.ui.sound uses). Mute never affects TTS. */
+  var THEME_KEY = "sd:theme", SOUND_KEY = "dc:sound-enabled";
+  function lsGet(k) { try { return win.localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { win.localStorage.setItem(k, v); } catch (e) { /* storage blocked: choice lasts for this page only */ } }
+  var osDark = win.matchMedia ? win.matchMedia("(prefers-color-scheme: dark)") : { matches: false };
+  function savedTheme() { var t = lsGet(THEME_KEY); return (t === "dark" || t === "light") ? t : null; }
+  function applyTheme() { var t = savedTheme(); if (t) root.setAttribute("data-theme", t); }
+  function themeIsDark() {
+    var c = root.getAttribute("data-theme");
+    return c === "dark" || (c !== "light" && !!osDark.matches);
+  }
+  function notify(name) {
+    try { win.dispatchEvent(new CustomEvent(name)); } catch (e) { /* old browser */ }
+  }
+  var theme = {
+    isDark: themeIsDark,
+    get: function () { return themeIsDark() ? "dark" : "light"; },
+    set: function (mode) {
+      if (mode !== "dark" && mode !== "light") return theme.get();
+      root.setAttribute("data-theme", mode); lsSet(THEME_KEY, mode); notify("sd:themechange"); return mode;
+    },
+    toggle: function () { return theme.set(themeIsDark() ? "light" : "dark"); }
+  };
+  function soundOn() { return lsGet(SOUND_KEY) !== "false"; }
+  var sound = {
+    isEnabled: soundOn,
+    set: function (on) { lsSet(SOUND_KEY, on ? "true" : "false"); notify("sd:soundchange"); return !!on; },
+    toggle: function () { return sound.set(!soundOn()); }
+  };
+  applyTheme();
+  if (osDark.addEventListener) osDark.addEventListener("change", function () { notify("sd:themechange"); });
+
   /* ------------------------------------------------------------ sprites */
   var PAL = { K: "#101010", W: "#FFFFFF", O: "#F94F37", Y: "#E1AD12", C: "#FFC25A", A: "#FD9E4F",
               B: "#8A4A1C", R: "#D7263D", T: "#EDB366", G: "#148A3C", L: "#2B3FD6", P: "#FFE9B0", S: "#8E8E8E",
               // shade ramps for the per-game icons (light = top-left, dark = bottom-right)
               E: "#8FD3FF", D: "#B52A14", N: "#1B2A9A", V: "#7B3FBF", U: "#A678E0", X: "#4B1F7E", M: "#A87500", F: "#D9D9D9", J: "#5E5E5E", Q: "#5B2E10" };
   var SPR = {
-    // Pølle — the hot-dog mascot
+    // Pølle — the hot-dog mascot (brand chrome)
     polle: [
-      "................",
-      "....KKKKKKKK....",
-      "..KKTTTTTTTTKK..",
-      ".KTTTTTTTTTTTTK.",
-      "KTTKKKKKKKKKKTTK",
-      "KTKOOOOOOOOOOKTK",
-      "KTKOWOOOOOOWOKTK",
-      "KTKOKOOOOOOKOKTK",
-      "KTKOOKOOOOKOOKTK",
-      "KTKOOOKKKKOOOKTK",
-      "KTKCOOOOOOOOCKTK",
-      "KTTKKKKKKKKKKTTK",
-      ".KTTTTTTTTTTTTK.",
-      "..KKKKKKKKKKKK..",
-      "..KK........KK..",
-      ".KKK........KKK."],
+      "................................",
+      ".......KKKKKKKKKKKKKKKKKK.......",
+      ".....KKPPPPPPPPPPPPPPPPPPKK.....",
+      "....KPPPTTTTTTTTTTTTTTTTTTPK....",
+      "...KPPTTTTTTTTTTTTTTTTTTTTTTK...",
+      "..KPPTTTTKKKKKKKKKKKKKKTTTTTAK..",
+      "..KPTTTKKAAAAAAAAAAAAAAKKTTTTK..",
+      ".KPPTTKAAAOOOOOOOOOOOOOODKTTTAK.",
+      ".KPTTTKAOOOOOOOOOOOOOOOOOKTTTAK.",
+      ".KPTTKAAOWWOOOOOOOOOOOOOODKTTAK.",
+      ".KPTTKAOOWOOOOOOOOOOOOOOODKTTAK.",
+      ".KPTTKAOOOWKOOOOOOOOWKOOODKTTAK.",
+      ".KPTTKAOOOKKOOOOOOOOKKOOODKTTAK.",
+      ".KPTTKAOOOKKOOOOOOOOKKOOODKTTAK.",
+      ".KPTTKAOOOOOOOOOOOOOOOOOODKTTAK.",
+      ".KPTTKAOOOOOOOOOOOOOOOOOODKTTAK.",
+      ".KPTTKAOOOOOOOOOOOOOOOOOODKTTAK.",
+      ".KPTTKAOAAOKOOOOOOOOKOOAADKTTAK.",
+      ".KPTTKAOOOOOKOOOOOOKOOOOODKTTAK.",
+      ".KPTTKAOOOOOOKKKKKKOOOOODDKTTAK.",
+      ".KPTTTKOOOOOOORRRROOOOOODKTTTAK.",
+      ".KPTTTKDOOOOOOOOOOOOOODDDKTTAAK.",
+      "..KTTTTKKDDDDDDDDDDDDDDKKTTTAK..",
+      "..KPTTTTTKKKKKKKKKKKKKKTTTTAAK..",
+      "...KTTTTTTTTTTTTTTTTTTTTTTAAK...",
+      "....KATTTTTTTTTTTTTTTTTTAAAK....",
+      ".....KKAAAAAAAAAAAAAAAAAAKK.....",
+      ".......KKKKKKKKKKKKKKKKKK.......",
+      ".......KKKKKKK....KKKKKKK.......",
+      "......KAAAAAADK..KAAAAAADK......",
+      "......KDDDDDDDK..KDDDDDDDK......",
+      ".......KKKKKKK....KKKKKKK......."],
     // Kanelsnegl — cinnamon roll
     snegl: [
-      "....KKKKKK....",
-      "..KKTTTTTTKK..",
-      ".KTTBBBBBBTTK.",
-      ".KTBBTTTTBBTK.",
-      "KTTBTTBBTTBTTK",
-      "KTBBTBBBBTBBTK",
-      "KTBTTBPPBTTBTK",
-      "KTBTTBPPBTTBTK",
-      "KTBBTBBBBTBBTK",
-      "KTTBTTBBTTBTTK",
-      ".KTBBTTTTBBTK.",
-      ".KTTBBBBBBTTK.",
-      "..KKTTTTTTKK..",
-      "....KKKKKK...."],
+      "................................",
+      "............KKKKKKKK............",
+      "..........KKPPPPPPPPKK..........",
+      "........KKPPPPPPPPPPPPKK........",
+      ".......KPPPPPPTTTTTTTTPPK.......",
+      "......KPPPPPTTTTTTTTTTTTPK......",
+      ".....KPPPPTTTTTTBBTTTTTTTTK.....",
+      "....KPPPPTTTBBBBBBBBBTTTTTAK....",
+      "...KPPPPTTTBBBTTTTTTBBBTTTTAK...",
+      "...KPPPTTTBBTTTTTTTTTTBBTTTAK...",
+      "..KPPPTTTBBTTTTTTTTTTTTBBTTTAK..",
+      "..KPPPTTBBTTWWTBBBBTTTTTBTTTAK..",
+      ".KPPPTTTBBTTTBBBTBBBTTTTBBTTAAK.",
+      ".KPPPTTTBTTTTBTPPTTBBTTTTBTTAAK.",
+      ".KPPBTTTBTTTBBPPPPTTBWTTTBTTAAK.",
+      ".KPPTTTTBTTTBPPPPPPTBBTTTBBTAAK.",
+      ".KPPBTTTBTTTBPPPPPPTTBTTTBBTAAK.",
+      ".KPPBTTTBTTTTBPPPPTTTBTTTBBTAAK.",
+      ".KPPTTTTBBTTTTBPPTTTBBTTTBBAAAK.",
+      ".KPPTTTTTBBTTTTTTTTTBTTTTBTAAAK.",
+      "..KPTBTTTBBWTTTTTTTBBTTTBBAAAK..",
+      "..KPTTTTTTBBBTTTTBBWWTTTBBAAAK..",
+      "...KPTBTTTTTBBBBBBBTTTTBBAAAK...",
+      "...KPTTBTTTTTTTTTTTTTTBBAAAAK...",
+      "....KPTTBTTTTTTTTTTTTBBAAAAK....",
+      ".....KTTTBBTTTTTTTTBBBAAAAK.....",
+      "......KATTTBBBBBBBBBBAAAAK......",
+      ".......KAATTTTBBBBAAAAAAK.......",
+      "........KKAAAAAAAAAAAAKK........",
+      "..........KKAAAAAAAAKK..........",
+      "............KKKKKKKK............",
+      "................................"],
     // Mølle — windmill
     molle: [
-      "KK............KK",
-      "KWK..........KWK",
-      ".KWK........KWK.",
-      "..KWK......KWK..",
-      "...KWK....KWK...",
-      "....KWK..KWK....",
-      ".....KWKKWK.....",
-      "......KKKK......",
-      ".....KOOOOK.....",
-      ".....KOCCOK.....",
-      "....KOOOOOOK....",
-      "....KOCKKCOK....",
-      "...KOOOKKOOOK...",
-      "...KOOOKKOOOK...",
-      "..KOOOOOOOOOOK..",
-      "..KKKKKKKKKKKK.."],
-    // Cykel — bicycle
+      "..KWWWWK................KWWWFK..",
+      "..KWWWWWK..............KWWWFFK..",
+      "...KWWWSWK............KWWSFFK...",
+      "....KWWWWWK..........KWWWFFK....",
+      ".....KWWWSWK........KWWSFFK.....",
+      "......KWWWWWK......KWWWFFK......",
+      ".......KWWWSWK....KWWSFFK.......",
+      "........KWWWWWK..KWWWFFK........",
+      ".........KWWWSWKKWWSFFK.........",
+      "..........KWWWKKKKWFFK..........",
+      "...........KFKCCCMKFK...........",
+      "............KKCYYMKK............",
+      "...........KWKMMMMKWK...........",
+      "..........KWWWKKKKWWWK..........",
+      ".........KWWWSFKKWWSWWK.........",
+      "........KWWWFFKAAKWWWWWK........",
+      ".......KWWWSFKAOOOKWWSWWK.......",
+      "......KWWWFFKAAEEODKWWWWWK......",
+      ".....KWWWSFKAADELDDDKWWSWWK.....",
+      "....KWWWFFKKAAOOOOODKKWWWWWK....",
+      "...KWWWSFKKAAAOKKOODK.KWWSWWK...",
+      "..KWWWFFK.KAAAKKKKODDK.KWWWWFK..",
+      "..KWWFFK..KAADKKKKDDDK..KWWFFK..",
+      "...KFFK...KAAOKQQKOODK...KFFK...",
+      "....KK....KAAOKQQKOODK....KK....",
+      ".........KDDDDKQQKDDDDK.........",
+      ".........KDDDDKQQKDDDDK.........",
+      "..........KKKKKKKKKKKK..........",
+      "................................",
+      "................................",
+      "................................",
+      "................................"],
+    // Cykel — bicycle (coloured, readable on dark)
     cykel: [
-      "......KKKK......",
-      "...........KK...",
-      "....KKKKKKK.K...",
-      "...K..K...KK....",
-      "..K....K..K.....",
-      ".KKKK..KK.KKKK..",
-      "K....K.K.K....K.",
-      "K....KKKKK....K.",
-      "K....K...K....K.",
-      ".KKKK.....KKKK.."],
-    // Stjerne — star
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      ".........KKKKKKK.....KKKKKK.....",
+      "........KTTTTTTQK...KFFFFFJK....",
+      "........KTBBBBBQK..KKJJJJJJK....",
+      "........KQQQQQQQKKKKFKKKKKK.....",
+      ".........KKKKKKKAAAKFJJK........",
+      "..........KDDRRDDDDRKJKK........",
+      "......KKKKARRRKKKKKKRKRKKK......",
+      "....KKEEEKARRDK...KARSRSKEKK....",
+      "...KEEELLKARRRK..KADDKFSKLLEK...",
+      "..KENNNNKADRRRDKKAADKKSSKNLLLK..",
+      ".KENNKKKKADKKRDKKADDKKSSKKKLLLK.",
+      "KENNK..KADDKKARKADDKKKSFK..KLLNK",
+      "KENK.SSKRRKKKRRARDKK.KSFSKS.KLNK",
+      "KENK..SKADRAASSSSKNK..KFSK..KENK",
+      "KENKSSKADDRRRSFSSKNKSSKSSKSSKENK",
+      "KENK..SKDRDDDSSSSENK..SKKS..KENK",
+      "KELK.SS.KKKKKKKKKELK.SS..SS.KENK",
+      "KELLK......KENNKKELLK......KENNK",
+      ".KLLLKKKKKKENNK..KLLLKKKKKKENNK.",
+      "..KLLLEEEEENNK....KLLLEEEEENNK..",
+      "...KNLLLLNNNK......KNLLLLNNNK...",
+      "....KKNNNNKK........KKNNNNKK....",
+      "......KKKK............KKKK......",
+      "................................",
+      "................................"],
+    // Stjerne — gold reward star
     stjerne: [
-      "....K....",
-      "...KCK...",
-      "...KCK...",
-      "KKKKCKKKK",
-      "KCCCCCCCK",
-      ".KCCCCCK.",
-      "..KCCCK..",
-      ".KCCKCCK.",
-      ".KCK.KCK.",
-      "..K...K.."],
-    // Hjerte — heart
+      "................................",
+      "................................",
+      "................................",
+      "...............KK...............",
+      "..............KCCK..............",
+      "..............KCCK..............",
+      "..............KCCK..............",
+      ".............KCCCCK.............",
+      ".............KCCCCK.............",
+      "............KCCCCCCK............",
+      "............KCCCCCCK............",
+      "....KKKKKKKWWCCCCCCKKKKKKKKK....",
+      "...KCCCCCCCWCCCCCCCYYYYYYYYYK...",
+      "...KCCCCCCCCCCCCCCCYYYYYYYYMK...",
+      "....KCCCCCCCCCCCCCYYYYYYMMMK....",
+      ".....KCCCCCCCCCCCYYYYMMMMMK.....",
+      "......KCCCCCCCCCYYMMMMMMMK......",
+      ".......KCCCCCCYYMMMMMMMMK.......",
+      "........KKCYYYYYMMMMMMKK........",
+      ".........KYYYYYYMMMMMMK.........",
+      ".........KYYYYYYMMMMMMK.........",
+      "........KYYYYYYYMMMMMMMK........",
+      "........KYYYYYYYMMMMMMMK........",
+      "........KYYYYYYYMMMMMMMK........",
+      "........KYYYYYKKKKMMMMMK........",
+      ".......KYYYYKK....KKMMMMK.......",
+      ".......KYYYK........KMMMK.......",
+      ".......KYKK..........KKMK.......",
+      "........K..............K........",
+      "................................",
+      "................................",
+      "................................"],
+    // Hjerte — heart / life
     hjerte: [
-      ".KKK...KKK.",
-      "KOOOK.KOOOK",
-      "KOWOOKOOOOK",
-      "KOOOOOOOOOK",
-      ".KOOOOOOOK.",
-      "..KOOOOOK..",
-      "...KOOOK...",
-      "....KOK....",
-      ".....K....."],
+      ".......KKKKK........KKKKK.......",
+      ".....KKOOOOOKKK..KKKOOOOOKK.....",
+      "....KOOOOOOOOOOKKOOOOOOOOOOK....",
+      "...KOOOOORRRRROOOOOOOORRRRRDK...",
+      "..KOOOORRRRRRRRRROORRRRRRRRRDK..",
+      "..KOOORRRRRRRRRRRRRRRRRRRRRRDK..",
+      ".KOOORRRRRRRRRRRRRRRRRRRRRRRDDK.",
+      ".KOOORRRRRRRRRRRRRRRRRRRRRRRDDK.",
+      ".KOORRRRRWWARRRRRRRRRRRRRRRRDDK.",
+      ".KOORRRRWRRRRRRRRRRRRRRRRRRRDDK.",
+      ".KOORRRRWRRRRRRRRRRRRRRRRRRRDDK.",
+      ".KOORRRRWRRRRRRRRRRRRRRRRRRRDDK.",
+      ".KOORRRRRRRRRRRRRRRRRRRRRRRDDDK.",
+      ".KOORRRRRRRRRRRRRRRRRRRRRRRDDDK.",
+      "..KORRRRRRRRRRRRRRRRRRRRRRRDDK..",
+      "..KORRRRRRRRRRRRRRRRRRRRRRDDDK..",
+      "..KOORRRRRRRRRRRRRRRRRRRRRDDDK..",
+      "...KORRRRRRRRRRRRRRRRRRRRDDDK...",
+      "...KORRRRRRRRRRRRRRRRRRRDDDDK...",
+      "....KORRRRRRRRRRRRRRRRRDDDDK....",
+      ".....KRRRRRRRRRRRRRRRRDDDDK.....",
+      "......KRRRRRRRRRRRRRRDDDDK......",
+      ".......KRRRRRRRRRRRRDDDDK.......",
+      "........KRRRRRRRRRRDDDDK........",
+      ".........KDRRRRRRDDDDDK.........",
+      "..........KDRRRRDDDDDK..........",
+      "...........KKDDDDDDKK...........",
+      ".............KDDDDK.............",
+      "..............KKKK..............",
+      "................................",
+      "................................",
+      "................................"],
     // Pokal — trophy
     pokal: [
-      "KKKKKKKKKKK",
-      "KCCCCCCCCCK",
-      "KCWCCCCCCCK",
-      "KCWCCCCCCCK",
-      ".KCCCCCCCK.",
-      "..KCCCCCK..",
-      "...KCCCK...",
-      "....KCK....",
-      "....KCK....",
-      "..KKKKKKK..",
-      "..KOOOOOK..",
-      "..KKKKKKK.."],
+      "................................",
+      "................................",
+      "........KKKKKKKKKKKKKKKK........",
+      ".......KCCCCCCCCCCCCCCMMK.......",
+      ".......KCCPCCCCCCCCCCCMMK.......",
+      "....KKKKCCPPYYYYYYYYYYMMKKKK....",
+      "...KCCCKCCPPYYYYYYYYYYMMKYCCK...",
+      "..KCCMMKCCPPYYYYOYYYYYMMKYYYMK..",
+      "..KCMMKKCCPPYYYOOOYYYYMMKKYYMK..",
+      "..KCMK.KCCPPYYOOOOOYYYMMK.KYYK..",
+      ".KCCMK.KCCPPYYYOOOYYYYMMK.KCMMK.",
+      "..KYYK.KCCPPYYYOYOYYYMMMK.KCMK..",
+      "..KCYYKKCCYYYYYYYYYYYMMMKKCCMK..",
+      "..KCYYYCKCYYYYYYYYYYMMMKCCCMMK..",
+      "...KMMMMKCYYYYYYYYYYMMMKMMMMK...",
+      "....KKKKKKCYYYYYYYYMMMKKKKKK....",
+      ".........KCYYYYYYYMMMMK.........",
+      ".........KMMMMMMMMMMMK..........",
+      "..........KKMMKKKKMMK...........",
+      "............KKCCCMKK............",
+      ".............KCYYMK.............",
+      ".............KCYYMK.............",
+      ".............KCYYMK.............",
+      "..........KKKKKKKKKKKK..........",
+      ".........KCCCCCCCCCCCMK.........",
+      "........KKKKKKKKKKKKKKKK........",
+      ".......KAAAAAAAAAAAAAAAAK.......",
+      "......KAAOOOOPPPPPPOOOOODK......",
+      "......KAOOOOOPPPPPPOOOOODK......",
+      "......KDDDDDDDDDDDDDDDDDDK......",
+      ".......KKKKKKKKKKKKKKKKKK.......",
+      "................................"],
     // ---- one icon per game (16x16, or 32x32 for the detailed ones; 1px outline, light from top-left) ----
     modsat: [
       "................................",
@@ -521,16 +694,40 @@
       "................................",
       "................................",
       "................................"],
-    // Vagt-hat — tall guard hat (for reading / "fejl" screens)
+    // Vagt-hat — grey bowler hat (for reading / "fejl" screens)
     hat: [
-      "....KKKK....",
-      "...KSSSSK...",
-      "..KSSSSSSK..",
-      "..KSSSSSSK..",
-      "..KSSSSSSK..",
-      ".KKKKKKKKKK.",
-      "KRRRRRRRRRRK",
-      ".KKKKKKKKKK."],
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "............KKKKKKKK............",
+      "...........WWFFFFFFFK...........",
+      "..........WFFFFFFFFFFK..........",
+      ".........KWFFFSSSSSSSSK.........",
+      "........KFWFFSSSSSSSSSJK........",
+      ".......KFFFFSSSSSSSSSSSJK.......",
+      ".......KFFFSSSSSSSSSSSSJK.......",
+      "......KFFFSSSSSSSSSSSSSJJK......",
+      "......KFFFSSSSSSSSSSSSSSJK......",
+      "......KFFSSSSSSSSSSSSSSSJK......",
+      ".....KFFFSSSSSSSSSSSSSSSJJK.....",
+      ".....KKKKKKKKKKKKKKKKKKKKKK.....",
+      ".....KOOOOOOOOOOOOOOOOOOODK.....",
+      ".....KORRRRRRRRRRRRRRRRRRDK.....",
+      ".....KORKKKKKKKKKKKKKKKKRDK.....",
+      "....KKKKRRRRRRRRRRRRRRRRKKKK....",
+      "..KKFKDDDDDDDDDDDDDDDDDDDDKFKK..",
+      ".KFFFFFFFFFFFFFFFFFFFFFFFFFFFFK.",
+      "KFFSSSSSSSSSSSSSSSSSSSSSSSSSSJJK",
+      ".KJSSSSSSSSSSSSSSSSSSSSSSSSJJJK.",
+      "..KKJJJSSSSSSSSSSSSSSSSJJJJJKK..",
+      "....KKKKJJJJJJJJJJJJJJJJKKKK....",
+      "........KKKKKKKKKKKKKKKK........",
+      "................................",
+      "................................",
+      "................................",
+      "................................"],
     // Pronomenmysteriet — speech bubble with a question mark and a person
     bog: [
       "................................",
@@ -598,19 +795,179 @@
       "......KMMKK..........KKMMK......",
       ".......KK..............KK.......",
       "................................",
+      "................................"],
+    // ---- generic family, 32x32 shaded (polle ... vend) ----
+    // Dannebrog — Danish flag
+    flag: [
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "..KKKKKKKKKKKKKKKKKKKKKKKKKKKK..",
+      ".KOOOOOOOWWWWOOOOOOOOOOOOOOOODK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KWWWWWWWWWWWWWWWWWWWWWWWWWWWWK.",
+      ".KWWWWWWWWWWWWWWWWWWWWWWWWWWWWK.",
+      ".KWWWWWWWWWWWWWWWWWWWWWWWWWWWWK.",
+      ".KWFFFFFFWWWWFFFFFFFFFFFFFFFFFK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KORRRRRRWWWFRRRRRRRRRRRRRRRRDK.",
+      ".KDDDDDDDWWWFDDDDDDDDDDDDDDDDDK.",
+      "..KKKKKKKKKKKKKKKKKKKKKKKKKKKK..",
+      "................................",
+      "................................",
+      "................................",
+      "................................"],
+    // Stopur — stopwatch: speed / timed modes
+    stopur: [
+      "................................",
+      "............KKKKKKKK............",
+      "...........KFFFFFFFJK...........",
+      "...........KFSSSSSSJK....KKK....",
+      "...........KJJJJJJJJK...KFFJK...",
+      "...........KKKKKKKKKK..KFFSJK...",
+      ".........KKEEEEEEEEEEKKFFSJJK...",
+      "........KEEEEEEEEEEEEEEKSJJK....",
+      ".......KEEEEELLLLLLLLLLEKJK.....",
+      "......KEEEELLKKKKKKLLLLLLK......",
+      ".....KEEEELKKJWKKRRKKLLLLLK.....",
+      "....KEEEEKKJWWWKKRRRRKKLLLNK....",
+      "...KEEEELKWWWWWKKRRRRRKLLLNNK...",
+      "...KEEELKJWWWWWKKRRRRRRKLLLNK...",
+      "...KEELKJWWWWWWKKRRRRRRWKLLNK...",
+      "..KEEELKWWWWWWWKKRRRRRRRKLLNNK..",
+      "..KEEELKWWWWWWWKKRRRRRRRKLLNNK..",
+      "..KEELKJWWWWWWWWKRRRRRRRWKLNNK..",
+      "..KEELKKWWWWWWKKKKRRRRRRKKLNNK..",
+      "..KEELKKWWWWWWWKKWRRRRRRKKLNNK..",
+      "..KEELLKWWWWWWWWWWWRRRRRKLNNNK..",
+      "..KEELLKWWWWWWWWWWWWWRRRKLNNNK..",
+      "...KELLKWWWWWWWWWWWWWWWFKLNNK...",
+      "...KELLLKWWWWWWWWWWWWWFKLNNNK...",
+      "...KEELLLKWWWWWWWWWWWWKLNNNNK...",
+      "....KELLLKKWWWWWWWWWFKKNNNNK....",
+      ".....KLLLLLKKWWWWWFKKLNNNNK.....",
+      "......KLLLLLLKKKKKKLLNNNNK......",
+      ".......KNLLLLLLLLLLNNNNNK.......",
+      "........KNNNNNNNNNNNNNNK........",
+      ".........KKNNNNNNNNNNKK.........",
+      "...........KKKKKKKKKK..........."],
+    // Bland — two crossing arrows: mixed / shuffled modes
+    bland: [
+      "................................",
+      "................................",
+      "................................",
+      "................................",
+      "...K............................",
+      "..KAKK..............KKKKKKK.....",
+      ".KAAOAK..........KKKEEEEEENK....",
+      ".KAOOOOK........KEEEELLLLNNK....",
+      "..KOOOOOK........KLLLLLLLNK.....",
+      "...KOOOOOK........KLLLLLLNK.....",
+      "....KOOOOOKK.....KKELLLLNNK.....",
+      ".....KDOOOOAK...KEEELLLLNK......",
+      "......KKOOOOOK.KEELNNLLLNK......",
+      "........KOOOOOKEELNNKKLNNK......",
+      ".........KOOKKEELNNK..KNK.......",
+      "..........KKEEELNNK....K........",
+      "..........KEELNNNKK....K........",
+      ".........KEELNNKKOOK..KAK.......",
+      "........KEELNNKOOOOOKKAADK......",
+      "......KKEELNNK.KOOOOOAAODK......",
+      ".....KEEENNNK...KDOOOOOOOK......",
+      "....KEELNNKK.....KKOOOOOODK.....",
+      "...KEELNNK........KAOOOOODK.....",
+      "..KEELNNK........KAAOOOOOOK.....",
+      ".KEELNNK........KDDOOOOOOODK....",
+      ".KENNNK..........KKKDDDDDDDK....",
+      "..KNKK..............KKKKKKK.....",
+      "...K............................",
+      "................................",
+      "................................",
+      "................................",
+      "................................"],
+    // Statistik — bar chart: progress / stats
+    statistik: [
+      "................................",
+      "................................",
+      "................................",
+      "......................KKKKK.....",
+      ".....................KWWAADK....",
+      ".....................KAOOODK....",
+      ".....................KAOOODK....",
+      ".....................KAOOODK....",
+      "................KKKKKKAOOODK....",
+      "...............KCCCCMKAOOODK....",
+      "...............KCYYYMKAOOODK....",
+      "...............KCYYYMKAOOODK....",
+      "...............KCYYYMKAOOODK....",
+      "..........KKKKKKCYYYMKAOOODK....",
+      ".........KWCCCCKCYYYMKAOOODK....",
+      ".........KCGGGGKCYYYMKAOOODK....",
+      ".........KCGGGGKCYYYMKAOOODK....",
+      ".........KCGGGGKCYYYMKAOOODK....",
+      "....KKKKKKCGGGGKCYYYMKAOOODK....",
+      "...KWEEENKCGGGGKCYYYMKAOOODK....",
+      "...KELLLNKCGGGGKCYYYMKAOOODK....",
+      "...KELLLNKCGGGGKCYYYMKAOOODK....",
+      "...KELLLNKCGGGGKCYYYMKAOOODK....",
+      "...KELLLNKCGGGGKCYYYMKAOOODK....",
+      "...KELLLNKCGGGGKCYYYMKAOOODK....",
+      "...KELLLNKCGGGGKCYYYMKAOOODK....",
+      "..KKNNNNNKCGGGGKMMMMMKDDDDDKKK..",
+      ".KFFKKKKKFKKKKKFKKKKKFKKKKKFFJK.",
+      ".KFSSSSSSSSSSSSSSSSSSSSSSSSSSJK.",
+      ".KJJJJJJJJJJJJJJJJJJJJJJJJJJJJK.",
+      "..KKKKKKKKKKKKKKKKKKKKKKKKKKKK..",
+      "................................"],
+    // Vend — card with a turn arrow: flip / memory modes
+    vend: [
+      "................................",
+      "................................",
+      "........KKKKKKKKKKKKKK..........",
+      ".......KEEEEEEEEEEEEENK.........",
+      ".......KELLLLLLLLLLLLNK.........",
+      ".......KELLLLLLLLLLLLNK.........",
+      ".......KELLLELELELELLNK.........",
+      ".......KELLLLLLLLLLLLNK.........",
+      ".......KELLELELELELELNK.........",
+      ".......KELLLLLWWLLLLLNK.........",
+      ".......KELLLELWWELELLNK.........",
+      ".......KELLLLLWWLLLLLNK.........",
+      ".......KELLELEWWLELELNK.........",
+      ".......KELLLLLLLLLLLLNK.........",
+      ".......KELLLELELELELLNK.KK......",
+      ".......KELLLLLLLLLLLLNKKADK.....",
+      ".......KELLELELELELELNKKAOK.....",
+      ".......KELLLLLLLLLLLLNKAAODK....",
+      ".......KNNNNNNNNNNNNNNKAOOOK....",
+      ".....KKKKKKKKKKKKKKKKKAAODDDK...",
+      "....KAAADK...........KAOODKK....",
+      "....KAOODK...........KAODDK.....",
+      ".....KOOOK...........KAODK......",
+      ".....KAOOOK.........KAADDK......",
+      "......KOOOOK.......KAAODK.......",
+      "......KAOOOOKKKKKKKAAODDK.......",
+      ".......KOOOOOAAAAAAAODDK........",
+      "........KDOOOOOOOOODDDK.........",
+      ".........KKDOOOOODDDKK..........",
+      "...........KKDDDDDKK............",
+      ".............KKKKK..............",
       "................................"]
   };
-  // Dannebrog — generated (red field, white Nordic cross)
-  (function () {
-    var w = 17, h = 12, rows = [], x, y, line;
-    for (y = 0; y < h; y++) { line = "";
-      for (x = 0; x < w; x++) {
-        var edge = (y === 0 || y === h - 1 || x === 0 || x === w - 1);
-        var cross = (x === 5 || x === 6) || (y === 5 || y === 6);
-        line += edge ? "K" : cross ? "W" : "R"; }
-      rows.push(line); }
-    SPR.flag = rows;
-  })();
 
   function spriteSVG(name, scale, label) {
     var g = SPR[name]; if (!g) return "";
@@ -763,19 +1120,35 @@
   function buildBar() {
     if (root.hasAttribute("data-sd-nobar") || doc.body.hasAttribute("data-sd-home")) return;
     var logo = '<span class="sd-bar-logo">' + '<span class="sd-sprite">' + spriteSVG("polle", 2) + '</span><span class="t">SJOVT <b>DANSK</b></span></span>';
+    var controls = '<button type="button" class="sd-bar-btn" id="sd-theme-btn" aria-label="Mørk tilstand" title="Skift mellem lys og mørk tilstand">MØRK</button>' +
+      '<button type="button" class="sd-bar-btn" id="sd-sound-btn" aria-label="Lydeffekter" title="Slå lydeffekter til eller fra (oplæsning med Lyt er upåvirket)">LYD</button>';
     var bar = doc.querySelector(".sd-bar");
     if (bar && bar.hasAttribute("data-sd-static")) {
-      /* Page ships a plain-HTML bar (crawlable home link); only add the sprite logo. */
+      /* Page ships a plain-HTML bar (crawlable home link); add the sprite logo and the controls. */
       if (!bar.querySelector(".sd-bar-logo")) bar.insertAdjacentHTML("beforeend", logo);
+      bar.insertAdjacentHTML("beforeend", controls);
     } else if (bar) {
       return;
     } else {
       bar = doc.createElement("nav");
       bar.className = "sd-bar"; bar.setAttribute("aria-label", "Sjovt Dansk");
-      bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '">← MENU</a>' + logo;
+      bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '"><span class="sd-arr" aria-hidden="true"></span>MENU</a>' + logo + controls;
       doc.body.insertBefore(bar, doc.body.firstChild);
     }
-    root.style.setProperty("--sd-bar-h", "48px");
+    var tb = bar.querySelector("#sd-theme-btn"), sb = bar.querySelector("#sd-sound-btn");
+    function paint() {
+      tb.setAttribute("aria-pressed", String(themeIsDark()));
+      var on = soundOn(); sb.setAttribute("aria-pressed", String(on)); sb.textContent = on ? "LYD" : "LYD ✗";
+    }
+    tb.addEventListener("click", function () { theme.toggle(); });
+    sb.addEventListener("click", function () { sound.toggle(); });
+    win.addEventListener("sd:themechange", paint); win.addEventListener("sd:soundchange", paint);
+    win.addEventListener("storage", function (e) { if (e.key === THEME_KEY) { applyTheme(); paint(); } else if (e.key === SOUND_KEY) paint(); });
+    paint();
+    // --sd-bar-h = the rendered bar height (it can grow if the bar wraps on narrow screens)
+    function measureBar() { var h = Math.round(bar.getBoundingClientRect().height); if (h > 0) root.style.setProperty("--sd-bar-h", h + "px"); }
+    measureBar();
+    if (win.ResizeObserver) new win.ResizeObserver(measureBar).observe(bar); else win.addEventListener("resize", measureBar);
   }
 
   /* ----------------------------------------------------------------- fx */
@@ -832,7 +1205,7 @@
 
   win.Sjovt = {
     sprite: sprite, spriteSVG: spriteSVG, hydrate: hydrateSprites, sprites: Object.keys(SPR), fx: fx,
-    watchScreens: watchScreens, reduced: reduced, homeUrl: homeUrl,
+    watchScreens: watchScreens, reduced: reduced, homeUrl: homeUrl, theme: theme, sound: sound,
     hold: function (p) { preState.holds.push(Promise.resolve(p).catch(function () {})); },   // keep curtain until p settles
     ready: function () { finishPre(); }
   };

@@ -388,7 +388,6 @@
   <header>
     <h1><span data-sd-sprite="ur" data-scale="3" class="sd-bob" aria-hidden="true"></span> <span>Sætningsbyggeren</span></h1>
     <div class="header-buttons">
-      <button id="darkToggle" title="Skift mellem lys og mørk" aria-label="Skift mellem lys og mørk tilstand">Lys / Mørk</button>
       <button id="importBtn" title="Importér CSV-data">Importér data</button>
       <button id="reviewBtn" title="Gennemgå gemte ord (R)">Repetition</button>
       <button id="settingsBtn" title="Indstillinger">Indstillinger</button>
@@ -1495,22 +1494,7 @@
       populateMap();
       // Start with a random zone/mode
       startZone(zones.find((z) => dataset.some(z.filter)) || zones[0]);
-      // Dark mode toggle
-      const darkToggle = document.getElementById("darkToggle");
-      let darkPref = null;
-      try { darkPref = localStorage.getItem("danishDarkMode"); } catch (e) { darkPref = null; }
-      if (darkPref === "true") {
-        document.body.classList.add("dark");
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else if (darkPref === "false") {
-        document.documentElement.setAttribute("data-theme", "light");
-      }
-      darkToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark");
-        const isDark = document.body.classList.contains("dark");
-        try { localStorage.setItem("danishDarkMode", isDark); } catch (e) {}
-        document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-      });
+      // Theme: the shared bar (shared/sjovt.js, sd:theme) owns light/dark (US-040)
       // Import modal events
       const importBtn = document.getElementById("importBtn");
       const importModal = document.getElementById("importModal");

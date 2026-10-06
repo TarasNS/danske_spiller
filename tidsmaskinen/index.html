@@ -222,8 +222,6 @@
 <div class="shell">
   <header class="topbar">
     <div class="brand"><span data-sd-sprite="tidsstjerne" data-scale="3" aria-hidden="true"></span> Tidsmaskinen</div>
-    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
-    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
     <button class="icon-btn" id="btn-reset" type="button" aria-label="Nulstil fremskridt" title="Nulstil fremskridt">NULSTIL</button>
   </header>
 
@@ -351,8 +349,7 @@
   };
 
   DC.ui.darkMode.init();
-  DC.ui.sound.init(prefs.get('sound') !== false);
-  syncSoundLabel();
+  DC.ui.sound.init(true);   // US-040: mute lives in the shared bar (dc:sound-enabled)
 
   var savedLevels = prefs.get('levels');
   if (Array.isArray(savedLevels)) {
@@ -361,13 +358,6 @@
   }
   state.timed = prefs.get('timed') === true && timedUnlocked();
 
-  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
-  document.getElementById('btn-sound').addEventListener('click', function(){
-    var on = DC.ui.sound.toggle();
-    prefs.set('sound', on);
-    syncSoundLabel();
-    if (on) SOUND.select();
-  });
   // US-030: reset progress (this game's keys only: srs:tidsmaskinen + tidsmaskinen:totalCorrect/hintDone/timed), after a Danish confirm
   document.getElementById('btn-reset').addEventListener('click', function(){
     var ok = false;
@@ -379,12 +369,6 @@
     state.timed = false;
     if (el.start.classList.contains('hidden')) showStart(); else buildStartControls();
   });
-  function syncSoundLabel(){
-    var on = DC.ui.sound.isEnabled();
-    var b = document.getElementById('btn-sound');
-    b.textContent = on ? 'LYD' : 'LYD ✗';
-    b.setAttribute('aria-pressed', String(!on));
-  }
   document.getElementById('btn-play').addEventListener('click', startRound);
   document.getElementById('btn-back').addEventListener('click', showStart);
   document.addEventListener('keydown', function(e){

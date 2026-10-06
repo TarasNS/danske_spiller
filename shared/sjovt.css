@@ -82,7 +82,7 @@
   --sd-drop:     8px 8px 0 0 var(--sd-ink);          /* hard arcade shadow */
   --sd-bevel:    inset -4px -4px 0 0 rgba(16,16,16,.28), inset 4px 4px 0 0 rgba(255,255,255,.45);
 
-  --sd-bar-h: 48px;
+  --sd-bar-h: 56px;   /* rendered bar height (44px link + 8px padding + 4px border); sjovt.js re-measures it */
   --sd-ease: steps(4, end);
   color-scheme: light;
 }
@@ -112,7 +112,10 @@
 }
 
 /* --------------------------------------------------------------- base page */
-html.sd-page { background: var(--sd-bg); }
+/* the grid is painted on <html> too, so it reaches the viewport bottom on short pages */
+html.sd-page { background-color: var(--sd-bg);
+  background-image: linear-gradient(var(--sd-grid) 1px, transparent 1px), linear-gradient(90deg, var(--sd-grid) 1px, transparent 1px);
+  background-size: 32px 32px; }
 html.sd-page body {
   background-color: var(--sd-bg);
   background-image:
@@ -199,6 +202,30 @@ html.sd-page ::selection { background: var(--sd-ink); color: var(--sd-cream); }
 .sd-fb--ok  { background: var(--sd-ok-bg);  box-shadow: var(--sd-box-ok);  color: var(--sd-text); } .sd-fb--ok::before  { content: "✓"; background: var(--sd-ok); }
 .sd-fb--bad { background: var(--sd-bad-bg); box-shadow: var(--sd-box-bad); color: var(--sd-text); } .sd-fb--bad::before { content: "✗"; background: var(--sd-bad); }
 
+/* ------------------------------------------------------------ pixel arrows (US-039)
+   8x8 pixel arrow drawn as a mask, so it takes the text colour in every theme and never falls back to a system font.
+   <span class="sd-arr" aria-hidden="true"></span> = left; add sd-arr--r (right), sd-arr--d (down), sd-arr--u (up). */
+.sd-arr { display: inline-block; flex: none; width: 16px; height: 16px; vertical-align: -2px; background: currentColor;
+  -webkit-mask: var(--_arr) center / 100% 100% no-repeat; mask: var(--_arr) center / 100% 100% no-repeat; image-rendering: pixelated;
+  --_arr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h1v1H3zM2 1h2v1H2zM1 2h7v1H1zM0 3h8v2H0zM1 5h7v1H1zM2 6h2v1H2zM3 7h1v1H3z'/%3E%3C/svg%3E"); }
+.sd-arr--r { transform: scaleX(-1); }
+.sd-arr--d { transform: rotate(-90deg); }
+.sd-arr--u { transform: rotate(90deg); }
+@media (forced-colors: active) { .sd-arr { background: CanvasText; forced-color-adjust: none; } }
+
+/* ------------------------------------------------------------ results screens (US-039)
+   Shared look only; each game keeps its own markup and flow. Typical order: icon (pokal/stjerne sprite), title, score,
+   stats, optional mistakes list, actions ("SPIL IGEN" / "TIL MENUEN"). Feedback colours stay out of here. */
+.sd-results { display: flex; flex-direction: column; align-items: center; gap: var(--sd-4); text-align: center; }
+.sd-results__title { margin: 0; font-family: var(--sd-font-display); font-weight: 700; font-size: clamp(22px, 4vw, 30px); line-height: 1.35; text-transform: uppercase; }
+.sd-results__score { font-family: var(--sd-font-display); font-weight: 700; font-size: clamp(40px, 10vw, 64px); line-height: 1; }
+.sd-results__stats { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sd-3); margin: 0; padding: 0; list-style: none; }
+.sd-results__stat { min-width: 112px; padding: var(--sd-3) var(--sd-4); margin: var(--sd-bw); background: var(--sd-panel-2); color: var(--sd-text); box-shadow: var(--sd-box); font-family: var(--sd-font-body); font-weight: 700; }
+.sd-results__stat small { display: block; font-size: 12px; font-weight: 400; text-transform: uppercase; letter-spacing: .02em; color: var(--sd-text-soft); }
+.sd-results__mistakes { width: 100%; max-width: 520px; margin: 0; padding: var(--sd-4); text-align: left; list-style: none; background: var(--sd-panel); color: var(--sd-text); box-shadow: var(--sd-box); }
+.sd-results__mistakes li + li { margin-top: var(--sd-2); padding-top: var(--sd-2); border-top: 2px dashed var(--sd-line); }
+.sd-results__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sd-3); }
+
 /* ------------------------------------------------------------ chrome bar (games) */
 .sd-bar { position: sticky; top: 0; z-index: 900; display: flex; align-items: center; gap: var(--sd-3);
   min-height: var(--sd-bar-h); padding: 4px 12px; background: var(--sd-ink); color: var(--sd-cream);
@@ -207,6 +234,11 @@ html.sd-page ::selection { background: var(--sd-ink); color: var(--sd-cream); }
 .sd-bar a:hover { background: var(--sd-orange); color: #101010; }
 .sd-bar .sd-bar-logo { margin-left: auto; font-family: var(--sd-font-logo); font-size: 12px; display: inline-flex; align-items: center; gap: 8px; color: var(--sd-cream); }
 .sd-bar .sd-bar-logo b { font-weight: 400; color: var(--sd-orange); }
+.sd-bar .sd-bar-btn { min-width: 44px; min-height: 44px; padding: 0 10px; border: 2px solid var(--sd-cream); background: transparent; color: var(--sd-cream); font: inherit; font-size: 14px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; cursor: pointer; }
+.sd-bar .sd-bar-btn:hover { background: var(--sd-orange); color: #101010; border-color: var(--sd-orange); }
+.sd-bar .sd-bar-btn[aria-pressed="true"] { background: var(--sd-cream); color: #101010; }
+.sd-bar .sd-bar-btn:focus-visible, .sd-bar a:focus-visible { outline: 3px solid var(--sd-orange); outline-offset: 2px; }
+@media (max-width: 420px) { .sd-bar { gap: 4px; padding: 4px 6px; } .sd-bar .sd-bar-btn { padding: 0 6px; font-size: 13px; } .sd-bar a { padding: 0 6px; } }
 @media (max-width: 420px) { .sd-bar .sd-bar-logo span.t { display: none; } }
 
 /* "Øv videre": static related-game links at the end of each game page (crawlable internal links) */

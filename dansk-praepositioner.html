@@ -344,6 +344,8 @@ const ITEMS = [];
 // opts.noErr  true = no safe error exists for this template: excluded from those two modes
 // opts.wrong  explicit distractors that are really wrong in this frame (used before CONFUSE)
 // opts.not    prepositions that are VALID in this frame and must never be offered as wrong options
+// opts.valid  per-template set of every other preposition that fits the frame (US-059); merged into `not`, so neither
+//             explicit nor padded distractors can ever be a valid answer. Never contains opts.err or the pair partner.
 function gen(pattern, answer, fills, ex, theme, opts, lvl){
   opts = opts || {};
   fills.forEach(function(x){
@@ -353,7 +355,7 @@ function gen(pattern, answer, fills, ex, theme, opts, lvl){
       err: opts.noErr ? null : (opts.err || (CONFUSE[answer]?CONFUSE[answer][0]:"i")),
       noErr: !!opts.noErr,
       wrong: opts.wrong || null,
-      not: opts.not || null,
+      not: (function(){ var n=(opts.not||[]).concat(opts.valid||[]).filter(function(x,i,a){ return x!==answer && a.indexOf(x)===i; }); return n.length?n:null; })(),
       pair: opts.pair || null,
       lvl: lvl
     });
@@ -362,264 +364,335 @@ function gen(pattern, answer, fills, ex, theme, opts, lvl){
 
 /* ---------- i ---------- */
 gen("Jeg bor {a} {x}.","i",["København","Aarhus","Odense","Aalborg","Esbjerg","Randers","en lejlighed","et rækkehus","centrum","en lille by"],
-  "Byer, lande og boliger tager 'i': man bor i en by eller i et hus.","Bolig",{err:"på",pair:"i|på"},"A1");
-gen("Vi mødes {a} {x}.","i",["kantinen","mødelokalet","biografen","kælderen","klasselokalet","svømmehallen"],
-  "Inde i lukkede rum bruger man 'i': i kantinen, i biografen.","Arbejde",{err:"på",pair:"i|på",not:["ved"]},"A1");
+  "Byer, lande og boliger tager 'i': man bor i en by eller i et hus.","Bolig",{err:"på",pair:"i|på",valid:["ved"]},"A1");
+gen("Vi mødes {a} {x}.","i",["mødelokalet","biografen","kælderen","klasselokalet","svømmehallen"],
+  "Inde i lukkede rum bruger man 'i': i kantinen, i biografen.","Arbejde",{err:"på",pair:"i|på",valid:["ved"]},"A1");
+// kantinen: 'på kantinen' is also heard in Danish, so no error word and no pair (US-059)
+gen("Vi mødes {a} {x}.","i",["kantinen"],
+  "Inde i lukkede rum bruger man 'i': i kantinen, i biografen.","Arbejde",{noErr:true,valid:["ved","på"]},"A1");
 gen("Mødet ligger {a} {x}.","i",["januar","februar","marts","maj","august","oktober","december"],
-  "Måneder og årstider tager 'i': i januar, i sommer.","Møder",{err:"på"},"A1");
-gen("Børnene går {a} {x}.","i",["skole","kirke","børnehave","biografen","byen","teatret"],
-  "Faste udtryk med aktivitet: gå i skole, i kirke, i byen.","Familie",{err:"på"},"A2");
-gen("Der er mange varer {a} {x}.","i",["Netto","kurven","butikken","køleskabet","tasken","skuffen"],
-  "Inde i en beholder eller butik: i kurven, i køleskabet.","Indkøb",{err:"på"},"A1");
-gen("Han sidder stadig {a} {x}.","i",["bilen","haven","mørket"],
-  "Inde i et køretøj eller rum: i bilen, i toget.","Rejse",{err:"på"},"A2");
-// toget/sofaen: 'på' is also valid Danish here (US-019)
-gen("Han sidder stadig {a} {x}.","i",["toget","sofaen"],
-  "Inde i et køretøj eller rum: i bilen, i toget.","Rejse",{noErr:true,not:["på"]},"A2");
+  "Måneder og årstider tager 'i': i januar, i sommer.","Møder",{err:"på",valid:["efter","fra","til"]},"A1");
+gen("Børnene går {a} {x}.","i",["skole","kirke","børnehave","biografen"],
+  "Faste udtryk med aktivitet: gå i skole, i kirke, i byen.","Familie",{err:"på",valid:["til","efter","fra","uden"]},"A2");
+// byen/teatret: 'går på byen' / 'går på teatret' are valid too (US-059)
+gen("Børnene går {a} {x}.","i",["byen","teatret"],
+  "Faste udtryk med aktivitet: gå i skole, i kirke, i byen.","Familie",{noErr:true,valid:["på","til","efter","fra","over","ved"]},"A2");
+gen("Der er mange varer {a} {x}.","i",["Netto","butikken"],
+  "Inde i en beholder eller butik: i kurven, i køleskabet.","Indkøb",{err:"på",valid:["hos","fra","ved","til"]},"A1");
+// kurven/køleskabet/tasken/skuffen: 'på' (ovenpå) and other positions can fit too (US-059)
+gen("Der er mange varer {a} {x}.","i",["kurven","køleskabet","tasken","skuffen"],
+  "Inde i en beholder eller butik: i kurven, i køleskabet.","Indkøb",{noErr:true,valid:["på","ved","under","over","fra","til","hos"]},"A1");
+gen("Han sidder stadig {a} {x}.","i",["haven","mørket"],
+  "Inde i et køretøj eller rum: i bilen, i toget.","Rejse",{err:"på",valid:["ved"]},"A2");
+// bilen/toget/sofaen: 'på' is also valid Danish here (US-019)
+gen("Han sidder stadig {a} {x}.","i",["bilen","toget","sofaen"],
+  "Inde i et køretøj eller rum: i bilen, i toget.","Rejse",{noErr:true,valid:["på","ved","under","over"]},"A2");
 
 /* ---------- på ---------- */
-gen("Jeg arbejder {a} {x}.","på",["kontoret","fabrikken","hospitalet","værkstedet","posthuset","biblioteket","en café","apoteket"],
-  "Mange arbejdspladser og institutioner tager 'på': på kontoret, på hospitalet.","Arbejde",{err:"i",pair:"i|på"},"A1");
+gen("Jeg arbejder {a} {x}.","på",["kontoret","fabrikken","hospitalet","værkstedet","posthuset","apoteket"],
+  "Mange arbejdspladser og institutioner tager 'på': på kontoret, på hospitalet.","Arbejde",{err:"i",pair:"i|på",valid:["ved","for"]},"A1");
+// biblioteket/en café: 'i' is also valid (US-059)
+gen("Jeg arbejder {a} {x}.","på",["biblioteket","en café"],
+  "Mange arbejdspladser og institutioner tager 'på': på kontoret, på hospitalet.","Arbejde",{noErr:true,valid:["i","ved","for","hos"]},"A1");
 gen("Bogen ligger {a} {x}.","på",["bordet","gulvet","skrivebordet","stolen"],
-  "Oven på en flade bruger man 'på': på bordet, på gulvet.","Hjem",{err:"i",pair:"i|på"},"A1");
+  "Oven på en flade bruger man 'på': på bordet, på gulvet.","Hjem",{err:"i",pair:"i|på",valid:["under","ved","over"]},"A1");
 // reolen/hylden/sengen: 'i' is also valid Danish here, so no error word and no 'i' distractor (US-019)
 gen("Bogen ligger {a} {x}.","på",["hylden","sengen","reolen"],
-  "Oven på en flade bruger man 'på': på bordet, på gulvet.","Hjem",{noErr:true,not:["i"]},"A1");
-gen("Vi ses {a} {x}.","på",["stationen","torvet","gaden","pladsen","hjørnet"],
-  "Åbne steder og pladser tager ofte 'på': på stationen, på torvet.","Rejse",{err:"i",not:["ved"]},"A2");
+  "Oven på en flade bruger man 'på': på bordet, på gulvet.","Hjem",{noErr:true,valid:["i","under","ved","over"]},"A1");
+gen("Vi ses {a} {x}.","på",["stationen","torvet","gaden","pladsen"],
+  "Åbne steder og pladser tager ofte 'på': på stationen, på torvet.","Rejse",{err:"i",valid:["ved"]},"A2");
+// hjørnet: 'i hjørnet' is valid too (US-059)
+gen("Vi ses {a} {x}.","på",["hjørnet"],
+  "Åbne steder og pladser tager ofte 'på': på stationen, på torvet.","Rejse",{noErr:true,valid:["ved","i"]},"A2");
 gen("Hun er {a} {x} i dag.","på",["vagt","ferie","barsel","kursus","besøg","udflugt"],
-  "Faste tilstandsudtryk: på arbejde, på ferie, på kursus.","Arbejde",{err:"i"},"A2");
-gen("Skriv det venligst {a} {x}.","på",["listen","tavlen","papiret","computeren","telefonen"],
-  "På en overflade eller skærm: på listen, på tavlen.","Møder",{err:"i"},"A2");
-gen("Vi bor {a} {x}.","på",["landet","femte sal","et hotel","en bondegård","Frederiksberg"],
-  "Særlige boligudtryk tager 'på': på landet, på femte sal, på hotel.","Bolig",{err:"i",pair:"i|på"},"B1");
+  "Faste tilstandsudtryk: på arbejde, på ferie, på kursus.","Arbejde",{err:"i",valid:["uden"]},"A2");
+gen("Skriv det venligst {a} {x}.","på",["tavlen","papiret"],
+  "På en overflade eller skærm: på listen, på tavlen.","Møder",{err:"i",valid:["under","over","ved"]},"A2");
+// listen/computeren/telefonen: 'i' is also valid (US-059)
+gen("Skriv det venligst {a} {x}.","på",["listen","computeren","telefonen"],
+  "På en overflade eller skærm: på listen, på tavlen.","Møder",{noErr:true,valid:["i","under","over","ved"]},"A2");
+gen("Vi bor {a} {x}.","på",["femte sal","Frederiksberg"],
+  "Særlige boligudtryk tager 'på': på landet, på femte sal, på hotel.","Bolig",{err:"i",pair:"i|på",valid:["under","over"]},"B1");
+// landet/et hotel/en bondegård: 'i' is also valid (US-059)
+gen("Vi bor {a} {x}.","på",["landet","et hotel","en bondegård"],
+  "Særlige boligudtryk tager 'på': på landet, på femte sal, på hotel.","Bolig",{noErr:true,valid:["i","ved"]},"B1");
 
 /* ---------- til ---------- */
-gen("Jeg skal {a} {x} i morgen.","til",["København","mødet","lægen","tandlægen","frisøren","stranden","fest","koncert"],
-  "Bevægelse mod et mål eller en begivenhed tager 'til': til mødet, til lægen.","Rejse",{err:"i",pair:"i|til"},"A1");
+gen("Jeg skal {a} {x} i morgen.","til",["lægen","tandlægen","frisøren","stranden","fest","koncert"],
+  "Bevægelse mod et mål eller en begivenhed tager 'til': til mødet, til lægen.","Rejse",{err:"i",pair:"i|til",valid:["på","hos","fra","med","efter","over"]},"A1");
+// København/mødet: 'i' can also be heard here, so no error word and no pair (US-059)
+gen("Jeg skal {a} {x} i morgen.","til",["København","mødet"],
+  "Bevægelse mod et mål eller en begivenhed tager 'til': til mødet, til lægen.","Rejse",{noErr:true,valid:["i","på","hos","fra","med","efter","over"]},"A1");
 gen("Vi glæder os {a} {x}.","til",["weekenden","ferien","jul","sommeren","festen","at se dig"],
-  "'Glæde sig til' styrer altid 'til' + det man ser frem til.","Familie",{err:"for"},"A2");
+  "'Glæde sig til' styrer altid 'til' + det man ser frem til.","Familie",{err:"for",valid:["over","i","efter","under"]},"A2");
 gen("Hun gav gaven {a} {x}.","til",["sin mor","læreren","chefen","sin ven","naboen","barnet"],
-  "Modtageren af noget får 'til': give noget til nogen.","Familie",{err:"for"},"A2");
+  "Modtageren af noget får 'til': give noget til nogen.","Familie",{err:"for",valid:["fra","med","uden","hos","ved","efter"]},"A2");
 gen("Hvad skal vi have {a} {x}?","til",["aftensmad","frokost","dessert","middag","morgenmad"],
-  "Måltider som formål tager 'til': hvad skal vi have til frokost.","Mad",{err:"for"},"A1");
+  "Måltider som formål tager 'til': hvad skal vi have til frokost.","Mad",{err:"for",valid:["efter","under","ved","med"]},"A1");
 gen("Brevet er adresseret {a} {x}.","til",["dig","direktøren","hele afdelingen","kunden","min familie"],
-  "Modtageren af et brev eller en besked får »til«.","Arbejde",{err:"for"},"A2");
-gen("Jeg cykler {a} {x} hver dag.","til",["arbejde","skole","stationen","træning","byen"],
-  "Målet for en fast tur tager »til«: cykle til arbejde.","Transport",{err:"på",pair:"i|til"},"A1");
+  "Modtageren af et brev eller en besked får »til«.","Arbejde",{err:"for",valid:["af"]},"A2");
+// arbejde/træning: 'på arbejde' is valid too (US-059)
+gen("Jeg cykler {a} {x} hver dag.","til",["arbejde","træning"],
+  "Målet for en fast tur tager »til«: cykle til arbejde.","Transport",{noErr:true,valid:["på","fra","efter","over","i","under","uden"]},"A1");
+// skole/stationen/byen: 'i skole', 'i byen' are valid too, so no pair with 'i' (US-059)
+gen("Jeg cykler {a} {x} hver dag.","til",["skole","stationen","byen"],
+  "Målet for en fast tur tager »til«: cykle til arbejde.","Transport",{noErr:true,valid:["i","på","fra","efter","ved","over"]},"A1");
 
 /* ---------- for ---------- */
 gen("Tak {a} {x}!","for",["hjælpen","maden","kaffen","gaven","invitationen","i dag","sidst","lånet"],
   "Man siger altid »tak for« noget.","Høflighed",{err:"til"},"A1");
 gen("Jeg er bange {a} {x}.","for",["hunde","edderkopper","mørket","højder","at flyve","at komme for sent"],
-  "»Bange for« efterfølges af det, man frygter.","Følelser",{err:"af"},"A2");
+  "»Bange for« efterfølges af det, man frygter.","Følelser",{err:"af",valid:["i","ved"]},"A2");
 gen("Hun kæmper {a} {x}.","for",["en god sag","miljøet","de fattige","menneskerettigheder","klimaet"],
-  "Når man kæmper på en sags side, bruger man »for«: kæmpe for en god sag.","Samfund",{err:"til"},"B1");
+  "Når man kæmper på en sags side, bruger man »for«: kæmpe for en god sag.","Samfund",{err:"til",valid:["med","om","i","under","uden"]},"B1");
+// 'godt til helbredet' is valid Danish too (US-059)
 gen("Det er godt {a} {x}.","for",["helbredet","miljøet","dig","kroppen","din karriere"],
-  "Til gavn for nogen eller noget: godt for helbredet.","Sundhed",{err:"til"},"A2");
+  "Til gavn for nogen eller noget: godt for helbredet.","Sundhed",{noErr:true,valid:["til","af","med","uden","hos","i","på"]},"A2");
 gen("Du arbejder {a} {x}.","for",["meget","hårdt","længe"],
-  "»For« kan betyde »mere end passende«: for meget, for hårdt, for længe.","Arbejde",{err:"til"},"B1");
+  "»For« kan betyde »mere end passende«: for meget, for hårdt, for længe.","Arbejde",{err:"til",valid:["med","på","under","over"]},"B1");
 gen("Hun interesserer sig {a} {x}.","for",["kunst","politik","fodbold","historie","klassisk musik"],
   "'Interessere sig for' styrer altid 'for'.","Fritid",{err:"om"},"A2");
 gen("Hun er ansvarlig {a} {x}.","for",["projektet","hele teamet","økonomien","afdelingen","sikkerheden"],
-  "'Ansvarlig for' styrer altid 'for'.","Arbejde",{err:"til"},"B1");
+  "'Ansvarlig for' styrer altid 'for'.","Arbejde",{err:"til",valid:["i","på","over","under","ved"]},"B1");
 
 /* ---------- med ---------- */
 gen("Jeg tager {a} {x} på arbejde.","med",["bussen","toget","metroen","færgen","bilen"],
-  "Transportmidlet står med »med«: tage med bussen, med toget.","Transport",{err:"i",pair:"med|uden"},"A1");
+  "Transportmidlet står med »med«: tage med bussen, med toget.","Transport",{err:"i",pair:"med|uden",valid:["til","efter","over"]},"A1");
 gen("Hun bor sammen {a} {x}.","med",["sin kæreste","sin familie","en veninde","sine forældre","sin hund"],
-  "'Sammen med' angiver selskab: bo sammen med nogen.","Familie",{err:"hos"},"A2");
+  "'Sammen med' angiver selskab: bo sammen med nogen.","Familie",{err:"hos",valid:["uden"]},"A2");
+// 'i' is also acceptable in 'hjælpe mig i flytningen' etc., so the error word is 'for' (US-059)
 gen("Kan du hjælpe mig {a} {x}?","med",["opgaven","flytningen","maden","computeren","regnskabet","tasken"],
-  "'Hjælpe med' styrer 'med' + det man hjælper med.","Arbejde",{err:"i"},"A2");
+  "'Hjælpe med' styrer 'med' + det man hjælper med.","Arbejde",{err:"for",valid:["i","på","ved","under","efter","over","fra","til","uden"]},"A2");
 gen("Jeg drikker kaffe {a} {x}.","med",["en kollega","mælk","en god ven","sukker","fløde"],
-  "Ledsagelse eller tilbehør: kaffe med mælk, kaffe med en ven.","Mad",{err:"af",not:["uden"]},"A1");
-gen("Han betalte {a} {x}.","med",["kort","kontanter","mobilen","MobilePay"],
-  "Betalingsmåden tager »med«: betale med kort.","Indkøb",{err:"i"},"A2");
+  "Ledsagelse eller tilbehør: kaffe med mælk, kaffe med en ven.","Mad",{err:"af",valid:["uden","til","hos","fra","efter","ved"]},"A1");
+gen("Han betalte {a} {x}.","med",["kort","mobilen","MobilePay"],
+  "Betalingsmåden tager »med«: betale med kort.","Indkøb",{err:"i",valid:["uden","på","over","til","for","efter"]},"A2");
+// 'betale i kontanter' is valid (US-059)
+gen("Han betalte {a} {x}.","med",["kontanter"],
+  "Betalingsmåden tager »med«: betale med kort.","Indkøb",{noErr:true,valid:["i","uden","på","til","for"]},"A2");
 gen("Vi er meget tilfredse {a} {x}.","med",["resultatet","servicen","den nye kollega","mødet","produktet"],
-  "'Tilfreds med' styrer altid 'med'.","Arbejde",{err:"af"},"B1");
+  "'Tilfreds med' styrer altid 'med'.","Arbejde",{err:"af",valid:["over","efter","under","uden","ved"]},"B1");
 
 /* ---------- af ---------- */
 gen("Bordet er lavet {a} {x}.","af",["træ","glas","metal","plastik","sten","massivt egetræ"],
-  "Materiale noget er lavet af: lavet af træ.","Bolig",{err:"fra",pair:"af|fra"},"A2");
+  "Materiale noget er lavet af: lavet af træ.","Bolig",{err:"fra",pair:"af|fra",valid:["i","med","uden"]},"A2");
 gen("Jeg er træt {a} {x}.","af",["at vente","regnen","larmen","det lange møde","at sidde stille"],
-  "'Træt af' = led ved noget, styrer 'af'.","Følelser",{err:"for"},"A2");
+  "'Træt af' = led ved noget, styrer 'af'.","Følelser",{err:"for",valid:["efter","under","i","ved"]},"A2");
 gen("Halvdelen {a} {x} var væk.","af",["klassen","kagen","pengene","holdet","gæsterne","lageret"],
-  "Mængde af en helhed: halvdelen af klassen.","Samfund",{err:"fra"},"B1");
+  "Mængde af en helhed: halvdelen af klassen.","Samfund",{err:"til",valid:["fra","i","på","ved","hos"]},"B1");
 gen("Hun stod {a} {x} ved stationen.","af",["bussen","toget","cyklen","færgen"],
-  "Stå af et køretøj: stå af bussen (modsat 'stige på').","Transport",{err:"fra",pair:"af|fra"},"A2");
+  "Stå af et køretøj: stå af bussen (modsat 'stige på').","Transport",{err:"fra",pair:"af|fra",valid:["på","i","ved","under","over","med","efter","uden","for","til"]},"A2");
 gen("Det afhænger {a} {x}.","af",["vejret","prisen","tiden","din beslutning","situationen"],
   "'Afhænge af' styrer altid 'af'.","Samfund",{err:"fra"},"B1");
 gen("Jeg holder meget {a} {x}.","af",["min familie","klassisk musik","at rejse","gamle film"],
-  "'Holde af' = være glad for, styrer 'af'.","Følelser",{err:"for"},"B1");
+  "'Holde af' = være glad for, styrer 'af'.","Følelser",{err:"for",valid:["med","på","til"]},"B1");
 
 /* ---------- om ---------- */
-gen("Vi taler {a} {x}.","om",["politik","vejret","arbejdet","fremtiden","ferien","problemet"],
-  "Emne man taler om: tale om politik.","Samtale",{err:"på",pair:"om|på"},"A2");
+gen("Vi taler {a} {x}.","om",["politik","vejret","fremtiden","ferien","problemet"],
+  "Emne man taler om: tale om politik.","Samtale",{err:"på",pair:"om|på",valid:["efter","under","i","for","til","uden","med","ved","over","fra"]},"A2");
+// arbejdet: 'taler på arbejdet' is valid too (US-059)
+gen("Vi taler {a} {x}.","om",["arbejdet"],
+  "Emne man taler om: tale om politik.","Samtale",{noErr:true,valid:["på","fra","efter","under","i","for","til","uden","med","ved","over"]},"A2");
 gen("Jeg er færdig {a} {x}.","om",["en time","ti minutter","et øjeblik","en uge","lidt"],
-  "Tid, der går, før noget sker, tager »om«: om en time.","Tid",{err:"af",not:["på"]},"A2");
+  "Tid, der går, før noget sker, tager »om«: om en time.","Tid",{err:"af",valid:["på","efter","med","til","i","under","over"]},"A2");
 gen("Bogen handler {a} {x}.","om",["kærlighed","krig","en familie","Danmarks historie","et mord"],
-  "'Handle om' = have som emne, styrer 'om'.","Kultur",{err:"på"},"A2");
+  "'Handle om' = have som emne, styrer 'om'.","Kultur",{err:"på",valid:["med"]},"A2");
 gen("Han drømmer {a} {x}.","om",["et nyt job","en lang ferie","at vinde","et større hus"],
-  "'Drømme om' styrer altid 'om'.","Følelser",{err:"på"},"B1");
+  "'Drømme om' styrer altid 'om'.","Følelser",{err:"på",valid:["i","under","efter"]},"B1");
+// 'på natten/aftenen/formiddagen' are valid Danish too, so no error word and no pair (US-059)
 gen("Vi mødes {a} {x}.","om",["morgenen","aftenen","formiddagen","natten","eftermiddagen"],
-  "Faste tider på døgnet tager 'om': om morgenen, om aftenen.","Tid",{err:"på",pair:"om|på"},"A2");
+  "Faste tider på døgnet tager 'om': om morgenen, om aftenen.","Tid",{noErr:true,valid:["på","i","under","efter","til","fra","over"]},"A2");
 gen("Jeg har en aftale {a} {x}.","om",["et lån","en ny kontrakt","prisen","leveringen"],
-  "Aftale/enighed om et emne: en aftale om prisen.","Arbejde",{err:"på"},"B1");
+  "Aftale/enighed om et emne: en aftale om prisen.","Arbejde",{err:"af",valid:["på","med","for","hos","fra","til","uden","efter","under","over"]},"B1");
 
 /* ---------- hos ---------- */
-gen("Jeg arbejder {a} {x}.","hos",["Netto","en advokat","en frisør","en tandlæge","en lokal bager","en mekaniker"],
-  "Hos en arbejdsgiver (firma eller person): arbejde hos Netto.","Arbejde",{err:"i",pair:"hos|i"},"A2");
+gen("Jeg arbejder {a} {x}.","hos",["en advokat","en frisør","en tandlæge","en lokal bager","en mekaniker"],
+  "Hos en arbejdsgiver (firma eller person): arbejde hos Netto.","Arbejde",{err:"i",pair:"hos|i",valid:["for","med","under","uden","ved","efter","over"]},"A2");
+// Netto: 'arbejder i/på Netto' are valid too (US-059)
+gen("Jeg arbejder {a} {x}.","hos",["Netto"],
+  "Hos en arbejdsgiver (firma eller person): arbejde hos Netto.","Arbejde",{noErr:true,valid:["i","på","for","med","under","uden","ved"]},"A2");
 gen("Vi var {a} {x} i weekenden.","hos",["min mormor","mine forældre","naboen","gode venner","min søster"],
-  "Hjemme hos en person bruger man 'hos': være hos mormor.","Familie",{err:"ved",pair:"hos|i"},"A2");
-gen("Hun bor {a} {x} for tiden.","hos",["sin tante","en veninde","sine bedsteforældre","en værtsfamilie"],
-  "At bo hjemme hos nogen: bo hos sin tante.","Familie",{err:"med",pair:"hos|i"},"A2");
+  "Hjemme hos en person bruger man 'hos': være hos mormor.","Familie",{err:"ved",pair:"hos|i",valid:["med","uden","efter"]},"A2");
+// 'bor med sin tante' is valid, so the error word is 'af' (US-059)
+gen("Hun bor {a} {x} for tiden.","hos",["sin tante","en veninde","sine bedsteforældre"],
+  "At bo hjemme hos nogen: bo hos sin tante.","Familie",{err:"af",pair:"hos|i",valid:["med","uden","ved","under","over"]},"A2");
+// værtsfamilie: 'bo i en værtsfamilie' is valid too (US-059)
+gen("Hun bor {a} {x} for tiden.","hos",["en værtsfamilie"],
+  "At bo hjemme hos nogen: bo hos sin tante.","Familie",{noErr:true,valid:["i","med","uden","ved"]},"A2");
+// 'tid til lægen' is valid, so the error word is 'af' (US-059)
 gen("Jeg har en tid {a} {x}.","hos",["lægen","frisøren","tandlægen","fysioterapeuten","dyrlægen"],
-  "Aftale hos en fagperson: en tid hos lægen.","Sundhed",{err:"til",pair:"hos|i"},"A2");
+  "Aftale hos en fagperson: en tid hos lægen.","Sundhed",{err:"af",pair:"hos|i",valid:["til","med","for","fra","ved","efter","uden","på"]},"A2");
 gen("Det kan du købe {a} {x}.","hos",["bageren","slagteren","en lokal forhandler","din boghandler"],
-  "Handle hos en bestemt forhandler: købe hos bageren.","Indkøb",{err:"i",pair:"hos|i"},"B1");
+  "Handle hos en bestemt forhandler: købe hos bageren.","Indkøb",{err:"i",pair:"hos|i",valid:["fra","af","til","med","uden","for","ved"]},"B1");
 
 /* ---------- fra ---------- */
 gen("Jeg kommer {a} {x}.","fra",["Danmark","Spanien","København","en lille by","Jylland","udlandet"],
-  "Oprindelse eller udgangspunkt tager 'fra': komme fra Danmark.","Rejse",{err:"af",pair:"af|fra"},"A1");
+  "Oprindelse eller udgangspunkt tager 'fra': komme fra Danmark.","Rejse",{err:"af",pair:"af|fra",valid:["til","efter","over"]},"A1");
 gen("Toget kører {a} {x}.","fra",["perron 3","Aarhus","hovedstationen","spor 2"],
-  "Afgangssted tager 'fra': toget kører fra perron 3.","Transport",{err:"af",pair:"af|fra"},"A2");
+  "Afgangssted tager 'fra': toget kører fra perron 3.","Transport",{err:"af",pair:"af|fra",valid:["til","over","under","ved","på","i","efter"]},"A2");
 gen("Vi har fået et brev {a} {x}.","fra",["banken","kommunen","min ven","Skat","min gamle skole"],
-  "Afsenderen af noget tager 'fra': et brev fra banken.","Samfund",{err:"af",pair:"af|fra"},"A2");
+  "Afsenderen af noget tager 'fra': et brev fra banken.","Samfund",{err:"af",pair:"af|fra",valid:["til","om","for","på","i"]},"A2");
 gen("Butikken har åbent {a} {x}.","fra",["klokken ni","mandag","tidlig morgen","i dag"],
-  "Startpunkt i tid tager 'fra': åbent fra klokken ni.","Indkøb",{err:"af"},"B1");
+  "Startpunkt i tid tager 'fra': åbent fra klokken ni.","Indkøb",{err:"af",valid:["til","efter","om","på","i","mellem","ved","uden"]},"B1");
 gen("Hun er lige kommet hjem {a} {x}.","fra",["arbejde","ferie","udlandet","skole","møde"],
-  "Bevægelse væk fra et sted: hjem fra arbejde.","Arbejde",{err:"af"},"A2");
+  "Bevægelse væk fra et sted: hjem fra arbejde.","Arbejde",{err:"af",valid:["på","til","efter","med","under","i","uden","over"]},"A2");
 
 /* ---------- efter ---------- */
 gen("Vi spiser {a} {x}.","efter",["mødet","træning","arbejde","filmen","gæsterne er gået"],
-  "Tidspunkt, der følger efter noget: spise efter mødet.","Tid",{err:"til",not:["under"]},"A1");
+  "Tidspunkt, der følger efter noget: spise efter mødet.","Tid",{err:"af",valid:["under","i","på","med","til","uden","over","ved"]},"A1");
 gen("Jeg leder {a} {x}.","efter",["mine nøgler","en ny lejlighed","et job","min telefon","en gave"],
-  "'Lede efter' = søge, styrer altid 'efter'.","Hverdag",{err:"for"},"A2");
-gen("Han kom {a} {x}.","efter",["frokost","lukketid","alle andre","en lang dag"],
-  "Rækkefølge i tid: komme efter frokost.","Tid",{err:"til",not:["under"]},"A2");
+  "'Lede efter' = søge, styrer altid 'efter'.","Hverdag",{err:"for",valid:["i","under","over","på","mellem","uden"]},"A2");
+// frokost: 'kom til frokost' is valid too (US-059)
+gen("Han kom {a} {x}.","efter",["frokost"],
+  "Rækkefølge i tid: komme efter frokost.","Tid",{noErr:true,valid:["til","under","i","med","uden","fra","for","på"]},"A2");
+gen("Han kom {a} {x}.","efter",["lukketid","alle andre","en lang dag"],
+  "Rækkefølge i tid: komme efter frokost.","Tid",{err:"af",valid:["til","under","med","uden","fra","for","over","i"]},"A2");
+// 'længes til sommeren' is valid too, so no error word (US-059)
 gen("Hun længes {a} {x}.","efter",["sommeren","sin familie","ferie","hjemlandet"],
-  "'Længes efter' styrer altid 'efter'.","Følelser",{err:"til"},"B1");
+  "'Længes efter' styrer altid 'efter'.","Følelser",{noErr:true,valid:["til","under","i","uden","om","hos","fra","med"]},"B1");
 gen("Vi rydder op {a} {x}.","efter",["festen","middagen","børnene","mødet"],
-  "'Rydde op efter' = efter en begivenhed eller nogen.","Hjem",{err:"for"},"B1");
+  "'Rydde op efter' = efter en begivenhed eller nogen.","Hjem",{err:"af",valid:["for","under","i","på","til","med","uden","hos","fra","ved"]},"B1");
 gen("Spørg lige {a} {x}.","efter",["vejen","prisen","chefen","din kollega"],
-  "'Spørge efter' = bede om eller efterspørge noget.","Hverdag",{err:"for"},"B1");
+  "'Spørge efter' = bede om eller efterspørge noget.","Hverdag",{err:"fra",valid:["om","til","hos","for","ved","med","af","uden"]},"B1");
 
 /* ---------- uden ---------- */
 gen("Jeg drikker te {a} {x}.","uden",["mælk","sukker","citron","honning"],
-  "'Uden' = fravær af noget, modsat 'med'.","Mad",{err:"af",not:["med"]},"A1");
+  "'Uden' = fravær af noget, modsat 'med'.","Mad",{err:"af",valid:["med","til","i","hos","fra","efter"]},"A1");
+// 'gik ud med jakke' is valid, so no error word and no 'med' distractor (US-059)
 gen("Han gik ud {a} {x}.","uden",["jakke","paraply","sko","en krone på lommen"],
-  "Manglende ledsagelse eller udstyr: gå uden jakke.","Hverdag",{err:"med",pair:"med|uden"},"A2");
+  "Manglende ledsagelse eller udstyr: gå uden jakke.","Hverdag",{noErr:true,valid:["med","i","efter"]},"A2");
+// 'klarer os ikke med hjælp' is valid, so no error word and no 'med' distractor (US-059)
+// context 'men' makes only 'uden' fit (keeps the med|uden pair group balanced, US-059)
+gen("Det var koldt, men han gik ud {a} {x}.","uden",["jakke","hue","handsker"],
+  "Manglende ledsagelse eller udstyr: gå uden jakke.","Hverdag",{err:"med",pair:"med|uden",valid:["i","efter"]},"A2");
 gen("Vi klarer os ikke {a} {x}.","uden",["hjælp","penge","internet","vand","strøm"],
-  "'Klare sig uden' = undvære noget.","Samfund",{err:"med",pair:"med|uden"},"B1");
+  "'Klare sig uden' = undvære noget.","Samfund",{noErr:true,valid:["med","under","på"]},"B1");
 gen("Hun rejste {a} {x}.","uden",["bagage","sin mand","at sige farvel","problemer"],
-  "Fravær af noget eller nogen: rejse uden bagage.","Rejse",{noErr:true,not:["med"]},"A2");
+  "Fravær af noget eller nogen: rejse uden bagage.","Rejse",{noErr:true,valid:["med","efter","til","fra","for","over","under"]},"A2");
 gen("Mødet sluttede {a} {x}.","uden",["en konklusion","resultat","en beslutning"],
-  "Uden noget som udfald: slutte uden resultat.","Møder",{noErr:true,not:["med"]},"B1");
+  "Uden noget som udfald: slutte uden resultat.","Møder",{noErr:true,valid:["med","efter","i","på","til","ved"]},"B1");
 
 /* ---------- under ---------- */
 gen("Katten ligger {a} {x}.","under",["bordet","sengen","stolen","tæppet","sofaen","bilen"],
-  "Placering nedenunder noget: under bordet.","Hjem",{err:"over",pair:"under|over",not:["i","ved"]},"A1");
+  "Placering nedenunder noget: under bordet.","Hjem",{err:"over",pair:"under|over",valid:["i","ved","på"]},"A1");
+// 'over ferien/middagen' are valid too, so the error word is 'hos' (US-059)
 gen("Det skete {a} {x}.","under",["mødet","krigen","ferien","koncerten","middagen","rejsen"],
-  "Det tidsrum, noget foregår i: under mødet.","Tid",{err:"over",not:["i"]},"A2");
+  "Det tidsrum, noget foregår i: under mødet.","Tid",{err:"hos",valid:["over","i","på","efter","ved","til","uden","med","fra"]},"A2");
 gen("Temperaturen er {a} {x}.","under",["frysepunktet","nul grader","gennemsnittet","det normale"],
-  "Lavere end et niveau: under frysepunktet.","Samfund",{err:"af",not:["over"]},"B1");
+  "Lavere end et niveau: under frysepunktet.","Samfund",{err:"af",valid:["over","på","ved","i","fra","for"]},"B1");
 gen("Børnene legede {a} {x}.","under",["bordet","trappen","træet","broen"],
-  "Fysisk placering nedenunder: lege under bordet.","Familie",{err:"over",pair:"under|over"},"A1");
+  "Fysisk placering nedenunder: lege under bordet.","Familie",{err:"over",pair:"under|over",valid:["på","i","ved","med","om","uden"]},"A1");
 gen("Hele projektet er stadig {a} {x}.","under",["udvikling","opbygning","planlægning","kontrol"],
-  "Igangværende proces: under udvikling.","Arbejde",{err:"over",not:["i"]},"B2");
+  "Igangværende proces: under udvikling.","Arbejde",{err:"over",valid:["i","uden"]},"B2");
 
 /* ---------- over ---------- */
 gen("Lampen hænger {a} {x}.","over",["bordet","sengen","sofaen","spisebordet"],
-  "Placering ovenover noget: over bordet.","Hjem",{err:"under",pair:"under|over"},"A1");
+  "Placering ovenover noget: over bordet.","Hjem",{err:"under",pair:"under|over",valid:["ved","på"]},"A1");
 gen("Vi snakkede sammen {a} {x}.","over",["en kop kaffe","en øl","en kande te","et glas vin"],
-  "Mens man deler en drik: snakke over en kop kaffe.","Samtale",{err:"på"},"B1");
+  "Mens man deler en drik: snakke over en kop kaffe.","Samtale",{err:"af",valid:["med","ved","efter","under","uden","på","om","til"]},"B1");
 gen("Der var {a} {x} til stede.","over",["hundrede mennesker","tusind gæster","halvdelen af byen"],
-  "Mere end et antal: over hundrede mennesker.","Samfund",{err:"på",not:["under"]},"B1");
+  "Mere end et antal: over hundrede mennesker.","Samfund",{err:"på",valid:["under","mellem","ved"]},"B1");
 gen("Broen går {a} {x}.","over",["floden","åen","havnen","motorvejen"],
-  "Hen over noget: broen går over floden.","Rejse",{err:"under",pair:"under|over"},"A2");
+  "Hen over noget: broen går over floden.","Rejse",{err:"under",pair:"under|over",valid:["ved","til","fra","med"]},"A2");
 gen("Vi gik {a} {x}.","over",["gaden","vejen","pladsen","græsplænen","parkeringspladsen"],
-  "Hen over en flade: gå over gaden.","Hverdag",{err:"under",pair:"under|over",not:["på"]},"A2");
+  "Hen over en flade: gå over gaden.","Hverdag",{err:"under",pair:"under|over",valid:["på","ved","til","fra","i"]},"A2");
 gen("Flyet fløj lavt {a} {x}.","over",["byen","havet","bjergene","skoven"],
-  "Hen over noget i luften: flyve over byen.","Rejse",{err:"under",pair:"under|over"},"A2");
+  "Hen over noget i luften: flyve over byen.","Rejse",{err:"under",pair:"under|over",valid:["ved","i","til","fra","mellem","om"]},"A2");
 
 /* ---------- mellem ---------- */
-gen("Mødet er {a} {x}.","mellem",["klokken ni og elleve","frokost og pause","to og tre"],
-  "Tidsrum afgrænset af to punkter: mellem ni og elleve.","Møder",{err:"under"},"A2");
+gen("Mødet er {a} {x}.","mellem",["klokken ni og elleve","to og tre"],
+  "Tidsrum afgrænset af to punkter: mellem ni og elleve.","Møder",{err:"under",valid:["efter","fra","til","ved","i","på","uden","over"]},"A2");
+// frokost og pause: 'under/over frokost og pause' fit too (US-059)
+gen("Mødet er {a} {x}.","mellem",["frokost og pause"],
+  "Tidsrum afgrænset af to punkter: mellem ni og elleve.","Møder",{noErr:true,valid:["under","over","efter","fra","til","ved","i","på","uden"]},"A2");
 gen("Samarbejdet {a} {x} fungerer godt.","mellem",["de to afdelinger","kollegerne","landene","parterne","holdene"],
-  "Forholdet mellem to eller flere parter tager 'mellem'.","Arbejde",{err:"ved"},"B1");
+  "Forholdet mellem to eller flere parter tager 'mellem'.","Arbejde",{err:"ved",valid:["med","hos","i","for","på","fra","uden"]},"B1");
 gen("Han sad {a} {x}.","mellem",["sine to børn","mig og chefen","to fremmede","rækkerne"],
-  "Placering i midten af to ting: sidde mellem to personer.","Hverdag",{err:"ved"},"A2");
+  "Placering i midten af to ting: sidde mellem to personer.","Hverdag",{err:"af",valid:["ved","hos","med","i","på","uden","efter"]},"A2");
 gen("Du må vælge {a} {x}.","mellem",["de to modeller","kage og frugt","tog og bus","ja og nej"],
-  "'Vælge mellem' = vælge ud af to muligheder.","Indkøb",{err:"af"},"A2");
+  "'Vælge mellem' = vælge ud af to muligheder.","Indkøb",{err:"af",valid:["fra","uden","til","efter","med"]},"A2");
 gen("Aftalen er {a} {x}.","mellem",["de to firmaer","os","parterne","nabolandene"],
-  "Forhold mellem to parter: aftale mellem to firmaer.","Arbejde",{err:"ved"},"B1");
+  "Forhold mellem to parter: aftale mellem to firmaer.","Arbejde",{err:"ved",valid:["med","hos","for","til","fra","uden","efter","om"]},"B1");
 
 /* ---------- ved ---------- */
 gen("Huset ligger {a} {x}.","ved",["stranden","søen","skoven","havet","vejen","kysten"],
-  "Tæt på noget tager »ved«: huset ligger ved stranden.","Bolig",{err:"til",not:["på"]},"A2");
+  "Tæt på noget tager »ved«: huset ligger ved stranden.","Bolig",{err:"til",valid:["på","i","over","under","efter"]},"A2");
+// indgangen/hoveddøren/porten/kassen: 'i' is also valid (US-059)
 gen("Vi mødes {a} {x}.","ved",["indgangen","springvandet","hoveddøren","kassen","porten"],
-  "Mødested helt tæt på et konkret punkt: mødes ved indgangen.","Hverdag",{err:"i"},"A2");
+  "Mødested helt tæt på et konkret punkt: mødes ved indgangen.","Hverdag",{noErr:true,valid:["i","under","efter"]},"A2");
 gen("Hun sidder {a} {x}.","ved",["vinduet","computeren","skrivebordet","bordet","klaveret"],
-  "Tæt på et møbel eller redskab: sidde ved computeren.","Arbejde",{err:"af",not:["i","på"]},"A2");
+  "Tæt på et møbel eller redskab: sidde ved computeren.","Arbejde",{err:"af",valid:["i","på","under","over","med","uden","til","om"]},"A2");
+// 'bo lige på torvet/havnen' and 'lige i parken' are valid too (US-059)
 gen("Vi bor lige {a} {x}.","ved",["havnen","parken","torvet","skolen","stationen"],
-  "I umiddelbar nærhed: bo lige ved parken.","Bolig",{err:"på"},"A2");
+  "I umiddelbar nærhed: bo lige ved parken.","Bolig",{noErr:true,valid:["på","i","over","under","efter","om"]},"A2");
+// 'holder på fortovet' is valid too (US-059)
 gen("Bilen holder {a} {x}.","ved",["fortovet","kantstenen","porten"],
-  "Stå stille tæt ved noget: bilen holder ved fortovet.","Transport",{err:"på"},"B1");
+  "Stå stille tæt ved noget: bilen holder ved fortovet.","Transport",{noErr:true,valid:["på","i","under","for","efter"]},"B1");
 // indkørslen: you park IN the driveway (US-019 QA-106)
 gen("Bilen holder {a} {x}.","i",["indkørslen"],
-  "Inde i et afgrænset område: bilen holder i indkørslen.","Transport",{noErr:true,wrong:["til","for","med"]},"B1");
+  "Inde i et afgrænset område: bilen holder i indkørslen.","Transport",{noErr:true,wrong:["til","for","med"],valid:["ved","på"]},"B1");
 
 /* ---------- EXTRA BATCH (everyday / work / family / travel / shopping / meetings / society) ---------- */
 gen("Der er tilbud {a} {x} i denne uge.","på",["kaffe","frugt","alle bøger","elektronik","sko","mælk"],
-  "Tilbud og rabat på en vare tager »på«.","Indkøb",{err:"i",pair:"i|på"},"B1");
+  "Tilbud og rabat på en vare tager »på«.","Indkøb",{err:"i",pair:"i|på",valid:["med","om","til","for","fra","uden"]},"B1");
 gen("Vi skal lige nå frem {a} {x}.","til",["stationen","hotellet","havnen","lufthavnen"],
-  "At nå frem til noget tager 'til'.","Rejse",{err:"i"},"A2");
+  "At nå frem til noget tager 'til'.","Rejse",{err:"i",valid:["på","ved","fra","efter","over"]},"A2");
 gen("Send venligst rapporten {a} {x}.","til",["chefen","hele teamet","kunden","bestyrelsen","mig"],
-  "Modtageren af noget man sender får 'til'.","Arbejde",{err:"for"},"A2");
+  "Modtageren af noget man sender får 'til'.","Arbejde",{err:"hos",valid:["fra","for","af","med","om","uden","efter"]},"A2");
 gen("Jeg er helt enig {a} {x}.","med",["dig","chefen","min kollega","dem","hele gruppen"],
-  "Man er enig »med« en person, men enig »i« en sag.","Samtale",{err:"i"},"B1");
+  "Man er enig »med« en person, men enig »i« en sag.","Samtale",{err:"i",valid:["om","uden"]},"B1");
 gen("Hun taler {a} {x} hver dag.","med",["sine kunder","sin chef","kollegerne","sin familie","naboen"],
-  "'Tale med' nogen (samtale) tager 'med'.","Samtale",{err:"på"},"A2");
+  "'Tale med' nogen (samtale) tager 'med'.","Samtale",{err:"på",valid:["til","om","for","uden","hos","efter"]},"A2");
 gen("Mange {a} {x} var enige.","af",["medarbejderne","deltagerne","vælgerne","borgerne","gæsterne"],
-  "En andel af en gruppe tager 'af': mange af deltagerne.","Samfund",{err:"fra"},"B1");
+  "En andel af en gruppe tager 'af': mange af deltagerne.","Samfund",{err:"til",valid:["fra","hos","i"]},"B1");
 gen("Bogen blev skrevet {a} {x}.","af",["en kendt forfatter","min gamle lærer","to journalister","en ung debutant"],
-  "I passiv angives den, der udfører handlingen, med »af«: skrevet af forfatteren.","Kultur",{err:"fra",pair:"af|fra"},"B1");
+  "I passiv angives den, der udfører handlingen, med »af«: skrevet af forfatteren.","Kultur",{err:"fra",pair:"af|fra",valid:["til","om","for","med","efter","uden"]},"B1");
 gen("Vi snakker tit {a} {x}.","om",["budgettet","den nye plan","klimaet","reglerne","fremtiden"],
-  "At snakke om et emne tager 'om'.","Møder",{err:"på",pair:"om|på"},"A2");
-gen("Hun er i lære {a} {x}.","hos",["en tømrer","en kok","en frisør","et stort firma"],
-  "At være i lære hos en mester eller arbejdsgiver tager »hos«.","Arbejde",{err:"i",pair:"hos|i"},"B2");
+  "At snakke om et emne tager 'om'.","Møder",{err:"på",pair:"om|på",valid:["for","i","med","uden","til"]},"A2");
+gen("Hun er i lære {a} {x}.","hos",["en tømrer","en kok","en frisør"],
+  "At være i lære hos en mester eller arbejdsgiver tager »hos«.","Arbejde",{err:"i",pair:"hos|i",valid:["ved","under","på","til","af"]},"B2");
+// et stort firma: 'i lære i et stort firma' is valid too (US-059)
+gen("Hun er i lære {a} {x}.","hos",["et stort firma"],
+  "At være i lære hos en mester eller arbejdsgiver tager »hos«.","Arbejde",{noErr:true,valid:["i","ved","under","på"]},"B2");
 gen("Flyet afgår {a} {x}.","fra",["København","terminal 2","gate 5","Kastrup"],
-  "Afgangsstedet tager 'fra': flyet afgår fra gate 5.","Rejse",{err:"af",pair:"af|fra"},"A2");
+  "Afgangsstedet tager 'fra': flyet afgår fra gate 5.","Rejse",{err:"af",pair:"af|fra",valid:["til","ved","i","på","over"]},"A2");
+// 'hørt af' is valid too, so no error word and no pair (US-059)
 gen("Jeg har lige hørt {a} {x}.","fra",["min chef","banken","skolen","forsikringen"],
-  "At høre fra en afsender tager 'fra'.","Arbejde",{err:"af",pair:"af|fra"},"B1");
+  "At høre fra en afsender tager 'fra'.","Arbejde",{noErr:true,valid:["af","om","til","efter","på","i","ved","hos","med"]},"B1");
+// 'henter fra skole' is valid too, so the error word is 'af' (US-059)
 gen("Hun henter børnene {a} {x}.","efter",["skole","arbejde","fritidsordningen"],
-  "Tidspunkt efter en aktivitet tager 'efter'.","Familie",{err:"til"},"A2");
+  "Tidspunkt efter en aktivitet tager 'efter'.","Familie",{err:"af",valid:["fra","til","på","hos","ved","uden","i","under"]},"A2");
 gen("Suppen var desværre helt {a} {x}.","uden",["smag","salt","krydderi"],
-  "Fravær af en egenskab tager 'uden': uden smag.","Mad",{err:"med",pair:"med|uden"},"B1");
+  "Fravær af en egenskab tager 'uden': uden smag.","Mad",{err:"med",pair:"med|uden",valid:["efter"]},"B1");
+// 'leve med kaffe' is valid too, so no error word and no pair (US-059)
 gen("Jeg kan slet ikke leve {a} {x}.","uden",["kaffe","musik","min telefon","internettet"],
-  "At undvære noget: leve uden kaffe.","Hverdag",{err:"med",pair:"med|uden"},"A2");
+  "At undvære noget: leve uden kaffe.","Hverdag",{noErr:true,valid:["med","af","på","for","efter"]},"A2");
+// 'over ferien' is valid too, so no error word (US-059)
 gen("Reglerne gælder {a} {x}.","under",["hele rejsen","prøvetiden","ferien","opholdet"],
-  "Noget, der gælder i et tidsrum, tager »under«.","Samfund",{err:"over",pair:"under|over",not:["i"]},"B1");
+  "Noget, der gælder i et tidsrum, tager »under«.","Samfund",{noErr:true,valid:["over","i","på","efter","til","fra","for","med","uden","ved"]},"B1");
 gen("Hunden sov {a} {x}.","under",["bordet","sengen","sofaen","trappen"],
-  "Placering nedenunder noget tager 'under'.","Hjem",{err:"over",pair:"under|over"},"A1");
+  "Placering nedenunder noget tager 'under'.","Hjem",{err:"over",pair:"under|over",valid:["på","i","ved","uden"]},"A1");
 gen("Mødet varede {a} {x}.","over",["en time","to timer","en hel dag"],
-  "Varighed mere end et mål tager 'over': varede over en time.","Møder",{err:"på",not:["under"]},"B1");
+  "Varighed mere end et mål tager 'over': varede over en time.","Møder",{err:"på",valid:["under","i"]},"B1");
 gen("Vi aftalte det hele {a} {x}.","over",["telefonen","en frokost","en kop kaffe"],
-  "Via et medie eller måltid: aftale noget over telefonen.","Arbejde",{err:"på"},"B2");
+  "Via et medie eller måltid: aftale noget over telefonen.","Arbejde",{err:"af",valid:["på","i","ved","under","efter","til","med","uden"]},"B2");
 gen("Forholdet {a} {x} er rigtig godt.","mellem",["kollegerne","de to lande","naboerne","parterne"],
-  "Forholdet mellem to eller flere parter tager 'mellem'.","Samfund",{err:"ved"},"B1");
+  "Forholdet mellem to eller flere parter tager 'mellem'.","Samfund",{err:"ved",valid:["med","til","i","hos","for","fra","uden"]},"B1");
 gen("Han står og venter {a} {x}.","ved",["springvandet","statuen","rundkørslen","lyskrydset"],
-  "At stå tæt ved et konkret punkt tager 'ved'.","Hverdag",{err:"af",not:["i","på"]},"A2");
+  "At stå tæt ved et konkret punkt tager 'ved'.","Hverdag",{err:"af",valid:["i","på","under","over","med","efter","uden"]},"A2");
 gen("Han sidder {a} {x} hele dagen.","i",["møder","kø","trafikken","et videomøde"],
-  "At være optaget i noget tager 'i': sidde i møder, i trafikken.","Arbejde",{err:"på"},"B1");
+  "At være optaget i noget tager 'i': sidde i møder, i trafikken.","Arbejde",{err:"af",valid:["på","til","under","med","mellem","uden","ved"]},"B1");
 gen("Vi var på ferie {a} {x} sidste år.","i",["Spanien","Italien","Norge","Frankrig","Tyskland"],
   "Lande tager 'i': på ferie i Spanien.","Rejse",{err:"på",pair:"i|til"},"A1");
-gen("Læg pengene {a} {x}.","på",["kontoen","bordet","bankbogen"],
-  "Penge på en konto tager 'på': sætte penge på kontoen.","Samfund",{err:"i"},"B1");
+gen("Læg pengene {a} {x}.","på",["kontoen","bordet"],
+  "Penge på en konto tager 'på': sætte penge på kontoen.","Samfund",{err:"i",valid:["under","over","ved","til"]},"B1");
+// bankbogen: 'i bankbogen' is valid too (US-059)
+gen("Læg pengene {a} {x}.","på",["bankbogen"],
+  "Penge på en konto tager 'på': sætte penge på kontoen.","Samfund",{noErr:true,valid:["i","til","ved","under"]},"B1");
 gen("Vi mangler stadig svar {a} {x}.","på",["spørgsmålet","din mail","ansøgningen","tilbuddet"],
-  "'Svar på' noget tager altid 'på'.","Arbejde",{err:"til"},"B1");
+  "'Svar på' noget tager altid 'på'.","Arbejde",{err:"af",valid:["fra","om","til","med","efter","hos","uden","i"]},"B1");
 gen("Jeg har tillid {a} {x}.","til",["dig","mit team","den nye chef","systemet"],
-  "'Tillid til' nogen/noget tager 'til'.","Arbejde",{err:"for"},"B1");
+  "'Tillid til' nogen/noget tager 'til'.","Arbejde",{err:"for",valid:["i","fra","uden"]},"B1");
 gen("Hun er gift {a} {x}.","med",["en læge","sin ungdomskæreste","en englænder"],
   "'Gift med' nogen tager altid 'med'.","Familie",{err:"til"},"A2");
 gen("Resultatet afhænger meget {a} {x}.","af",["indsatsen","vejret","markedet","kunderne"],
@@ -761,8 +834,12 @@ function blankSentence(item){ // replace the answer preposition (whole word) wit
   let done=false;
   return item.text.replace(re,function(m,p1,p2){ if(done) return m; done=true; return p1+"@@@"+p2; });
 }
+const ITEM_BY_TEXT = {};
+ITEMS.forEach(function(it){ ITEM_BY_TEXT[it.text]=it; });
 function distractorsFor(prep, n, item){
   // item (optional) may carry .wrong (explicit wrong options) and .not (valid alternatives to never offer)
+  // stored review items may predate the current valid sets: prefer the live item with the same text (US-059)
+  if(item && ITEM_BY_TEXT[item.text] && ITEM_BY_TEXT[item.text].a===prep) item = ITEM_BY_TEXT[item.text];
   const not = (item && item.not) || [];
   let opts = [];
   ((item && item.wrong) || []).forEach(x=>{ if(opts.indexOf(x)<0 && x!==prep && not.indexOf(x)<0) opts.push(x); });

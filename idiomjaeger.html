@@ -973,7 +973,7 @@ function renderMemory(){
     <h2 class="section-title">Idiom Memory</h2>
     <div class="progress-line">Par fundet: <b>${MEM.matched}</b>/6 · Træk: ${MEM.moves}</div>
     <div class="mem-grid" id="memGrid">
-      ${MEM.cards.map((c,i)=>`<div class="mem-card${c.matched?' matched':''}${MEM.flipped.includes(i)?' flipped':''}" data-i="${i}"><span class="back" data-sd-sprite="stjerne" data-scale="3" aria-hidden="true"></span><span class="face">${esc(c.text)}${c.kind==='d'?speakerBtn(c.text):''}</span></div>`).join('')}
+      ${MEM.cards.map((c,i)=>`<div class="mem-card${c.matched?' matched':''}${MEM.flipped.includes(i)?' flipped':''}" data-i="${i}"><span class="back" data-sd-sprite="stjerne" data-scale="2" aria-hidden="true"></span><span class="face">${esc(c.text)}${c.kind==='d'?speakerBtn(c.text):''}</span></div>`).join('')}
     </div>
     <div class="scrollnote">Vend to kort og find idiom + betydning.</div></div>`;
   document.querySelectorAll('#memGrid .mem-card').forEach(el=>el.onclick=()=>memFlip(parseInt(el.dataset.i)));

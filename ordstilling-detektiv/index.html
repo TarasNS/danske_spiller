@@ -1188,7 +1188,7 @@ function finishSession(){
     }
     const next=CASES.find(x=>x.n===G.caseN+1);
     area.innerHTML=
-      `<div class="res-sprites" aria-hidden="true">${passed?'<span data-sd-sprite="pokal" data-scale="3"></span>':''}<span data-sd-sprite="lup" data-scale="6" class="${passed?'sd-hop':'sd-wig'}"></span>${passed?'<span data-sd-sprite="stjerne" data-scale="3"></span>':''}</div>`+
+      `<div class="res-sprites" aria-hidden="true">${passed?'<span data-sd-sprite="pokal" data-scale="2"></span>':''}<span data-sd-sprite="lup" data-scale="6" class="${passed?'sd-hop':'sd-wig'}"></span>${passed?'<span data-sd-sprite="stjerne" data-scale="2"></span>':''}</div>`+
       (passed?`<div class="bigstamp">LØST</div>`:`<div class="bigstamp" style="color:#8a6a30;border-color:#8a6a30;transform:rotate(-4deg)">GENÅBN</div>`)+
       `<h2>${G.c.title}</h2>`+
       `<div class="score">${G.correct} / ${G.total} rigtige · ${pct} %</div>`+
@@ -1207,7 +1207,7 @@ function finishSession(){
     const m=Math.floor(G.time/60),s=G.time%60;
     const title = pct>=90?"MESTERDETEKTIV":pct>=70?"Skarp efterforsker":pct>=50?"Dygtig opklarer":"Fortsæt efterforskningen";
     area.innerHTML=
-      `<div class="res-sprites" aria-hidden="true"><span data-sd-sprite="pokal" data-scale="3"></span><span data-sd-sprite="lup" data-scale="6" class="sd-hop"></span></div>`+
+      `<div class="res-sprites" aria-hidden="true"><span data-sd-sprite="pokal" data-scale="2"></span><span data-sd-sprite="lup" data-scale="6" class="sd-hop"></span></div>`+
       `<div class="bigstamp" style="${pct>=90?'':'color:#8a6a30;border-color:#8a6a30'}">${pct>=90?'MESTER':'SAG'}</div>`+
       `<h2>${title}</h2>`+
       `<div class="score">${G.correct} / ${G.total} · ${pct} %</div>`+

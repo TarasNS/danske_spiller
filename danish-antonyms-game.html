@@ -429,10 +429,6 @@
     <div class="card">
       <h2 class="section-title first">Indstillinger</h2>
       <div class="toggle-row">
-        <div><div class="t">Lyd og udtale</div><div class="d">Læs danske ord og sætninger højt</div></div>
-        <span class="switch"><input type="checkbox" id="setSound"><label for="setSound"></label></span>
-      </div>
-      <div class="toggle-row">
         <div><div class="t">Vis eksempelsætninger</div><div class="d">Vis eksempler, når du har svaret</div></div>
         <span class="switch"><input type="checkbox" id="setExamples"><label for="setExamples"></label></span>
       </div>
@@ -826,7 +822,6 @@ const defaultState = () => ({
   mastery:{},               // { "wordA|wordB": 0..3 }
   mistakes:[],              // array of pair keys answered incorrectly (still weak)
   settings:{
-    sound:true,
     examples:true,
     weakOnly:false,
     unmasteredOnly:false
@@ -935,7 +930,6 @@ if('speechSynthesis' in window){
   refreshVoices();
 }
 function speak(text){
-  if(!state.settings.sound) return;
   if(!('speechSynthesis' in window) || !text) return;
   try{
     speechSynthesis.cancel();
@@ -1540,7 +1534,7 @@ function reviewRow(p, type){
    16) SETTINGS
    ============================================================ */
 function bindSettings(){
-  const map = {setSound:"sound",setExamples:"examples",setWeakOnly:"weakOnly",setUnmasteredOnly:"unmasteredOnly"};
+  const map = {setExamples:"examples",setWeakOnly:"weakOnly",setUnmasteredOnly:"unmasteredOnly"};
   Object.entries(map).forEach(([id,key])=>{
     const el = $("#"+id);
     el.checked = !!state.settings[key];
