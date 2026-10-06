@@ -1,23 +1,26 @@
-// Static blog guards (no browser, no deps). Usage: node tests/blog-static.mjs
-// Every blog page: title 50-60 chars, description 140-155, one <h1>, JSON-LD parses, relative links resolve.
+// Static guards for the reading sections blog/ and en/ (no browser, no deps). Usage: node tests/blog-static.mjs
+// Every page: title 50-60 chars, description 140-155, one <h1>, JSON-LD parses, relative links resolve.
 // Every quiz: data-answer points at an existing option, has one .why and one no-JS <details> fallback.
-// The blog index links every post folder.
+// Each section index links every article folder.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const BLOG = path.join(ROOT, 'blog');
-let fails = 0;
+let fails = 0, total = 0;
 const check = (ok, msg) => { if (!ok) { console.log(`FAIL  ${msg}`); fails++; } };
 const unesc = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"');
 
+for (const section of ['blog', 'en']) {
+const BLOG = path.join(ROOT, section);
 const posts = fs.readdirSync(BLOG, { withFileTypes: true })
   .filter(d => d.isDirectory() && fs.existsSync(path.join(BLOG, d.name, 'index.html'))).map(d => d.name);
 const pages = ['index.html', ...posts.map(p => `${p}/index.html`)];
+total += pages.length;
 
-for (const rel of pages) {
-  const file = path.join(BLOG, rel);
+for (const page of pages) {
+  const rel = `${section}/${page}`;
+  const file = path.join(BLOG, page);
   const html = fs.readFileSync(file, 'utf8');
   const title = unesc((html.match(/<title>([^<]*)<\/title>/) || [])[1] || '');
   const desc = unesc((html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || '');
@@ -38,11 +41,12 @@ for (const rel of pages) {
     check(/<details class="nojs">/.test(q[2]), `${rel}: quiz missing no-JS <details> fallback`);
   }
   const quizzes = (html.match(/<div class="quiz"/g) || []).length;
-  if (rel !== 'index.html') check(quizzes >= 1, `${rel}: post has no quiz`);
+  if (page !== 'index.html') check(quizzes >= 1, `${rel}: article has no quiz`);
 }
 
 const index = fs.readFileSync(path.join(BLOG, 'index.html'), 'utf8');
-for (const p of posts) check(index.includes(`href="${p}/index.html"`), `blog index links ${p}`);
+for (const p of posts) check(index.includes(`href="${p}/index.html"`), `${section} index links ${p}`);
+}
 
-console.log(fails ? `\n${fails} failed` : `all passed (${pages.length} pages)`);
+console.log(fails ? `\n${fails} failed` : `all passed (${total} pages)`);
 process.exit(fails ? 1 : 0);

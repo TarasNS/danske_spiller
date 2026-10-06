@@ -35,7 +35,24 @@ for (const loc of locs) {
 for (const loc of locs.filter(l => l !== SITE)) {
   const rel = loc.slice(SITE.length);
   if (!fs.existsSync(path.join(ROOT, rel))) continue;
-  check(/<nav class="sd-bar"[^>]*data-sd-static><a class="sd-bar-home" href="[^"]*index\.html">/.test(read(rel)), `static home link: ${rel}`);
+  check(/<nav class="sd-bar"[^>]*data-sd-static><a class="sd-bar-home" href="[^"]*index\.html"[^>]*>/.test(read(rel)), `static home link: ${rel}`);
+}
+
+// 4. hreflang: every alternate exists, includes the page itself, and is reciprocated with the same set.
+const alts = (rel) => Object.fromEntries([...read(rel).matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" \/>/g)].map(m => [m[1], m[2]]));
+for (const loc of locs) {
+  const rel = loc.slice(SITE.length) || 'index.html';
+  if (!fs.existsSync(path.join(ROOT, rel))) continue;
+  const a = alts(rel);
+  if (!Object.keys(a).length) continue;
+  check(Object.values(a).includes(loc), `hreflang includes self: ${rel}`);
+  check('x-default' in a, `hreflang has x-default: ${rel}`);
+  for (const [lang, href] of Object.entries(a)) {
+    const other = href.slice(SITE.length) || 'index.html';
+    if (!fs.existsSync(path.join(ROOT, other))) { check(false, `hreflang ${lang} target exists: ${rel} -> ${href}`); continue; }
+    check(JSON.stringify(alts(other)) === JSON.stringify(a) || JSON.stringify(Object.entries(alts(other)).sort()) === JSON.stringify(Object.entries(a).sort()),
+      `hreflang reciprocal: ${rel} <-> ${other}`);
+  }
 }
 
 console.log(fails ? `\n${fails} failed` : '\nall passed');

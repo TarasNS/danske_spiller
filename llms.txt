@@ -1,0 +1,43 @@
+# Sjovt Dansk
+
+> Sjovt Dansk ("Fun Danish", sjovtdansk.dk) is a free collection of short browser games and simple grammar guides for adults learning Danish as a second language, from CEFR level A1 to B2. No login, no ads, nothing to install. The games are in Danish; the guides and blog explain the grammar in English with Danish examples.
+
+Every game page states its CEFR level and what it trains. Each English guide gives a short answer first, then rules with Danish examples, a quick quiz, an FAQ, and a link to the matching game. The Danish homepage (https://sjovtdansk.dk/) and the English homepage (https://sjovtdansk.dk/en/index.html) are language alternates of each other.
+
+## English guides
+
+- [En or et? Gender of Danish nouns](https://sjovtdansk.dk/en/en-or-et/index.html): roughly three in four nouns are en-words; endings such as -hed, -ing, -tion (en) and -um, -ment (et); compound words take the gender of the last part. A1–A2.
+- [Danish word order: the V2 rule](https://sjovtdansk.dk/en/danish-word-order/index.html): the verb is second in a main clause, inversion, questions, and ikke before the verb in subordinate clauses. A2–B2.
+- [Danish prepositions: i, på, til and af](https://sjovtdansk.dk/en/danish-prepositions/index.html): i or på for places and time, til for direction, af for by/of, and fixed phrases such as vente på. A2–B1.
+- [Danish verb tenses](https://sjovtdansk.dk/en/danish-verb-tenses/index.html): four forms per verb, two regular groups, past vs perfect, and the future with skal and kommer til at. A2–B1.
+- [Danish pronouns](https://sjovtdansk.dk/en/danish-pronouns/index.html): jeg or mig, den or det, min/mit/mine, sin or hans, nogen or nogle. A1–B1.
+
+## Blog (one grammar point per post, with quizzes)
+
+- [Danish inversion](https://sjovtdansk.dk/blog/danish-inversion/index.html): why the verb jumps in front of the subject. A2–B1.
+- [og, fordi or derfor?](https://sjovtdansk.dk/blog/og-fordi-derfor/index.html): three ways to join Danish sentences and what each does to word order. B1.
+- [Where does ikke go?](https://sjovtdansk.dk/blog/ikke-in-subordinate-clauses/index.html): ikke and other sentence adverbs in main and subordinate clauses. B1–B2.
+- [sin or hans?](https://sjovtdansk.dk/blog/sin-or-hans/index.html): Danish reflexive possessives. A2–B1.
+- [har or er?](https://sjovtdansk.dk/blog/har-or-er-perfect/index.html): choosing the helper verb in the Danish perfect. A2–B1.
+
+## Games (in Danish)
+
+- [En/Et-træner](https://sjovtdansk.dk/en-og-et/index.html): noun gender, en or et. A1–A2.
+- [Dansk Mester](https://sjovtdansk.dk/danske-phraser/dansk-mester.html): everyday phrases and verbs with prepositions. A1–A2.
+- [Bøjningsværkstedet](https://sjovtdansk.dk/boejningsvaerkstedet/index.html): plural, definite form, adjective endings and comparison. A1–B2.
+- [Verb-glosekort](https://sjovtdansk.dk/danish_flashcards/danish_flashcards_game/index.html): flashcards for Danish verb forms. A2–B1.
+- [Magiske Verber](https://sjovtdansk.dk/magiske_verber.html): verb forms in present, past and perfect. A2–B1.
+- [Præpositionsmester](https://sjovtdansk.dk/dansk-praepositioner.html): i, på, til, af and other prepositions. A2–B1.
+- [Pronomenmysteriet](https://sjovtdansk.dk/pronomenmysteriet/index.html): personal and possessive pronouns, sin or hans, nogen or nogle. A2–B2.
+- [Tidsmaskinen](https://sjovtdansk.dk/tidsmaskinen/index.html): choosing tenses in context, including modal verbs. A2–C1.
+- [Sætningsmaskinen](https://sjovtdansk.dk/saetningsmaskinen/index.html): placement of ikke, subordinate clauses, direct and indirect questions. A2–C1.
+- [Konjunktion Crush](https://sjovtdansk.dk/konjunktioner/konjunktioner.html): conjunctions such as fordi, og, men, selvom. B1.
+- [Forbindeord](https://sjovtdansk.dk/forbindenor/Forbindenor.html): linking words that make a text hang together. B1.
+- [Ordstillingsdetektiven](https://sjovtdansk.dk/ordstilling-detektiv/index.html): Danish word order and the V2 rule. B1–B2.
+- [Adverbier og bindeord](https://sjovtdansk.dk/adverbs.html): sentence building with adverbs and linking words. B1–B2.
+- [Danske Antonymer](https://sjovtdansk.dk/danish-antonyms-game.html): Danish opposites. B1–B2.
+- [Idiomjægeren](https://sjovtdansk.dk/idiomjaeger.html): Danish idioms and what they mean. B2.
+
+## Optional
+
+- [Sitemap](https://sjovtdansk.dk/sitemap.xml): every public page.
