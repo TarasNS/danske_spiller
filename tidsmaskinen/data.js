@@ -19693,7 +19693,7 @@ window.TIDS_DATA = {
       "level": "B2",
       "mode": "passive",
       "context": "Det står i reglerne for kantinen.",
-      "sentence": "Maden ___ kun mellem klokken 11 og 13.",
+      "sentence": "Reglen er, at maden kun ___ mellem klokken 11 og 13.",
       "options": [
         "serverer",
         "serveres",
@@ -19769,7 +19769,7 @@ window.TIDS_DATA = {
       "level": "B2",
       "mode": "passive",
       "context": "Det er en tradition.",
-      "sentence": "Fødselsdagen ___ altid med kage og flag.",
+      "sentence": "Traditionen er, at fødselsdagen altid ___ med kage og flag.",
       "options": [
         "fejres",
         "er fejret",
@@ -21666,7 +21666,7 @@ window.TIDS_DATA = {
       "level": "B2",
       "mode": "passive",
       "context": "Butikken accepterer ikke kontanter.",
-      "sentence": "Der ___ kun med kort her.",
+      "sentence": "Skiltet siger, at der kun ___ med kort her.",
       "options": [
         "betaler",
         "betales",
@@ -22892,7 +22892,7 @@ window.TIDS_DATA = {
       "level": "B2",
       "mode": "passive",
       "context": "Det er en regel.",
-      "sentence": "Der ___ ikke i klassen.",
+      "sentence": "Reglen er, at der ikke ___ i klassen.",
       "options": [
         "spises",
         "blev spist",
