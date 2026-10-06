@@ -1,0 +1,8 @@
+{
+  "id": "tids-passive-adverb",
+  "from": "8c6e8cb^",
+  "fix": "8c6e8cb",
+  "prompt": "Tidsmaskinen passive mode (tidsmaskinen/data.js, \"mode\": \"passive\") has four items where a sentence adverb stands right after the blank, so the periphrastic options (bliver/blev + participle) put the adverb after the participle, which is ungrammatical or stilted. The items are: 'Maden ___ kun mellem klokken 11 og 13.', 'Fødselsdagen ___ altid med kage og flag.', 'Der ___ kun med kort her.' and 'Der ___ ikke i klassen.' Rewrite these four sentences so the adverb comes before the blank and every option fills the gap grammatically, while the item still tests the passive and has exactly one defensible answer. Item ids are SRS keys: keep all ids, the option lists and the 1,260 total unchanged. Run the dataset validation when done.",
+  "may_change": ["tidsmaskinen/data.js"],
+  "checks": ["node shared/validate.js", "node {root}/evals/checks/tids-passive-adverb.mjs ."]
+}

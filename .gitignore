@@ -5,6 +5,7 @@
 !.claude/hooks/
 .worktrees/
 .build-logs/
+evals-out/
 
 # Local working artifacts, not repo content
 danish_b1_b2_500_adverb_sentences.xlsx

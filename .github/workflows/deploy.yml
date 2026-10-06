@@ -39,7 +39,7 @@ jobs:
             -e "ssh -i ~/.ssh/id_deploy -p $SIMPLY_PORT" \
             --exclude='.git/' --exclude='.github/' --exclude='.claude/' \
             --exclude='tests/' --exclude='docs/' --exclude='stories/' \
-            --exclude='qa/' --exclude='improvement/' \
+            --exclude='qa/' --exclude='improvement/' --exclude='evals/' --exclude='evals-out/' \
             --exclude='tmp_*.js' --exclude='.tmp_*' --exclude='build-loop.sh' \
             --exclude='*.md' --exclude='*.csv' --exclude='.gitignore' \
             ./ "$SIMPLY_USER@$SIMPLY_HOST:public_html/"

@@ -1,0 +1,8 @@
+{
+  "id": "verbs-imperative-doubled",
+  "from": "3b05b77^",
+  "fix": "3b05b77",
+  "prompt": "In shared/data/verbs.js the imperative of weak verbs keeps a doubled final consonant: 'snakke' gives 'snakk'. Danish writes a doubled consonant single when it is word-final (snak, luk, kys, pas). Fix the generator so these imperatives are correct, and leave verbs without a doubled consonant untouched (for example 'spise' -> 'spis').",
+  "may_change": ["shared/data/verbs.js"],
+  "checks": ["node shared/validate.js", "node {root}/evals/checks/verbs-imperative.mjs ."]
+}

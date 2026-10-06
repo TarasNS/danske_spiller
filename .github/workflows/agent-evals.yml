@@ -1,0 +1,54 @@
+name: Agent evals
+
+# Regression-tests the Claude Code configuration (CLAUDE.md, .claude/agents|skills|hooks) by replaying
+# historical tasks. See evals/README.md. Never deploys; never touches the deploy secrets.
+on:
+  pull_request:
+    paths: ['CLAUDE.md', '.claude/**', 'evals/**', 'shared/validate.js', '.github/workflows/agent-evals.yml']
+  schedule:
+    - cron: '0 5 * * 1'   # weekly, Monday 05:00 UTC
+  workflow_dispatch:
+    inputs:
+      runs:
+        description: 'Runs per case'
+        default: '1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-evals-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  graders:
+    # Deterministic, no model call, no secrets: each grader must fail at `from` and pass at `fix`.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - run: node evals/run.mjs --selftest
+
+  evals:
+    needs: graders
+    # Fork PRs get no secrets; skip them rather than fail.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install -g @anthropic-ai/claude-code
+      - name: Run evals
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          EVAL_CLEAN_HOME: '1'
+        run: node evals/run.mjs --runs ${{ github.event_name == 'schedule' && '3' || inputs.runs || '1' }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-transcripts
+          path: evals-out/
+          if-no-files-found: ignore

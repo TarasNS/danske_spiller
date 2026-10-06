@@ -1,0 +1,8 @@
+{
+  "id": "nouns-er-plural",
+  "from": "ac57505^",
+  "fix": "ac57505",
+  "prompt": "In the shared noun list (shared/data/nouns.js) the definite plural of agent nouns ending in -er is wrong: 'lærer' gives 'lærerene' instead of 'lærerne', and the same happens for 'computer' and 'printer'. Fix it in the generator code rather than hand-editing individual entries, and do not change any other noun's forms.",
+  "may_change": ["shared/data/nouns.js"],
+  "checks": ["node shared/validate.js", "node {root}/evals/checks/nouns-er-plural.mjs ."]
+}
