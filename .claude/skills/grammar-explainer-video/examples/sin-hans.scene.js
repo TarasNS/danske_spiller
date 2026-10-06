@@ -5,7 +5,7 @@ window.EXPLAINER_SCENE = {
   id: "sin-hans",
   title: "sin eller hans",
   level: "B1",
-  verify: true,
+  verify: false,
   steps: [
     { type: "sentence", t: 2400, words: ["Peter", "ser", "sin", "bror"] },
     { type: "highlight", t: 2200, words: [0, 2], color: "G" },

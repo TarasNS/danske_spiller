@@ -32,7 +32,7 @@ html.sd-page .shell { max-width: 744px; margin: 0 auto; padding: var(--sd-5) var
 
 /* ---- top row */
 html.sd-page header.topbar { margin-bottom: var(--sd-5); gap: var(--sd-3); }
-html.sd-page .brand { font-family: var(--sd-font-display); font-weight: 700; font-size: clamp(20px, 5vw, 26px); text-transform: uppercase; color: var(--sd-text); letter-spacing: .02em; gap: var(--sd-3); min-width: 0; overflow-wrap: anywhere; }
+html.sd-page .brand { font-family: var(--sd-font-display); font-weight: 700; font-size: clamp(20px, 5vw, 26px); text-transform: uppercase; color: var(--sd-text); letter-spacing: .02em; gap: var(--sd-3); min-width: 0; overflow-wrap: anywhere; font-size: 0; flex: 1 1 auto; } /* one visible title: the h1 with tandhjul (US-038); brand text stays for screen readers */
 html.sd-page[data-theme="dark"] .brand { color: var(--sd-text); }
 html.sd-page .icon-btn {
   min-width: 48px; min-height: 48px; padding: 4px 12px; margin: var(--sd-bw); border: 0; border-radius: 0; background: var(--sd-panel); color: var(--sd-text);
@@ -111,7 +111,7 @@ html.sd-page .gender-tag, html.sd-page[data-theme="dark"] .gender-tag, html.sd-p
 html.sd-page .feat-tags { gap: var(--sd-2); margin: var(--sd-2) 0 var(--sd-4); }
 html.sd-page .ask { color: var(--sd-text); font-size: 16px; margin: var(--sd-2) 0 var(--sd-4); }
 html.sd-page .frame { font-family: var(--sd-font-body); font-size: 22px; color: var(--sd-text); margin: var(--sd-3) 0 var(--sd-4); overflow-wrap: anywhere; }
-html.sd-page .frame .blank, html.sd-page .context .blank { border-bottom: 4px dashed var(--sd-orange); padding: 0 8px; font-weight: 700; }
+html.sd-page .frame .blank { border-bottom: 4px dashed var(--sd-orange); padding: 0 8px; font-weight: 700; }
 
 html.sd-page table.grid { border-spacing: 8px; table-layout: fixed; }
 html.sd-page table.grid th.rowh { width: 6.2em; font-size: 13px; }
@@ -161,10 +161,11 @@ html.sd-page .press-col .arrow { color: var(--sd-text); font-family: var(--sd-fo
 
 /* modes 5/6 */
 html.sd-page .context { background: var(--sd-panel-2); border: 0; border-radius: 0; box-shadow: inset 0 0 0 4px var(--sd-line); font-family: var(--sd-font-body); font-size: 20px; line-height: 1.7; padding: var(--sd-4); overflow-wrap: anywhere; }
-html.sd-page .context .blank.done-correct, html.sd-page[data-theme="dark"] .context .blank.done-correct { border-bottom-color: var(--sd-ok); color: var(--sd-ok); }
-html.sd-page .context .blank.done-wrong, html.sd-page[data-theme="dark"] .context .blank.done-wrong { border-bottom-color: var(--sd-bad); color: var(--sd-bad); }
-html.sd-page .context .blank.done-correct::before { content: "✓ "; }
-html.sd-page .context .blank.done-wrong::before { content: "✗ "; }
+html.sd-page .context .sd-gap { background: var(--sd-panel); }
+html.sd-page .context .sd-gap.is-ok { background: var(--sd-ok-bg, #CFF1C9); color: var(--sd-text, #101010); }
+html.sd-page .context .sd-gap.is-bad { background: var(--sd-bad-bg, #FFD0DE); color: var(--sd-text, #101010); }
+html.sd-page .context .sd-gap.is-ok::before { content: "✓ "; }
+html.sd-page .context .sd-gap.is-bad::before { content: "✗ "; }
 html.sd-page .options { gap: var(--sd-3); margin-top: var(--sd-3); }
 html.sd-page .opt {
   min-height: 56px; margin: var(--sd-bw); padding: 8px 14px; border: 0; border-radius: 0; background: var(--sd-panel-2); color: var(--sd-text); font-family: var(--sd-font-body); font-size: 18px;
@@ -194,11 +195,7 @@ html.sd-page .slip .note { color: var(--sd-text); font-size: 16px; }
 html.sd-page .slip .actions { gap: var(--sd-3); }
 html.sd-page .slip.press, html.sd-page .press { animation: none; }
 
-/* shared TTS button from DanskCore */
-html.sd-page .dc-tts-button { min-width: 48px; min-height: 48px; margin: 4px; padding: 0; border: 0; border-radius: 0; background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 0 8px 0 -4px var(--sd-ink); cursor: pointer; font-size: 0; }
-html.sd-page .dc-tts-button span { display: none; }
-html.sd-page .dc-tts-button::before { content: "▶"; font-family: var(--sd-font-body); font-weight: 700; font-size: 18px; }
-html.sd-page .dc-tts-button:hover { background: var(--sd-orange); }
+/* shared TTS button: see shared/tts-button.css */
 
 /* empty + summary */
 html.sd-page .empty-state { color: var(--sd-text); }
@@ -223,3 +220,9 @@ html.sd-page .sum-actions { justify-content: center; gap: var(--sd-3); }
   html.sd-page .primary { font-size: 22px; }
 }
 @media (prefers-reduced-motion: reduce) { html.sd-page .progress > i { transition: none !important; } }
+
+/* US-037: SPIL sits above the mode list in the DOM (visible on load, no sticky overlay that could cover mode buttons) */
+html.sd-page #start-screen #btn-play { margin-bottom: var(--sd-3); }
+/* US-030: reset control under SPIL */
+html.sd-page .reset-row { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sd-3); margin-top: var(--sd-5); }
+html.sd-page .reset-status { font-size: 16px; color: var(--sd-text); }

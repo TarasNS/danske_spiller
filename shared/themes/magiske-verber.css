@@ -44,7 +44,7 @@ html.sd-page h1 {
 }
 html.sd-page .subtitle { font-family: var(--sd-font-body); font-style: normal; font-weight: 700; color: var(--sd-text); font-size: 15px; letter-spacing: 0; margin: 0 0 20px; }
 html.sd-page h2, html.sd-page h3, html.sd-page .title { font-family: var(--sd-font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; }
-html.sd-page h2.title { font-size: clamp(22px, 5vw, 30px); color: var(--sd-text) !important; margin: 12px 0 8px; overflow-wrap: anywhere; }
+html.sd-page h2.title { font-size: clamp(22px, 5vw, 30px); color: var(--sd-text) !important; margin: 12px 0 8px; overflow-wrap: break-word; hyphens: manual; }
 html.sd-page h2.title .sd-sprite { margin-right: 8px; }
 
 /* panels */
@@ -92,7 +92,7 @@ html.sd-page .game-card:nth-child(4n+4) { background: #FFA9C6; }
 html.sd-page .game-card:hover { transform: translate(-2px,-2px); border: 0; box-shadow: var(--sd-box), var(--sd-bevel), 10px 10px 0 0 var(--sd-ink); }
 html.sd-page .game-card:active { transform: translate(4px,4px); box-shadow: var(--sd-box), var(--sd-bevel), 2px 2px 0 0 var(--sd-ink); }
 html.sd-page .game-card .ico { filter: none; font-size: 0; width: 68px; min-width: 68px; display: grid; place-items: center; }
-html.sd-page .game-card .gc-t { font-family: var(--sd-font-display); font-weight: 700; font-size: 18px; color: #101010; text-transform: uppercase; line-height: 1.2; overflow-wrap: anywhere; }
+html.sd-page .game-card .gc-t { font-family: var(--sd-font-display); font-weight: 700; font-size: 18px; color: #101010; text-transform: uppercase; line-height: 1.2; overflow-wrap: break-word; hyphens: manual; }
 html.sd-page .game-card .gc-d { font-family: var(--sd-font-body); font-size: 14px; color: #101010; margin-top: 4px; line-height: 1.4; overflow-wrap: anywhere; }
 html.sd-page .gc-done { margin-left: 6px; background: #101010; color: var(--sd-cream); padding: 0 6px; font-family: var(--sd-font-body); font-size: 14px; }
 
@@ -126,18 +126,9 @@ html.sd-page .timer-chip b { color: #101010; }
 html.sd-page .q-instruction { font-family: var(--sd-font-body); font-style: normal; font-weight: 700; font-size: 16px; color: var(--sd-text-soft); letter-spacing: 0; margin: 12px 0 6px; overflow-wrap: anywhere; }
 html.sd-page .q-prompt { font-family: var(--sd-font-body); font-weight: 700; font-size: clamp(20px, 5.4vw, 26px); line-height: 1.55; color: var(--sd-text); text-shadow: none; overflow-wrap: anywhere; hyphens: auto; }
 html.sd-page .q-prompt .pre { color: var(--sd-text-soft); font-style: normal; font-weight: 400; font-size: 16px; line-height: 1.5; margin-bottom: 10px; }
-html.sd-page .q-prompt .blank { color: var(--sd-text); border-bottom: 4px solid var(--sd-orange); padding: 0 6px; font-weight: 700; }
 html.sd-page .q-chain { font-family: var(--sd-font-body); letter-spacing: 0; }
-html.sd-page .q-chain .blank { color: var(--sd-text); }
 html.sd-page .q-prompt-row { gap: 12px; }
 html.sd-page .q-prompt-row .q-prompt { flex: 1 1 200px; min-width: 0; }
-
-html.sd-page .speaker {
-  width: 48px; height: 48px; min-width: 48px; margin: 4px; padding: 0; background: var(--sd-cream); color: #101010; border: 0;
-  box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); font-family: var(--sd-font-display); font-weight: 700; font-size: 18px;
-}
-html.sd-page .speaker:hover { background: #fff; border: 0; }
-html.sd-page .speaker:active { transform: translate(2px,2px); box-shadow: var(--sd-box), 2px 2px 0 0 var(--sd-ink); }
 
 /* options */
 html.sd-page .options { gap: 16px; padding: 4px; margin-top: 16px; }
@@ -212,3 +203,13 @@ html.sd-page #screen-result .stat { padding: 12px 4px; }
   :root:not([data-theme="light"]) .crest .spark { background: var(--sd-cream); padding: 8px; box-shadow: var(--sd-box); }
 }
 :root[data-theme="dark"] .crest .spark { background: var(--sd-cream); padding: 8px; box-shadow: var(--sd-box); }
+
+/* dark mode: mode cards, difficulty tiles and options use panel tokens (.sd-surface) instead of staying light; pastel/white fills are light-mode only */
+html.sd-page:root[data-theme="dark"] .game-card, html.sd-page:root[data-theme="dark"] .diff, html.sd-page:root[data-theme="dark"] .opt:not(.correct):not(.wrong) { background: var(--sd-panel-2); color: var(--sd-text); }
+html.sd-page:root[data-theme="dark"] .game-card .gc-t, html.sd-page:root[data-theme="dark"] .game-card .gc-d, html.sd-page:root[data-theme="dark"] .diff .dn, html.sd-page:root[data-theme="dark"] .diff .dl { color: var(--sd-text); }
+html.sd-page:root[data-theme="dark"] .game-card:hover, html.sd-page:root[data-theme="dark"] .diff:hover, html.sd-page:root[data-theme="dark"] .opt:hover:not(.locked) { background: var(--sd-panel); }
+@media (prefers-color-scheme: dark) {
+html.sd-page:root:not([data-theme="light"]) .game-card, html.sd-page:root:not([data-theme="light"]) .diff, html.sd-page:root:not([data-theme="light"]) .opt:not(.correct):not(.wrong) { background: var(--sd-panel-2); color: var(--sd-text); }
+html.sd-page:root:not([data-theme="light"]) .game-card .gc-t, html.sd-page:root:not([data-theme="light"]) .game-card .gc-d, html.sd-page:root:not([data-theme="light"]) .diff .dn, html.sd-page:root:not([data-theme="light"]) .diff .dl { color: var(--sd-text); }
+html.sd-page:root:not([data-theme="light"]) .game-card:hover, html.sd-page:root:not([data-theme="light"]) .diff:hover, html.sd-page:root:not([data-theme="light"]) .opt:hover:not(.locked) { background: var(--sd-panel); }
+}

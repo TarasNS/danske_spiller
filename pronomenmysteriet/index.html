@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" data-explainer="min-mit,sin-hans">
+<html lang="da" data-explainer="min-mit,sin-hans,subjekt-objekt,den-det-de,nogen-nogle-noget,demonstrativer">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,11 +62,6 @@
   .evidence li{background:var(--panel-2);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:.45em .75em;font-size:1.05rem}
   .target{font-size:1.3rem;line-height:1.6;margin:.4em 0;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
   .target .sentence{flex:1 1 12em;min-width:0}
-  .blank{display:inline-block;min-width:3.2em;border-bottom:3px dashed var(--accent);text-align:center;font-weight:700}
-  .blank.done-correct{border-bottom:3px solid var(--correct);color:var(--correct)}
-  .blank.done-wrong{border-bottom:3px solid var(--wrong);color:var(--wrong)}
-  html[data-theme="dark"] .blank.done-correct{color:#8fd1b3}
-  html[data-theme="dark"] .blank.done-wrong{color:#f0a0a5}
   .gloss{font-size:.9rem;color:var(--muted);font-style:italic;margin:.2em 0 .8em}
   .options{display:flex;flex-direction:column;gap:.5em;margin-top:.6em}
   .opt{display:flex;align-items:center;gap:.7em;text-align:left;min-height:52px;padding:.5em .9em;border-radius:11px;font:inherit;font-size:1.15rem;border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer}
@@ -111,24 +106,25 @@
 <link rel="stylesheet" href="../shared/sjovt.css">
 <script src="../shared/sjovt.js"></script>
 <link rel="stylesheet" href="../shared/themes/pronomenmysteriet.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 <link rel="stylesheet" href="../shared/explainer/modal.css"><script src="../shared/explainer/modal.js"></script>
 </head>
 <body>
 <div class="shell">
   <header class="topbar">
     <div class="brand"><span data-sd-sprite="bog" data-scale="3" aria-hidden="true"></span> Pronomenmysteriet</div>
-    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
-    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
+    <button class="icon-btn" id="btn-reset" type="button" aria-label="Nulstil fremskridt" title="Nulstil fremskridt">NULSTIL</button>
   </header>
 
   <main id="start-screen" class="card">
     <h1 class="title"><span data-sd-sprite="bog" data-scale="5" aria-hidden="true"></span>Pronomenmysteriet</h1>
     <p class="lede">Opklar sagen: hvem peger ordet på?</p>
+    <button class="primary" id="btn-play" type="button">Spil</button>
     <div class="group-label" id="lbl-mode">Tilstand</div>
     <div class="modes" id="mode-list" role="group" aria-labelledby="lbl-mode"></div>
     <div class="group-label" id="lbl-level">Niveau</div>
     <div class="chips" id="level-list" role="group" aria-labelledby="lbl-level"></div>
-    <button class="primary" id="btn-play" type="button">Spil</button>
   </main>
 
   <main id="play-screen" class="card hidden">
@@ -221,8 +217,7 @@
   };
 
   DC.ui.darkMode.init();
-  DC.ui.sound.init(prefs.get('sound') !== false);
-  syncSoundLabel();
+  DC.ui.sound.init(true);   // US-040: mute lives in the shared bar (dc:sound-enabled)
 
   var savedMode = prefs.get('mode');
   if (savedMode && MODE_BY_KEY[savedMode]) state.mode = savedMode;
@@ -232,19 +227,16 @@
     if (ok.length) state.levels = ok;
   }
 
-  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
-  document.getElementById('btn-sound').addEventListener('click', function(){
-    var on = DC.ui.sound.toggle();
-    prefs.set('sound', on);
-    syncSoundLabel();
-    if (on) SOUND.select();
+  // reset progress (US-030): confirm, then clear only this game's SRS record (keeps mode/level/sound prefs)
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    var ok = true;
+    try { ok = window.confirm('Vil du nulstille alle fremskridt? Det kan ikke fortrydes.'); } catch (e) { ok = false; }
+    if (!ok) return;
+    srsState.items = {};
+    srsState.patterns = {};
+    DC.store.remove('srs:' + GAME_ID);
+    DC.ui.announce('Fremskridt nulstillet.');
   });
-  function syncSoundLabel(){
-    var on = DC.ui.sound.isEnabled();
-    var b = document.getElementById('btn-sound');
-    b.textContent = on ? 'LYD' : 'LYD ✗';
-    b.setAttribute('aria-pressed', String(!on));
-  }
   document.getElementById('btn-play').addEventListener('click', startRound);
   document.getElementById('btn-back').addEventListener('click', showStart);
   document.addEventListener('keydown', function(e){
@@ -316,6 +308,7 @@
     el.start.classList.toggle('hidden', which !== 'start');
     el.play.classList.toggle('hidden', which !== 'play');
     el.summary.classList.toggle('hidden', which !== 'summary');
+    document.getElementById('btn-reset').classList.toggle('hidden', which !== 'start');
   }
 
   var advanceTimer = null;
@@ -329,21 +322,24 @@
     clearPending();
     buildStartControls();
     show('start');
-    document.getElementById('btn-play').focus();
+    window.scrollTo(0, 0);
+    document.getElementById('btn-play').focus({ preventScroll: true });
   }
 
   // ---- round lifecycle ----
+  // Queue order (US-042, ported from Tidsmaskinen): just-missed (box 1, newest first), then due, then unseen, then not-yet-due.
   function buildRound(pool){
-    var shuffled = shuffle(pool.slice());
-    var due = shuffled.filter(function(it){ return DC.srs.isDue(srsState, srsKey(it)); }).slice(0, ROUND_SIZE);
-    var chosen = due.slice();
-    if (chosen.length < ROUND_SIZE){
-      var seen = {};
-      chosen.forEach(function(it){ seen[it.id] = true; });
-      var rest = shuffled.filter(function(it){ return !seen[it.id]; });
-      for (var i = 0; i < rest.length && chosen.length < ROUND_SIZE; i++) chosen.push(rest[i]);
-    }
-    return shuffle(chosen);
+    var boxed = [], unseen = [], dueRest = [], notDue = [];
+    shuffle(pool.slice()).forEach(function(it){
+      var e = srsState.items[srsKey(it)];
+      if (!e) unseen.push(it);
+      else if (e.box === 1) boxed.push(it);
+      else if (DC.srs.isDue(srsState, srsKey(it))) dueRest.push(it);
+      else notDue.push(it);
+    });
+    boxed.sort(function(a, b){ return (srsState.items[srsKey(b)].lastSeen || 0) - (srsState.items[srsKey(a)].lastSeen || 0); });
+    notDue.sort(function(a, b){ return srsState.items[srsKey(a)].dueAt - srsState.items[srsKey(b)].dueAt; });
+    return shuffle(boxed.concat(dueRest, unseen, notDue).slice(0, ROUND_SIZE));
   }
 
   function startRound(){
@@ -364,7 +360,7 @@
     box.className = 'empty-state';
     box.innerHTML = '<p>Der er ingen opgaver til dette valg. Vælg et andet niveau.</p>';
     var back = document.createElement('button');
-    back.className = 'btn accent'; back.type = 'button'; back.textContent = 'Tilbage';
+    back.className = 'btn accent'; back.type = 'button'; back.textContent = '← TILBAGE';
     back.addEventListener('click', showStart);
     box.appendChild(back);
     el.itemHost.appendChild(box);
@@ -392,6 +388,8 @@
     SOUND.roundComplete();
     renderSummary();
     show('summary');
+    var again = el.sumHost.querySelector('.primary');
+    if (again) again.focus({ preventScroll: true });
   }
 
   function recordAnswer(item, correct){
@@ -451,8 +449,9 @@
       sent.appendChild(document.createTextNode(seg));
       if (i < arr.length - 1){
         blank = document.createElement('span');
-        blank.className = 'blank';
+        blank.className = 'sd-gap';
         blank.textContent = '?';
+        blank.setAttribute('role', 'img');
         blank.setAttribute('aria-label', 'tomt felt');
         sent.appendChild(blank);
       }
@@ -500,7 +499,7 @@
       if (activeKeyHandler){ document.removeEventListener('keydown', activeKeyHandler); activeKeyHandler = null; }
       var correct = DC.diff.normalize(btn.getAttribute('data-value')) === DC.diff.normalize(item.correct);
       buttons.forEach(function(b){
-        b.disabled = true;
+        b.setAttribute('aria-disabled', 'true');
         var isRight = DC.diff.normalize(b.getAttribute('data-value')) === DC.diff.normalize(item.correct);
         if (b === btn) b.classList.add(correct ? 'chosen-correct' : 'chosen-wrong');
         else if (!correct && isRight) b.classList.add('reveal-correct');
@@ -508,9 +507,11 @@
       if (blank){
         blank.textContent = item.correct;
         blank.removeAttribute('aria-label');
-        blank.classList.add(correct ? 'done-correct' : 'done-wrong');
+        blank.removeAttribute('role');
+        blank.classList.add('is-filled', correct ? 'is-ok' : 'is-bad', correct ? 'done-correct' : 'done-wrong');
       }
       recordAnswer(item, correct);
+      btn.focus({ preventScroll: true });
       sdFx(correct, btn);
       var full = filled(item, item.correct);
       if (correct){
@@ -648,7 +649,6 @@
     home.addEventListener('click', showStart);
     actions.appendChild(home);
     el.sumHost.appendChild(actions);
-    again.focus();
 
     var S = window.Sjovt;
     if (S && state.correct > 0 && S.fx && S.fx.celebrate) S.fx.celebrate();

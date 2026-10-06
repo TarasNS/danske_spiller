@@ -2,6 +2,9 @@
 //   cd <worktree> && SHOT_ROOT=<main>/docs/redesign/screenshots node <main>/tests/pronomenmysteriet.mjs [--shots]
 import { launch, openGame, sleep, hasHorizontalOverflow, smallTapTargets, shot } from './lib/harness.mjs';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const FILE = 'pronomenmysteriet/index.html';
 const SHOTS = process.argv.includes('--shots');
@@ -11,13 +14,19 @@ const results = [];
 const rec = (name, ok, ev) => { results.push({ name, ok, ev }); console.log((ok ? 'PASS ' : 'FAIL ') + name + (ev ? '  :: ' + ev : '')); };
 const shownItems = {}; // mode -> [{ctx,sentence,options,gloss,wrong?:{...}}]
 
+// US-001 data guard: placeholder text / unknown mode keys fail the run. PM_DATA_FILE overrides the data path (for guard self-tests).
+{
+  const g = spawnSync(process.execPath, [new URL('./pronomen-data-guard.mjs', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'), ...(process.env.PM_DATA_FILE ? [process.env.PM_DATA_FILE] : [])], { encoding: 'utf8' });
+  rec('data guard: no placeholder text / unknown mode keys', g.status === 0, ((g.stdout || '') + (g.stderr || '')).trim().split(/\r?\n/).slice(0, 4).join(' | '));
+}
+
 const browser = await launch();
 
 async function lookup(page) {
   // find item data for the currently shown item
   return page.evaluate(() => {
     const sent = [...document.querySelectorAll('#item-host .sentence')][0];
-    const blank = sent.querySelector('.blank');
+    const blank = sent.querySelector('.sd-gap');
     const text = sent.textContent;
     const all = [].concat(...Object.values(window.PRONOMEN_DATA));
     const ctx = [...document.querySelectorAll('#item-host .evidence li')].map(l => l.textContent);
@@ -193,7 +202,7 @@ try {
   const order = [];
   for (let i = 0; i < 14; i++) { await page.keyboard.press('Tab'); order.push(await page.evaluate(() => { const e = document.activeElement; return e.id || (e.textContent || '').trim().slice(0, 14) || e.tagName; })); }
   console.log('tab order:', order.join(' > '));
-  rec('tab order reaches mode/level/Spil/header buttons', ['btn-dark','btn-sound','btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-6]/.test(o)).length >= 6, order.join(' > '));
+  rec('tab order reaches mode/level/Spil/header buttons', ['sd-theme-btn','sd-sound-btn','btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-6]/.test(o)).length >= 6, order.join(' > '));
   await page.focus('#btn-play'); await page.keyboard.press('Enter'); await sleep(300);
   const playVisible = await page.$eval('#play-screen', n => !n.classList.contains('hidden'));
   const focusedOpt = await page.evaluate(() => document.activeElement.className);
@@ -211,15 +220,19 @@ try {
   rec('Escape returns to start', await page.$eval('#start-screen', n => !n.classList.contains('hidden')), '');
   // Space on focused chip
   await page.focus('#level-list .chip:nth-child(2)'); await page.keyboard.press('Space');
-  const sp = await page.$eval('#level-list .chip:nth-child(2)', n => n.getAttribute('aria-pressed'));
-  rec('Space toggles a chip', sp === 'true', sp);
+  // All level chips start pressed, so the first Space correctly un-presses chip 2; a second Space presses it again.
+  const chip2 = () => page.$eval('#level-list .chip:nth-child(2)', n => n.getAttribute('aria-pressed'));
+  const spOff = await chip2();
+  await page.keyboard.press('Space');
+  const spOn = await chip2();
+  rec('Space toggles a chip (true -> false -> true)', spOff === 'false' && spOn === 'true', `after 1st Space=${spOff}; after 2nd=${spOn}`);
 
   // ---------- mute
   await page.evaluate(() => localStorage.clear());
   await page.reload({ waitUntil: 'load' }); await sleep(1500);
-  const sndBefore = await page.$eval('#btn-sound', n => n.textContent);
-  await page.click('#btn-sound');
-  const sndAfter = await page.$eval('#btn-sound', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
+  const sndBefore = await page.$eval('#sd-sound-btn', n => n.textContent);
+  await page.click('#sd-sound-btn');
+  const sndAfter = await page.$eval('#sd-sound-btn', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
   const stored = await page.evaluate(() => [localStorage.getItem('dc:sound-enabled'), localStorage.getItem('pronomenmysteriet:sound')]);
   // wrap audio: count oscillators created when playing while muted
   await page.evaluate(() => { window.__osc = 0; const AC = window.AudioContext || window.webkitAudioContext; if (AC) { const o = AC.prototype.createOscillator; AC.prototype.createOscillator = function () { window.__osc++; return o.apply(this, arguments); }; const b = AC.prototype.createBufferSource; AC.prototype.createBufferSource = function () { window.__osc++; return b.apply(this, arguments); }; } });
@@ -228,7 +241,7 @@ try {
   await (await page.$$('#item-host .opt'))[o2.findIndex(v => v === it2.correct)].click(); await sleep(300);
   const oscMuted = await page.evaluate(() => window.__osc);
   rec('mute: label changes, persisted, no audio nodes created', sndBefore === 'LYD' && /✗/.test(sndAfter) && oscMuted === 0, `${sndBefore} -> ${sndAfter}; stored=${stored}; osc=${oscMuted}`);
-  await page.click('#btn-back'); await page.click('#btn-sound'); await page.click('#btn-play'); await sleep(300);
+  await page.click('#btn-back'); await page.click('#sd-sound-btn'); await page.click('#btn-play'); await sleep(300);
   const it3 = await lookup(page); const o3 = await page.$$eval('#item-host .opt', ns => ns.map(n => n.getAttribute('data-value')));
   await sleep(1000);
   await (await page.$$('#item-host .opt'))[o3.findIndex(v => v === it3.correct)].click(); await sleep(300);
@@ -280,6 +293,9 @@ try {
   }
 } catch (e) { rec('SPEC CRASH', false, e.stack); }
 await browser.close();
-fs.writeFileSync(process.env.OUT || 'pm-items.json', JSON.stringify(shownItems, null, 1));
+// Dump of every shown item: OUT overrides; default is the OS temp dir so nothing is written into the repo.
+const outFile = process.env.OUT || path.join(os.tmpdir(), 'pm-items.json');
+fs.writeFileSync(outFile, JSON.stringify(shownItems, null, 1));
+console.log('items dump written to ' + outFile);
 console.log(`\n${results.filter(r => r.ok).length}/${results.length} passed`);
 process.exit(results.some(r => !r.ok) ? 1 : 0);

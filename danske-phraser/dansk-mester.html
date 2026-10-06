@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dansk Mester — lær hverdagsvendinger og verber med præposition | Sjovt Dansk</title>
-<meta name="description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser for begyndere på A1–A2-niveau." />
+<meta name="description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser på A1–B2-niveau." />
 <meta property="og:title" content="Dansk Mester — lær hverdagsvendinger og verber med præposition | Sjovt Dansk" />
-<meta property="og:description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser for begyndere på A1–A2-niveau." />
+<meta property="og:description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser på A1–B2-niveau." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://sjovtdansk.dk/danske-phraser/dansk-mester.html" />
 <meta property="og:locale" content="da_DK" />
@@ -24,7 +24,7 @@
     "name": "Sjovt Dansk"
   },
   "teaches": ["Danske fraser", "Hverdagsdansk", "Vendinger"],
-  "educationalLevel": "A1 A2",
+  "educationalLevel": "A1 A2 B1 B2",
   "inLanguage": "da",
   "isAccessibleForFree": true
 }
@@ -205,11 +205,6 @@ body{
 .opt.wrong{border-color:var(--red);background:rgba(227,85,106,.16);animation:shake .35s}
 .opt:disabled{cursor:default}
 
-/* speaker / pronounce button */
-.speaker{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:inline-grid;place-items:center;font-size:1.1rem;box-shadow:var(--shadow);flex:none;cursor:pointer;color:var(--text);margin-top:12px}
-.speaker.sm{width:32px;height:32px;font-size:.9rem;margin-top:0}
-.speaker:hover{border-color:var(--accent)}
-.speaker:active{transform:scale(.92)}
 
 /* feedback banner */
 .feedback{margin-top:16px;text-align:center;min-height:30px;font-weight:900;font-size:1.15rem}
@@ -324,6 +319,8 @@ body{
 <link rel="stylesheet" href="../shared/sjovt.css">
 <script src="../shared/sjovt.js"></script>
 <link rel="stylesheet" href="../shared/themes/dansk-mester.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 </head>
 <body>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -343,7 +340,7 @@ const DATA = {
         {da:"gå ud", en:"go out", cefr:"A1", note:"Bruges om at forlade hjemmet, fx for at være sammen med andre."},
         {da:"komme ind", en:"come in", cefr:"A1", note:"Bruges både om at træde ind og om at bede nogen komme indenfor."},
         {da:"komme tilbage", en:"come back", cefr:"A1", note:"At vende tilbage til et sted, man har været væk fra."},
-        {da:"tage af sted", en:"leave", cefr:"A2", note:"At drage afsted – ofte når man begynder på en tur."},
+        {da:"tage af sted", en:"leave", cefr:"A2", note:"At drage af sted – ofte når man begynder på en tur."},
         {da:"holde op", en:"stop", cefr:"A2", note:"Bruges til at få nogen til at stoppe med noget: »Hold op!«"},
         {da:"blive ved", en:"continue", cefr:"A2", note:"At fortsætte med noget og ikke give op."},
         {da:"gå i gang", en:"get started", cefr:"A2", note:"Det almindelige udtryk for at begynde på en opgave eller et projekt."},
@@ -360,7 +357,7 @@ const DATA = {
       ]},
       {name:"Arbejde og erhverv", icon:"💼", items:[
         {da:"arbejde med", en:"work with", cefr:"A1", note:"Bruges om at arbejde sammen med en person eller med et værktøj eller projekt."},
-        {da:"begynde på", en:"start", cefr:"A2", note:"Bruges om at gå i gang med en bestemt opgave – husk præpositionen »på«, ikke »med«."},
+        {da:"begynde på", en:"start", cefr:"A2", note:"Bruges om at gå i gang med en bestemt opgave: »begynde på« en opgave, men »begynde med at« + infinitiv."},
         {da:"fortsætte med", en:"continue with", cefr:"A2", note:"Bruges om at føre noget videre, som allerede er i gang."},
         {da:"deltage i", en:"participate in", cefr:"B1", note:"Lidt formelt verbum for at tage del i en begivenhed, et møde eller en aktivitet."},
         {da:"lykkes med", en:"succeed in", cefr:"B1", note:"Bruges upersonligt: »Det lykkedes mig at …« eller »Det lykkedes med projektet.«"},
@@ -383,10 +380,10 @@ const DATA = {
         {da:"være med", en:"participate", cefr:"A1", note:"Et enkelt og meget almindeligt udtryk for at deltage i noget."},
         {da:"tage med", en:"bring along", cefr:"A2", note:"Bruges, når man tager nogen eller noget med sig."},
         {da:"gå med", en:"join", cefr:"A2", note:"Bruges om at følge med nogen, deltage i en aktivitet eller sige ja til en plan."},
-        {da:"være enig i", en:"agree with", cefr:"B1", note:"Bruges, når man er enig i en holdning eller et udsagn – husk »i«, ikke »med«."},
-        {da:"være uenig i", en:"disagree with", cefr:"B1", note:"Det modsatte af »være enig i« – samme præposition."},
-        {da:"passe på", en:"take care of", cefr:"A2", note:"Bruges både som advarsel (»Pas på!«) og om at tage sig af nogen eller noget."},
-        {da:"tage sig af", en:"take care of", cefr:"B1", note:"En lidt mere formel måde at sige, at man tager ansvar for nogen eller noget."},
+        {da:"være enig i", en:"agree with", cefr:"B1", note:"Man er »enig i« en sag, en holdning eller et udsagn, men »enig med« en person."},
+        {da:"være uenig i", en:"disagree with", cefr:"B1", note:"Det modsatte af »være enig i« – man er »uenig i« en sag og »uenig med« en person."},
+        {da:"passe på", en:"look after / watch out", cefr:"A2", note:"Bruges både som advarsel (»Pas på!«) og om at tage sig af nogen eller noget."},
+        {da:"tage sig af", en:"take care of (a task)", cefr:"B1", note:"En lidt mere formel måde at sige, at man tager ansvar for nogen eller noget."},
         {da:"høre til", en:"belong to", cefr:"B2", note:"Bruges om at tilhøre en gruppe eller kategori – mere abstrakt end at eje noget."},
       ]},
       {name:"Blandet repetition for øvede", icon:"🎓", items:[
@@ -394,8 +391,8 @@ const DATA = {
         {da:"lede efter", en:"look for", cefr:"A2", note:"Bruges om aktivt at lede efter noget, man har mistet eller har brug for."},
         {da:"søge efter", en:"search for", cefr:"B1", note:"Mere formelt end »lede efter« – bruges ofte om job eller oplysninger."},
         {da:"kigge på", en:"look at", cefr:"A1", note:"Den afslappede hverdagsudgave af »se på«."},
-        {da:"se på", en:"look at / watch", cefr:"A1", note:"Ligner »kigge på«, men bruges også om at følge med i fx tv eller en situation."},
-        {da:"finde ud af", en:"figure out", cefr:"B1", note:"Et meget almindeligt udtryk, hvor tre småord hører sammen: at opdage eller regne noget ud."},
+        {da:"se på", en:"watch", cefr:"A1", note:"Ligner »kigge på«, men bruges også om at følge med i fx tv eller en situation."},
+        {da:"finde ud af", en:"figure out", cefr:"B1", note:"Et meget almindeligt udtryk, hvor verbet »finde« og småordene »ud« og »af« hører sammen: at opdage eller regne noget ud."},
         {da:"gå efter", en:"go for", cefr:"B1", note:"Bruges om at jagte et mål eller vælge en bestemt mulighed, fx »gå efter drømmen«."},
         {da:"komme over", en:"get over", cefr:"B2", note:"Bruges overført om at komme sig over en modgang, en sygdom eller en svær følelse."},
         {da:"slippe af med", en:"get rid of", cefr:"B2", note:"Et idiomatisk udtryk med tre dele: at blive fri for noget eller skille sig af med det."},
@@ -419,7 +416,7 @@ const DATA = {
         {da:"Helt sikkert", en:"Definitely", cefr:"A1", note:"Et stærkt, eftertrykkeligt ja, der bruges både formelt og afslappet."},
       ]},
       {name:"Enighed og uenighed", icon:"⚖️", items:[
-        {da:"Det er jeg enig i", en:"I agree", cefr:"A2", note:"Læg mærke til »i«, ikke »med« – det er den faste konstruktion, når man er enig."},
+        {da:"Det er jeg enig i", en:"I agree", cefr:"A2", note:"Man er »enig i« en sag (»Det er jeg enig i«), men »enig med« en person (»Jeg er enig med dig«)."},
         {da:"Det er jeg ikke enig i", en:"I disagree", cefr:"A2", note:"Den direkte benægtelse af »enig i« – høflig og neutral, også på arbejdet."},
         {da:"Du har ret", en:"You're right", cefr:"A1", note:"Et af de mest grundlæggende udtryk for enighed – man »har ret«."},
         {da:"Det tror jeg ikke", en:"I don't believe that", cefr:"A2", note:"En blød, personlig uenighed – »tror« udtrykker en formodning og lyder høfligt."},
@@ -461,7 +458,7 @@ const DATA = {
         {da:"Nå okay", en:"Alright then", cefr:"A1", note:"En afslappet accept – blødere end blot »okay«, og viser, at man tager det til sig."},
         {da:"Sådan er det", en:"That's how it is", cefr:"A2", note:"En afdæmpet dansk måde at acceptere noget, man ikke kan ændre."},
         {da:"Det må tiden vise", en:"Time will tell", cefr:"B1", note:"Bruges, når udfaldet er uvist, og kun fremtiden kan give svaret."},
-        {da:"Det er ikke så ringe endda", en:"Not bad at all", cefr:"B1", note:"»Ringe« betyder »dårlig«, så dobbelt benægtelse betyder overraskende godt – typisk dansk underdrivelse."},
+        {da:"Det er ikke så ringe endda", en:"Not bad at all", cefr:"B1", note:"»Ringe« betyder »dårlig«, så udtrykket er en underdrivelse for »ret godt« – typisk dansk."},
         {da:"Det kunne være værre", en:"Could be worse", cefr:"A2", note:"Typisk dansk afdæmpet optimisme – man tager en ufuldkommen situation uden at klage."},
         {da:"Ingen ko på isen", en:"No need to worry", cefr:"B2", note:"Bruges, når der ikke er grund til bekymring. Hele udtrykket er »Der er ingen ko på isen«."},
         {da:"Det går fremad", en:"Things are improving", cefr:"A2", note:"Et optimistisk udtryk for, at tingene skrider frem."},
@@ -481,12 +478,12 @@ const DATA = {
       {name:"Sociale situationer", icon:"🎉", items:[
         {da:"Hvordan går det", en:"How are you", cefr:"A1", note:"Den almindelige, afslappede hilsen – »hvordan har du det?« i hverdagen."},
         {da:"Hvad så", en:"What's up", cefr:"A1", note:"En meget uformel hilsen mellem venner – »hvad nyt?«"},
-        {da:"Det var hyggeligt", en:"That was nice", cefr:"A2", note:"»Hyggelig« i datid – siges efter en social sammenkomst for at vise, at man nød den."},
+        {da:"Det var hyggeligt", en:"That was nice", cefr:"A2", note:"»Var« + »hyggeligt« (intetkøn af »hyggelig«) – siges efter en social sammenkomst for at vise, at man nød den."},
         {da:"Vi ses", en:"See you", cefr:"A1", note:"Den almindelige, afslappede afsked – »vi ses senere«."},
         {da:"Pas på dig selv", en:"Take care", cefr:"A2", note:"En varm afsked til mennesker, man holder af."},
         {da:"Hav en god dag", en:"Have a nice day", cefr:"A1", note:"En høflig og venlig afsked – »hav« er bydemåde af »have«."},
         {da:"God arbejdslyst", en:"Enjoy your work", cefr:"B1", note:"En typisk dansk afsked til en, der skal i gang med at arbejde."},
-        {da:"Velbekomme", en:"You're welcome / enjoy your meal", cefr:"A2", note:"Bruges både som svar på tak og som ønske om god appetit før et måltid."},
+        {da:"Velbekomme", en:"You're welcome / enjoy your meal", cefr:"A2", note:"Siges efter maden som svar på »tak for mad« – ikke som almindeligt »selv tak«."},
         {da:"Det var så lidt", en:"My pleasure", cefr:"A2", note:"Det beskedne danske svar på tak, der gør indsatsen mindre, end den var."},
         {da:"Tak for sidst", en:"Nice seeing you last time", cefr:"B1", note:"En venlig dansk skik: man takker for sidste gang, man mødtes."},
       ]},
@@ -509,14 +506,14 @@ const DATA = {
         {da:"Hvad er status", en:"What's the status", cefr:"A2", note:"Et direkte og effektivt spørgsmål på danske arbejdspladser om, hvor langt man er."},
         {da:"Det er en prioritet", en:"It's a priority", cefr:"A2", note:"Bruges, når noget skal tages hånd om hurtigt."},
         {da:"Vi er næsten i mål", en:"We're almost there", cefr:"B1", note:"En motiverende vending, når man snart er færdig."},
-        {da:"Vi mangler lige det sidste", en:"We're just missing the last bit", cefr:"B1", note:"»Mangler« betyder »savner« – der er kun ét trin tilbage."},
+        {da:"Vi mangler lige det sidste", en:"We're just missing the last bit", cefr:"B1", note:"»Mangler« betyder her, at der stadig er noget tilbage."},
         {da:"Det ser lovende ud", en:"It looks promising", cefr:"B1", note:"»Lovende« kommer af »love« – bruges om tidlig optimisme omkring et projekt."},
         {da:"Det er et godt spørgsmål", en:"That's a good question", cefr:"A2", note:"Både en høflig anerkendelse og en måde at få tid til at tænke sig om."},
         {da:"Lad os holde det simpelt", en:"Let's keep it simple", cefr:"A2", note:"Afspejler, at danske arbejdspladser foretrækker praktiske løsninger uden unødig pynt."},
       ]},
       {name:"Udtryk, du hører hele tiden", icon:"🔁", items:[
         {da:"Det skal nok gå", en:"It'll work out fine", cefr:"A2", note:"En beroligende vending: »det skal nok ordne sig«."},
-        {da:"Det tror jeg", en:"I think so", cefr:"A1", note:"En enkel bekræftelse – »tror« udtrykker personlig overbevisning, ikke sikker viden."},
+        {da:"Det tror jeg", en:"I believe so", cefr:"A1", note:"En enkel bekræftelse – »tror« udtrykker personlig overbevisning, ikke sikker viden."},
         {da:"Det ved jeg ikke", en:"I don't know", cefr:"A1", note:"Et af de vigtigste udtryk – »ved« kommer af »vide«, ikke af »tænke«."},
         {da:"Det har du ret i", en:"You're right about that", cefr:"A2", note:"Lidt mere eftertrykkeligt end »du har ret« – »i« peger tilbage på det, der blev sagt."},
         {da:"Det kan jeg godt forstå", en:"I can understand that", cefr:"A2", note:"Et medfølende svar, der viser forståelse – »godt« afdæmper og understreger på én gang."},
@@ -530,6 +527,7 @@ const DATA = {
   }
 };
 
+const STREAK_ICO='<span class="ico" data-sd-sprite="molle" data-scale="2" aria-hidden="true"></span>';
 const PRAISE = ["Godt klaret!","Flot arbejde!","Fremragende!","Du lærer hurtigt!","Perfekt!","Sådan!"];
 const RETRY  = ["Prøv igen!","Ikke helt — øv videre!","Næsten!"];
 
@@ -669,7 +667,7 @@ const ACHS=[
 function checkAchievements(){
   const newly=[];
   ACHS.forEach(a=>{ if(!P.badges.includes(a.id) && a.test()){P.badges.push(a.id);newly.push(a);} });
-  if(newly.length){save(); newly.forEach((a,i)=>setTimeout(()=>toast("🎉 Nyt emblem: "+a.name),i*1200));}
+  if(newly.length){save(); newly.forEach((a,i)=>setTimeout(()=>toast("Nyt emblem: "+a.name),i*1200));}
 }
 
 /* =========================================================
@@ -731,10 +729,9 @@ function speak(text){
 /* small speaker button helper */
 function speakerBtn(text,cls){
   const b=document.createElement("button");
-  b.className="speaker "+(cls||"");
+  b.className="dc-tts-button "+(cls||"");
   b.type="button";
-  b.textContent="🔊";
-  b.setAttribute("aria-label","Udtal");
+  b.setAttribute("aria-label","Lyt");
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -753,7 +750,7 @@ function filterItems(items){
 
 function topbar(){
   return `<div class="topbar">
-    <div class="brand"><span data-sd-sprite="flag" data-scale="3" aria-hidden="true"></span> Dansk Mester</div>
+    <div class="brand"><span data-sd-sprite="snak" data-scale="3" aria-hidden="true"></span> Dansk Mester</div>
     <div class="spacer"></div>
     <div class="stat-chip xp" role="img" aria-label="XP: ${P.xp}"><span class="ico" data-sd-sprite="stjerne" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.xp}</span></div>
     <div class="stat-chip streak" role="img" aria-label="Dage i træk: ${P.currentStreak}"><span class="ico" data-sd-sprite="molle" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.currentStreak}</span></div>
@@ -761,7 +758,7 @@ function topbar(){
 }
 function bottomnav(active){
   const b=(n,ico,lbl)=>`<button class="navbtn ${active===n?'active':''}" onclick="go('${n}')"><span class="nico" data-sd-sprite="${ico}" data-scale="2" aria-hidden="true"></span>${lbl}</button>`;
-  return `<div class="bottomnav">${b('home','snak','Hjem')}${b('stats','pokal','Statistik')}${b('badges','stjerne','Emblemer')}</div>`;
+  return `<div class="bottomnav">${b('home','polle','Hjem')}${b('stats','pokal','Statistik')}${b('badges','stjerne','Emblemer')}</div>`;
 }
 
 function render(){
@@ -785,7 +782,7 @@ function screenHome(){
     const d=DATA[key], m=pathMastery(key), learned=pathLearned(key), tot=pathTotal(key);
     return `<div class="path-card ${key}" onclick="go('path',{path:'${key}'})">
       <div class="glow"></div>
-      <div class="pico" data-sd-sprite="${key==='verbs'?'cykel':'snegl'}" data-scale="5" aria-hidden="true"></div>
+      <div class="pico" data-sd-sprite="${key==='verbs'?'kort':'snak'}" data-scale="5" aria-hidden="true"></div>
       <h3>${d.label}</h3>
       <p>${d.blurb} • ${tot} udtryk</p>
       <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
@@ -798,19 +795,19 @@ function screenHome(){
   if(P.last.path!=null){
     const d=DATA[P.last.path], c=d.categories[P.last.cat];
     cont=`<div class="card" style="margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-      <div data-sd-sprite="flag" data-scale="3" aria-hidden="true"></div>
+      <div data-sd-sprite="snak" data-scale="3" aria-hidden="true"></div>
       <div style="flex:1;min-width:140px">
         <div style="font-weight:900">Fortsæt, hvor du slap</div>
         <div class="muted" style="font-size:.9rem">${d.label} — ${c?c.name:''}</div>
       </div>
-      <button class="btn small" onclick="go('modes',{path:'${P.last.path}',ci:${P.last.cat}})">Fortsæt ▸</button>
+      <button class="btn small" onclick="go('modes',{path:'${P.last.path}',ci:${P.last.cat}})">Fortsæt →</button>
     </div>`;
   }
   return `<div class="dm-welcome"><span data-sd-sprite="snak" data-scale="6" class="sd-bob" aria-hidden="true"></span><div class="h1">Hej! Er du klar til at lære dansk?</div></div>
     <p class="sub">Lær verber med præposition og hverdagsvendinger, som danskerne bruger dem. Vælg et forløb for at komme i gang.</p>
     ${cont}
     <div class="path-grid">${pc('verbs')}${pc('phrases')}</div>
-    <div class="section-title">🔥 Hurtig øvelse</div>
+    <div class="section-title">Hurtig øvelse</div>
     <div class="btn-row">
       <button class="btn secondary small" onclick="quickMixed()">🎲 Blandet repetition (alt)</button>
       <button class="btn secondary small" onclick="quickWeak()">🩹 Svage ord</button>
@@ -833,7 +830,7 @@ function screenPath(path){
   const d=DATA[path];
   let cats=d.categories.map((c,ci)=>{
     const unlocked=catUnlocked(path,ci), m=catProgress(path,ci), done=m>=80;
-    return `<div class="cat ${unlocked?'':'locked'}" onclick="${unlocked?`go('modes',{path:'${path}',ci:${ci}})`:`toast('🔒 Få 80 % i den forrige kategori for at låse op')`}">
+    return `<div class="cat ${unlocked?'':'locked'}" onclick="${unlocked?`go('modes',{path:'${path}',ci:${ci}})`:`toast('Få 80 % i den forrige kategori for at låse op')`}">
       <div class="num">${unlocked?(ci+1):'🔒'}</div>
       <div class="cbody">
         <div class="cname">${c.icon} ${c.name} ${done?'<span class="badge-done">KLARET</span>':''}</div>
@@ -843,16 +840,16 @@ function screenPath(path){
     </div>`;
   }).join("");
   const cefrOpts=["all","A1","A2","B1","B2","C1"].map(v=>`<option value="${v}" ${cefrFilter===v?"selected":""}>${v==="all"?"Alle niveauer":v}</option>`).join("");
-  return `<div class="back" onclick="go('home')">‹ Tilbage</div>
+  return `<div class="back" onclick="go('home')">← Tilbage</div>
     <div class="h1">${d.icon} ${d.label}</div>
     <p class="sub">Samlet beherskelse: ${pathMastery(path)} % – nye kategorier låses op ved 80 %.</p>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-      <label style="font-weight:800;font-size:.9rem;color:var(--muted)">🎓 CEFR-niveau:</label>
-      <select onchange="setCefrFilter(this.value)" style="background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-family:inherit;font-weight:800;font-size:.9rem;cursor:pointer">${cefrOpts}</select>
+      <label style="font-weight:800;font-size:.9rem;color:var(--muted)">CEFR-niveau:</label>
+      <select class="sd-select" aria-label="CEFR-niveau" onchange="setCefrFilter(this.value)">${cefrOpts}</select>
       ${cefrFilter!=="all"?`<span style="font-size:.82rem;color:var(--muted);font-weight:600">Viser kun niveau ${cefrFilter}</span>`:""}
     </div>
     <div class="btn-row" style="margin-bottom:16px">
-      <button class="btn small" onclick="go('modes',{path:'${path}',ci:0})">▶ Start med kategori 1</button>
+      <button class="btn small" onclick="go('modes',{path:'${path}',ci:0})">Start med kategori 1</button>
       <button class="btn secondary small" onclick="go('quiz',{cfg:{mode:'mc',pool:shuffle(filteredItems('${path}')).slice(0,15),title:'${d.label} — blandet',isMixed:true,ret:{name:'path',path:'${path}'}}})">🎲 Blandet repetition</button>
     </div>
     ${cats}`;
@@ -861,7 +858,7 @@ function screenPath(path){
 /* =========================================================
    MODES for a category
 ========================================================= */
-const MODE_SPR={mc:'stjerne',flash:'snegl',match:'hjerte',timed:'cykel',mixed:'molle',sr:'pokal',weak:'hat'};
+const MODE_SPR={mc:'bog',flash:'kort',match:'net',timed:'tryllestav',mixed:'terning',sr:'kiste',weak:'lup'};
 function screenModes(path,ci){
   P.last={path,cat:ci}; save();
   const d=DATA[path], c=d.categories[ci];
@@ -869,15 +866,15 @@ function screenModes(path,ci){
     {id:"mc",   ico:"✅", name:"Flervalg", desc:"Vælg den rigtige betydning"},
     {id:"flash",ico:"🃏", name:"Vendekort", desc:"Vend kortet og tjek dig selv"},
     {id:"match",ico:"🧲", name:"Find par", desc:"Forbind dansk ↔ engelsk"},
-    {id:"timed",ico:"⏱️", name:"Tidsudfordring", desc:"Slå uret"},
-    {id:"mixed",ico:"🎲", name:"Blandet repetition", desc:"Hele forløbet blandet"},
-    {id:"sr",   ico:"🧠", name:"Intervalrepetition", desc:"Gentag det, der er på tide"},
+    {id:"timed",ico:"⏱️", name:"Tids&shy;udfordring", desc:"Slå uret"},
+    {id:"mixed",ico:"🎲", name:"Blandet re&shy;petition", desc:"Hele forløbet blandet"},
+    {id:"sr",   ico:"🧠", name:"Interval&shy;repetition", desc:"Gentag det, der er på tide"},
     {id:"weak", ico:"🩹", name:"Svage ord", desc:"Ret op på de svage punkter"},
   ];
   const cells=modes.map(m=>`<div class="mode" onclick="launchMode('${path}',${ci},'${m.id}')">
       <div class="mico" data-sd-sprite="${MODE_SPR[m.id]||'stjerne'}" data-scale="4" aria-hidden="true"></div><div class="mname">${m.name}</div><div class="mdesc">${m.desc}</div>
     </div>`).join("");
-  return `<div class="back" onclick="go('path',{path:'${path}'})">‹ ${d.label}</div>
+  return `<div class="back" onclick="go('path',{path:'${path}'})">← Tilbage</div>
     <div class="h1">${c.icon} ${c.name}</div>
     <p class="sub">${c.items.length} udtryk • fremgang ${catProgress(path,ci)} % • vælg en spiltype</p>
     <div class="mode-grid">${cells}</div>`;
@@ -918,6 +915,7 @@ function launchMode(path,ci,mode){
 ========================================================= */
 let G=null;
 function startGame(cfg){
+  clearGameTimers();
   G={cfg,idx:0,correct:0,total:0,results:[]};
   if(cfg.mode==='match'){renderMatch();return;}
   if(cfg.mode==='flash'){renderFlash();return;}
@@ -925,16 +923,18 @@ function startGame(cfg){
 }
 function gameHead(extra){
   const prog=Math.round(G.idx/ (G.cfg.pool.length||1) *100);
-  return `<div class="back" onclick="quitGame()">‹ Afslut</div>
+  return `<div class="back" onclick="quitGame()">✕ Afslut</div>
     <div class="quiz-head">
       ${bar(prog)}
       ${extra||''}
     </div>`;
 }
-function quitGame(){ if(G&&G.timer)clearInterval(G.timer); go(G.cfg.ret.name,G.cfg.ret); }
+function clearGameTimers(){ if(!G)return; if(G.timer)clearInterval(G.timer); if(G._adv){clearTimeout(G._adv);G._adv=null;} if(G._miss){clearTimeout(G._miss);G._miss=null;} }
+function quitGame(){ clearGameTimers(); go(G.cfg.ret.name,G.cfg.ret); }
 
 /* ---- Multiple Choice / Timed ---- */
 function nextQuestion(){
+  if(!G||!$("#gamewrap"))return;
   const cfg=G.cfg;
   if(G.idx>=cfg.pool.length){return finishGame();}
   const q=cfg.pool[G.idx];
@@ -942,10 +942,10 @@ function nextQuestion(){
   const promptText = ask==='da2en'? q.it.da : q.it.en;
   const answer     = ask==='da2en'? q.it.en : q.it.da;
   // distractors from same path
-  const others=allItems(q.path).filter(x=>x.it.da!==q.it.da);
+  const others=allItems(q.path).filter(x=>x.it.da!==q.it.da && x.it.en!==q.it.en);
   const picks=shuffle(others).slice(0,3).map(x=> ask==='da2en'? x.it.en : x.it.da);
   const opts=shuffle([answer,...picks]);
-  G._answer=answer; G._q=q; G._answered=false;
+  G._answer=answer; G._q=q; G._answered=false; G._ask=ask;
 
   let timerHtml = cfg.mode==='timed'? `<div class="timer-pill" id="tpill">⏱️ ${G._time||10}</div>`:'';
   const wrap=$("#gamewrap");
@@ -985,7 +985,7 @@ function updateTimer(){const p=$("#tpill"); if(p){p.textContent="⏱️ "+G._tim
 function timeoutMC(){
   G._answered=true;
   document.querySelectorAll("#opts .opt").forEach(b=>{b.disabled=true; if(b.textContent===G._answer)b.classList.add("correct");});
-  finishAnswer(false,"⏰ Tiden er gået!");
+  finishAnswer(false,"Tiden er gået!");
 }
 function answerMC(btn,chosen){
   if(G._answered) return;
@@ -1014,10 +1014,24 @@ function finishAnswer(correct,msg){
     fb.textContent=PRAISE[Math.floor(Math.random()*PRAISE.length)];
   } else {
     const noteText=G._q&&G._q.it&&G._q.it.note ? G._q.it.note : "";
-    fb.innerHTML=`<div>${RETRY[Math.floor(Math.random()*RETRY.length)]} → <strong>${esc(G._answer)}</strong></div>${noteText?`<div style="font-size:.82rem;font-weight:600;color:var(--muted);margin-top:6px;line-height:1.4">💡 ${esc(noteText)}</div>`:""}`;
+    fb.innerHTML=`<div>${RETRY[Math.floor(Math.random()*RETRY.length)]} → <strong>${esc(G._answer)}</strong></div>${noteText?`<div style="font-size:.82rem;font-weight:600;color:var(--muted);margin-top:6px;line-height:1.4">${esc(noteText)}</div>`:""}`;
   }
+  if(G._ask==='en2da') fb.appendChild(speakerBtn(G._answer));
   G.idx++;
-  setTimeout(()=>nextQuestion(), correct?750:1500);
+  if(!correct && cfg.mode!=='timed'){
+    // US-057: wrong answer waits for the learner (note stays until "Fortsæt →")
+    const cb=document.createElement("button");
+    cb.type="button"; cb.className="btn"; cb.id="btn-continue-q";
+    cb.style.cssText="display:block;margin:10px auto 0;scroll-margin-bottom:16px";
+    cb.textContent="Fortsæt →";
+    cb.addEventListener("click",()=>{ if(G&&$("#gamewrap")) nextQuestion(); });
+    fb.appendChild(cb);
+    try{cb.focus({preventScroll:true});}catch(e){}
+    const rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try{cb.scrollIntoView({block:"nearest",behavior:rm?"auto":"smooth"});}catch(e){}
+    return;
+  }
+  G._adv=setTimeout(()=>{G._adv=null;nextQuestion();}, correct?750:1500);
 }
 
 /* ---- Flash Cards ---- */
@@ -1034,12 +1048,12 @@ function renderFlash(){
         <div class="face back"><div class="lbl">Engelsk</div><div class="ftext">${esc(q.it.en)}</div><div class="hint">vidste du det?</div></div>
      </div></div>
      <div class="btn-row" style="justify-content:center" id="flashbtns" style="opacity:.4">
-       <button class="btn secondary" onclick="gradeFlash(false)">😕 Jeg øver stadig</button>
-       <button class="btn" onclick="gradeFlash(true)">😎 Det vidste jeg</button>
+       <button class="btn secondary" onclick="gradeFlash(false)">Jeg øver stadig</button>
+       <button class="btn" onclick="gradeFlash(true)">Det vidste jeg</button>
      </div>`;
   const frontFace=$("#flash .face.front");
   if(frontFace){
-    const sb=speakerBtn(q.it.da,"sm");
+    const sb=speakerBtn(q.it.da);
     sb.style.position="absolute";
     sb.style.top="14px";
     sb.style.right="14px";
@@ -1065,7 +1079,7 @@ function renderMatch(){
   const right=shuffle(round.map(x=>({txt:x.it.en,key:x.it.da,x})));
   const cell=(item,side)=>`<button class="match-cell" data-key="${esc(item.key)}" data-side="${side}" onclick="pickMatch(this)">${esc(item.txt)}</button>`;
   const wrap=$("#gamewrap");
-  wrap.innerHTML=`<div class="back" onclick="quitGame()">‹ Afslut</div>
+  wrap.innerHTML=`<div class="back" onclick="quitGame()">✕ Afslut</div>
     <div class="h1" style="font-size:1.3rem">🧲 Find par</div>
     <p class="sub">${cfg.title} – tryk på et dansk udtryk og derefter på den engelske betydning.</p>
     <div class="match-grid">
@@ -1080,7 +1094,7 @@ function renderMatch(){
     holder.style.position="relative";
     btn.parentNode.insertBefore(holder,btn);
     holder.appendChild(btn);
-    const sb=speakerBtn(left[i].txt,"sm");
+    const sb=speakerBtn(left[i].txt);
     sb.style.position="absolute";
     sb.style.top="4px";
     sb.style.right="4px";
@@ -1102,9 +1116,11 @@ function pickMatch(btn){
     const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2);
     recordAnswer(item.path,item.it,true,10);
     G._matched++; G._sel=null;
+    { const fbc=$("#fb"); if(fbc){ fbc.className="feedback"; fbc.textContent=""; } }
     if(G._matched>=G._matchTotal){
-      const fb=$("#fb");fb.className="feedback good";fb.textContent="Fremragende! Alle par er fundet! 🎉";
-      setTimeout(()=>{ // advance to next round or finish
+      const fb=$("#fb");fb.className="feedback good";fb.textContent="Fremragende! Alle par er fundet!";
+      G._adv=setTimeout(()=>{ // advance to next round or finish
+        G._adv=null; if(!G||!$("#gamewrap"))return;
         G.idx+=6;
         if(G.idx<G.cfg.pool.length) renderMatch();
         else { finishMatch(); }
@@ -1112,9 +1128,17 @@ function pickMatch(btn){
     }
   }else{
     a.classList.add("miss");b.classList.add("miss");
-    const itemB=G.cfg.pool.find(x=>x.it.da===b.dataset.key);
     recordAnswer(item.path,item.it,false,0);
-    setTimeout(()=>{a.classList.remove("miss","sel");b.classList.remove("miss");},400);
+    const daCell=a.dataset.side==="da"?a:b;
+    const daItem=G.cfg.pool.find(x=>x.it.da===daCell.dataset.key);
+    const fbm=$("#fb");
+    if(fbm&&daItem){
+      fbm.className="feedback bad";
+      fbm.innerHTML=`<div>Rigtigt par: <strong>${esc(daItem.it.da)}</strong> = <strong>${esc(daItem.it.en)}</strong></div>`;
+      fbm.appendChild(speakerBtn(daItem.it.da));
+    }
+    if(G._miss)clearTimeout(G._miss);
+    G._miss=setTimeout(()=>{G._miss=null;a.classList.remove("miss","sel");b.classList.remove("miss");},400);
     G._sel=null;
   }
 }
@@ -1128,7 +1152,7 @@ function finishMatch(){
   // Build Continue button with closure over ret (avoids JSON.stringify in inline onclick)
   const matchContinueBtn=document.createElement("button");
   matchContinueBtn.className="btn";
-  matchContinueBtn.textContent="Continue ▸";
+  matchContinueBtn.textContent="Fortsæt →";
   const matchRet=G.cfg.ret;
   matchContinueBtn.addEventListener("click",()=>go(matchRet.name,matchRet));
   document.getElementById("matchContinueRow").appendChild(matchContinueBtn);
@@ -1154,7 +1178,7 @@ function finishGame(){
     if(ni<cats.length && catUnlocked(G.cfg.path,ni)){nextUnlocked=true;nextName=cats[ni].name;}
   }
   const color = pct>=80?"var(--accent)": pct>=50?"var(--gold)":"var(--red)";
-  const headline = pct>=90?"Fremragende! 🌟": pct>=80?"Flot arbejde! 🎉": pct>=50?"Godt forsøg! 👍":"Bliv ved — du lærer! 💪";
+  const headline = pct>=90?"Fremragende!": pct>=80?"Flot arbejde!": pct>=50?"Godt forsøg!":"Bliv ved — du lærer!";
   const xpEarned = G.results.reduce((s,r)=>s+(r.correct?10:2),0);
   const wrap=$("#gamewrap");
   wrap.innerHTML=`<div class="card result">
@@ -1166,9 +1190,9 @@ function finishGame(){
       <div class="kv"><span class="k">Rigtige</span><span class="v">${G.correct}/${G.total}</span></div>
       <div class="kv"><span class="k">Træfsikkerhed</span><span class="v">${pct}%</span></div>
       <div class="kv"><span class="k">Optjent XP</span><span class="v" style="color:var(--gold)">+${xpEarned}</span></div>
-      <div class="kv"><span class="k">Dage i træk</span><span class="v" style="color:#ff8f5e">🔥 ${P.currentStreak}</span></div>
+      <div class="kv"><span class="k">Dage i træk</span><span class="v" style="color:#ff8f5e">${STREAK_ICO} ${P.currentStreak}</span></div>
     </div>
-    ${nextUnlocked?`<div style="margin-top:16px;background:rgba(51,209,122,.12);border:1px solid var(--accent);border-radius:14px;padding:12px;font-weight:800">🔓 Låst op: ${esc(nextName)}</div>`:''}
+    ${nextUnlocked?`<div style="margin-top:16px;background:rgba(51,209,122,.12);border:1px solid var(--accent);border-radius:14px;padding:12px;font-weight:800">Låst op: ${esc(nextName)}</div>`:''}
     <div class="btn-row" style="justify-content:center;margin-top:18px" id="finishBtnRow"></div>
   </div>`;
   // Build result buttons with proper event listeners (avoids JSON.stringify in inline onclick)
@@ -1180,7 +1204,7 @@ function finishGame(){
   finishRow.appendChild(retryBtn);
   const contBtn=document.createElement("button");
   contBtn.className="btn secondary";
-  contBtn.textContent="Fortsæt ▸";
+  contBtn.textContent="Fortsæt →";
   const finishRet=G.cfg.ret;
   contBtn.addEventListener("click",()=>go(finishRet.name,finishRet));
   finishRow.appendChild(contBtn);
@@ -1224,7 +1248,7 @@ function screenStats(){
     <div class="stat-grid">
       <div class="stat-box"><div class="num" style="color:var(--accent)">${learned}</div><div class="lbl">Lært i alt</div></div>
       <div class="stat-box"><div class="num" style="color:var(--blue)">${acc}%</div><div class="lbl">Træfsikkerhed</div></div>
-      <div class="stat-box"><div class="num" style="color:#ff8f5e">🔥 ${P.bestStreak}</div><div class="lbl">Bedste serie</div></div>
+      <div class="stat-box"><div class="num" style="color:#ff8f5e">${STREAK_ICO} ${P.bestStreak}</div><div class="lbl">Bedste serie</div></div>
       <div class="stat-box"><div class="num" style="color:var(--gold)">${P.xp}</div><div class="lbl">XP i alt</div></div>
       <div class="stat-box"><div class="num">${catsDone}/${catsTot}</div><div class="lbl">Kategorier klaret</div></div>
       <div class="stat-box"><div class="num">${Math.round(learned/totItems*100)}%</div><div class="lbl">Samlet beherskelse</div></div>
@@ -1243,7 +1267,7 @@ function resetAll(){ if(confirm("Vil du nulstille alle fremskridt, al XP og alle
 /* =========================================================
    BADGES
 ========================================================= */
-const BADGE_SPR=['stjerne','pokal','hjerte','snegl','molle','cykel','hat','flag','snak'];
+const BADGE_SPR=['pokal','stjerne'];
 function screenBadges(){
   const cells=ACHS.map(a=>{const un=P.badges.includes(a.id);
     return `<div class="ach ${un?'un':''}"><div class="aico" data-sd-sprite="${BADGE_SPR[ACHS.indexOf(a)%BADGE_SPR.length]}" data-scale="4" aria-hidden="true"></div><div class="aname">${a.name}</div></div>`;}).join("");

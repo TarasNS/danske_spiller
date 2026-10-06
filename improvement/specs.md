@@ -1491,16 +1491,16 @@ Relative-clause item:
 
 ### 6.7 Dataset targets
 
-| Mode | Target |
-|---|---|
-| Adverb placement | 140 |
-| Main-to-subordinate transformations | 160 |
-| Direct questions | 140 |
-| Indirect questions | 140 |
-| Relative clauses | 180 |
-| der/det | 160 |
-| Complex clause chains | 100 |
-| **Total** | **1,020** |
+| Mode | Target | Current (data.js, after US-051) |
+|---|---|---|
+| Adverb placement | 140 | 40 |
+| Main-to-subordinate transformations | 160 | 10 |
+| Direct questions | 140 | 10 |
+| Indirect questions | 140 | 10 |
+| Relative clauses | 180 | 10 |
+| der/det | 160 | 9 |
+| Complex clause chains | 100 | 10 |
+| **Total** | **1,020** (target, unchanged) | **99** |
 
 Some items may be generated from templates, but every generated sentence must be checked for naturalness.
 

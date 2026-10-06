@@ -54,6 +54,13 @@
     catch (e) { return false; }
   }
 
+  // Dev-only UI (e.g. the "Skal tjekkes" badge on scenes with verify:true) is hidden in production.
+  // Enable with ?dev=1 in the page URL, or localStorage "sd-dev" = "1". Storage may be blocked, so never throw.
+  function devMode() {
+    try { if (/[?&]dev=1(&|#|$)/.test(window.location.search)) return true; } catch (e) { /* ignore */ }
+    try { return window.localStorage.getItem("sd-dev") === "1"; } catch (e) { return false; }
+  }
+
   var active = null; // the mounted instance owning keyboard shortcuts
 
   function mount(root, scene, opts) {
@@ -94,7 +101,7 @@
     var barTitle = h("span", "xp-bar-title", scene.title || "");
     var barRight = h("span", "xp-bar-right");
     if (scene.level) barRight.appendChild(h("span", "xp-badge", scene.level));
-    if (scene.verify) { var vb = h("span", "xp-badge xp-badge-verify", "Skal tjekkes"); barRight.appendChild(vb); }
+    if (scene.verify && devMode()) { var vb = h("span", "xp-badge xp-badge-verify", "Skal tjekkes"); barRight.appendChild(vb); }
     var counter = h("span", "xp-count", "");
     barRight.appendChild(counter);
     bar.appendChild(barTitle); bar.appendChild(barRight);
@@ -151,7 +158,7 @@
     function anim(el, kf, o) {
       if (!motion || !el.animate) return Promise.resolve();
       o = o || {};
-      var a = el.animate(kf, { duration: Math.max(1, (o.duration || 300) / speed), easing: o.easing || "ease-out",
+      var a = el.animate(kf, { duration: Math.max(1, (o.duration || 300) / speed), easing: o.easing || "steps(8, end)",
                                delay: (o.delay || 0) / speed, fill: o.fill || "both" });
       live.push(a);
       return a.finished.then(function () { drop(a); return a; }, function () { drop(a); return a; });

@@ -29,11 +29,11 @@
     { id: 'din', forms: { en: 'din', et: 'dit', pl: 'dine' }, owner: '2sg', level: 'A1', note: 'Possessivet bøjes efter det ejede ord, ikke efter ejeren.', verify: false },
     { id: 'hans', forms: { en: 'hans', et: 'hans', pl: 'hans' }, owner: '3sg_m_non_reflexive', level: 'A2', note: 'Hans er ubøjeligt og bruges kun når ejeren IKKE er sætningens subjekt.', verify: false },
     { id: 'hendes', forms: { en: 'hendes', et: 'hendes', pl: 'hendes' }, owner: '3sg_f_non_reflexive', level: 'A2', note: 'Hendes er ubøjeligt og bruges kun når ejeren IKKE er sætningens subjekt.', verify: false },
-    { id: 'dens', forms: { en: 'dens', et: 'dens', pl: 'dens' }, owner: '3sg_en_non_reflexive', level: 'B1', note: 'Dens bruges om en en-tings ikke-reflexive ejerskab.', verify: false },
-    { id: 'dets', forms: { en: 'dets', et: 'dets', pl: 'dets' }, owner: '3sg_et_non_reflexive', level: 'B1', note: 'Dets bruges om en et-tings ikke-reflexive ejerskab.', verify: false },
+    { id: 'dens', forms: { en: 'dens', et: 'dens', pl: 'dens' }, owner: '3sg_en_non_reflexive', level: 'B1', note: 'Dens bruges om en en-tings ikke-refleksive ejerskab.', verify: false },
+    { id: 'dets', forms: { en: 'dets', et: 'dets', pl: 'dets' }, owner: '3sg_et_non_reflexive', level: 'B1', note: 'Dets bruges om en et-tings ikke-refleksive ejerskab.', verify: false },
     { id: 'vores', forms: { en: 'vores', et: 'vores', pl: 'vores' }, owner: '1pl', level: 'A1', note: 'Vores er ubøjeligt.', verify: false },
     { id: 'jeres', forms: { en: 'jeres', et: 'jeres', pl: 'jeres' }, owner: '2pl', level: 'A2', note: 'Jeres er ubøjeligt.', verify: false },
-    { id: 'deres', forms: { en: 'deres', et: 'deres', pl: 'deres' }, owner: '3pl_non_reflexive', level: 'A2', note: 'Deres er ubøjeligt og bruges både reflexivt og ikke-reflexivt for flertalsejere, da dansk mangler et separat flertals-reflexiv.', verify: false }
+    { id: 'deres', forms: { en: 'deres', et: 'deres', pl: 'deres' }, owner: '3pl_non_reflexive', level: 'A2', note: 'Deres er ubøjeligt og bruges både refleksivt og ikke-refleksivt for flertalsejere, da dansk mangler et separat flertals-refleksiv.', verify: false }
   ];
 
   // Mode 2 + Mode 3 coverage: the reflexive possessive agrees with the
@@ -58,17 +58,17 @@
   // Mode 5 coverage (pronomenmysteriet § 5.4): nogen, nogle, noget, ingen,
   // intet, man, en, alle, begge, hver, hverken.
   var indefinite = [
-    { id: 'nogen', note: 'Bruges i spørgsmål og negation for tælleligt ental/flertal.', level: 'A2', verify: false },
-    { id: 'nogle', note: 'Bruges om ubestemt flertal i positive udsagn.', level: 'A2', verify: false },
+    { id: 'nogen', note: 'Bruges typisk i spørgsmål og negation om tællelige ting (ental/flertal), men kan også stå i positive udsagn.', level: 'A2', verify: false },
+    { id: 'nogle', note: 'Bruges typisk om ubestemt flertal i positive udsagn.', level: 'A2', verify: false },
     { id: 'noget', note: 'Bruges om utælleligt ental, både positivt og i spørgsmål/negation.', level: 'A2', verify: false },
     { id: 'ingen', note: 'Negerer tælleligt ental og flertal: ingen bøger, ingen penge.', level: 'A2', verify: false },
-    { id: 'intet', note: 'Negerer utælleligt ental og er mere formelt end "ikke noget".', level: 'B1', verify: false },
+    { id: 'intet', note: 'Intetkønsformen af ingen (intet hus); mere formelt end "ikke noget".', level: 'B1', verify: false },
     { id: 'man', note: 'Generisk subjektspronomen svarende til "one"/"you" i generelle udsagn.', level: 'A2', verify: false },
     { id: 'en-pron', note: 'Objektsform/alternativ til "man" i mere uformel stil: det gør en glad.', level: 'B1', verify: true },
     { id: 'alle', note: 'Refererer til hele en tællelig gruppe, altid flertal.', level: 'A2', verify: false },
     { id: 'begge', note: 'Refererer specifikt til to, ikke flere.', level: 'B1', verify: false },
     { id: 'hver', note: 'Distributivt: refererer til hvert enkelt medlem af en gruppe, ental.', level: 'A2', verify: false },
-    { id: 'hverken', note: 'Bruges i par med "eller" til at negere begge muligheder: hverken kaffe eller te.', level: 'B1', verify: false }
+    { id: 'hverken', note: 'Egentlig en konjunktion (ikke et pronomen): bruges i par med "eller" til at negere begge muligheder: hverken kaffe eller te.', level: 'B1', verify: false }
   ];
 
   window.DANSK_PRONOUNS = {

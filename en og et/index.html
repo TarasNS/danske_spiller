@@ -112,7 +112,7 @@
   }
   .eyebrow{font-family:'Tangerine',cursive;font-size:2rem;color:var(--rose);line-height:.7;margin-bottom:2px}
   header h1{
-    font-family:'Cinzel Decorative',serif;font-weight:900;
+    font-family:var(--sd-font-display,serif);font-weight:900;
     font-size:1.65rem;margin:.1em 0 .15em;color:var(--ink);letter-spacing:.5px;
     text-shadow:0 1px 0 rgba(255,255,255,.5);
   }
@@ -140,10 +140,12 @@
     font-family:'EB Garamond',serif;
   }
   .mode-card:hover{transform:translateY(-3px) rotate(-.3deg);box-shadow:0 12px 26px rgba(40,20,10,.35)}
-  .emblem{flex:0 0 52px;width:52px;height:52px;display:flex;align-items:center;justify-content:center}
-  .emblem svg{width:46px;height:46px}
-  .mode-card h3{margin:0 0 2px;font-family:'Cinzel Decorative',serif;font-size:1.02rem;color:var(--ink)}
+  .emblem{flex:0 0 64px;width:64px;height:64px;display:flex;align-items:center;justify-content:center}
+  .emblem svg{width:64px;height:64px}
+  .mode-card h3{margin:0 0 2px;font-family:var(--sd-font-display,serif);font-size:1.02rem;color:var(--ink)}
   .mode-card p{margin:0;font-size:.96rem;color:var(--muted);font-style:italic}
+  .reset-row{text-align:center;margin-top:18px}
+  .reset-btn{min-height:44px;min-width:44px;padding:8px 16px;border:1.5px solid var(--gold);border-radius:10px;background:#fff8e8;color:var(--ink);font-family:'EB Garamond',serif;font-size:.95rem;cursor:pointer}
   .count-note{text-align:center;margin-top:16px;color:var(--muted);font-style:italic;font-size:.95rem}
 
   /* ---------- CEFR FILTER ---------- */
@@ -168,25 +170,16 @@
 
   .prompt{text-align:center}
   .hint{font-style:italic;color:var(--muted);min-height:1.2rem;margin-bottom:4px;font-size:1rem}
-  .word{font-family:'Cinzel Decorative',serif;font-size:2.1rem;font-weight:700;margin:8px 0 6px;color:var(--ink);word-break:break-word}
+  .word{font-family:var(--sd-font-display,serif);font-size:2.1rem;font-weight:700;margin:8px 0 6px;color:var(--ink);word-break:break-word}
   .word .art{font-family:'EB Garamond';color:var(--rose);font-weight:500;font-size:1.4rem;font-style:italic}
   .translation{font-style:italic;color:var(--teal);font-size:1.05rem;min-height:1.2rem;margin-bottom:18px}
 
   /* speaker / pronunciation button */
   .word-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-  .speaker{
-    width:38px;height:38px;border-radius:50%;display:inline-grid;place-items:center;
-    font-size:1rem;flex:none;cursor:pointer;
-    background:linear-gradient(180deg,#fff8e8,#efe1bf);border:1.5px solid var(--gold);
-    color:var(--ink);transition:transform .12s,box-shadow .15s;
-  }
-  .speaker:hover{box-shadow:0 4px 10px rgba(40,20,10,.25)}
-  .speaker:active{transform:scale(.92)}
-  .speaker.speaker-sm{width:30px;height:30px;font-size:.85rem;margin-left:6px;vertical-align:middle}
 
   .buttons{display:flex;gap:14px;margin:8px 0 16px}
   .btn-big{
-    flex:1;font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;padding:16px 0;border-radius:12px;cursor:pointer;color:#f7ecd2;
+    flex:1;font-family:var(--sd-font-display,serif);font-size:1.4rem;font-weight:700;padding:16px 0;border-radius:12px;cursor:pointer;color:#f7ecd2;
     border:1.5px solid var(--gold);transition:transform .12s,opacity .2s;
   }
   .btn-big:active{transform:scale(.97)}
@@ -202,7 +195,7 @@
   .answer-row input:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(168,19,43,.12)}
   .answer-row button{
     border:1.5px solid var(--gold);background:var(--rose);color:#f7ecd2;padding:0 22px;border-radius:12px;
-    font-family:'Cinzel Decorative',serif;font-size:1rem;cursor:pointer;
+    font-family:var(--sd-font-display,serif);font-size:1rem;cursor:pointer;
   }
 
   /* MC options */
@@ -228,7 +221,7 @@
     background:linear-gradient(180deg,#fff8e8,#efe1bf);box-shadow:0 8px 18px rgba(40,20,10,.25);
   }
   .flash-back{transform:rotateY(180deg);background:linear-gradient(180deg,#eafaf3,#d9efe4)}
-  .flash-face .big{font-family:'Cinzel Decorative',serif;font-size:1.9rem;color:var(--ink)}
+  .flash-face .big{font-family:var(--sd-font-display,serif);font-size:1.9rem;color:var(--ink)}
   .flash-face .sub{font-style:italic;color:var(--teal);font-size:1.05rem;margin-top:6px}
   .flash-face .tag{position:absolute;top:10px;right:14px;font-style:italic;color:var(--muted);font-size:.85rem}
   .flash-tip{text-align:center;font-style:italic;color:var(--muted);margin-bottom:10px}
@@ -250,7 +243,7 @@
   #message small{display:block;font-weight:400;color:var(--muted);font-style:italic;margin-top:3px}
   #next{
     display:none;margin:6px auto 0;width:100%;padding:13px 0;border:1.5px solid var(--gold);border-radius:12px;cursor:pointer;
-    background:var(--gold);color:#3a2410;font-family:'Cinzel Decorative',serif;font-size:1.05rem;
+    background:var(--gold);color:#3a2410;font-family:var(--sd-font-display,serif);font-size:1.05rem;
   }
 
   /* sub-menu (style picker) */
@@ -259,11 +252,11 @@
   /* ---------- END ---------- */
   .end{text-align:center;padding:10px 0}
   .end .big{font-size:3rem;margin:4px 0}
-  .end h2{font-family:'Cinzel Decorative',serif;margin:0 0 4px;color:var(--ink)}
+  .end h2{font-family:var(--sd-font-display,serif);margin:0 0 4px;color:var(--ink)}
   .end p{color:var(--muted);font-style:italic;margin:4px 0}
   .end .grade{font-size:1.15rem;margin:12px 0;color:var(--teal)}
   .end-actions{display:flex;gap:12px;margin-top:18px}
-  .end-actions button{flex:1;padding:13px 0;border:1.5px solid var(--gold);border-radius:12px;cursor:pointer;font-family:'Cinzel Decorative',serif;font-size:1rem}
+  .end-actions button{flex:1;padding:13px 0;border:1.5px solid var(--gold);border-radius:12px;cursor:pointer;font-family:var(--sd-font-display,serif);font-size:1rem}
   .btn-primary{background:var(--rose);color:#f7ecd2}
   .btn-soft{background:#fff8e8;color:var(--ink)}
 
@@ -282,12 +275,14 @@
 </style>
 <link rel="stylesheet" href="../shared/sjovt.css">
 <link rel="stylesheet" href="../shared/themes/en-og-et.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 <link rel="stylesheet" href="../shared/explainer/modal.css">
 <script src="../shared/explainer/modal.js"></script>
 </head>
 <body>
 <div class="book">
-  <button class="home-btn" id="homeBtn">← Tilbage</button>
+  <button class="home-btn" id="homeBtn">← TILBAGE</button>
   <header>
     <div class="eyebrow">Velkommen til</div>
     <h1>Ordenes Vidunderland</h1>
@@ -300,51 +295,35 @@
     <section id="menu">
       <div class="menu-grid">
         <button class="mode-card" data-mode="enet">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><text x="24" y="30" font-family="Cinzel Decorative,serif" font-size="14" font-weight="700" text-anchor="middle" fill="#a8132b">?</text><path d="M24 4 a20 20 0 0 1 0 40" fill="none" stroke="#15534c" stroke-width="2"/></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="terning" data-scale="4"></span></span>
           <span><h3>En eller et?</h3><p>Larvens evige spørgsmål – vælg artiklen</p></span>
         </button>
         <button class="mode-card" data-mode="definite">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><rect x="9" y="7" width="30" height="34" rx="4" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><text x="24" y="30" font-family="Cinzel Decorative,serif" font-size="13" text-anchor="middle" fill="#a8132b">-en</text></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="pin" data-scale="4"></span></span>
           <span><h3>Bestemt form</h3><p>en bil → <em>bilen</em>, et hus → <em>huset</em></p></span>
         </button>
         <button class="mode-card" data-mode="plural">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><rect x="7" y="10" width="24" height="28" rx="3" fill="#efe1bf" stroke="#c79a3a" stroke-width="2"/><rect x="15" y="6" width="24" height="28" rx="3" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><text x="27" y="24" font-family="Cinzel Decorative,serif" font-size="12" text-anchor="middle" fill="#15534c">-er</text></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="kort" data-scale="4"></span></span>
           <span><h3>Flertal</h3><p>en bil → <em>biler</em>, et hus → <em>huse</em></p></span>
         </button>
         <button class="mode-card" data-mode="sentence">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><path d="M24 6c8 0 14 5 14 11s-6 11-14 11c-2 0-4-.3-6-.8L10 40l1-7c-4-2-7-6-7-10C4 11 14 6 24 6z" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><text x="24" y="22" font-size="11" text-anchor="middle" fill="#a8132b">___</text></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="snak" data-scale="4"></span></span>
           <span><h3>Dronningens gåder</h3><p>Udfyld hullet i sætningen – bestemt/ubestemt</p></span>
         </button>
         <button class="mode-card" data-mode="opposites">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><rect x="6" y="9" width="16" height="30" rx="3" fill="#eafaf3" stroke="#c79a3a" stroke-width="2"/><rect x="26" y="9" width="16" height="30" rx="3" fill="#fdeef0" stroke="#c79a3a" stroke-width="2"/><path d="M24 6v36" stroke="#c79a3a" stroke-width="2" stroke-dasharray="3 3"/></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="modsat" data-scale="4"></span></span>
           <span><h3>Spejlordene</h3><p>100 modsætninger · <em>god ↔ dårlig</em></p></span>
         </button>
         <button class="mode-card" data-mode="synonyms">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><circle cx="18" cy="24" r="13" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><circle cx="30" cy="24" r="13" fill="rgba(199,154,58,.25)" stroke="#15534c" stroke-width="2"/></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="slik" data-scale="4"></span></span>
           <span><h3>Tvillingordene</h3><p>100 synonymer · <em>glad = lykkelig</em></p></span>
         </button>
         <button class="mode-card" data-mode="speed">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><circle cx="24" cy="26" r="16" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><path d="M24 26V16M24 26l7 4" stroke="#a8132b" stroke-width="2" stroke-linecap="round"/><rect x="20" y="3" width="8" height="5" rx="2" fill="#c79a3a"/><path d="M24 8v3" stroke="#c79a3a" stroke-width="2"/></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="tryllestav" data-scale="4"></span></span>
           <span><h3>Den Hvide Kanins ræs</h3><p>"Jeg kommer for sent!" – en/et på 60 sek.</p></span>
         </button>
         <button class="mode-card" id="weakCard" data-mode="weak">
-          <span class="emblem">
-            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><path d="M16 32 Q24 16 32 32" fill="none" stroke="#a8132b" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="34" r="2" fill="#a8132b"/></svg>
-          </span>
+          <span class="emblem"><span data-sd-sprite="lup" data-scale="4"></span></span>
           <span><h3>Svage ord</h3><p id="weakSubtitle">Gentræn de ord, du har fejlet</p></span>
         </button>
       </div>
@@ -357,21 +336,22 @@
         <button class="cefr-btn" data-cefr="B1">B1</button>
         <button class="cefr-btn" data-cefr="B2">B2</button>
       </div>
+      <div class="reset-row"><button class="reset-btn" id="resetBtn" type="button">Nulstil fremskridt</button></div>
     </section>
 
     <!-- STYLE SUBMENU (opposites/synonyms) -->
     <section id="submenu" class="hidden">
       <div class="submenu">
         <button class="mode-card" data-style="mc">
-          <span class="emblem"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="32" rx="6" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><path d="M16 24l5 5 11-12" fill="none" stroke="#15534c" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <span class="emblem"><span data-sd-sprite="bog" data-scale="4"></span></span>
           <span><h3>Quiz</h3><p>Vælg det rigtige ord mellem fire</p></span>
         </button>
         <button class="mode-card" data-style="flash">
-          <span class="emblem"><svg viewBox="0 0 48 48"><rect x="7" y="12" width="34" height="24" rx="4" fill="#fff8e8" stroke="#c79a3a" stroke-width="2"/><path d="M24 12v24" stroke="#c79a3a" stroke-width="2" stroke-dasharray="3 3"/></svg></span>
+          <span class="emblem"><span data-sd-sprite="terning" data-scale="4"></span></span>
           <span><h3>Vendekort</h3><p>Vend kortet og se parret</p></span>
         </button>
         <button class="mode-card" data-style="match">
-          <span class="emblem"><svg viewBox="0 0 48 48"><circle cx="15" cy="15" r="7" fill="#eafaf3" stroke="#c79a3a" stroke-width="2"/><circle cx="33" cy="33" r="7" fill="#fdeef0" stroke="#c79a3a" stroke-width="2"/><path d="M20 18l8 12" stroke="#15534c" stroke-width="2"/></svg></span>
+          <span class="emblem"><span data-sd-sprite="net" data-scale="4"></span></span>
           <span><h3>Find par</h3><p>Find ordenes par</p></span>
         </button>
       </div>
@@ -490,7 +470,7 @@ const DATA=[
   {w:"løve",a:"en",d:"løven",p:"løver",cefr:"A2",note:"Det hedder »en løve«. De fleste dyr er en-ord."},
   {w:"tiger",a:"en",d:"tigeren",p:"tigre",cefr:"A2",note:"Det hedder »en tiger«. De fleste dyr er en-ord."},
   {w:"kanin",a:"en",d:"kaninen",p:"kaniner",cefr:"A2",note:"Det hedder »en kanin«. De fleste dyr er en-ord."},
-  {w:"and",a:"en",d:"anden",p:"ænder",cefr:"A2",note:"De fleste dyr er en-ord: en and. Ordet er det samme som bindeordet »and« på engelsk, men det er et helt andet ord."},
+  {w:"and",a:"en",d:"anden",p:"ænder",cefr:"A2",note:"De fleste dyr er en-ord: en and. Det har intet med det engelske ord »and« at gøre – det betyder »og« på dansk."},
   {w:"gås",a:"en",d:"gåsen",p:"gæs",cefr:"B1",note:"De fleste dyr er en-ord: en gås. Flertal: gæs."},
   {w:"fisk",a:"en",d:"fisken",p:"fisk",cefr:"A1",note:"De fleste dyr er en-ord: en fisk. Flertal: fisk."},
   {w:"abe",a:"en",d:"aben",p:"aber",cefr:"B1",note:"Det hedder »en abe«. De fleste dyr er en-ord."},
@@ -576,12 +556,12 @@ const DATA=[
   {w:"måltid",a:"et",d:"måltidet",p:"måltider",cefr:"B1",note:"Det hedder »et måltid«. Der er ingen sikker regel for mad og drikke – lær ordet sammen med artiklen."},
   /* --- DRINKS --- */
   {w:"vin",a:"en",d:"vinen",p:"vine",cefr:"A2",note:"Det hedder »en vin«. De fleste madvarer og drikkevarer er en-ord."},
-  {w:"øl",a:"en",d:"øllen",p:"øl",cefr:"A2",note:"Det hedder »en øl«. Bestemt form: ølen."},
+  {w:"øl",a:"en",d:"øllen",a2:"et",d2:"ølet",p:"øl",cefr:"A2",note:"Både en øl og et øl bruges. Bestemt form: øllen / ølet."},
   {w:"kaffe",a:"en",d:"kaffen",p:null,cefr:"A1",note:"Det hedder »en kaffe«. De fleste madvarer og drikkevarer er en-ord."},
-  {w:"mælk",a:"en",d:"mælken",p:null,cefr:"A1",note:"Det hedder »en mælk«. De fleste madvarer og drikkevarer er en-ord."},
-  {w:"vand",a:"et",d:"vandet",p:null,cefr:"A1",note:"»Vand« er et et-ord: »et vand« – det er en af de vigtige undtagelser blandt drikkevarer."},
-  {w:"sukker",a:"et",d:"sukkeret",p:null,cefr:"A2",note:"»Sukker« er et et-ord: »et sukker«. Lær »et sukker« og »et salt« som et par."},
-  {w:"salt",a:"et",d:"saltet",p:null,cefr:"A2",note:"»Salt« er et et-ord: »et salt«. Lær »et sukker« og »et salt« som et par."},
+  {w:"mælk",a:"en",d:"mælken",p:null,cefr:"A1",note:"»Mælk« er et en-ord: mælken. Man siger oftest bare »mælk« eller »noget mælk«. De fleste madvarer og drikkevarer er en-ord."},
+  {w:"vand",a:"et",d:"vandet",p:null,cefr:"A1",note:"»Vand« er et et-ord: vandet – det er en af de vigtige undtagelser blandt drikkevarer. Man siger oftest »et glas vand«."},
+  {w:"sukker",a:"et",d:"sukkeret",p:null,cefr:"A2",note:"»Sukker« er et et-ord: sukkeret. Man siger oftest bare »sukker« eller »noget sukker«."},
+  {w:"salt",a:"et",d:"saltet",p:null,cefr:"A2",note:"»Salt« er et et-ord: saltet. Man siger oftest bare »salt« eller »noget salt«."},
   /* --- CLOTHING (mostly en) --- */
   {w:"skjorte",a:"en",d:"skjorten",p:"skjorter",cefr:"A2",note:"Det hedder »en skjorte«. Tøj er som regel en-ord."},
   {w:"trøje",a:"en",d:"trøjen",p:"trøjer",cefr:"A2",note:"Det hedder »en trøje«. Tøj er som regel en-ord."},
@@ -774,7 +754,7 @@ const SYNONYMS=[
   {a:"smuk",b:"køn",t:"beautiful / pretty"},{a:"grim",b:"hæslig",t:"ugly / hideous"},
   {a:"bange",b:"skræmt",t:"afraid / scared"},{a:"vred",b:"sur",t:"angry / cross"},
   {a:"træt",b:"udmattet",t:"tired / exhausted"},{a:"sjov",b:"morsom",t:"funny / amusing"},
-  {a:"kedelig",b:"træls",t:"boring / dull"},{a:"svær",b:"vanskelig",t:"difficult / hard"},
+  {a:"kedelig",b:"uinteressant",t:"boring / uninteresting"},{a:"svær",b:"vanskelig",t:"difficult / hard"},
   {a:"nem",b:"let",t:"easy"},{a:"rig",b:"velhavende",t:"rich / wealthy"},
   {a:"fattig",b:"nødlidende",t:"poor / needy"},{a:"stærk",b:"kraftig",t:"strong / powerful"},
   {a:"svag",b:"spinkel",t:"weak / frail"},{a:"kvik",b:"rask",t:"quick / brisk"},
@@ -799,7 +779,7 @@ const SYNONYMS=[
   {a:"ro",b:"fred",t:"calm / peace"},{a:"larm",b:"støj",t:"noise / din"},
   {a:"lys",b:"skær",t:"light / glow"},{a:"mørke",b:"mulm",t:"darkness / gloom"},
   {a:"mange",b:"talrige",t:"many / numerous"},{a:"få",b:"sparsomme",t:"few / sparse"},
-  {a:"ofte",b:"hyppigt",t:"often / frequently"},{a:"sjældent",b:"fåtalligt",t:"rarely"},
+  {a:"ofte",b:"hyppigt",t:"often / frequently"},{a:"sjælden",b:"usædvanlig",t:"rare / unusual"},
   {a:"altid",b:"bestandigt",t:"always / constantly"},{a:"måske",b:"muligvis",t:"maybe / possibly"},
   {a:"meget",b:"yderst",t:"very / extremely"},{a:"lidt",b:"smule",t:"a little / a bit"},
   {a:"hele",b:"samtlige",t:"whole / entire"},{a:"næsten",b:"cirka",t:"almost / approximately"},
@@ -816,8 +796,8 @@ const SYNONYMS=[
   {a:"ærlig",b:"oprigtig",t:"honest / sincere"},{a:"løgn",b:"usandhed",t:"lie / untruth"},
   {a:"sand",b:"korrekt",t:"true / correct"},{a:"stilhed",b:"tavshed",t:"silence / quietness"},
   {a:"tøj",b:"beklædning",t:"clothes / clothing"},{a:"mad",b:"føde",t:"food / nourishment"},
-  {a:"penge",b:"mønt",t:"money / coin"},{a:"by",b:"købstad",t:"town / city"},
-  {a:"vej",b:"gade",t:"road / street"},{a:"tid",b:"stund",t:"time / while"}
+  {a:"penge",b:"midler",t:"money / funds"},{a:"by",b:"købstad",t:"town / city"},
+  {a:"sti",b:"stig",t:"path / trail"},{a:"tid",b:"stund",t:"time / while"}
 ];
 
 /* =====================================================================
@@ -830,19 +810,19 @@ const SENTENCES=[
   {s:"___ i parken er meget glade.",lemma:"hund",form:"bestemt flertal",answer:"hundene",en:"The dogs in the park are very happy."},
   {s:"Hun købte ___ i går.",lemma:"bil",form:"ubestemt ental",answer:"en bil",en:"She bought a car yesterday."},
   {s:"___ står ude foran huset.",lemma:"bil",form:"bestemt ental",answer:"bilen",en:"The car is parked in front of the house."},
-  {s:"Vejen er fuld af ___ .",lemma:"bil",form:"ubestemt flertal",answer:"biler",en:"The road is full of cars."},
+  {s:"Vejen er fuld af ___.",lemma:"bil",form:"ubestemt flertal",answer:"biler",en:"The road is full of cars."},
   {s:"___ på parkeringspladsen er dyre.",lemma:"bil",form:"bestemt flertal",answer:"bilerne",en:"The cars in the parking lot are expensive."},
   {s:"Vi bor i ___ ved stranden.",lemma:"hus",form:"ubestemt ental",answer:"et hus",en:"We live in a house by the beach."},
   {s:"___ er malet hvidt.",lemma:"hus",form:"bestemt ental",answer:"huset",en:"The house is painted white."},
   {s:"Der bygges mange nye ___ i byen.",lemma:"hus",form:"ubestemt flertal",answer:"huse",en:"Many new houses are being built in town."},
   {s:"___ på vejen er gamle.",lemma:"hus",form:"bestemt flertal",answer:"husene",en:"The houses on the road are old."},
-  {s:"Må jeg få ___ , tak?",lemma:"æble",form:"ubestemt ental",answer:"et æble",en:"May I have an apple, please?"},
+  {s:"Må jeg få ___, tak?",lemma:"æble",form:"ubestemt ental",answer:"et æble",en:"May I have an apple, please?"},
   {s:"___ på bordet er rødt.",lemma:"æble",form:"bestemt ental",answer:"æblet",en:"The apple on the table is red."},
   {s:"Hun spiser to ___ hver dag.",lemma:"æble",form:"ubestemt flertal",answer:"æbler",en:"She eats two apples every day."},
   {s:"___ i kurven er grønne.",lemma:"æble",form:"bestemt flertal",answer:"æblerne",en:"The apples in the basket are green."},
-  {s:"Jeg læser ___ om dagen.",lemma:"bog",form:"ubestemt ental",answer:"en bog",en:"I read a book during the day."},
+  {s:"Jeg læser ___ om dagen.",lemma:"bog",form:"ubestemt ental",answer:"en bog",en:"I read a book every day."},
   {s:"___ ligger på bordet.",lemma:"bog",form:"bestemt ental",answer:"bogen",en:"The book is on the table."},
-  {s:"Han har skrevet tre ___ .",lemma:"bog",form:"ubestemt flertal",answer:"bøger",en:"He has written three books."},
+  {s:"Han har skrevet tre ___.",lemma:"bog",form:"ubestemt flertal",answer:"bøger",en:"He has written three books."},
   {s:"___ på hylden er støvede.",lemma:"bog",form:"bestemt flertal",answer:"bøgerne",en:"The books on the shelf are dusty."},
   {s:"Der sidder ___ i træet.",lemma:"fugl",form:"ubestemt ental",answer:"en fugl",en:"There is a bird in the tree."},
   {s:"___ synger smukt.",lemma:"fugl",form:"bestemt ental",answer:"fuglen",en:"The bird sings beautifully."},
@@ -856,7 +836,7 @@ const SENTENCES=[
   {s:"___ ved døren venter på dig.",lemma:"mand",form:"bestemt ental",answer:"manden",en:"The man at the door is waiting for you."},
   {s:"Jeg mødte to ___ på gaden.",lemma:"mand",form:"ubestemt flertal",answer:"mænd",en:"I met two men on the street."},
   {s:"___ på billedet er gamle.",lemma:"mand",form:"bestemt flertal",answer:"mændene",en:"The men in the picture are old."},
-  {s:"Kan jeg låne ___ ?",lemma:"telefon",form:"ubestemt ental",answer:"en telefon",en:"Can I borrow a phone?"},
+  {s:"Kan jeg låne ___?",lemma:"telefon",form:"ubestemt ental",answer:"en telefon",en:"Can I borrow a phone?"},
   {s:"___ ringer hele tiden.",lemma:"telefon",form:"bestemt ental",answer:"telefonen",en:"The phone keeps ringing."},
   {s:"Der lå tre ___ på bordet.",lemma:"nøgle",form:"ubestemt flertal",answer:"nøgler",en:"There were three keys on the table."},
   {s:"___ passer ikke til døren.",lemma:"nøgle",form:"bestemt flertal",answer:"nøglerne",en:"The keys don't fit the door."}
@@ -889,10 +869,10 @@ function speak(text){
 }
 function speakerBtn(text, cls){
   const b = document.createElement("button");
-  b.className = "speaker " + (cls||"");
+  b.className = "dc-tts-button " + (cls||"");
   b.type = "button";
-  b.textContent = "♪";
-  b.setAttribute("aria-label","Udtal ordet");
+  b.setAttribute("aria-label","Lyt");
+  b.title = "Lyt";
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -910,11 +890,24 @@ function loadProgress(){
   catch(e){ return defaultProgress(); }
 }
 function saveProgress(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(P)); }catch(e){} }
+function resetProgress(){ // US-030: confirmed reset of this game's progress only (key en_et_traener_v1, incl. word streaks "ws")
+  let ok=false;
+  try{ ok=window.confirm("Nulstil al fremgang i denne øvelse? Det kan ikke fortrydes."); }catch(e){ ok=false; }
+  if(!ok)return;
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  P=defaultProgress();
+  refreshWeakCard();
+}
 
 /* --- Weak-word helpers --- */
+const WEAK_CLEAR_STREAK=2; // consecutive correct answers that clear a weak word
+function wordStreak(w){return (P.ws&&P.ws[w])||0;}
+function isCleared(noun){return wordStreak(noun.w)>=WEAK_CLEAR_STREAK;}
 function weakPool(){
-  // Return WORDS items where ANY perItem key matching *:word.w has c < t
+  // Return WORDS items where ANY perItem key matching *:word.w has c < t,
+  // unless the word has since been answered correctly WEAK_CLEAR_STREAK times in a row
   return WORDS.filter(noun=>{
+    if(isCleared(noun))return false;
     for(const key in P.perItem){
       // noun-mode keys are formatted as "mode:word"
       if(key.endsWith(":"+noun.w)){
@@ -951,8 +944,12 @@ function itemKeyFor(m,item){
   if(item.a&&item.b)return (category||"pair")+":"+item.a+"/"+item.b; // opposites/synonyms pair
   return null;
 }
-function recordAnswer(itemKey,ok){
+function recordAnswer(itemKey,ok,word){
   P.total++; if(ok)P.correct++;
+  if(word){ // consecutive-correct streak per word (US-012); older saves have no ws field
+    if(!P.ws)P.ws={};
+    P.ws[word]=ok?(P.ws[word]||0)+1:0;
+  }
   if(itemKey){
     if(!P.perItem[itemKey])P.perItem[itemKey]={t:0,c:0};
     P.perItem[itemKey].t++; if(ok)P.perItem[itemKey].c++;
@@ -996,6 +993,10 @@ let timer=null, timeLeft=0, speedCorrect=0;
 let matchSel=null, matchDone=0, matchTotal=0, matchBatch=[];
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+// Words that accept two genders carry an optional a2 (second article) and d2 (its definite form), e.g. øl: en/et.
+function artLabel(it){return it.a2?it.a+"/"+it.a2:it.a;}
+function artOk(it,sel){return sel===it.a||(!!it.a2&&sel===it.a2);}
+function defTargets(it){return it.d2?[it.d,it.d2]:[it.d];}
 function pick(a){return a[Math.floor(Math.random()*a.length)];}
 function norm(s){return s.trim().toLowerCase().replace(/\s+/g," ");}
 const praise=["Storartet!","Pragtfuldt!","Vidunderligt!","Helt rigtigt!","Fortræffeligt!","Bravo!","Sådan!"];
@@ -1078,6 +1079,13 @@ function startTimer(){
   },1000);
 }
 function stopTimer(){if(timer){clearInterval(timer);timer=null;}}
+/* explainer modal: freeze the speed-round countdown while it is open; resume only if this listener paused it and the round is still running */
+let xpPaused=false;
+document.addEventListener("explainer:open",()=>{if(timer){stopTimer();xpPaused=true;}});
+document.addEventListener("explainer:close",()=>{
+  if(!xpPaused)return;xpPaused=false;
+  if(!timer&&mode==="speed"&&timeLeft>0&&!sections.game.classList.contains("hidden"))startTimer();
+});
 
 function updateStats(){
   if(mode==="speed")scorePill.textContent="Rigtige: "+speedCorrect;
@@ -1104,17 +1112,17 @@ function showQuestion(){
     setWordSpeaker(null); // article not revealed yet — avoid giving away the answer
   }else if(mode==="definite"){
     hintEl.innerHTML="Skriv i <b>bestemt form</b> (ental)";
-    wordEl.innerHTML='<span class="art">'+item.a+'</span> '+item.w;
+    wordEl.innerHTML='<span class="art">'+artLabel(item)+'</span> '+item.w;
     setWordSpeaker(item.a+" "+item.w);
     resetInput();
   }else if(mode==="plural"){
     hintEl.innerHTML="Skriv i <b>flertal</b> (ubestemt)";
-    wordEl.innerHTML='<span class="art">'+item.a+'</span> '+item.w;
+    wordEl.innerHTML='<span class="art">'+artLabel(item)+'</span> '+item.w;
     setWordSpeaker(item.a+" "+item.w);
     resetInput();
   }else if(mode==="sentence"){
     hintEl.innerHTML="Udfyld: <b>"+item.form+"</b> af <em>"+item.lemma+"</em>";
-    wordEl.innerHTML=item.s.replace("___",'<span class="gap">_____</span>');
+    wordEl.innerHTML=item.s.replace("___",'<span class="sd-gap" role="img" aria-label="mellemrum"></span>');
     wordEl.classList.add("is-sentence");
     setWordSpeaker(null); // sentence has a gap — speak the full answer sentence once revealed
     resetInput();
@@ -1124,8 +1132,8 @@ function resetInput(){answerInput.value="";answerInput.disabled=false;submitBtn.
 
 function answerArticle(sel){
   if(answered)return;answered=true;
-  const ok=sel===current.a;
-  register(ok,current.a+" "+current.w);
+  const ok=artOk(current,sel);
+  register(ok,artLabel(current)+" "+current.w);
   if(window.Sjovt) (ok?Sjovt.fx.correct:Sjovt.fx.wrong)(sel==="en"?btnEn:btnEt);
   setWordSpeaker(current.a+" "+current.w); // reveal pronunciation now that the article is known
   btnEn.disabled=true;btnEt.disabled=true;
@@ -1136,10 +1144,11 @@ function submitTyped(){
   if(answered)return;
   const val=norm(answerInput.value);if(!val)return;answered=true;
   let target,full;
-  if(mode==="definite"){target=current.d;full=current.a+" "+current.w+" → "+current.d;}
-  else if(mode==="plural"){target=current.p;full=current.a+" "+current.w+" → "+current.p;}
+  let targets;
+  if(mode==="definite"){targets=defTargets(current);target=targets.join(" / ");full=artLabel(current)+" "+current.w+" → "+target;}
+  else if(mode==="plural"){target=current.p;full=artLabel(current)+" "+current.w+" → "+current.p;}
   else{target=current.answer;full=current.answer+(current.en?'  ('+current.en+')':'');}
-  const ok=norm(target)===val;
+  const ok=(targets||[target]).some(t=>norm(t)===val);
   register(ok,target,full);
   if(window.Sjovt) (ok?Sjovt.fx.correct:Sjovt.fx.wrong)(ok?submitBtn:answerInput);
   if(mode==="sentence") setWordSpeaker(current.s.replace("___",current.answer)); // speak the completed sentence
@@ -1160,7 +1169,7 @@ function register(ok,answerTxt,full){
     const noteHTML=(current&&current.note)?'<small>'+current.note+'</small>':'';
     messageEl.innerHTML=pick(consol)+" Det rigtige svar: <b>"+(full||answerTxt)+"</b>."+noteHTML;
   }
-  recordAnswer(itemKeyFor(mode,current), ok);
+  recordAnswer(itemKeyFor(mode,current), ok, mode!=="sentence"&&current?current.w:null);
   updateStats();
 }
 
@@ -1343,7 +1352,7 @@ function finishRound(){
     // count how many words in the played queue are now fully cleared (c === t for all their keys)
     const cleared=queue.filter(noun=>{
       const keys=Object.keys(P.perItem).filter(k=>k.endsWith(":"+noun.w));
-      return keys.length>0&&keys.every(k=>P.perItem[k].c>=P.perItem[k].t);
+      return isCleared(noun)||(keys.length>0&&keys.every(k=>P.perItem[k].c>=P.perItem[k].t));
     }).length;
     refreshWeakCard();
     showEnd(pct,correct+" / "+total+" rigtige",
@@ -1383,8 +1392,13 @@ btnEn.addEventListener("click",()=>answerArticle("en"));
 btnEt.addEventListener("click",()=>answerArticle("et"));
 submitBtn.addEventListener("click",submitTyped);
 answerInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.stopPropagation();submitTyped();}});
+$("resetBtn").addEventListener("click",resetProgress);
 document.addEventListener("keydown",e=>{
   if(sections.game.classList.contains("hidden"))return;
+  if(!answered&&style==="mc"&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&/^[1-9]$/.test(e.key)){ // US-047: number keys pick the nth option
+    const o=optionsBox.children[Number(e.key)-1];
+    if(o){e.preventDefault();o.click();}
+  }
   if(!answered&&(mode==="enet"||mode==="speed"||mode==="weak")){
     if(e.key==="1"||e.key==="ArrowLeft")answerArticle("en");
     if(e.key==="2"||e.key==="ArrowRight")answerArticle("et");

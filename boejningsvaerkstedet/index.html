@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" data-explainer="navneord-former,tillaegsord-form">
+<html lang="da" data-explainer="navneord-former,tillaegsord-form,gradboejning,gradboejning-mere-mest,maengdeord">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -285,14 +285,6 @@
     font-size:1.2rem;line-height:1.6;color:var(--text);margin:.3em 0 1em;
     background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:.8em .9em;
   }
-  .context .blank{
-    display:inline-block;min-width:3.2em;border-bottom:2px dashed var(--brass);
-    text-align:center;font-weight:600;
-  }
-  .context .blank.done-correct{border-bottom-color:var(--correct);color:var(--correct)}
-  .context .blank.done-wrong{border-bottom-color:var(--wrong);color:var(--wrong)}
-  html[data-theme="dark"] .context .blank.done-correct{color:#8fc088}
-  html[data-theme="dark"] .context .blank.done-wrong{color:#d98f88}
   .options{display:flex;flex-direction:column;gap:.5em}
   .opt{
     display:flex;align-items:center;gap:.7em;text-align:left;
@@ -357,29 +349,33 @@
 <link rel="stylesheet" href="../shared/sjovt.css">
 <script src="../shared/sjovt.js"></script>
 <link rel="stylesheet" href="../shared/themes/boejningsvaerkstedet.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 <link rel="stylesheet" href="../shared/explainer/modal.css">
 <script src="../shared/explainer/modal.js"></script>
 </head>
 <body>
 <div class="shell">
   <header class="topbar">
-    <div class="brand"><span data-sd-sprite="molle" data-scale="3" aria-hidden="true"></span> Bøjningsværkstedet</div>
-    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
-    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
+    <div class="brand">Bøjningsværkstedet</div>
   </header>
 
   <!-- ================= START SCREEN ================= -->
   <main id="start-screen" class="card">
-    <h1 class="title"><span data-sd-sprite="tandhjul" data-scale="5" class="sd-bob" aria-hidden="true"></span> Bøjningsværkstedet</h1>
+    <h1 class="title"><span data-sd-sprite="tandhjul" data-scale="5" class="sd-bob" aria-hidden="true"></span> Bøjnings&shy;værkstedet</h1>
     <p class="lede">Bøj hele navneordsgruppen — former, artikler, tillægsord og mængder.</p>
 
+    <button class="primary" id="btn-play" type="button">Spil</button>
     <div class="group-label">Vælg værksted</div>
     <div class="modes" id="mode-list" role="group" aria-label="Vælg tilstand"></div>
 
     <div class="group-label">Niveau</div>
     <div class="chips" id="level-list" role="group" aria-label="Vælg niveau"></div>
 
-    <button class="primary" id="btn-play" type="button">Spil</button>
+    <div class="reset-row">
+      <button class="btn" id="btn-reset" type="button">Nulstil fremskridt</button>
+      <span class="reset-status" id="reset-status" role="status"></span>
+    </div>
   </main>
 
   <!-- ================= PLAY SCREEN ================= -->
@@ -426,10 +422,10 @@
   var MODES = [
     { key:'fire_former',          num:1, name:'Fire former',            meta:'De fire navneordsformer' },
     { key:'byg_navneordet',       num:2, name:'Byg navneordet',         meta:'Byg hele navneordsgruppen' },
-    { key:'adjektivvaerkstedet',  num:3, name:'Adjektivværkstedet',     meta:'Tillægsordets bøjning' },
-    { key:'sammenligningspressen',num:4, name:'Sammenligningspressen',  meta:'Gradbøjning' },
+    { key:'adjektivvaerkstedet',  num:3, name:'Adjektiv&shy;værkstedet',     meta:'Tillægsordets bøjning' },
+    { key:'sammenligningspressen',num:4, name:'Sammenlignings&shy;pressen',  meta:'Gradbøjning' },
     { key:'bestemt_ubestemt',     num:5, name:'Bestemt eller ubestemt?',meta:'Bestemthed i kontekst' },
-    { key:'maengdevaerkstedet',   num:6, name:'Mængdeværkstedet',       meta:'Mængdeord' }
+    { key:'maengdevaerkstedet',   num:6, name:'Mængde&shy;værkstedet',       meta:'Mængdeord' }
   ];
 
   var FORM_META = {
@@ -488,8 +484,7 @@
 
   // ---- init settings ----
   DC.ui.darkMode.init();
-  DC.ui.sound.init(prefs.get('sound') !== false);
-  syncSoundIcon();
+  DC.ui.sound.init(true);   // US-040: mute lives in the shared bar (dc:sound-enabled)
 
   // restore last mode/levels if present
   var savedMode = prefs.get('mode');
@@ -500,16 +495,19 @@
     if (!state.levels.length) state.levels = LEVELS.slice();
   }
 
-  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
-  document.getElementById('btn-sound').addEventListener('click', function(){
-    var on = DC.ui.sound.toggle();
-    prefs.set('sound', on);
-    syncSoundIcon();
-    if (on) SOUND.select();
+
+  // US-030: reset only this game's SRS progress, after a Danish confirmation.
+  // Storage failures are swallowed by DC.store; confirm() failures count as "cancel".
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    var ok = false;
+    try { ok = window.confirm('Vil du nulstille alle fremskridt i Bøjningsværkstedet? Det kan ikke fortrydes.'); } catch (err) { ok = false; }
+    if (!ok) return;
+    srsState.items = {};
+    srsState.patterns = {};
+    DC.store.remove('srs:' + GAME_ID);
+    document.getElementById('reset-status').textContent = 'Fremskridt nulstillet.';
+    DC.ui.announce('Fremskridt nulstillet.');
   });
-  function syncSoundIcon(){
-    document.getElementById('btn-sound').textContent = DC.ui.sound.isEnabled() ? 'LYD' : 'LYD ✗';
-  }
 
   document.getElementById('btn-play').addEventListener('click', startRound);
   document.getElementById('btn-back').addEventListener('click', showStart);
@@ -583,27 +581,32 @@
     el.summary.classList.toggle('hidden', which !== 'summary');
   }
   function showStart(){
-    clearKeyHandler();
+    clearPending();
     buildStartControls();
     show('start');
     document.getElementById('btn-play').focus();
   }
 
   // ---- round lifecycle ----
+  // US-042: queue = missed in the last round (SRS box 1, newest first), then due
+  // seen items, then unseen items, then not-yet-due items (soonest due first).
+  // SRS keys/state are untouched (item.id, DC.srs).
   function buildRound(pool){
-    // Prefer SRS-due items, then pad with the rest (shuffled) up to ROUND_SIZE.
-    var due = DC.srs.nextItems(srsState, shuffle(pool.slice()), ROUND_SIZE);
-    var chosen = due.slice();
-    if (chosen.length < ROUND_SIZE) {
-      var seen = {};
-      chosen.forEach(function(it){ seen[it.id] = true; });
-      var rest = shuffle(pool.filter(function(it){ return !seen[it.id]; }));
-      for (var i=0; i<rest.length && chosen.length<ROUND_SIZE; i++) chosen.push(rest[i]);
-    }
-    return chosen;
+    var missed = [], due = [], unseen = [], later = [];
+    shuffle(pool.slice()).forEach(function(it){
+      var e = srsState.items[it.id];
+      if (!e) unseen.push(it);
+      else if (e.box === 1) missed.push(it);
+      else if (DC.srs.isDue(srsState, it.id)) due.push(it);
+      else later.push(it);
+    });
+    missed.sort(function(a, b){ return (srsState.items[b.id].lastSeen || 0) - (srsState.items[a.id].lastSeen || 0); });
+    later.sort(function(a, b){ return srsState.items[a.id].dueAt - srsState.items[b.id].dueAt; });
+    return missed.concat(due, unseen, later).slice(0, ROUND_SIZE);
   }
 
   function startRound(){
+    clearPending();
     var pool = poolFor(state.mode, state.levels);
     if (!pool.length) {
       // No data for this mode/level yet — show a graceful empty state.
@@ -625,12 +628,12 @@
     el.itemHost.innerHTML = '';
     var box = document.createElement('div');
     box.className = 'empty-state';
-    box.innerHTML = '<span class="big"><span data-sd-sprite="hat" data-scale="6" aria-hidden="true"></span></span>' +
+    box.innerHTML = '<span class="big"><span data-sd-sprite="tandhjul" data-scale="6" aria-hidden="true"></span></span>' +
       '<p>Denne tilstand er endnu ikke klar. Prøv <strong>Fire former</strong>.</p>';
     var back = document.createElement('button');
     back.className = 'btn accent';
     back.type = 'button';
-    back.textContent = 'Tilbage';
+    back.textContent = '← TILBAGE';
     back.addEventListener('click', showStart);
     box.appendChild(back);
     el.itemHost.appendChild(box);
@@ -651,8 +654,20 @@
     if (activeKeyHandler){ document.removeEventListener('keydown', activeKeyHandler); activeKeyHandler = null; }
   }
 
-  function renderItem(){
+  // US-041: the 800 ms auto-advance after a correct answer is stored so that
+  // leaving the round (Escape, back, new round, summary) cancels it.
+  var advanceTimer = null;
+  function clearPending(){
+    if (advanceTimer){ window.clearTimeout(advanceTimer); advanceTimer = null; }
     clearKeyHandler();
+  }
+  function scheduleAdvance(){
+    if (advanceTimer) window.clearTimeout(advanceTimer);
+    advanceTimer = window.setTimeout(advance, 800);
+  }
+
+  function renderItem(){
+    clearPending();
     if (state.idx >= state.round.length) { finishRound(); return; }
     updateProgress();
     var item = state.round[state.idx];
@@ -663,15 +678,21 @@
   }
 
   function advance(){
+    advanceTimer = null;
+    if (el.play.classList.contains('hidden')) return;   // round already left
     state.idx++;
     renderItem();
   }
 
   function finishRound(){
+    clearPending();
     el.fill.style.width = '100%';
     SOUND.roundComplete();
     renderSummary();
     show('summary');
+    // US-031: focus only once the summary is visible (a hidden element cannot take focus).
+    var again = el.sumHost.querySelector('.primary');
+    if (again) again.focus();
   }
 
   // ---- answer bookkeeping (shared by all modes) ----
@@ -792,7 +813,7 @@
         if (!DC.ui.motion.isReduced()) table.classList.add('press');
         DC.ui.announce('Rigtigt.');
         buildSlip(slip, true, solution, item.note, null);
-        window.setTimeout(advance, 800);
+        scheduleAdvance();
       } else {
         SOUND.wrong();
         DC.ui.announce('Forkert. Rigtigt svar: ' + solution);
@@ -893,7 +914,7 @@
         if (!DC.ui.motion.isReduced()) frame.classList.add('press');
         DC.ui.announce('Rigtigt.');
         buildSlip(slip, true, solution, item.note, null);
-        window.setTimeout(advance, 800);
+        scheduleAdvance();
       } else {
         SOUND.wrong();
         DC.ui.announce('Forkert. Rigtigt svar: ' + solution);
@@ -996,7 +1017,7 @@
         if (!DC.ui.motion.isReduced()) bench.classList.add('press');
         DC.ui.announce('Rigtigt.');
         buildSlip(slip, true, solution, item.note, null);
-        window.setTimeout(advance, 800);
+        scheduleAdvance();
       } else {
         SOUND.wrong();
         DC.ui.announce('Forkert. Rigtigt svar: ' + solution);
@@ -1086,7 +1107,7 @@
         if (!DC.ui.motion.isReduced()) row.classList.add('press');
         DC.ui.announce('Rigtigt.');
         buildSlip(slip, true, solution, item.note, null);
-        window.setTimeout(advance, 800);
+        scheduleAdvance();
       } else {
         SOUND.wrong();
         DC.ui.announce('Forkert. Rigtigt svar: ' + solution);
@@ -1126,7 +1147,7 @@
         ctx.appendChild(document.createTextNode(seg));
         if (i < parts.length - 1){
           blank = document.createElement('span');
-          blank.className = 'blank'; blank.textContent = '?';
+          blank.className = 'sd-gap'; blank.setAttribute('role','img'); blank.setAttribute('aria-label','mellemrum');
           ctx.appendChild(blank);
         }
       });
@@ -1149,7 +1170,9 @@
 
       var buttons = [];
       var answered = false;
-      item.options.forEach(function(optText, i){
+      // Shuffle per presentation; choose()/number keys use this displayed order.
+      var shownOptions = shuffle((item.options || []).slice());
+      shownOptions.forEach(function(optText, i){
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'opt';
         b.innerHTML = '<span class="onum">' + (i + 1) + '</span>' +
@@ -1162,18 +1185,19 @@
         if (answered) return;
         answered = true;
         clearKeyHandler();
-        var chosen = item.options[i];
+        var chosen = shownOptions[i];
         var correct = DC.diff.normalize(chosen) === DC.diff.normalize(item.correct);
         buttons.forEach(function(b, j){
           b.disabled = true;
           if (j === i) b.classList.add(correct ? 'chosen-correct' : 'chosen-wrong');
-          if (!correct && DC.diff.normalize(item.options[j]) === DC.diff.normalize(item.correct)){
+          if (!correct && DC.diff.normalize(shownOptions[j]) === DC.diff.normalize(item.correct)){
             b.classList.add('reveal-correct');
           }
         });
         if (blank){
+          blank.removeAttribute('role'); blank.removeAttribute('aria-label');
           blank.textContent = item.correct;
-          blank.classList.add(correct ? 'done-correct' : 'done-wrong');
+          blank.classList.add('is-filled', correct ? 'is-ok' : 'is-bad');
         }
         recordAnswer(item, correct, patternKey);
         sdFx(correct, buttons[i]);
@@ -1182,7 +1206,7 @@
           if (!DC.ui.motion.isReduced()) ctx.classList.add('press');
           DC.ui.announce('Rigtigt.');
           buildSlip(slip, true, item.correct, item.note, null);
-          window.setTimeout(advance, 800);
+          scheduleAdvance();
         } else {
           SOUND.wrong();
           DC.ui.announce('Forkert. Rigtigt svar: ' + item.correct);
@@ -1253,6 +1277,10 @@
     } else {
       slip.appendChild(actions);
       host.appendChild(slip);
+      // US-031: the answer controls are disabled now; keep focus inside the game
+      // (replay button) until the auto-advance renders the next item.
+      var keep = actions.querySelector('button');
+      if (keep) keep.focus();
     }
   }
 
@@ -1320,6 +1348,7 @@
         state.idx = 0;
         state.correct = 0;
         state.missed = [];
+        clearPending();
         show('play');
         renderItem();
       });
@@ -1334,7 +1363,6 @@
     actions.appendChild(home);
 
     el.sumHost.appendChild(actions);
-    again.focus();
     // celebration + mascot (visual only)
     var S = window.Sjovt;
     if (S){

@@ -43,7 +43,8 @@ html.sd-page header .header-buttons { display: flex; flex-wrap: wrap; gap: 12px;
 html.sd-page header .header-buttons button,
 html.sd-page #controls button,
 html.sd-page .modal-content button,
-html.sd-page #content > button {
+html.sd-page #content > button,
+html.sd-page #backToPracticeBtn {
   font-family: var(--sd-font-display); font-weight: 700; font-size: 16px; letter-spacing: .04em; text-transform: uppercase;
   min-height: 44px; min-width: 44px; padding: 10px 14px; margin: 4px; border: 0; border-radius: 0;
   background: var(--sd-primary); color: #101010; cursor: pointer;
@@ -51,8 +52,8 @@ html.sd-page #content > button {
   opacity: 1;
 }
 html.sd-page header .header-buttons button { margin: 4px 6px 8px; }
-html.sd-page header .header-buttons button:hover, html.sd-page .modal-content button:hover, html.sd-page #content > button:hover { background: var(--sd-cream); opacity: 1; }
-html.sd-page header .header-buttons button:active, html.sd-page .modal-content button:active, html.sd-page #content > button:active { transform: translateY(3px); }
+html.sd-page header .header-buttons button:hover, html.sd-page .modal-content button:hover, html.sd-page #content > button:hover, html.sd-page #backToPracticeBtn:hover { background: var(--sd-cream); opacity: 1; }
+html.sd-page header .header-buttons button:active, html.sd-page .modal-content button:active, html.sd-page #content > button:active, html.sd-page #backToPracticeBtn:active { transform: translateY(3px); }
 html.sd-page .modal-content button#cancelImportBtn, html.sd-page .modal-content button#closeSettingsBtn, html.sd-page .modal-content button#closeReviewBtn { background: var(--sd-cream); }
 
 /* ---- panels --------------------------------------------------------- */
@@ -79,7 +80,7 @@ html.sd-page #map button {
 html.sd-page #map button:hover:not(:disabled) { background: var(--sd-cream); color: #101010; }
 html.sd-page #map button.completed { background: var(--sd-ok-bg); color: var(--sd-text); box-shadow: var(--sd-box-ok); }
 html.sd-page #map button.completed::before { content: "✓ "; font-weight: 700; }
-html.sd-page #map button.locked { background: #CFC6AA; color: #3a3326; box-shadow: var(--sd-box); }
+html.sd-page #map button.locked { background: var(--sd-panel-2); color: var(--sd-text-soft); box-shadow: var(--sd-box); }
 html.sd-page #map button.locked::after { content: "LÅST"; display: block; font-size: 12px; font-family: var(--sd-font-body); }
 
 /* ---- game area ------------------------------------------------------ */
@@ -160,3 +161,21 @@ html.sd-page #reviewList li { padding: 8px 10px; margin: 6px 0; background: var(
   html.sd-page #dashboard .stat { flex: 1 1 40%; min-width: 120px; font-size: 18px; }
   html.sd-page header .header-buttons button { margin: 4px 4px 8px; padding: 10px 10px; font-size: 15px; }
 }
+
+/* ---- TTS replay + review/word-order additions ---------------------- */
+html.sd-page .tts-row { display: inline-block; margin-left: 8px; vertical-align: middle; }
+html.sd-page #reorderPreview { margin: 8px 4px; font-size: 17px; line-height: 1.5; min-height: 1.5em; }
+html.sd-page #reorderParts button[aria-pressed="true"] { outline: 3px solid var(--sd-ink); }
+html.sd-page #feedback .fb-note { margin-top: 6px; }
+html.sd-page #feedback .fb-hint { margin-top: 4px; font-weight: 400; opacity: .85; }
+html.sd-page .modal-content button.hidden { display: none; }
+html.sd-page .modal-content button:disabled { opacity: .5; cursor: not-allowed; }
+
+/* wrong-answer "Næste" control (the question waits for it) */
+html.sd-page #feedback .fb-next {
+  display: block; min-height: 48px; min-width: 120px; margin: 12px 0 0; padding: 10px 18px; border: 0; border-radius: 0;
+  font-family: var(--sd-font-body); font-weight: 700; font-size: 17px; background: var(--sd-primary); color: #101010;
+  box-shadow: var(--sd-box), var(--sd-bevel); cursor: pointer;
+}
+html.sd-page #feedback .fb-next:focus-visible { outline: 3px solid var(--sd-ink); outline-offset: 2px; }
+html.sd-page #feedback { scroll-margin-top: 72px; scroll-margin-bottom: 16px; }

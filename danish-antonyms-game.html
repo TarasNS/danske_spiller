@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Danske modsætninger — øv antonymer | Sjovt Dansk</title>
-<meta name="description" content="Lær danske modsætningsord gennem quiz og par-spil. Gratis ordforrådsøvelser på B1–B2-niveau." />
+<meta name="description" content="Lær danske modsætningsord gennem quiz og par-spil. Gratis ordforrådsøvelser på B1–C1-niveau." />
 <meta property="og:title" content="Danske modsætninger — øv antonymer | Sjovt Dansk" />
-<meta property="og:description" content="Lær danske modsætningsord gennem quiz og par-spil. Gratis ordforrådsøvelser på B1–B2-niveau." />
+<meta property="og:description" content="Lær danske modsætningsord gennem quiz og par-spil. Gratis ordforrådsøvelser på B1–C1-niveau." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://sjovtdansk.dk/danish-antonyms-game.html" />
 <meta property="og:locale" content="da_DK" />
@@ -24,7 +24,7 @@
     "name": "Sjovt Dansk"
   },
   "teaches": ["Antonymer", "Ordforråd", "Danske ord"],
-  "educationalLevel": "B1 B2",
+  "educationalLevel": "B1 B2 C1",
   "inLanguage": "da",
   "isAccessibleForFree": true
 }
@@ -195,12 +195,6 @@
   .prompt .word{font-size:2.4rem;font-weight:800;margin:6px 0;display:inline-flex;align-items:center;gap:10px}
   .prompt .sub{color:var(--muted);font-weight:600}
 
-  .speaker{
-    width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);
-    display:inline-grid;place-items:center;font-size:1.1rem;box-shadow:var(--shadow);flex:none;
-  }
-  .speaker.sm{width:30px;height:30px;font-size:.9rem}
-  .speaker:active{transform:scale(.92)}
 
   .options{display:grid;gap:12px;margin-top:16px}
   .options.two{grid-template-columns:1fr 1fr}
@@ -299,6 +293,7 @@
 <link rel="stylesheet" href="shared/sjovt.css">
 <script src="shared/sjovt.js"></script>
 <link rel="stylesheet" href="shared/themes/antonyms.css">
+<link rel="stylesheet" href="shared/tts-button.css">
 </head>
 <body>
 
@@ -316,8 +311,8 @@
     <div class="hud">
       <span class="chip level"><span class="ic" data-sd-sprite="pokal" data-scale="2" aria-hidden="true"></span><span id="hudLevel">Niv. 1</span></span>
       <span class="chip xp"><span class="ic" data-sd-sprite="stjerne" data-scale="2" aria-hidden="true"></span><span id="hudXP">0 XP</span></span>
-      <span class="chip streak"><span class="ic" data-sd-sprite="hjerte" data-scale="2" aria-hidden="true"></span><span id="hudStreak">0</span></span>
-      <span class="chip acc"><span class="ic" data-sd-sprite="flag" data-scale="1" aria-hidden="true"></span><span id="hudAcc">0%</span></span>
+      <span class="chip streak"><span class="ic" data-sd-sprite="molle" data-scale="2" aria-hidden="true"></span><span id="hudStreak">0</span></span>
+      <span class="chip acc"><span id="hudAcc">0%</span></span>
     </div>
     <div class="xpbar"><i id="xpFill"></i></div>
   </header>
@@ -330,7 +325,7 @@
     <!-- ===================== INTRO ===================== -->
     <section style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin: 16px 0; box-shadow: var(--shadow);">
       <h2 style="margin: 0 0 12px; font-size: 20px; font-weight: 800; color: var(--ink);">Danske Modsætninger</h2>
-      <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--muted);">Øv danske modsætningsord (antonymer) gennem quiz og par-spil. Lær ord, der betyder det modsatte, og styrk dit ordforråd på B1–B2-niveau.</p>
+      <p style="margin: 0; font-size: 15px; line-height: 1.55; color: var(--muted);">Øv danske modsætningsord (antonymer) gennem quiz og par-spil. Lær ord, der betyder det modsatte, og styrk dit ordforråd på B1–C1-niveau.</p>
     </section>
 
     <h2 class="section-title">Din fremgang</h2>
@@ -346,7 +341,7 @@
 
   <!-- ===================== CATEGORY PICKER ===================== -->
   <section id="screen-category" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Tilbage</button>
+    <button type="button" class="back-link" data-back>← TILBAGE</button>
     <div class="card">
       <h2 class="section-title first">Øv efter emne</h2>
       <div class="pills" id="categoryPills"></div>
@@ -356,7 +351,7 @@
 
   <!-- ===================== DIFFICULTY PICKER ===================== -->
   <section id="screen-difficulty" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Tilbage</button>
+    <button type="button" class="back-link" data-back>← TILBAGE</button>
     <div class="card">
       <h2 class="section-title first">Øv efter sværhedsgrad</h2>
       <div class="pills" id="difficultyPills"></div>
@@ -373,7 +368,7 @@
       <span class="timer hidden" id="speedTimer">60</span>
     </div>
     <div id="playArea"></div>
-    <div id="feedbackArea"></div>
+    <div id="feedbackArea" tabindex="-1"></div>
     <div style="margin-top:16px" class="hidden" id="nextWrap">
       <button class="btn block alt" id="nextBtn">Fortsæt →</button>
     </div>
@@ -394,7 +389,7 @@
 
   <!-- ===================== REVIEW SCREEN ===================== -->
   <section id="screen-review" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Tilbage</button>
+    <button type="button" class="back-link" data-back>← TILBAGE</button>
     <div class="card">
       <div class="row between">
         <h2 class="section-title first" style="margin:0">Gennemgang og fejl</h2>
@@ -409,13 +404,9 @@
 
   <!-- ===================== SETTINGS SCREEN ===================== -->
   <section id="screen-settings" class="screen hidden">
-    <button type="button" class="back-link" data-back>← Tilbage</button>
+    <button type="button" class="back-link" data-back>← TILBAGE</button>
     <div class="card">
       <h2 class="section-title first">Indstillinger</h2>
-      <div class="toggle-row">
-        <div><div class="t">Lyd og udtale</div><div class="d">Læs danske ord og sætninger højt</div></div>
-        <span class="switch"><input type="checkbox" id="setSound"><label for="setSound"></label></span>
-      </div>
       <div class="toggle-row">
         <div><div class="t">Vis eksempelsætninger</div><div class="d">Vis eksempler, når du har svaret</div></div>
         <span class="switch"><input type="checkbox" id="setExamples"><label for="setExamples"></label></span>
@@ -474,13 +465,10 @@ const ANTONYMS = [
   {wordA:"dyb",wordB:"lavvandet",enA:"deep",enB:"shallow",category:"Size",difficulty:"Medium",exampleA:"Søen er meget dyb.",exampleB:"Bugten er lavvandet."},
   {wordA:"fed",wordB:"mager",enA:"fat",enB:"skinny",category:"Everyday adjectives",difficulty:"Medium",exampleA:"Grisen er fed.",exampleB:"Katten er mager."},
   {wordA:"hvid",wordB:"sort",enA:"white",enB:"black",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Sneen er hvid.",exampleB:"Kullet er sort."},
-  {wordA:"rød",wordB:"blå",enA:"red",enB:"blue",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Æblet er rødt.",exampleB:"Himlen er blå."},
-  {wordA:"gul",wordB:"lilla",enA:"yellow",enB:"purple",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Solen er gul.",exampleB:"Blomsten er lilla."},
   {wordA:"mørk",wordB:"lys",enA:"dark",enB:"light",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Kælderen er mørk.",exampleB:"Stuen er lys."},
   {wordA:"klar",wordB:"mat",enA:"bright",enB:"dull",category:"Quality",difficulty:"Medium",exampleA:"Lyset er klart.",exampleB:"Farven virker mat."},
   {wordA:"varm",wordB:"kold",enA:"hot",enB:"cold",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Suppen er varm.",exampleB:"Vandet er koldt."},
   {wordA:"lun",wordB:"kølig",enA:"warm",enB:"cool",category:"Everyday adjectives",difficulty:"Medium",exampleA:"Vejret er lunt i dag.",exampleB:"Aftenen er kølig."},
-  {wordA:"brændende",wordB:"frysende",enA:"burning",enB:"freezing",category:"Quality",difficulty:"Hard",exampleA:"Sandet er brændende varmt.",exampleB:"Vandet er frysende koldt."},
   {wordA:"dag",wordB:"nat",enA:"day",enB:"night",category:"Time",difficulty:"Easy",exampleA:"Det er lys dag.",exampleB:"Det er mørk nat."},
   {wordA:"morgen",wordB:"aften",enA:"morning",enB:"evening",category:"Time",difficulty:"Easy",exampleA:"Jeg løber om morgenen.",exampleB:"Vi spiser om aftenen."},
   {wordA:"tidlig",wordB:"sen",enA:"early",enB:"late",category:"Time",difficulty:"Medium",exampleA:"Jeg står tidligt op.",exampleB:"Han kom sent."},
@@ -504,12 +492,11 @@ const ANTONYMS = [
   {wordA:"frem",wordB:"tilbage",enA:"forward",enB:"backward",category:"Direction",difficulty:"Medium",exampleA:"Gå et skridt frem.",exampleB:"Han trådte tilbage."},
   {wordA:"ind",wordB:"ud",enA:"in",enB:"out",category:"Direction",difficulty:"Easy",exampleA:"Kom ind i huset.",exampleB:"Gå ud i haven."},
   {wordA:"venstre",wordB:"højre",enA:"left",enB:"right",category:"Direction",difficulty:"Easy",exampleA:"Drej til venstre.",exampleB:"Drej til højre."},
-  {wordA:"nær",wordB:"fjern",enA:"near",enB:"far",category:"Direction",difficulty:"Medium",exampleA:"Skolen ligger nær.",exampleB:"Byen er fjern herfra."},
+  {wordA:"nær",wordB:"fjern",enA:"near",enB:"far",category:"Direction",difficulty:"Medium",exampleA:"Vi bor nær skolen.",exampleB:"Byen er fjern herfra."},
   {wordA:"over",wordB:"under",enA:"above",enB:"below",category:"Direction",difficulty:"Medium",exampleA:"Lampen hænger over bordet.",exampleB:"Katten sover under bordet."},
   {wordA:"foran",wordB:"bag",enA:"front",enB:"back",category:"Direction",difficulty:"Medium",exampleA:"Bilen holder foran huset.",exampleB:"Haven ligger bag huset."},
   {wordA:"god",wordB:"dårlig",enA:"good",enB:"bad",category:"Quality",difficulty:"Easy",exampleA:"Maden er god.",exampleB:"Vejret er dårligt."},
   {wordA:"smuk",wordB:"grim",enA:"beautiful",enB:"ugly",category:"Quality",difficulty:"Medium",exampleA:"Hun er meget smuk.",exampleB:"Bygningen er grim."},
-  {wordA:"pæn",wordB:"frygtelig",enA:"pretty",enB:"hideous",category:"Quality",difficulty:"Medium",exampleA:"Kjolen er pæn.",exampleB:"Lugten var frygtelig."},
   {wordA:"rigtig",wordB:"forkert",enA:"right",enB:"wrong",category:"Quality",difficulty:"Easy",exampleA:"Svaret er rigtigt.",exampleB:"Det var et forkert valg."},
   {wordA:"sand",wordB:"falsk",enA:"true",enB:"false",category:"Other",difficulty:"Medium",exampleA:"Historien er sand.",exampleB:"Påstanden er falsk."},
   {wordA:"retfærdig",wordB:"uretfærdig",enA:"fair",enB:"unfair",category:"Quality",difficulty:"Medium",exampleA:"Dommen var retfærdig.",exampleB:"Reglen er uretfærdig."},
@@ -527,7 +514,7 @@ const ANTONYMS = [
   {wordA:"åben",wordB:"lukket",enA:"open",enB:"closed",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Butikken er åben.",exampleB:"Døren er lukket."},
   {wordA:"starte",wordB:"stoppe",enA:"to start",enB:"to stop",category:"Verbs",difficulty:"Easy",exampleA:"Vi starter nu.",exampleB:"Bussen stopper her."},
   {wordA:"begynde",wordB:"slutte",enA:"to begin",enB:"to end",category:"Verbs",difficulty:"Easy",exampleA:"Filmen begynder klokken otte.",exampleB:"Mødet slutter snart."},
-  {wordA:"komme",wordB:"gå",enA:"to come",enB:"to go",category:"Verbs",difficulty:"Easy",exampleA:"Kom her hen.",exampleB:"Vi skal gå nu."},
+  {wordA:"komme",wordB:"gå",enA:"to come",enB:"to go",category:"Verbs",difficulty:"Easy",exampleA:"Kom herhen.",exampleB:"Vi skal gå nu."},
   {wordA:"give",wordB:"tage",enA:"to give",enB:"to take",category:"Verbs",difficulty:"Easy",exampleA:"Giv mig bogen.",exampleB:"Tag din jakke med."},
   {wordA:"sidde",wordB:"stå",enA:"to sit",enB:"to stand",category:"Verbs",difficulty:"Easy",exampleA:"Sæt dig ned og sid.",exampleB:"Han blev ved med at stå."},
   {wordA:"stige",wordB:"falde",enA:"to rise",enB:"to fall",category:"Movement",difficulty:"Medium",exampleA:"Priserne stiger.",exampleB:"Bladene falder."},
@@ -543,14 +530,12 @@ const ANTONYMS = [
   {wordA:"rig",wordB:"fattig",enA:"rich",enB:"poor",category:"Everyday adjectives",difficulty:"Medium",exampleA:"Manden er meget rig.",exampleB:"Familien er fattig."},
   {wordA:"succes",wordB:"fiasko",enA:"success",enB:"failure",category:"Other",difficulty:"Hard",exampleA:"Projektet blev en succes.",exampleB:"Forsøget endte i fiasko."},
   {wordA:"lovlig",wordB:"ulovlig",enA:"legal",enB:"illegal",category:"Other",difficulty:"Medium",exampleA:"Det er fuldt lovligt.",exampleB:"Handlingen er ulovlig."},
-  {wordA:"retfærdig",wordB:"uretfærdig",enA:"just",enB:"unjust",category:"Quality",difficulty:"Medium",exampleA:"Loven er retfærdig.",exampleB:"Straffen var uretfærdig."},
   {wordA:"mulig",wordB:"umulig",enA:"possible",enB:"impossible",category:"Other",difficulty:"Medium",exampleA:"Det er stadig muligt.",exampleB:"Opgaven virker umulig."},
   {wordA:"svær",wordB:"let",enA:"difficult",enB:"easy",category:"Everyday adjectives",difficulty:"Medium",exampleA:"Eksamen var svær.",exampleB:"Opgaven er let."},
-  {wordA:"simpel",wordB:"kompleks",enA:"simple",enB:"complex",category:"Quality",difficulty:"Medium",exampleA:"Løsningen er simpel.",exampleB:"Systemet er kompleks."},
+  {wordA:"simpel",wordB:"kompleks",enA:"simple",enB:"complex",category:"Quality",difficulty:"Medium",exampleA:"Løsningen er simpel.",exampleB:"Systemet er komplekst."},
   {wordA:"indre",wordB:"ydre",enA:"inner",enB:"outer",category:"Other",difficulty:"Hard",exampleA:"Hendes indre ro smitter.",exampleB:"Hans ydre fremtoning er rolig."},
   {wordA:"indvendig",wordB:"udvendig",enA:"interior",enB:"exterior",category:"Other",difficulty:"Hard",exampleA:"Det indvendige rum er lyst.",exampleB:"Den udvendige mur er hvid."},
   {wordA:"silkeblød",wordB:"ujævn",enA:"silky",enB:"bumpy",category:"Quality",difficulty:"Hard",exampleA:"Huden er silkeblød.",exampleB:"Vejen er ujævn."},
-  {wordA:"luftig",wordB:"pigget",enA:"fluffy",enB:"spiky",category:"Quality",difficulty:"Hard",exampleA:"Skyen ser luftig ud.",exampleB:"Kaktussen er pigget."},
   {wordA:"sød",wordB:"sur",enA:"sweet",enB:"sour",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Kagen er sød.",exampleB:"Citronen er sur."},
   {wordA:"bitter",wordB:"mild",enA:"bitter",enB:"bland",category:"Quality",difficulty:"Medium",exampleA:"Kaffen smager bittert.",exampleB:"Saucen er mild."},
   {wordA:"duftende",wordB:"stinkende",enA:"fragrant",enB:"stinky",category:"Quality",difficulty:"Hard",exampleA:"Roserne er duftende.",exampleB:"Skraldet er stinkende."},
@@ -562,12 +547,12 @@ const ANTONYMS = [
   {wordA:"altid",wordB:"aldrig",enA:"always",enB:"never",category:"Adverbs",difficulty:"Medium",exampleA:"Jeg er altid glad.",exampleB:"Han er aldrig sur."},
   {wordA:"intens",wordB:"mild",enA:"intense",enB:"mild",category:"Quality",difficulty:"Hard",exampleA:"Smerten var intens.",exampleB:"Klimaet er mildt."},
   {wordA:"ekstrem",wordB:"moderat",enA:"extreme",enB:"moderate",category:"Quality",difficulty:"Hard",exampleA:"Vejret var ekstremt.",exampleB:"Han drikker moderat."},
-  {wordA:"tilstødende",wordB:"fjern",enA:"adjacent",enB:"distant",category:"Direction",difficulty:"Hard",exampleA:"Værelset er tilstødende køkkenet.",exampleB:"Byen ligger fjern herfra."},
+  {wordA:"tilstødende",wordB:"fjern",enA:"adjacent",enB:"distant",category:"Direction",difficulty:"Hard",exampleA:"Køkkenet har et tilstødende værelse.",exampleB:"Byen ligger fjern herfra."},
   {wordA:"klar",wordB:"vag",enA:"clear",enB:"vague",category:"Quality",difficulty:"Medium",exampleA:"Beskeden var klar.",exampleB:"Svaret var vagt."},
   {wordA:"tydelig",wordB:"sløret",enA:"distinct",enB:"blurry",category:"Quality",difficulty:"Medium",exampleA:"Billedet er tydeligt.",exampleB:"Fotoet er sløret."},
   {wordA:"sandfærdig",wordB:"bedragerisk",enA:"truthful",enB:"deceptive",category:"Personality",difficulty:"Hard",exampleA:"Han gav et sandfærdigt svar.",exampleB:"Reklamen var bedragerisk."},
   {wordA:"dydig",wordB:"syndig",enA:"virtuous",enB:"sinful",category:"Personality",difficulty:"Hard",exampleA:"Hun levede et dydigt liv.",exampleB:"Han følte sig syndig."},
-  {wordA:"favorit",wordB:"hadet",enA:"favorite",enB:"hated",category:"Feelings",difficulty:"Medium",exampleA:"Det er min favorit film.",exampleB:"Han er den mest hadede chef."},
+  {wordA:"favorit",wordB:"hadet",enA:"favorite",enB:"hated",category:"Feelings",difficulty:"Medium",exampleA:"Den film er min favorit.",exampleB:"Han er den mest hadede chef."},
   {wordA:"smart",wordB:"dum",enA:"smart",enB:"stupid",category:"Personality",difficulty:"Easy",exampleA:"Hun er meget smart.",exampleB:"Det var en dum idé."},
   {wordA:"vis",wordB:"tåbelig",enA:"wise",enB:"foolish",category:"Personality",difficulty:"Hard",exampleA:"Den gamle mand er vis.",exampleB:"Planen var tåbelig."},
   {wordA:"tilregnelig",wordB:"sindssyg",enA:"sane",enB:"insane",category:"Personality",difficulty:"Hard",exampleA:"Lægen erklærede ham tilregnelig.",exampleB:"Planen lød sindssyg."},
@@ -576,14 +561,13 @@ const ANTONYMS = [
   {wordA:"gavmild",wordB:"nærig",enA:"generous",enB:"stingy",category:"Personality",difficulty:"Hard",exampleA:"Han er meget gavmild.",exampleB:"Hun er lidt nærig."},
   {wordA:"ærlig",wordB:"uærlig",enA:"honest",enB:"dishonest",category:"Personality",difficulty:"Medium",exampleA:"Han er en ærlig mand.",exampleB:"Det er uærligt at lyve."},
   {wordA:"entusiastisk",wordB:"apatisk",enA:"enthusiastic",enB:"apathetic",category:"Personality",difficulty:"Hard",exampleA:"Hun var entusiastisk over jobbet.",exampleB:"Han virkede apatisk."},
-  {wordA:"ivrig",wordB:"modvillig",enA:"eager",enB:"reluctant",category:"Personality",difficulty:"Hard",exampleA:"Drengen var ivrig efter at starte.",exampleB:"Hun var modvillig til at hjælpe."},
+  {wordA:"ivrig",wordB:"modvillig",enA:"eager",enB:"reluctant",category:"Personality",difficulty:"Hard",exampleA:"Drengen var ivrig efter at starte.",exampleB:"Hun var modvillig og ville helst ikke hjælpe."},
   {wordA:"vinder",wordB:"taber",enA:"winner",enB:"loser",category:"Other",difficulty:"Medium",exampleA:"Hun blev kåret som vinder.",exampleB:"Han følte sig som en taber."},
   {wordA:"allieret",wordB:"fjendtlig",enA:"allied",enB:"hostile",category:"Other",difficulty:"Hard",exampleA:"Landene er allierede.",exampleB:"Stemningen var fjendtlig."},
   {wordA:"ven",wordB:"fjende",enA:"friend",enB:"enemy",category:"Other",difficulty:"Easy",exampleA:"Han er min bedste ven.",exampleB:"De blev fjender."},
   {wordA:"kærlighed",wordB:"fjendskab",enA:"love",enB:"enmity",category:"Feelings",difficulty:"Hard",exampleA:"Kærlighed bandt dem sammen.",exampleB:"Fjendskab splittede familien."},
   {wordA:"rentabel",wordB:"urentabel",enA:"profitable",enB:"unprofitable",category:"Other",difficulty:"Hard",exampleA:"Forretningen er rentabel.",exampleB:"Projektet blev urentabelt."},
   {wordA:"overkommelig",wordB:"dyr",enA:"affordable",enB:"expensive",category:"Quality",difficulty:"Medium",exampleA:"Lejligheden er overkommelig.",exampleB:"Bilen er dyr."},
-  {wordA:"økonomi",wordB:"luksus",enA:"budget",enB:"luxury",category:"Other",difficulty:"Medium",exampleA:"Vi rejser på økonomi.",exampleB:"Hotellet er ren luksus."},
   {wordA:"i form",wordB:"ude af form",enA:"fit",enB:"unfit",category:"Other",difficulty:"Medium",exampleA:"Han er virkelig i form.",exampleB:"Jeg er helt ude af form."},
   {wordA:"næringsrig",wordB:"næringsfattig",enA:"nutritious",enB:"empty of nutrients",category:"Quality",difficulty:"Hard",exampleA:"Grøntsager er næringsrige.",exampleB:"Slik er næringsfattigt."},
   {wordA:"fremgang",wordB:"tilbagegang",enA:"progress",enB:"regress",category:"Other",difficulty:"Hard",exampleA:"Virksomheden viser fremgang.",exampleB:"Salget er i tilbagegang."},
@@ -591,7 +575,6 @@ const ANTONYMS = [
   {wordA:"fokus",wordB:"distraktion",enA:"focus",enB:"distraction",category:"Other",difficulty:"Medium",exampleA:"Hun arbejder med fuldt fokus.",exampleB:"Telefonen er en distraktion."},
   {wordA:"opmærksom",wordB:"forsømmelig",enA:"attentive",enB:"negligent",category:"Personality",difficulty:"Hard",exampleA:"Læreren er meget opmærksom.",exampleB:"Han var forsømmelig med arbejdet."},
   {wordA:"væsentlig",wordB:"ubetydelig",enA:"significant",enB:"insignificant",category:"Quality",difficulty:"Hard",exampleA:"Det er en væsentlig forskel.",exampleB:"Fejlen var ubetydelig."},
-  {wordA:"større",wordB:"mindre",enA:"major",enB:"minor",category:"Quantity",difficulty:"Medium",exampleA:"Det er et større problem.",exampleB:"Det er kun en mindre fejl."},
   {wordA:"overlegen",wordB:"underlegen",enA:"superior",enB:"inferior",category:"Other",difficulty:"Hard",exampleA:"Holdet var overlegent.",exampleB:"Modstanderen virkede underlegen."},
   {wordA:"dominerende",wordB:"underdanig",enA:"dominant",enB:"submissive",category:"Personality",difficulty:"Hard",exampleA:"Han har en dominerende stil.",exampleB:"Hunden var underdanig."},
   {wordA:"vild",wordB:"tam",enA:"wild",enB:"tame",category:"Quality",difficulty:"Medium",exampleA:"Ulven er vild.",exampleB:"Kaninen er tam."},
@@ -601,7 +584,6 @@ const ANTONYMS = [
   {wordA:"fredelig",wordB:"hektisk",enA:"peaceful",enB:"hectic",category:"Quality",difficulty:"Medium",exampleA:"Landsbyen er fredelig.",exampleB:"Hverdagen er hektisk."},
   {wordA:"afslappende",wordB:"stressende",enA:"relaxing",enB:"stressful",category:"Quality",difficulty:"Medium",exampleA:"Ferien var afslappende.",exampleB:"Eksamen var stressende."},
   {wordA:"strålende",wordB:"mat",enA:"brilliant",enB:"dull",category:"Quality",difficulty:"Medium",exampleA:"Solen skinner strålende.",exampleB:"Lyset var mat."},
-  {wordA:"dygtig",wordB:"langsom",enA:"clever",enB:"slow",category:"Personality",difficulty:"Medium",exampleA:"Hun er meget dygtig.",exampleB:"Han er lidt langsom."},
   {wordA:"snakkesalig",wordB:"tavs",enA:"talkative",enB:"silent",category:"Personality",difficulty:"Hard",exampleA:"Hun er meget snakkesalig.",exampleB:"Han forblev tavs."},
   {wordA:"verbal",wordB:"nonverbal",enA:"verbal",enB:"nonverbal",category:"Other",difficulty:"Hard",exampleA:"Det var en verbal aftale.",exampleB:"Han brugte nonverbal kommunikation."},
   {wordA:"bestemt",wordB:"genert",enA:"assertive",enB:"timid",category:"Personality",difficulty:"Medium",exampleA:"Hun talte bestemt.",exampleB:"Drengen var genert."},
@@ -611,20 +593,17 @@ const ANTONYMS = [
   {wordA:"passioneret",wordB:"kold",enA:"passionate",enB:"cold",category:"Feelings",difficulty:"Hard",exampleA:"Hun talte passioneret om sagen.",exampleB:"Hans svar var koldt."},
   {wordA:"entusiastisk",wordB:"ligegyldig",enA:"enthusiastic",enB:"indifferent",category:"Feelings",difficulty:"Hard",exampleA:"Han var entusiastisk over rejsen.",exampleB:"Hun virkede ligegyldig."},
   {wordA:"stabil",wordB:"ustabil",enA:"stable",enB:"unstable",category:"Quality",difficulty:"Medium",exampleA:"Økonomien er stabil.",exampleB:"Situationen er ustabil."},
-  {wordA:"stabil",wordB:"rystende",enA:"steady",enB:"shaky",category:"Quality",difficulty:"Medium",exampleA:"Bordet står stabilt.",exampleB:"Stigen var rystende."},
   {wordA:"elegant",wordB:"akavet",enA:"elegant",enB:"awkward",category:"Quality",difficulty:"Medium",exampleA:"Kjolen er elegant.",exampleB:"Situationen var akavet."},
   {wordA:"graciøs",wordB:"klodset",enA:"graceful",enB:"clumsy",category:"Quality",difficulty:"Hard",exampleA:"Danseren var graciøs.",exampleB:"Han er lidt klodset."},
   {wordA:"flydende",wordB:"hakkende",enA:"fluent",enB:"halting",category:"Quality",difficulty:"Hard",exampleA:"Hun taler flydende dansk.",exampleB:"Hans tale var hakkende."},
   {wordA:"solid",wordB:"skrøbelig",enA:"solid",enB:"fragile",category:"Quality",difficulty:"Medium",exampleA:"Møblet er solidt.",exampleB:"Vasen er skrøbelig."},
   {wordA:"stiv",wordB:"fleksibel",enA:"rigid",enB:"flexible",category:"Quality",difficulty:"Medium",exampleA:"Reglerne er stive.",exampleB:"Planen er fleksibel."},
-  {wordA:"lys",wordB:"mørk",enA:"bright",enB:"dark",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Værelset er lyst.",exampleB:"Kælderen er mørk."},
   {wordA:"oplyst",wordB:"skyggefuld",enA:"illuminated",enB:"shadowy",category:"Quality",difficulty:"Hard",exampleA:"Scenen var oplyst.",exampleB:"Gyden var skyggefuld."},
   {wordA:"behagelig",wordB:"ubehagelig",enA:"pleasant",enB:"unpleasant",category:"Quality",difficulty:"Medium",exampleA:"Vejret er behageligt.",exampleB:"Lugten var ubehagelig."},
   {wordA:"frisk",wordB:"gammel",enA:"fresh",enB:"stale",category:"Quality",difficulty:"Easy",exampleA:"Brødet er frisk.",exampleB:"Brødet er blevet gammelt."},
   {wordA:"lækker",wordB:"ulækker",enA:"delicious",enB:"disgusting",category:"Everyday adjectives",difficulty:"Easy",exampleA:"Maden smager lækkert.",exampleB:"Lugten var ulækker."},
   {wordA:"velsmagende",wordB:"fad",enA:"savory",enB:"bland",category:"Quality",difficulty:"Hard",exampleA:"Suppen er velsmagende.",exampleB:"Risen smagte fad."},
   {wordA:"mør",wordB:"sej",enA:"tender",enB:"tough",category:"Quality",difficulty:"Medium",exampleA:"Kødet er mørt.",exampleB:"Bøffen var sej."},
-  {wordA:"skarp",wordB:"sløret",enA:"sharp",enB:"blurred",category:"Quality",difficulty:"Medium",exampleA:"Kniven er skarp.",exampleB:"Billedet er sløret."},
   {wordA:"musikalsk",wordB:"disharmonisk",enA:"musical",enB:"discordant",category:"Quality",difficulty:"Hard",exampleA:"Sangen lyder musikalsk.",exampleB:"Akkorden var disharmonisk."},
   {wordA:"melodisk",wordB:"skinger",enA:"melodic",enB:"harsh",category:"Quality",difficulty:"Hard",exampleA:"Stemmen er melodisk.",exampleB:"Lyden var skinger."},
   {wordA:"center",wordB:"kant",enA:"center",enB:"edge",category:"Direction",difficulty:"Medium",exampleA:"Bordet står i centrum.",exampleB:"Han sad helt ude i kanten."},
@@ -634,7 +613,7 @@ const ANTONYMS = [
   {wordA:"øge",wordB:"mindske",enA:"to increase",enB:"to decrease",category:"Verbs",difficulty:"Medium",exampleA:"Vi vil øge salget.",exampleB:"De vil mindske udgifterne."},
   {wordA:"udvide",wordB:"skrumpe",enA:"to expand",enB:"to shrink",category:"Verbs",difficulty:"Medium",exampleA:"Firmaet vil udvide.",exampleB:"Markedet begyndte at skrumpe."},
   {wordA:"identisk",wordB:"forskellig",enA:"identical",enB:"different",category:"Quality",difficulty:"Medium",exampleA:"De to tasker er identiske.",exampleB:"Meningerne er forskellige."},
-  {wordA:"lignende",wordB:"uensartet",enA:"similar",enB:"dissimilar",category:"Quality",difficulty:"Hard",exampleA:"Husene er lignende.",exampleB:"Stilene er uensartede."},
+  {wordA:"lignende",wordB:"uensartet",enA:"similar",enB:"dissimilar",category:"Quality",difficulty:"Hard",exampleA:"Vi har lignende huse.",exampleB:"Stilene er uensartede."},
   {wordA:"samme",wordB:"modsat",enA:"same",enB:"opposite",category:"Other",difficulty:"Medium",exampleA:"Vi har samme mening.",exampleB:"Hun har den modsatte holdning."},
   {wordA:"intern",wordB:"ekstern",enA:"internal",enB:"external",category:"Other",difficulty:"Hard",exampleA:"Det er et internt møde.",exampleB:"Vi har en ekstern konsulent."},
   {wordA:"kort",wordB:"udvidet",enA:"brief",enB:"extended",category:"Time",difficulty:"Medium",exampleA:"Mødet var kort.",exampleB:"Vi fik en udvidet frist."},
@@ -652,12 +631,10 @@ const ANTONYMS = [
   {wordA:"rigelig",wordB:"knap",enA:"abundant",enB:"scarce",category:"Quantity",difficulty:"Hard",exampleA:"Maden var rigelig.",exampleB:"Vandet er knapt."},
   {wordA:"overskud",wordB:"underskud",enA:"surplus",enB:"deficit",category:"Other",difficulty:"Hard",exampleA:"Firmaet har overskud i år.",exampleB:"Budgettet har et underskud."},
   {wordA:"vinde",wordB:"opgive",enA:"to gain",enB:"to relinquish",category:"Verbs",difficulty:"Medium",exampleA:"Vi vil vinde indflydelse.",exampleB:"Han måtte opgive sin titel."},
-  {wordA:"beholde",wordB:"forlade",enA:"to keep",enB:"to abandon",category:"Verbs",difficulty:"Medium",exampleA:"Jeg vil beholde huset.",exampleB:"Han måtte forlade byen."},
   {wordA:"aktiv",wordB:"passiv",enA:"active",enB:"passive",category:"Quality",difficulty:"Medium",exampleA:"Hun er meget aktiv.",exampleB:"Han er ret passiv."},
   {wordA:"dynamisk",wordB:"statisk",enA:"dynamic",enB:"static",category:"Quality",difficulty:"Hard",exampleA:"Teamet er dynamisk.",exampleB:"Situationen er statisk."},
-  {wordA:"hel",wordB:"delvis",enA:"whole",enB:"partial",category:"Quantity",difficulty:"Medium",exampleA:"Han spiste den hele kage.",exampleB:"Vi fik kun delvis betaling."},
+  {wordA:"hel",wordB:"delvis",enA:"whole",enB:"partial",category:"Quantity",difficulty:"Medium",exampleA:"Han spiste hele kagen.",exampleB:"Vi fik kun delvis betaling."},
   {wordA:"komplet",wordB:"ufuldstændig",enA:"complete",enB:"incomplete",category:"Quality",difficulty:"Medium",exampleA:"Listen er komplet.",exampleB:"Rapporten er ufuldstændig."},
-  {wordA:"alvorlig",wordB:"mild",enA:"severe",enB:"mild",category:"Quality",difficulty:"Medium",exampleA:"Sygdommen var alvorlig.",exampleB:"Symptomerne var milde."},
   {wordA:"intens",wordB:"afslappet",enA:"intense",enB:"relaxed",category:"Quality",difficulty:"Medium",exampleA:"Træningen var intens.",exampleB:"Stemningen var afslappet."},
   {wordA:"massiv",wordB:"lille",enA:"massive",enB:"tiny",category:"Size",difficulty:"Medium",exampleA:"Bygningen er massiv.",exampleB:"Insektet er lille."},
   {wordA:"enorm",wordB:"mikroskopisk",enA:"enormous",enB:"microscopic",category:"Size",difficulty:"Hard",exampleA:"Elefanten er enorm.",exampleB:"Bakterien er mikroskopisk."},
@@ -669,7 +646,6 @@ const ANTONYMS = [
   {wordA:"sikker",wordB:"tvivlsom",enA:"sure",enB:"doubtful",category:"Quality",difficulty:"Medium",exampleA:"Han er sikker i sin sag.",exampleB:"Resultatet er tvivlsomt."},
   {wordA:"selvsikker",wordB:"usikker",enA:"confident",enB:"unsure",category:"Personality",difficulty:"Medium",exampleA:"Hun virker selvsikker.",exampleB:"Han er usikker på sig selv."},
   {wordA:"gunstig",wordB:"ugunstig",enA:"favorable",enB:"unfavorable",category:"Quality",difficulty:"Hard",exampleA:"Vilkårene er gunstige.",exampleB:"Vejret var ugunstigt."},
-  {wordA:"lovende",wordB:"ulovende",enA:"promising",enB:"unpromising",category:"Quality",difficulty:"Hard",exampleA:"Resultatet ser lovende ud.",exampleB:"Starten var ulovende."},
   {wordA:"detaljeret",wordB:"vag",enA:"detailed",enB:"vague",category:"Quality",difficulty:"Hard",exampleA:"Planen er detaljeret.",exampleB:"Beskrivelsen er vag."},
   {wordA:"specifik",wordB:"generel",enA:"specific",enB:"general",category:"Quality",difficulty:"Medium",exampleA:"Giv mig et specifikt eksempel.",exampleB:"Det er en generel regel."},
   {wordA:"troværdig",wordB:"upålidelig",enA:"trustworthy",enB:"unreliable",category:"Personality",difficulty:"Hard",exampleA:"Han er en troværdig kilde.",exampleB:"Bilen er upålidelig."},
@@ -684,7 +660,7 @@ const ANTONYMS = [
   {wordA:"pletfri",wordB:"plettet",enA:"spotless",enB:"stained",category:"Quality",difficulty:"Hard",exampleA:"Bordet er pletfrit.",exampleB:"Dugen er plettet."},
   {wordA:"beskeden",wordB:"pralende",enA:"modest",enB:"boastful",category:"Personality",difficulty:"Hard",exampleA:"Hun er meget beskeden.",exampleB:"Han er pralende af natur."},
   {wordA:"venlig",wordB:"grusom",enA:"kind",enB:"cruel",category:"Personality",difficulty:"Medium",exampleA:"Hun er altid venlig.",exampleB:"Han var grusom mod dyrene."},
-  {wordA:"sympatisk",wordB:"ligegyldig",enA:"sympathetic",enB:"indifferent",category:"Personality",difficulty:"Hard",exampleA:"Lægen var sympatisk.",exampleB:"Han virkede ligegyldig."},
+  {wordA:"sympatisk",wordB:"usympatisk",enA:"likeable",enB:"unlikeable",category:"Personality",difficulty:"Hard",exampleA:"Lægen var sympatisk.",exampleB:"Chefen virkede usympatisk."},
   {wordA:"omsorgsfuld",wordB:"forsømmelig",enA:"caring",enB:"neglectful",category:"Personality",difficulty:"Hard",exampleA:"Hun er en omsorgsfuld mor.",exampleB:"Faren var forsømmelig."},
   {wordA:"loyal",wordB:"forræderisk",enA:"loyal",enB:"treacherous",category:"Personality",difficulty:"Hard",exampleA:"Hunden er loyal.",exampleB:"Vennen var forræderisk."},
   {wordA:"trofast",wordB:"utro",enA:"faithful",enB:"unfaithful",category:"Personality",difficulty:"Medium",exampleA:"Han er trofast mod hende.",exampleB:"Hun var utro mod ham."},
@@ -693,7 +669,7 @@ const ANTONYMS = [
   {wordA:"munter",wordB:"melankolsk",enA:"cheerful",enB:"melancholy",category:"Feelings",difficulty:"Hard",exampleA:"Hun er altid munter.",exampleB:"Sangen lyder melankolsk."},
   {wordA:"lystig",wordB:"dyster",enA:"jolly",enB:"somber",category:"Feelings",difficulty:"Hard",exampleA:"Festen var lystig.",exampleB:"Stemningen blev dyster."},
   {wordA:"livlig",wordB:"kedelig",enA:"lively",enB:"dull",category:"Feelings",difficulty:"Medium",exampleA:"Barnet er livligt.",exampleB:"Foredraget var kedeligt."},
-  {wordA:"levende",wordB:"bleg",enA:"vibrant",enB:"pale",category:"Quality",difficulty:"Medium",exampleA:"Farverne er levende.",exampleB:"Hendes ansigt var bleg."},
+  {wordA:"levende",wordB:"bleg",enA:"vibrant",enB:"pale",category:"Quality",difficulty:"Medium",exampleA:"Farverne er levende.",exampleB:"Hendes ansigt var blegt."},
   {wordA:"udadvendt",wordB:"reserveret",enA:"outgoing",enB:"reserved",category:"Personality",difficulty:"Hard",exampleA:"Hun er meget udadvendt.",exampleB:"Han er ret reserveret."},
   {wordA:"opmærksom",wordB:"tungnem",enA:"perceptive",enB:"obtuse",category:"Personality",difficulty:"Hard",exampleA:"Læreren er opmærksom på detaljer.",exampleB:"Han virkede tungnem."},
   {wordA:"indsigtsfuld",wordB:"overfladisk",enA:"insightful",enB:"shallow",category:"Personality",difficulty:"Hard",exampleA:"Hendes kommentar var indsigtsfuld.",exampleB:"Samtalen var overfladisk."},
@@ -708,7 +684,6 @@ const ANTONYMS = [
   {wordA:"kraftfuld",wordB:"svagelig",enA:"vigorous",enB:"feeble",category:"Quality",difficulty:"Hard",exampleA:"Motoren er kraftfuld.",exampleB:"Den gamle mand er svagelig."},
   {wordA:"skinger",wordB:"dyb",enA:"shrill",enB:"deep",category:"Quality",difficulty:"Hard",exampleA:"Stemmen var skinger.",exampleB:"Hans stemme er dyb."},
   {wordA:"prikkende",wordB:"følelsesløs",enA:"tingling",enB:"numb",category:"Quality",difficulty:"Hard",exampleA:"Foden føltes prikkende.",exampleB:"Hånden var følelsesløs."},
-  {wordA:"kløende",wordB:"glat",enA:"itchy",enB:"smooth",category:"Quality",difficulty:"Hard",exampleA:"Trøjen er kløende.",exampleB:"Stoffet er glat."},
   {wordA:"skarp",wordB:"mild",enA:"pungent",enB:"mild",category:"Quality",difficulty:"Hard",exampleA:"Osten har en skarp lugt.",exampleB:"Smagen er mild."},
   {wordA:"besk",wordB:"sød",enA:"acrid",enB:"sweet",category:"Quality",difficulty:"Hard",exampleA:"Røgen lugtede besk.",exampleB:"Frugten smager sødt."},
   {wordA:"stærk",wordB:"mild",enA:"spicy",enB:"bland",category:"Everyday adjectives",difficulty:"Medium",exampleA:"Curryen er stærk.",exampleB:"Suppen er mild."},
@@ -720,9 +695,8 @@ const ANTONYMS = [
   {wordA:"pludselig",wordB:"gradvis",enA:"abrupt",enB:"gradual",category:"Time",difficulty:"Hard",exampleA:"Stoppet var pludseligt.",exampleB:"Forandringen var gradvis."},
   {wordA:"pludselig",wordB:"langsom",enA:"sudden",enB:"slow",category:"Time",difficulty:"Medium",exampleA:"Det kom som et pludseligt chok.",exampleB:"Bedringen var langsom."},
   {wordA:"hurtig",wordB:"adstadig",enA:"rapid",enB:"leisurely",category:"Everyday adjectives",difficulty:"Hard",exampleA:"Udviklingen var hurtig.",exampleB:"De tog en adstadig gåtur."},
-  {wordA:"rap",wordB:"træg",enA:"swift",enB:"sluggish",category:"Quality",difficulty:"Hard",exampleA:"Reaktionen var rap.",exampleB:"Systemet var træg."},
-  {wordA:"prompte",wordB:"forsinket",enA:"prompt",enB:"tardy",category:"Quality",difficulty:"Hard",exampleA:"Han gav et prompte svar.",exampleB:"Toget var forsinket."},
-  {wordA:"mikro",wordB:"makro",enA:"micro",enB:"macro",category:"Other",difficulty:"Hard",exampleA:"Det handler om mikroøkonomi.",exampleB:"Vi ser på makroniveau."},
+  {wordA:"rap",wordB:"træg",enA:"swift",enB:"sluggish",category:"Quality",difficulty:"Hard",exampleA:"Reaktionen var rap.",exampleB:"Systemet var trægt."},
+  {wordA:"prompte",wordB:"forsinket",enA:"prompt",enB:"tardy",category:"Quality",difficulty:"Hard",exampleA:"Hun svarede prompte på mailen.",exampleB:"Toget var forsinket."},
   {wordA:"miniature",wordB:"gigantisk",enA:"miniature",enB:"gigantic",category:"Size",difficulty:"Hard",exampleA:"Huset er bygget i miniature.",exampleB:"Bygningen er gigantisk."},
   {wordA:"spinkel",wordB:"overstørrelse",enA:"petite",enB:"oversized",category:"Size",difficulty:"Hard",exampleA:"Hun har en spinkel figur.",exampleB:"Trøjen er i overstørrelse."},
   {wordA:"bred",wordB:"begrænset",enA:"wide",enB:"restricted",category:"Size",difficulty:"Medium",exampleA:"Han har et bredt udvalg.",exampleB:"Adgangen er begrænset."},
@@ -735,7 +709,6 @@ const ANTONYMS = [
   {wordA:"indad",wordB:"udad",enA:"inward",enB:"outward",category:"Direction",difficulty:"Hard",exampleA:"Døren åbner indad.",exampleB:"Vinduet åbner udad."},
   {wordA:"positiv",wordB:"negativ",enA:"positive",enB:"negative",category:"Quality",difficulty:"Medium",exampleA:"Resultatet var positivt.",exampleB:"Han havde en negativ holdning."},
   {wordA:"lige",wordB:"ulige",enA:"equal",enB:"unequal",category:"Quantity",difficulty:"Medium",exampleA:"Delene er lige store.",exampleB:"Fordelingen er ulige."},
-  {wordA:"ulige",wordB:"lige",enA:"odd",enB:"even",category:"Quantity",difficulty:"Medium",exampleA:"Tre er et ulige tal.",exampleB:"Fire er et lige tal."},
   {wordA:"primtal",wordB:"sammensat tal",enA:"prime",enB:"composite",category:"Other",difficulty:"Hard",exampleA:"Syv er et primtal.",exampleB:"Otte er et sammensat tal."},
   {wordA:"rigelig",wordB:"sparsom",enA:"plentiful",enB:"meager",category:"Quantity",difficulty:"Hard",exampleA:"Høsten var rigelig.",exampleB:"Lønnen var sparsom."},
   {wordA:"rigelig",wordB:"utilstrækkelig",enA:"ample",enB:"insufficient",category:"Quantity",difficulty:"Hard",exampleA:"Der var rigelig plads.",exampleB:"Budgettet var utilstrækkeligt."},
@@ -748,15 +721,13 @@ const ANTONYMS = [
   {wordA:"afbalanceret",wordB:"ubalanceret",enA:"balanced",enB:"unbalanced",category:"Quality",difficulty:"Hard",exampleA:"Kosten er afbalanceret.",exampleB:"Hjulet er ubalanceret."},
   {wordA:"symmetrisk",wordB:"asymmetrisk",enA:"symmetrical",enB:"asymmetrical",category:"Quality",difficulty:"Hard",exampleA:"Mønsteret er symmetrisk.",exampleB:"Frisuren er asymmetrisk."},
   {wordA:"prydet",wordB:"enkel",enA:"ornate",enB:"austere",category:"Quality",difficulty:"Hard",exampleA:"Rammen er prydet med guld.",exampleB:"Rummet er meget enkelt."},
-  {wordA:"fløjl",wordB:"sandpapir",enA:"velvet",enB:"sandpaper",category:"Quality",difficulty:"Hard",exampleA:"Stoffet føles som fløjl.",exampleB:"Overfladen er som sandpapir."},
   {wordA:"silke",wordB:"sækkelærred",enA:"silk",enB:"burlap",category:"Quality",difficulty:"Hard",exampleA:"Kjolen er lavet af silke.",exampleB:"Sækken er lavet af sækkelærred."},
   {wordA:"fast",wordB:"flydende",enA:"solid",enB:"liquid",category:"Quality",difficulty:"Medium",exampleA:"Isen er fast.",exampleB:"Vandet er flydende."},
   {wordA:"uigennemsigtig",wordB:"gennemskinnelig",enA:"opaque",enB:"translucent",category:"Quality",difficulty:"Hard",exampleA:"Gardinet er uigennemsigtigt.",exampleB:"Glasset er gennemskinneligt."},
   {wordA:"tæt",wordB:"porøs",enA:"dense",enB:"porous",category:"Quality",difficulty:"Hard",exampleA:"Materialet er tæt.",exampleB:"Stenen er porøs."},
-  {wordA:"gas",wordB:"fast stof",enA:"gas",enB:"solid",category:"Other",difficulty:"Hard",exampleA:"Damp er en gas.",exampleB:"Is er et fast stof."},
   {wordA:"ledende",wordB:"isolerende",enA:"conductive",enB:"insulating",category:"Quality",difficulty:"Hard",exampleA:"Metal er ledende.",exampleB:"Gummi er isolerende."},
   {wordA:"gennemtrængelig",wordB:"uigennemtrængelig",enA:"permeable",enB:"impermeable",category:"Quality",difficulty:"Hard",exampleA:"Stoffet er gennemtrængeligt.",exampleB:"Membranen er uigennemtrængelig."},
-  {wordA:"accelererende",wordB:"decelererende",enA:"accelerating",enB:"decelerating",category:"Movement",difficulty:"Hard",exampleA:"Bilen er accelererende.",exampleB:"Toget er decelererende."},
+  {wordA:"accelererende",wordB:"decelererende",enA:"accelerating",enB:"decelerating",category:"Movement",difficulty:"Hard",exampleA:"Den accelererende bil overhalede os.",exampleB:"Den decelererende bil nærmede sig lyskrydset."},
   {wordA:"stigende",wordB:"faldende",enA:"increasing",enB:"decreasing",category:"Movement",difficulty:"Medium",exampleA:"Temperaturen er stigende.",exampleB:"Salget er faldende."},
   {wordA:"eskalerende",wordB:"deeskalerende",enA:"escalating",enB:"deescalating",category:"Movement",difficulty:"Hard",exampleA:"Konflikten er eskalerende.",exampleB:"Situationen er deeskalerende."},
   {wordA:"konstant",wordB:"variabel",enA:"constant",enB:"variable",category:"Quality",difficulty:"Hard",exampleA:"Hastigheden er konstant.",exampleB:"Renten er variabel."},
@@ -830,12 +801,33 @@ const defaultState = () => ({
   mastery:{},               // { "wordA|wordB": 0..3 }
   mistakes:[],              // array of pair keys answered incorrectly (still weak)
   settings:{
-    sound:true,
     examples:true,
     weakOnly:false,
     unmasteredOnly:false
   }
 });
+
+/* Pairs that were duplicated in the data (same pair in reverse order) were merged.
+   Progress saved under the removed key is carried over to the kept key. */
+const KEY_ALIASES = {"lys|mørk":"mørk|lys","alvorlig|mild":"mild|alvorlig","ulige|lige":"lige|ulige"};
+function migrateKeys(s){
+  try{
+    if(!s.mastery || typeof s.mastery!=="object") s.mastery = {};
+    if(!Array.isArray(s.mistakes)) s.mistakes = [];
+    Object.keys(KEY_ALIASES).forEach(old=>{
+      const nw = KEY_ALIASES[old];
+      if(old in s.mastery){
+        s.mastery[nw] = Math.max(s.mastery[nw]||0, s.mastery[old]||0);
+        delete s.mastery[old];
+      }
+      if(s.mistakes.includes(old)){
+        s.mistakes = s.mistakes.filter(k=>k!==old);
+        if(!s.mistakes.includes(nw)) s.mistakes.push(nw);
+      }
+    });
+  }catch(e){}
+  return s;
+}
 
 let state = loadState();
 
@@ -845,12 +837,13 @@ function loadState(){
     if(!raw) return defaultState();
     const parsed = JSON.parse(raw);
     // merge to be safe against older/partial saves
-    return Object.assign(defaultState(), parsed, {
+    const s = Object.assign(defaultState(), parsed, {
       settings:Object.assign(defaultState().settings, parsed.settings||{})
     });
+    return migrateKeys(s);
   }catch(e){ return defaultState(); }
 }
-function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function save(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){} }
 
 /* ============================================================
    3) HELPERS
@@ -858,6 +851,25 @@ function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 const keyOf = p => p.wordA + "|" + p.wordB;
+/* word -> Set of every Danish word it is paired with (either direction) */
+const ANT_MAP = new Map();
+ANTONYMS.forEach(p=>{
+  [[p.wordA,p.wordB],[p.wordB,p.wordA]].forEach(([a,b])=>{
+    if(!ANT_MAP.has(a)) ANT_MAP.set(a,new Set());
+    ANT_MAP.get(a).add(b);
+  });
+});
+const antonymsOf = w => ANT_MAP.get(w) || new Set();
+const VALID_KEYS = new Set(ANTONYMS.map(keyOf));
+/* shortest prefix of answer that no other accepted answer shares */
+function hintPrefix(answer, accepted){
+  const others = accepted.filter(w=>w!==answer);
+  for(let n=1;n<=answer.length;n++){
+    const pre = answer.slice(0,n).toLowerCase();
+    if(!others.some(w=>w.toLowerCase().startsWith(pre))) return answer.slice(0,n);
+  }
+  return answer;
+}
 const shuffle = arr => arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]);
 const sample = (arr,n) => shuffle(arr).slice(0,n);
 
@@ -897,7 +909,6 @@ if('speechSynthesis' in window){
   refreshVoices();
 }
 function speak(text){
-  if(!state.settings.sound) return;
   if(!('speechSynthesis' in window) || !text) return;
   try{
     speechSynthesis.cancel();
@@ -912,10 +923,9 @@ function speak(text){
 /* small speaker button markup helper */
 function speakerBtn(text, cls){
   const b = document.createElement("button");
-  b.className = "speaker " + (cls||"");
+  b.className = "dc-tts-button" + (cls==="sm" ? " dc-tts-button--sm" : "");
   b.type = "button";
-  b.innerHTML = '<svg viewBox="0 0 8 8" width="16" height="16" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 3h2V2h1V1h1v6H3V6H2V5H0zM5 2h1v1H5zM6 3h1v2H6zM5 5h1v1H5z"/></svg>';
-  b.setAttribute("aria-label","Pronounce");
+  b.setAttribute("aria-label","Lyt");
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -924,9 +934,17 @@ function speakerBtn(text, cls){
    5) NAVIGATION
    ============================================================ */
 const screens = ["dashboard","category","difficulty","play","summary","review","settings"];
-function showScreen(name){
+function focusEl(el){
+  if(!el) return;
+  try{ el.focus({preventScroll:true}); }catch(e){ try{ el.focus(); }catch(_){} }
+}
+function showScreen(name, noFocus){
   screens.forEach(s=>$("#screen-"+s).classList.toggle("hidden", s!==name));
   window.scrollTo({top:0,behavior:"smooth"});
+  /* focus after the screen is visible (US-031); the play screen focuses its own first control */
+  if(noFocus || name==="play") return;
+  const scr = $("#screen-"+name);
+  focusEl(name==="summary" ? $("#sumAgain") : scr.querySelector(".back-link, .mode-btn, .btn"));
 }
 
 /* ============================================================
@@ -942,13 +960,13 @@ function updateHud(){
   $("#hudAcc").textContent = acc + "%";
   $("#xpFill").style.width = (state.xp % 100) + "%";
 }
-function masteredCount(){ return Object.values(state.mastery).filter(v=>v>=3).length; }
+function masteredCount(){ return Object.keys(state.mastery).filter(k=>VALID_KEYS.has(k) && state.mastery[k]>=3).length; }
 function updateDashboard(){
   $("#stTotal").textContent = state.totalQuestions;
   $("#stCorrect").textContent = state.correct;
   $("#stIncorrect").textContent = state.incorrect;
   $("#stMastered").textContent = masteredCount();
-  $("#stWeak").textContent = state.mistakes.length;
+  $("#stWeak").textContent = state.mistakes.filter(k=>VALID_KEYS.has(k)).length;
   $("#stSpeed").textContent = state.bestSpeed;
 }
 
@@ -1031,9 +1049,18 @@ function getPool(opts){
    ============================================================ */
 let session = null;
 const QUESTIONS_PER_ROUND = 10;
+/* Advance / summary timeouts are tracked so leaving a round can cancel them (US-041). */
+let pendingTimers = [];
+function later(fn, ms){
+  const id = setTimeout(()=>{ pendingTimers = pendingTimers.filter(t=>t!==id); fn(); }, ms);
+  pendingTimers.push(id);
+  return id;
+}
+function clearPending(){ pendingTimers.forEach(clearTimeout); pendingTimers = []; }
 
 function startSession(mode, opts){
   opts = opts || {};
+  clearPending();
   let pool = getPool(opts);
   if(pool.length < 1){
     toast("Ingen par matcher filteret endnu.");
@@ -1058,11 +1085,13 @@ function startSession(mode, opts){
 }
 
 function endSession(){
-  if(session && session.timerId){ clearInterval(session.timerId); }
+  clearPending();
+  if(session){ session.over = true; if(session.timerId){ clearInterval(session.timerId); } }
   if('speechSynthesis' in window) speechSynthesis.cancel();
 }
 
 function nextQuestion(){
+  if(!session || session.over) return;
   $("#feedbackArea").innerHTML = "";
   $("#nextWrap").classList.add("hidden");
 
@@ -1100,8 +1129,9 @@ function renderChoice(){
   const answer = dir ? pair.wordB : pair.wordA;
 
   // distractors: other Danish words that are not the answer/shown
+  const valid = antonymsOf(shown);
   const others = ANTONYMS.flatMap(p=>[p.wordA,p.wordB])
-    .filter(w=>w!==answer && w!==shown);
+    .filter(w=>w!==answer && w!==shown && !valid.has(w));
   const opts = shuffle([answer, ...sample([...new Set(others)],3)]);
 
   const area = $("#playArea");
@@ -1131,6 +1161,7 @@ function renderChoice(){
     });
     box.appendChild(b);
   });
+  focusEl(box.querySelector(".option"));
 }
 
 /* ---------- MODE 3: Reverse Translation ---------- */
@@ -1167,6 +1198,7 @@ function renderReverse(){
     });
     box.appendChild(b);
   });
+  focusEl(box.querySelector(".option"));
 }
 
 /* ---------- MODE 4: Missing Antonym (type the answer) ---------- */
@@ -1175,32 +1207,34 @@ function renderMissing(){
   const dir = Math.random()<0.5;
   const shown = dir ? pair.wordA : pair.wordB;
   const answer = dir ? pair.wordB : pair.wordA;
+  const accepted = Array.from(antonymsOf(shown));
+  const acceptedNorm = accepted.map(normalize);
 
   const area = $("#playArea");
   area.innerHTML = `
     <div class="prompt">
       <div class="label">Skriv det modsatte</div>
       <div class="word" id="promptWord">${shown} →&nbsp;?</div>
-      <div class="sub">Hint: begynder med »${answer[0]}«</div>
+      <div class="sub">Hint: begynder med »${hintPrefix(answer, accepted)}«</div>
     </div>
     <div class="typebox">
       <input id="answerInput" type="text" autocomplete="off" autocapitalize="off"
              spellcheck="false" placeholder="Skriv her…" />
-      <button class="btn" id="checkBtn">Check</button>
+      <button class="btn" id="checkBtn">Tjek</button>
     </div>`;
   $("#promptWord").appendChild(speakerBtn(shown,"sm"));
   if(session.mode!=="speed") speak(shown);
 
   const input = $("#answerInput");
-  input.focus();
+  focusEl(input);
   const submit = ()=>{
-    const ok = normalize(input.value)===normalize(answer);
+    const ok = acceptedNorm.includes(normalize(input.value));
     input.disabled = true; $("#checkBtn").disabled = true;
     recordAnswer(pair, ok);
     showFeedback(pair, ok);
   };
   $("#checkBtn").addEventListener("click", submit);
-  input.addEventListener("keydown", e=>{ if(e.key==="Enter") submit(); });
+  input.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); if(!input.disabled) submit(); } });   // preventDefault: the Enter keypress must not also click the Fortsæt button that receives focus
 }
 
 /* ---------- MODE 2: Match Pairs ---------- */
@@ -1232,20 +1266,24 @@ function renderMatch(){
       if(el.classList.contains("done")) return;
       if(side==="L"){
         if(item.pair) speak(item.text);
+        $("#feedbackArea").innerHTML = "";
         clearSel("L"); el.classList.add("selected"); selected={el,item,side};
       }else{
         if(!selected){ el.classList.add("selected"); setTimeout(()=>el.classList.remove("selected"),200); return; }
         const ok = selected.item.k===item.k;
-        recordAnswer(item.pair, ok);
+        /* a miss is recorded against the prompted (left) word's pair, not the wrongly tapped partner */
+        recordAnswer(ok ? item.pair : selected.item.pair, ok);
         if(ok){
           el.classList.add("done"); selected.el.classList.add("done");
           selected=null; solved++;
-          if(solved===count) setTimeout(showSummary, 500);
+          if(solved===count) later(showSummary, 500);
         }else{
           el.classList.add("bad");
           const badL = selected.el; badL.classList.add("bad");
           setTimeout(()=>{el.classList.remove("bad","selected");badL.classList.remove("bad","selected");},400);
+          const missPair = selected.item.pair;
           selected=null;
+          showFeedback(missPair, false, true);
         }
       }
     });
@@ -1256,13 +1294,14 @@ function renderMatch(){
   const colL=$("#colL"), colR=$("#colR");
   left.forEach(it=>colL.appendChild(makeItem(it,"L")));
   right.forEach(it=>colR.appendChild(makeItem(it,"R")));
+  focusEl(colL.querySelector(".match-item"));
   // match mode has no per-question feedback panel
 }
 
 /* ============================================================
    10) FEEDBACK PANEL
    ============================================================ */
-function showFeedback(pair, ok){
+function showFeedback(pair, ok, inline){
   const fb = document.createElement("div");
   fb.className = "feedback " + (ok?"ok":"no");
 
@@ -1296,12 +1335,38 @@ function showFeedback(pair, ok){
   // speak the correct antonym
   speak(ok ? pair.wordB : (pair.wordA + ", " + pair.wordB));
 
+  if(inline){   // Find par: feedback stays beside the board, no Fortsæt / auto-advance
+    try{ fb.scrollIntoView({block:"nearest", behavior:"auto"}); }catch(e){}
+    return;
+  }
   if(session.mode==="speed"){
+    focusEl($("#feedbackArea"));   // answered controls are disabled: keep focus off <body>
     // auto-advance quickly in speed mode
-    setTimeout(()=>{ if(session && session.mode==="speed") nextQuestion(); }, 650);
+    later(()=>{ if(session && !session.over && session.mode==="speed") nextQuestion(); }, 650);
   }else{
     $("#nextWrap").classList.remove("hidden");
+    revealNext();
   }
+}
+
+/* Keep the feedback and the Fortsæt button in view: focus Fortsæt without a
+   jump, then scroll so the button (and as much feedback as fits) is visible. */
+function revealNext(){
+  const btn = $("#nextBtn"), fb = $("#feedbackArea");
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const behavior = reduce ? "auto" : "smooth";
+  try{ btn.focus({preventScroll:true}); }catch(e){ btn.focus(); }
+  try{
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const fbTop = fb.getBoundingClientRect().top;
+    const btnBottom = btn.getBoundingClientRect().bottom;
+    // scroll down just enough to show the button; but never push the feedback top above the viewport top
+    const need = Math.max(0, btnBottom - vh + 12);
+    const maxUp = Math.max(0, fbTop - 8);
+    const dy = Math.min(need, maxUp);
+    if(need>maxUp) btn.scrollIntoView({block:"nearest", behavior}); // too tall to fit: button wins
+    else if(dy>0) window.scrollBy({top:dy, behavior});
+  }catch(e){ try{ btn.scrollIntoView({block:"nearest"}); }catch(_){} }
 }
 
 /* ============================================================
@@ -1315,6 +1380,7 @@ function startSpeedTimer(){
     session.timeLeft--;
     el.textContent = session.timeLeft;
     el.classList.toggle("calm", session.timeLeft>10);
+    if(session.over){ clearInterval(session.timerId); return; }
     if(session.timeLeft<=0){
       clearInterval(session.timerId);
       // score = correct answers this round
@@ -1347,14 +1413,14 @@ function showSummary(isSpeed){
    13) MODE MENU (dashboard)
    ============================================================ */
 const MODES = [
-  {id:"choice",   emoji:"modsat", t:"Vælg modsætningen",   d:"Find det modsatte blandt fire ord"},
-  {id:"match",    emoji:"snegl", t:"Find par",       d:"Forbind ordene med deres modsætninger"},
-  {id:"reverse",  emoji:"molle", t:"Omvendt oversættelse",d:"Fra engelsk betydning til dansk par"},
-  {id:"missing",  emoji:"cykel", t:"Det manglende ord",   d:"Skriv det modsatte ord"},
-  {id:"speed",    emoji:"stjerne", t:"Hurtigrunde",        d:"Så mange du kan nå på 60 sekunder"},
-  {id:"review",   emoji:"hjerte", t:"Gentag fejlene",   d:"Øv de par, du har svaret forkert på"},
-  {id:"category", emoji:"pokal", t:"Øv efter emne", d:"Fokuser på ét emne"},
-  {id:"difficulty",emoji:"hat",t:"Øv efter sværhedsgrad",d:"Let, middel, svær eller blandet"}
+  {id:"choice",   emoji:"bog", t:"Vælg modsætningen",   d:"Find det modsatte blandt fire ord"},
+  {id:"match",    emoji:"net", t:"Find par",       d:"Forbind ordene med deres modsætninger"},
+  {id:"reverse",  emoji:"modsat", t:"Omvendt oversættelse",d:"Fra engelsk betydning til dansk par"},
+  {id:"missing",  emoji:"snak", t:"Det manglende ord",   d:"Skriv det modsatte ord"},
+  {id:"speed",    emoji:"tryllestav", t:"Hurtigrunde",        d:"Så mange du kan nå på 60 sekunder"},
+  {id:"review",   emoji:"lup", t:"Gentag fejlene",   d:"Øv de par, du har svaret forkert på"},
+  {id:"category", emoji:"kiste", t:"Øv efter emne", d:"Fokuser på ét emne"},
+  {id:"difficulty",emoji:"stjerne",t:"Øv efter sværhedsgrad",d:"Let, middel, svær eller blandet"}
 ];
 function buildModeMenu(){
   const grid = $("#modeGrid");
@@ -1447,7 +1513,7 @@ function reviewRow(p, type){
    16) SETTINGS
    ============================================================ */
 function bindSettings(){
-  const map = {setSound:"sound",setExamples:"examples",setWeakOnly:"weakOnly",setUnmasteredOnly:"unmasteredOnly"};
+  const map = {setExamples:"examples",setWeakOnly:"weakOnly",setUnmasteredOnly:"unmasteredOnly"};
   Object.entries(map).forEach(([id,key])=>{
     const el = $("#"+id);
     el.checked = !!state.settings[key];
@@ -1456,7 +1522,7 @@ function bindSettings(){
   $("#testVoice").addEventListener("click", ()=>{ refreshVoices(); speak("Goddag, dette er dansk udtale."); });
   $("#resetBtn").addEventListener("click", ()=>{
     if(confirm("Vil du nulstille alle fremskridt, al XP, alle serier og alle gemte data? Det kan ikke fortrydes.")){
-      localStorage.removeItem(STORAGE_KEY);
+      try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
       state = defaultState();
       save(); updateHud(); updateDashboard(); bindSettings();
       toast("Fremskridt nulstillet.");
@@ -1509,7 +1575,7 @@ function init(){
   updateDashboard();
   buildReview();
   // add a "Review" shortcut on dashboard via the mode menu already.
-  showScreen("dashboard");
+  showScreen("dashboard", true);
 
   // refresh daily streak display on load (without incrementing)
   const today = new Date().toDateString();

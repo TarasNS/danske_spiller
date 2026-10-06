@@ -42,7 +42,7 @@ html.sd-page .dex {
   box-shadow: var(--sd-box), var(--sd-drop); padding: 14px 16px; gap: 16px;
 }
 html.sd-page .dexlight { width: auto; height: auto; background: none; border: 0; box-shadow: none; animation: none; display: inline-block; flex: none; }
-html.sd-page .dex h1 { font-family: var(--sd-font-display); font-weight: 700; text-transform: uppercase; font-size: clamp(22px, 6vw, 32px); line-height: 1.1; letter-spacing: .01em; overflow-wrap: anywhere; }
+html.sd-page .dex h1 { font-family: var(--sd-font-display); font-weight: 700; text-transform: uppercase; font-size: clamp(22px, 6vw, 32px); line-height: 1.1; letter-spacing: .01em; overflow-wrap: break-word; hyphens: manual; }
 html.sd-page .dex p { font-family: var(--sd-font-body); font-weight: 700; font-size: 14px; opacity: 1; margin-top: 6px; }
 html.sd-page .minidots { gap: 6px; flex: none; }
 html.sd-page .minidots span { width: 12px; height: 12px; border: 0; background: #101010; }
@@ -69,34 +69,34 @@ html.sd-page .card .section-title { margin-left: 0; }
 
 /* level select */
 html.sd-page #lvlSel {
-  font-family: var(--sd-font-body) !important; font-size: 16px !important; min-height: 48px; padding: 8px 12px !important;
-  background: #fff !important; color: #101010 !important; border: 0 !important; box-shadow: var(--sd-box); margin: 4px; max-width: 100%;
+  font-family: var(--sd-font-body); font-size: 16px; border: 0; box-shadow: var(--sd-box); margin: 4px; max-width: 100%;
 }
 html.sd-page label[for="lvlSel"] { font-family: var(--sd-font-body); font-weight: 700; font-size: 16px !important; text-transform: uppercase; color: var(--sd-text) !important; }
 
 /* mode grid */
-html.sd-page .menu-grid { gap: 20px; padding: 4px; }
+html.sd-page .menu-grid { gap: 20px; padding: 4px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+html.sd-page .mode-btn, html.sd-page .dex h1 { min-width: 0; }
 html.sd-page .mode-btn {
-  min-height: 132px; padding: 14px 12px; color: #101010; background: var(--sd-cream); position: relative; overflow: visible;
+  min-height: 132px; padding: 14px 12px; color: var(--sd-text); --acc: var(--sd-cream); background: linear-gradient(var(--acc), var(--acc)) top / 100% 8px no-repeat, var(--sd-panel); position: relative; overflow: visible;
   box-shadow: var(--sd-box), var(--sd-bevel), 8px 8px 0 0 var(--sd-ink); margin: 4px;
-  transition: transform .08s steps(2), box-shadow .08s steps(2); overflow-wrap: anywhere; hyphens: auto; display: block; width: calc(100% - 8px);
+  transition: transform .08s steps(2), box-shadow .08s steps(2); overflow-wrap: break-word; hyphens: manual; display: block; width: calc(100% - 8px);
 }
 html.sd-page .mode-btn:hover { transform: translate(-2px,-2px); box-shadow: var(--sd-box), var(--sd-bevel), 10px 10px 0 0 var(--sd-ink); }
 html.sd-page .mode-btn:active { transform: translate(4px,4px); box-shadow: var(--sd-box), var(--sd-bevel), 2px 2px 0 0 var(--sd-ink); }
 html.sd-page .mode-btn .emoji { margin-bottom: 8px; min-height: 32px; display: block; font-size: 0; }
 html.sd-page .mode-btn .t { font-family: var(--sd-font-display); font-weight: 700; font-size: 18px; text-transform: uppercase; line-height: 1.15; }
 html.sd-page .mode-btn .d { font-family: var(--sd-font-body); font-weight: 400; font-size: 14px; line-height: 1.35; opacity: 1; margin-top: 6px; }
-html.sd-page .mode-btn .t span { background: #101010 !important; color: var(--sd-cream); padding: 1px 7px !important; font-family: var(--sd-font-body); font-size: 13px !important; }
-html.sd-page .c-red    { background: var(--sd-orange); }
-html.sd-page .c-blue   { background: #A9B8FF; }
-html.sd-page .c-green  { background: #A5E0A8; }
-html.sd-page .c-yellow { background: var(--sd-cream); }
-html.sd-page .c-purple { background: #D7B8FF; }
-html.sd-page .c-teal   { background: #9BE3DC; }
-html.sd-page .c-orange { background: var(--sd-amber); }
-html.sd-page .c-pink   { background: #FFA9C6; }
-html.sd-page .c-slate  { background: #D9D2BE; }
-html.sd-page .c-gold   { background: #FFE27A; }
+html.sd-page .mode-btn .t span { background: var(--sd-ink) !important; color: var(--sd-cream); padding: 1px 7px !important; font-family: var(--sd-font-body); font-size: 13px !important; }
+html.sd-page .c-red    { --acc: var(--sd-orange); }
+html.sd-page .c-blue   { --acc: #A9B8FF; }
+html.sd-page .c-green  { --acc: #A5E0A8; }
+html.sd-page .c-yellow { --acc: var(--sd-cream); }
+html.sd-page .c-purple { --acc: #D7B8FF; }
+html.sd-page .c-teal   { --acc: #9BE3DC; }
+html.sd-page .c-orange { --acc: var(--sd-amber); }
+html.sd-page .c-pink   { --acc: #FFA9C6; }
+html.sd-page .c-slate  { --acc: #D9D2BE; }
+html.sd-page .c-gold   { --acc: #FFE27A; }
 
 /* exercise head */
 html.sd-page .backrow { margin-top: 0; gap: 12px; }
@@ -108,12 +108,8 @@ html.sd-page .topbtn {
 html.sd-page .topbtn:hover { background: var(--sd-orange); color: #101010; }
 html.sd-page .qcount { font-family: var(--sd-font-body); font-weight: 700; font-size: 14px; color: var(--sd-text); text-transform: uppercase; }
 html.sd-page .exhead { gap: 8px; }
-html.sd-page .badge { background: var(--sd-ink); color: var(--sd-cream); font-family: var(--sd-font-body); font-weight: 700; font-size: 13px; padding: 4px 10px; text-transform: uppercase; letter-spacing: .02em; }
-html.sd-page .badge.theme { background: var(--sd-cream); color: #101010; box-shadow: inset 0 0 0 2px #101010; }
 html.sd-page .prompt { font-family: var(--sd-font-body); font-size: 16px; color: var(--sd-text-soft); font-weight: 700; margin: 12px 0 6px; }
 html.sd-page .sentence { font-family: var(--sd-font-body); font-weight: 700; font-size: clamp(20px, 5.4vw, 26px); line-height: 1.55; overflow-wrap: anywhere; hyphens: auto; }
-html.sd-page .sentence .blank { border-bottom: 4px solid var(--sd-orange); color: var(--sd-text); min-width: 56px; padding: 0 6px; }
-html.sd-page .sentence .filled { color: var(--sd-text); background: var(--sd-ok-bg); border-bottom-color: var(--sd-ok); }
 html.sd-page .sentence .word {
   display: inline-block; min-height: 44px; min-width: 44px; padding: 4px 8px; margin: 2px 0; line-height: 1.4; cursor: pointer; text-align: center;
   background: var(--sd-panel-2); box-shadow: inset 0 -4px 0 0 var(--sd-orange); transition: none;
@@ -123,23 +119,15 @@ html.sd-page .sentence .word.sel { background: var(--sd-ok-bg); color: var(--sd-
 html.sd-page .sentence[style*="red-d"] { color: var(--sd-text) !important; }
 html.sd-page .sentence[style*="blue-d"] { color: var(--sd-text) !important; }
 
-/* speaker */
-html.sd-page .speaker {
-  width: 48px; height: 48px; min-width: 48px; background: var(--sd-cream); color: #101010; border: 0; margin: 4px;
-  box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); font-family: var(--sd-font-display); font-size: 18px; font-weight: 700; padding: 0;
-}
-html.sd-page .speaker.sm { width: 44px; height: 44px; min-width: 44px; font-size: 16px; }
-html.sd-page .speaker:hover { background: #fff; }
-html.sd-page .speaker:active { transform: translate(2px,2px); box-shadow: var(--sd-box), 2px 2px 0 0 var(--sd-ink); }
 
 /* options */
 html.sd-page .opts { gap: 16px; padding: 4px; }
 html.sd-page .opt {
-  min-height: 56px; padding: 12px; margin: 4px; background: var(--sd-white); color: #101010; border: 0;
+  min-height: 56px; padding: 12px; margin: 4px; background: var(--sd-panel); color: var(--sd-text); border: 0;
   font-family: var(--sd-font-body); font-weight: 700; font-size: 20px; overflow-wrap: anywhere;
   box-shadow: var(--sd-box), var(--sd-bevel), 0 12px 0 -4px var(--sd-ink); transition: transform .08s steps(2);
 }
-html.sd-page .opt:hover { border: 0; transform: translateY(-2px); background: var(--sd-cream); }
+html.sd-page .opt:hover { border: 0; transform: translateY(-2px); background: var(--sd-cream); color: #101010; }
 html.sd-page .opt:active { transform: translateY(3px); }
 html.sd-page .opt.correct { background: var(--sd-ok-bg); color: var(--sd-text); border: 0; box-shadow: var(--sd-box-ok), 0 12px 0 -4px var(--sd-ok); }
 html.sd-page .opt.wrong   { background: var(--sd-bad-bg); color: var(--sd-text); border: 0; box-shadow: var(--sd-box-bad), 0 12px 0 -4px var(--sd-bad); }
@@ -157,8 +145,8 @@ html.sd-page .chip {
 html.sd-page .chip:hover { background: #fff; }
 html.sd-page .chip:active { transform: translateY(3px); }
 html.sd-page .chip.used { opacity: .5; }
-html.sd-page .drop { border: 0; box-shadow: var(--sd-box); background: var(--sd-white); color: #101010; min-height: 44px; min-width: 96px; padding: 6px 10px; margin: 0 4px; }
-html.sd-page .drop.over { background: var(--sd-cream); }
+html.sd-page .drop { border: 0; box-shadow: var(--sd-box); background: var(--sd-panel); color: var(--sd-text); min-height: 44px; min-width: 96px; padding: 6px 10px; margin: 0 4px; }
+html.sd-page .drop.over { background: var(--sd-cream); color: #101010; }
 html.sd-page .drop.filled { background: var(--sd-ok-bg); color: var(--sd-text); border: 0; box-shadow: var(--sd-box-ok); }
 html.sd-page .drop.filled[style] { color: var(--sd-text) !important; background: var(--sd-bad-bg) !important; box-shadow: var(--sd-box-bad) !important; }
 
@@ -195,7 +183,6 @@ html.sd-page .fb.bad  { background: var(--sd-bad-bg); box-shadow: var(--sd-box-b
 html.sd-page .fb.bad::before  { content: "\2717"; background: var(--sd-bad); color: #101010; }
 html.sd-page .fb .big { font-family: var(--sd-font-display); font-weight: 700; font-size: 20px; text-transform: uppercase; color: var(--sd-text); margin-bottom: 6px; }
 html.sd-page .fb .corr { font-weight: 700; background: var(--sd-ink); color: var(--sd-cream); padding: 0 6px; }
-html.sd-page .fb .speaker { display: inline-grid; vertical-align: middle; }
 html.sd-page .tipk { display: inline-block; background: var(--sd-ink); color: var(--sd-cream); font-size: 12px; padding: 1px 6px; margin-right: 4px; letter-spacing: .04em; }
 html.sd-page .hint { font-family: var(--sd-font-body); font-size: 14px; color: var(--sd-text-soft); margin-top: 14px; }
 
@@ -247,6 +234,7 @@ html[data-sd-motion="off"].sd-page .particle { visibility: hidden; animation: sd
   html.sd-page .menu-grid { gap: 14px; }
   html.sd-page .mode-btn .t { font-size: 16px; }
 }
+@media (max-width: 359px) { html.sd-page .dex h1, html.sd-page .mode-btn { overflow-wrap: anywhere; } }
 
 /* Pixelify bold closes the gap in C (reads as O): use a lighter weight for display labels */
-html.sd-page :is(.mode-btn .t, .btn, .topbtn, .section-title, .dex h1, .fb .big, .speaker, .chip, .streakpop, h2) { font-weight: 700; }
+html.sd-page :is(.mode-btn .t, .btn, .topbtn, .section-title, .dex h1, .fb .big, .chip, .streakpop, h2) { font-weight: 700; }

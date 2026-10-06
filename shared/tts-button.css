@@ -1,0 +1,65 @@
+/* =============================================================================
+   TTS "listen" button - ONE look for every game (US-029).
+   Pixel speaker (Antonymer 8x8 path) in a 48x48 framed Sjovt button; small inline variant .dc-tts-button--sm.
+
+   ADOPTION (per game):  <link rel="stylesheet" href="../shared/tts-button.css">   AFTER sjovt.css and the game's theme CSS.
+   Markup:  DanskCore.ui.ttsButton(text, container)             -> label "Lyt"
+            DanskCore.ui.ttsButton(text, container, "Lyt til sætningen")
+            or by hand:  <button type="button" class="dc-tts-button" aria-label="Lyt"></button>   (icon is drawn by CSS: no inner glyph needed;
+            any text/emoji/<span> inside is hidden, so old markup keeps working)
+            small, inline in text:  class="dc-tts-button dc-tts-button--sm"
+   Optional state hook: add class "is-playing" (or aria-pressed="true") to show the primary colour while speaking.
+
+   THEME CLASH: these theme rules (shared/themes/*.css) restyle .dc-tts-button and must be DELETED by the per-game worker:
+     boejningsvaerkstedet.css:198-201, pronomenmysteriet.css:149-152 (+108), tidsmaskinen.css:197-200 (+121) and the
+     ::before "▶" glyph / ♪ rules in idiomjaeger.css (~171), dansk-mester.css (~204), adverbs.css:167.
+   Until they are removed this file still wins: selectors are boosted with :root:root + a doubled class (specificity 0,4,0
+   beats the themes' html.sd-page .x .dc-tts-button = 0,3,1) so no !important is needed. Do not "fix" that by lowering it.
+   Tokens: --sd-* from sjovt.css (dark mode comes through the tokens); every use has a light-mode fallback.
+   ============================================================================= */
+
+:root:root .dc-tts-button.dc-tts-button {
+  --_bw: 4px;
+  box-sizing: border-box; position: relative; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; min-width: 48px; min-height: 48px; padding: 0; margin: 4px;
+  font-size: 0; line-height: 0; color: var(--sd-text, #101010);          /* font-size 0 hides any legacy glyph/text node */
+  background: var(--sd-panel, #FFF4D6); border: 0; border-radius: 0; cursor: pointer;
+  box-shadow: var(--sd-box, 0 -4px 0 0 #101010, 0 4px 0 0 #101010, -4px 0 0 0 #101010, 4px 0 0 0 #101010),
+              var(--sd-bevel, inset -4px -4px 0 0 rgba(16,16,16,.28), inset 4px 4px 0 0 rgba(255,255,255,.45)),
+              0 12px 0 -4px var(--sd-ink, #101010);
+  transform: translateY(0); transition: transform .08s steps(2), background-color .08s steps(2);
+  -webkit-user-select: none; user-select: none; touch-action: manipulation; vertical-align: middle;
+}
+/* the speaker: 8x8 pixel path drawn as a mask, so it takes currentColor (works in light and dark) */
+:root:root .dc-tts-button.dc-tts-button::before {
+  content: ""; display: block; position: static; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; background: currentColor;
+  font: 0/0 sans-serif; text-indent: 0; transform: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 3h2V2h1V1h1v6H3V6H2V5H0zM5 2h1v1H5zM6 3h1v2H6zM5 5h1v1H5z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 3h2V2h1V1h1v6H3V6H2V5H0zM5 2h1v1H5zM6 3h1v2H6zM5 5h1v1H5z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+}
+:root:root .dc-tts-button.dc-tts-button::after { content: none; }
+:root:root .dc-tts-button.dc-tts-button > * { display: none; }            /* legacy <span>&#128266;</span> etc. */
+:root:root .dc-tts-button.dc-tts-button:hover:not(:disabled) { background: var(--sd-cream, #FFC25A); color: #101010; transform: translateY(-2px); }
+:root:root .dc-tts-button.dc-tts-button:active:not(:disabled) { transform: translateY(4px); }
+:root:root .dc-tts-button.dc-tts-button.is-playing,
+:root:root .dc-tts-button.dc-tts-button[aria-pressed="true"] { background: var(--sd-primary, #F94F37); color: var(--sd-on-primary, #101010); }
+:root:root .dc-tts-button.dc-tts-button:disabled { background: #CFC6AA; color: #5b5646; cursor: not-allowed; }
+/* focus ring: same thick ring as sjovt.css (which adds its own !important version on .sd-page); standalone fallback otherwise */
+:root:root .dc-tts-button.dc-tts-button:focus-visible { outline: 4px solid var(--sd-focus, #2B3FD6); outline-offset: 3px; z-index: 2; }
+
+/* SMALL inline variant (~32px) for running text, e.g. Idiomjaeger explanations: keeps the line rhythm via negative block margins,
+   hit area still 44px through ::after (invisible). */
+:root:root .dc-tts-button.dc-tts-button.dc-tts-button--sm {
+  --_bw: 2px;
+  width: 32px; height: 32px; min-width: 32px; min-height: 32px; margin: -6px 6px; vertical-align: -.5em;
+  box-shadow: 0 -2px 0 0 var(--sd-line, #101010), 0 2px 0 0 var(--sd-line, #101010), -2px 0 0 0 var(--sd-line, #101010), 2px 0 0 0 var(--sd-line, #101010);
+}
+:root:root .dc-tts-button.dc-tts-button.dc-tts-button--sm::before { width: 16px; height: 16px; }
+:root:root .dc-tts-button.dc-tts-button.dc-tts-button--sm::after { content: ""; position: absolute; inset: -6px; background: transparent; }
+:root:root .dc-tts-button.dc-tts-button.dc-tts-button--sm:hover:not(:disabled) { transform: none; }
+:root:root .dc-tts-button.dc-tts-button.dc-tts-button--sm:active:not(:disabled) { transform: translateY(2px); }
+
+@media (prefers-reduced-motion: reduce) { :root:root .dc-tts-button.dc-tts-button { transition: none; transform: none !important; } }
+html[data-sd-motion="off"] .dc-tts-button.dc-tts-button { transition: none; transform: none !important; }

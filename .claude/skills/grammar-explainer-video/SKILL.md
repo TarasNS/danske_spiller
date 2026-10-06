@@ -46,9 +46,15 @@ The shipping copy lives in `shared/explainer/` (`explainer.js`, `explainer.css`,
 2. After the game's theme css: `<link rel="stylesheet" href="../shared/explainer/modal.css">` and `<script src="../shared/explainer/modal.js"></script>` (drop `../` for root-level games).
 3. Put the scene in `shared/explainer/scenes/<id>.scene.js` (copy it into `examples/` too).
 
-`modal.js` adds a FORKLARING button to the shared `.sd-bar` (floating corner button if there is no bar), opens an accessible dialog (Esc closes, focus trap, focus returns, 44 px targets) and loads the player and scene on demand, so nothing runs at page load. While it is open it stops keys from reaching the game. It does not pause game timers.
+`modal.js` adds a FORKLARING button to the shared `.sd-bar` (HJÆLP at 420 px and below; floating corner button if there is no bar), opens an accessible dialog (Esc closes, focus trap, focus returns, 44 px targets) and loads the player and scene on demand, so nothing runs at page load. If the player or every scene fails to load, the dialog shows a Danish error message instead of nothing. While it is open it stops keys from reaching the game.
 
-The skill's `templates/` copy of the player is for previewing; if you change the player, copy `explainer.js`, `explainer.css` (fix the `../fonts/` path) and `monitor.svg` to `shared/explainer/` too. Verify by opening the game, clicking the button, and checking mobile, desktop and dark mode, Esc, and no console errors.
+With several scenes the chooser is one horizontally scrolling row of tabs (active tab always scrolled into view; Left/Right/Home/End move between tabs, Tab goes on to the controls).
+
+**Events.** `modal.js` dispatches `explainer:open` and `explainer:close` (a `CustomEvent` on `document`, `detail.ids`) when the dialog is shown and removed. Each open is followed by exactly one close. A game with a running countdown listens to both: on `open` stop/hold the timer and remember that *it* paused it; on `close` resume only if it paused it and the round is still running (same round object, time left > 0, game screen visible), so a timer is never resumed twice or after the round ended. Wired so far: `en og et` (Den Hvide Kanins ræs), `dansk-praepositioner.html` (Lynrunde), `magiske_verber.html` (Hurtigduellen), `tidsmaskinen` (Med tid). `ordstilling-detektiv` has a count-up elapsed timer that is not paused.
+
+**Dev flag.** Scenes with `verify: true` show a "Skal tjekkes" badge in the screen header only when the page is opened with `?dev=1` or `localStorage["sd-dev"] = "1"` (read inside try/catch). Production never shows it. Review the list of `verify: true` scenes in the report instead.
+
+The skill's `templates/` copy of the player is for previewing. The shipping copy is `shared/explainer/`; after changing the player there, copy `explainer.js` and `explainer.css` (change the `../fonts/` path to `../../../../shared/fonts/`) back to `templates/` so they stay identical. Verify by opening the game, clicking the button, and checking mobile, desktop and dark mode, Esc, and no console errors.
 
 ## Design rules
 

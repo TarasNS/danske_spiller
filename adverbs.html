@@ -7,8 +7,11 @@
   external libraries or backend services are required.  Progress is
   stored in the browser’s localStorage so returning players can pick
   up where they left off.  A sample dataset is built into the script
-  so the game works immediately; learners can also paste CSV data
-  exported from the supplied Excel sheet to load all ~500 sentences.
+  so the game works immediately; the built-in dataset currently has
+  only 10 entries (it is not the ~500-sentence list of the original
+  plan). Learners can also paste CSV data to load a larger list.
+  Topic zones (Tid, Sted, Måde, Frekvens, Bindeord) are shown on the
+  map only while they have at least one entry in the active dataset.
 
   CSV import instructions:
   - Click the “Import Data” button in the header.  Paste your CSV
@@ -41,7 +44,7 @@
   with a dark‑mode toggle.
 -->
 <!DOCTYPE html>
-<html lang="da" data-explainer="adverbier-placering,konjunktioner">
+<html lang="da" data-explainer="adverbier-placering,konjunktioner,adverbier-betydning">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -353,7 +356,11 @@
   </style>
   <link rel="stylesheet" href="shared/sjovt.css">
   <script src="shared/sjovt.js"></script>
+  <script src="shared/dansk-speech.js"></script>
+  <script src="shared/dansk-core.js"></script>
   <link rel="stylesheet" href="shared/themes/adverbs.css">
+  <link rel="stylesheet" href="shared/tts-button.css">
+  <link rel="stylesheet" href="shared/sd-extras.css">
   <link rel="stylesheet" href="shared/explainer/modal.css">
   <script src="shared/explainer/modal.js"></script>
 </head>
@@ -361,7 +368,6 @@
   <header>
     <h1><span data-sd-sprite="ur" data-scale="3" class="sd-bob" aria-hidden="true"></span> <span>Sætningsbyggeren</span></h1>
     <div class="header-buttons">
-      <button id="darkToggle" title="Skift mellem lys og mørk" aria-label="Skift mellem lys og mørk tilstand">Lys / Mørk</button>
       <button id="importBtn" title="Importér CSV-data">Importér data</button>
       <button id="reviewBtn" title="Gennemgå gemte ord (R)">Repetition</button>
       <button id="settingsBtn" title="Indstillinger">Indstillinger</button>
@@ -378,9 +384,9 @@
 
   <!-- Import Modal -->
   <div id="importModal" class="hidden">
-    <div class="modal-content">
-      <h2>Importér CSV-data</h2>
-      <p>Indsæt din CSV (kolonner: word, meaning, sentence_da, sentence_en, category, level, theme). Adskil værdierne med komma eller tabulator.</p>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="importModalTitle">
+      <h2 id="importModalTitle">Importér CSV-data</h2>
+      <p>Indsæt din CSV (kolonner: word, meaning, sentence_da, sentence_en, category, level, theme, og valgfrit note). Adskil værdierne med komma eller tabulator.</p>
       <textarea id="csvInput" placeholder="Indsæt CSV her …"></textarea>
       <div>
         <button id="loadDataBtn">Indlæs data</button>
@@ -391,8 +397,8 @@
 
   <!-- Settings Modal (contains reset/export) -->
   <div id="settingsModal" class="hidden">
-    <div class="modal-content">
-      <h2>Indstillinger</h2>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+      <h2 id="settingsModalTitle">Indstillinger</h2>
       <p>
         Her kan du styre dine fremskridt. Dine data bliver gemt i browseren og
         er der næste gang, medmindre du rydder dem eller bruger privat browsing.
@@ -409,10 +415,12 @@
 
   <!-- Review Modal -->
   <div id="reviewModal" class="hidden">
-    <div class="modal-content">
-      <h2>Repetition</h2>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+      <h2 id="reviewModalTitle">Repetition</h2>
       <p>Øv de gemte ord, og besejr fejlmonstrene. Svar rigtigt tre gange på et ord for at slippe af med det.</p>
       <ul id="reviewList"></ul>
+      <button id="startReviewBtn">Start repetition</button>
+      <button id="endReviewBtn" class="hidden">Afslut repetition</button>
       <button id="closeReviewBtn">Luk</button>
     </div>
   </div>
@@ -426,18 +434,22 @@
         meaning: "anyway / nevertheless",
         sentence_da: "Jeg kom for sent, men jeg nåede alligevel mødet.",
         sentence_en: "I arrived late, but I still made it to the meeting.",
-        category: "Adverb - Manner",
+        category: "Adverb - Sentence",
         level: "B1",
         theme: "Work",
+        alt: ["stadig"],
+        note: "‘Alligevel’ er et sætningsadverbium: det viser, at noget sker på trods af det, der lige er sagt.",
       },
       {
         word: "stadig",
         meaning: "still",
         sentence_da: "Hun arbejder stadig på projektet.",
         sentence_en: "She is still working on the project.",
-        category: "Adverb - Frequency",
-        level: "B1",
+        category: "Adverb - Time",
+        level: "A2",
         theme: "Work",
+        alt: ["endnu", "alligevel"],
+        note: "‘Stadig’ siger, at en handling varer ved. Det er et tidsadverbium, ikke et hyppighedsadverbium.",
       },
       {
         word: "fordi",
@@ -445,8 +457,10 @@
         sentence_da: "Jeg blev hjemme, fordi jeg var syg.",
         sentence_en: "I stayed home because I was sick.",
         category: "Subordinating conjunction",
-        level: "B1",
+        level: "A2",
         theme: "Health",
+        alt: ["da"],
+        note: "‘Fordi’ er en underordnende konjunktion og angiver årsag. Den indleder en bisætning.",
       },
       {
         word: "derfor",
@@ -454,8 +468,9 @@
         sentence_da: "Det regnede, derfor blev vi inde.",
         sentence_en: "It rained, therefore we stayed inside.",
         category: "Adverb - Cause/Effect",
-        level: "B2",
+        level: "A2",
         theme: "Weather",
+        note: "‘Derfor’ er et adverbium og viser en følge. Når det står først i sætningen, kommer udsagnsordet lige efter: ‘Derfor blev vi inde.’",
       },
       {
         word: "når",
@@ -463,8 +478,10 @@
         sentence_da: "Når jeg er træt, drikker jeg kaffe.",
         sentence_en: "When I'm tired, I drink coffee.",
         category: "Subordinating conjunction",
-        level: "B1",
+        level: "A2",
         theme: "Daily life",
+        alt: ["da"],
+        note: "‘Når’ bruges om noget, der sker igen og igen eller i fremtiden. Om en enkelt gang i fortiden bruger man ‘da’.",
       },
       {
         word: "da",
@@ -472,8 +489,10 @@
         sentence_da: "Da jeg var lille, boede jeg i Aarhus.",
         sentence_en: "When I was little, I lived in Aarhus.",
         category: "Subordinating conjunction",
-        level: "B1",
+        level: "A2",
         theme: "Childhood",
+        alt: ["når"],
+        note: "‘Da’ bruges om noget, der skete én gang i fortiden. Om noget, der sker igen og igen, bruger man ‘når’.",
       },
       {
         word: "men",
@@ -481,8 +500,9 @@
         sentence_da: "Han ville gerne komme, men han kunne ikke.",
         sentence_en: "He wanted to come, but he couldn't.",
         category: "Coordinating conjunction",
-        level: "B1",
+        level: "A1",
         theme: "Social",
+        note: "‘Men’ er en sideordnende konjunktion og udtrykker en modsætning. Ordstillingen ændres ikke efter ‘men’.",
       },
       {
         word: "endnu",
@@ -490,8 +510,10 @@
         sentence_da: "Jeg har ikke set filmen endnu.",
         sentence_en: "I haven't seen the movie yet.",
         category: "Adverb - Time",
-        level: "B1",
+        level: "A2",
         theme: "Entertainment",
+        alt: ["stadig", "alligevel"],
+        note: "‘Endnu’ bruges ofte i nægtende sætninger: ‘ikke … endnu’ betyder, at noget stadig mangler.",
       },
       {
         word: "inde",
@@ -499,8 +521,9 @@
         sentence_da: "Vi bliver inde, når det er koldt.",
         sentence_en: "We stay inside when it's cold.",
         category: "Adverb - Place",
-        level: "B2",
+        level: "A1",
         theme: "Weather",
+        note: "‘Inde’ bruges, når man er et sted. Ved bevægelse hen imod stedet siger man ‘ind’.",
       },
       {
         word: "ud",
@@ -508,19 +531,22 @@
         sentence_da: "Han gik ud af huset.",
         sentence_en: "He went out of the house.",
         category: "Adverb - Place",
-        level: "B1",
+        level: "A1",
         theme: "Home",
+        note: "‘Ud’ bruges ved bevægelse væk fra et sted indefra. Når man er udenfor, siger man ‘ude’.",
       },
     ];
 
-    // Define categories used in the Fluency Map
+    // Define categories used in the Fluency Map.
+    // unlockLevel = the level index (see `levels` below) a zone needs; it is set per zone and never derived from the
+    // zone's position, so hiding or adding zones cannot make one unreachable. It is clamped to the top level in populateMap().
     const zones = [
-      { id: "time", name: "Tid", filter: (entry) => /Time/.test(entry.category) },
-      { id: "place", name: "Sted", filter: (entry) => /Place/.test(entry.category) },
-      { id: "manner", name: "Måde", filter: (entry) => /Manner/.test(entry.category) },
-      { id: "frequency", name: "Frekvens", filter: (entry) => /Frequency/.test(entry.category) },
-      { id: "connector", name: "Bindeord", filter: (entry) => /conjunction/i.test(entry.category) },
-      { id: "order", name: "Sætningsbygning", filter: (entry) => true }, // fallback
+      { id: "time", name: "Tid", unlockLevel: 0, filter: (entry) => /Time/.test(entry.category) },
+      { id: "place", name: "Sted", unlockLevel: 1, filter: (entry) => /Place/.test(entry.category) },
+      { id: "manner", name: "Måde", unlockLevel: 2, filter: (entry) => /Manner/.test(entry.category) },
+      { id: "frequency", name: "Frekvens", unlockLevel: 3, filter: (entry) => /Frequency/.test(entry.category) },
+      { id: "connector", name: "Bindeord", unlockLevel: 4, filter: (entry) => /conjunction/i.test(entry.category) },
+      { id: "order", name: "Sætningsbygning", unlockLevel: 4, filter: (entry) => true }, // fallback; unlocks at the top level
     ];
 
     // Progress object to track scores, levels, etc.
@@ -568,11 +594,30 @@
     let reorderSelections = [];
     let reviewQueue = [];
     let reviewActive = false;
+    let currentZone = null;
+    let zoneModes = [];
+    let zoneStep = 0;
+    let bossActive = false;
+    let bossQueue = [];
+    let bossTotal = 0;
+    let advanceTimer = null;
+    let reorderBtns = [];
+    let userActive = false;
+    // Question types rotated through in every zone; a boss round follows each full rotation
+    const MODE_ROTATION = [
+      MODES.MEANING,
+      MODES.GAP,
+      MODES.TRANSLATE,
+      MODES.ORDER,
+      MODES.CATEGORY,
+      MODES.CONNECTOR,
+      MODES.LISTENING,
+    ];
 
     /* === Utility Functions === */
     function catDa(c) {
       if (!c) return c;
-      const m = { Time: "Tid", Place: "Sted", Manner: "Måde", Frequency: "Hyppighed", "Cause/Effect": "Årsag og følge" };
+      const m = { Time: "Tid", Place: "Sted", Manner: "Måde", Frequency: "Hyppighed", "Cause/Effect": "Årsag og følge", Sentence: "sætningsadverbium" };
       if (/Coordinating/i.test(c)) return "Sideordnende konjunktion";
       if (/Subordinating/i.test(c)) return "Underordnende konjunktion";
       if (/Correlative/i.test(c)) return "Parvis konjunktion";
@@ -589,7 +634,8 @@
     }
 
     function loadProgress() {
-      const stored = localStorage.getItem("danishSentenceBuilderProgress");
+      let stored = null;
+      try { stored = localStorage.getItem("danishSentenceBuilderProgress"); } catch (e) { stored = null; }
       if (stored) {
         try {
           const obj = JSON.parse(stored);
@@ -601,10 +647,12 @@
     }
 
     function saveProgress() {
-      localStorage.setItem(
-        "danishSentenceBuilderProgress",
-        JSON.stringify(progress)
-      );
+      try {
+        localStorage.setItem(
+          "danishSentenceBuilderProgress",
+          JSON.stringify(progress)
+        );
+      } catch (e) {}
     }
 
     function updateDashboard() {
@@ -647,11 +695,14 @@
       const map = document.getElementById("map");
       map.innerHTML = "";
       zones.forEach((zone) => {
+        // Never offer a topic without entries; it reappears once the data has some.
+        // (Unlock level is per zone, see `zones`.)
+        if (!dataset.some(zone.filter)) return;
         const btn = document.createElement("button");
         btn.textContent = zone.name;
         btn.dataset.zone = zone.id;
         // Determine completion or locked status based on level
-        const levelUnlock = zones.indexOf(zone);
+        const levelUnlock = Math.min(zone.unlockLevel, levels.length - 1);
         if (progress.level < levelUnlock) {
           btn.classList.add("locked");
           btn.disabled = true;
@@ -663,35 +714,148 @@
       });
     }
 
-    function startZone(zone) {
-      // Choose a random mode for this zone
-      const possibleModes = [
-        MODES.MEANING,
-        MODES.GAP,
-        MODES.TRANSLATE,
-        MODES.ORDER,
-        MODES.CATEGORY,
-        MODES.CONNECTOR,
-        MODES.LISTENING,
-      ];
-      currentMode = possibleModes[Math.floor(Math.random() * possibleModes.length)];
-      loadQuestion(currentMode, zone);
+    function esc(t) {
+      return String(t == null ? "" : t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     }
 
-    function loadQuestion(mode, zone = null) {
-      // Filter entries by zone if provided
-      let entries = dataset;
-      if (zone) entries = dataset.filter(zone.filter);
-      currentMode = mode;
-      // If review active, get from reviewQueue
-      if (reviewActive && reviewQueue.length > 0) {
+    function escapeRe(t) {
+      return String(t).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    // Replace the target word in a sentence with a blank (whole-word, case-insensitive).
+    function blankWord(sentence, word) {
+      const re = new RegExp("(^|[^\\p{L}])(" + escapeRe(word) + ")(?![\\p{L}])", "iu");
+      let out = sentence.replace(re, (m, pre) => pre + "______");
+      if (out === sentence) out = sentence.replace(new RegExp(escapeRe(word), "i"), "______");
+      return out;
+    }
+
+    function sentenceHasWord(sentence, word) {
+      return new RegExp("(^|[^\\p{L}])" + escapeRe(word) + "(?![\\p{L}])", "iu").test(sentence);
+    }
+
+    function altList(e) {
+      const a = e && e.alt;
+      if (Array.isArray(a)) return a.map((x) => String(x).toLowerCase());
+      if (typeof a === "string" && a.trim()) return a.split(/[;|]/).map((x) => x.trim().toLowerCase()).filter(Boolean);
+      return [];
+    }
+
+    // Words listed in the asked entry's "alt" would also be a defensible answer, so they are kept out of the options.
+    function conflicts(e, cur) {
+      return altList(cur).includes(String(e.word).toLowerCase());
+    }
+
+    function distractors(field, n, pool, extraFilter) {
+      const seen = new Set([currentEntry[field]]);
+      const out = [];
+      shuffle((pool || dataset).filter((e) => e.word !== currentEntry.word && !conflicts(e, currentEntry) && (!extraFilter || extraFilter(e)))).forEach((e) => {
+        const v = e[field];
+        if (v && !seen.has(v) && out.length < n) { seen.add(v); out.push(v); }
+      });
+      return out;
+    }
+
+    // Render the blank ("______") as a shared .sd-gap placeholder
+    function appendGapText(p, sentence) {
+      sentence.split("______").forEach((part, i) => {
+        let tail = part;
+        if (i > 0) {
+          const g = document.createElement("span");
+          g.className = "sd-gap";
+          g.setAttribute("role", "img");
+          g.setAttribute("aria-label", "mellemrum");
+          // Keep punctuation that directly follows the blank (e.g. the final ".") on the blank's line
+          const m = /^[^\s\p{L}\p{N}]+/u.exec(part);
+          if (m) {
+            const keep = document.createElement("span");
+            keep.style.whiteSpace = "nowrap";
+            keep.appendChild(g);
+            keep.appendChild(document.createTextNode(m[0]));
+            p.appendChild(keep);
+            tail = part.slice(m[0].length);
+          } else {
+            p.appendChild(g);
+          }
+        }
+        if (tail) p.appendChild(document.createTextNode(tail));
+      });
+    }
+
+    function addTts(container, text, label) {
+      if (!window.DanskCore || !DanskCore.ui || !DanskCore.ui.ttsButton || !container) return null;
+      return DanskCore.ui.ttsButton(text, container, label);
+    }
+
+    function spokenGap(sentence) {
+      return sentence.replace(/_{2,}/g, ",").replace(/\s+/g, " ").replace(/,\s*,/g, ",").trim();
+    }
+
+    function startZone(zone) {
+      clearTimeout(advanceTimer);
+      reviewActive = false;
+      reviewQueue = [];
+      bossActive = false;
+      bossQueue = [];
+      currentZone = zone;
+      zoneModes = shuffle(MODE_ROTATION.slice());
+      zoneStep = 0;
+      loadQuestion(zoneModes[0], zone);
+    }
+
+    function zoneEntries() {
+      return currentZone ? dataset.filter(currentZone.filter) : dataset;
+    }
+
+    function renderEmptyZone() {
+      const game = document.getElementById("game");
+      game.innerHTML = "";
+      const title = document.createElement("h2");
+      title.textContent = currentZone ? currentZone.name : "";
+      game.appendChild(title);
+      const p = document.createElement("p");
+      p.textContent = "Der er endnu ingen ord i dette emne. Vælg et andet emne.";
+      game.appendChild(p);
+      awaitingAnswer = false;
+    }
+
+    function loadQuestion(mode, zone) {
+      if (zone) currentZone = zone;
+      clearTimeout(advanceTimer);
+      awaitingAnswer = false;
+      if (reviewActive) {
+        if (reviewQueue.length === 0) { finishReview(); return; }
         const next = reviewQueue.shift();
         currentEntry = next.entry;
         currentMode = next.mode;
       } else {
-        currentEntry = entries[Math.floor(Math.random() * entries.length)];
+        if (bossActive && bossQueue.length === 0) {
+          // Boss round finished: start a new rotation in the same zone
+          bossActive = false;
+          zoneModes = shuffle(MODE_ROTATION.slice());
+          zoneStep = 0;
+          mode = zoneModes[0];
+        }
+        if (bossActive) {
+          const next = bossQueue.shift();
+          currentEntry = next.entry;
+          currentMode = next.mode;
+        } else {
+          const entries = zoneEntries();
+          if (entries.length === 0) { renderEmptyZone(); return; }
+          let pick = entries[Math.floor(Math.random() * entries.length)];
+          if (entries.length > 1) {
+            let guard = 0;
+            while (pick === currentEntry && guard++ < 10) pick = entries[Math.floor(Math.random() * entries.length)];
+          }
+          currentEntry = pick;
+          currentMode = mode || zoneModes[zoneStep] || MODES.MEANING;
+        }
       }
+      // An entry whose category has no button cannot be asked in the category mode.
+      if (currentMode === MODES.CATEGORY && !categoryKey(currentEntry.category)) currentMode = MODES.GAP;
       reorderSelections = [];
+      reorderBtns = [];
       renderGame();
     }
 
@@ -699,7 +863,9 @@
       const game = document.getElementById("game");
       game.innerHTML = "";
       const title = document.createElement("h2");
-      title.textContent = currentMode;
+      title.textContent = bossActive && !reviewActive
+        ? MODES.BOSS + " " + (bossTotal - bossQueue.length) + "/" + bossTotal + " – " + currentMode
+        : currentMode;
       game.appendChild(title);
       const content = document.createElement("div");
       content.id = "content";
@@ -709,6 +875,7 @@
       game.appendChild(optionsDiv);
       const feedback = document.createElement("div");
       feedback.id = "feedback";
+      feedback.setAttribute("aria-live", "polite");
       game.appendChild(feedback);
       // Generate question based on mode
       switch (currentMode) {
@@ -725,7 +892,7 @@
           renderOrderQuestion(content);
           break;
         case MODES.CATEGORY:
-          renderCategoryQuestion(content);
+          renderCategoryQuestion(content, optionsDiv);
           break;
         case MODES.CONNECTOR:
           renderConnectorQuestion(content, optionsDiv);
@@ -733,85 +900,157 @@
         case MODES.LISTENING:
           renderListeningQuestion(content, optionsDiv);
           break;
-        case MODES.BOSS:
-          startBossRound();
-          return;
       }
       awaitingAnswer = true;
+      if (userActive) scrollGameIntoView();
+      focusFirstControl();
+    }
+
+    // Move keyboard focus to the first answer control after a render (only once the learner has interacted,
+    // so the page does not grab focus on load). Never leaves focus on BODY after the old buttons are replaced.
+    // Scroll helpers that respect the sticky MENU bar (measured, not the token: the rendered bar is taller than --sd-bar-h).
+    function stickyBarH() {
+      const b = document.querySelector(".sd-bar");
+      return b ? Math.ceil(b.getBoundingClientRect().height) : 0;
+    }
+    function scrollFeedbackIntoView() {
+      const fb = document.getElementById("feedback");
+      if (!fb) return;
+      const h = stickyBarH() + 12, vh = window.innerHeight;
+      const r = fb.getBoundingClientRect();
+      let d = 0;
+      if (r.bottom > vh - 16) d = r.bottom - (vh - 16);
+      if (r.top - d < h) d = r.top - h;
+      if (Math.abs(d) > 0.5) window.scrollBy(0, d);
+    }
+    function scrollGameIntoView() {
+      const g = document.getElementById("game");
+      if (!g) return;
+      const h = stickyBarH() + 8, r = g.getBoundingClientRect();
+      if (r.top < h) window.scrollBy(0, r.top - h);
+    }
+    function focusFirstControl() {
+      if (!userActive) return;
+      const first = document.querySelector("#options button, #reorderParts button");
+      if (first) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }
+    }
+
+    // Modal helper: focus the first control, trap Tab, close on Esc, restore focus to the opener.
+    const modalState = {};
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal || modalState[id]) return;
+      const opener = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
+      modal.classList.remove("hidden");
+      const box = modal.querySelector(".modal-content");
+      // Tab trap over visible controls only (DanskCore.ui.focusTrap also counts the hidden export textarea)
+      const sel = "button:not([disabled]), textarea:not([readonly]), input:not([disabled]), a[href]";
+      const visible = () => Array.from(box.querySelectorAll(sel)).filter((n) => n.offsetParent !== null);
+      const onKey = (e) => {
+        if (e.key !== "Tab") return;
+        const f = visible();
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (!box.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      };
+      box.addEventListener("keydown", onKey);
+      const release = () => box.removeEventListener("keydown", onKey);
+      const f0 = visible();
+      if (f0.length) f0[0].focus();
+      modalState[id] = { opener: opener, release: release };
+    }
+    function closeModal(id, restore) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add("hidden");
+      const st = modalState[id];
+      if (!st) return;
+      delete modalState[id];
+      st.release();
+      if (restore !== false && st.opener && document.body.contains(st.opener)) {
+        try { st.opener.focus({ preventScroll: true }); } catch (e) { st.opener.focus(); }
+      }
+    }
+    function closeSettingsModal() {
+      closeModal("settingsModal");
+      document.getElementById("exportArea").classList.add("hidden");
+    }
+
+    function addOptionButtons(optionsDiv, opts, isCorrect) {
+      opts.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.addEventListener("click", () => handleAnswer(isCorrect(opt)));
+        optionsDiv.appendChild(btn);
+      });
     }
 
     /* === Question Renderers === */
     function renderMeaningQuestion(content, optionsDiv) {
-      content.innerHTML = `<p><strong>${currentEntry.word}</strong></p>`;
+      const p = document.createElement("p");
+      const strong = document.createElement("strong");
+      strong.textContent = currentEntry.word;
+      p.appendChild(strong);
+      const row = document.createElement("span");
+      row.className = "tts-row";
+      p.appendChild(row);
+      content.appendChild(p);
+      addTts(row, currentEntry.word, "Lyt til ordet");
       // Build options: correct meaning + random wrong options
-      const distractors = dataset
-        .filter((e) => e.word !== currentEntry.word)
-        .map((e) => e.meaning);
-      shuffle(distractors);
-      const options = [currentEntry.meaning, distractors[0], distractors[1], distractors[2]];
-      currentOptions = shuffle(options.slice());
-      currentOptions.forEach((opt) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => handleAnswer(opt === currentEntry.meaning));
-        optionsDiv.appendChild(btn);
-      });
+      currentOptions = shuffle([currentEntry.meaning].concat(distractors("meaning", 3)));
+      addOptionButtons(optionsDiv, currentOptions, (opt) => opt === currentEntry.meaning);
     }
 
     function renderGapQuestion(content, optionsDiv) {
-      const gapSentence = currentEntry.sentence_da.replace(
-        new RegExp(currentEntry.word, "i"),
-        "______"
-      );
-      content.innerHTML = `<p>${gapSentence}</p>`;
-      // Options: correct word + wrong ones
-      const distractors = dataset
-        .filter((e) => e.word !== currentEntry.word)
-        .map((e) => e.word);
-      shuffle(distractors);
-      const opts = [currentEntry.word, distractors[0], distractors[1], distractors[2]];
-      currentOptions = shuffle(opts.slice());
-      currentOptions.forEach((opt) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => handleAnswer(opt === currentEntry.word));
-        optionsDiv.appendChild(btn);
-      });
+      const gapSentence = blankWord(currentEntry.sentence_da, currentEntry.word);
+      const p = document.createElement("p");
+      appendGapText(p, gapSentence);
+      const row = document.createElement("span");
+      row.className = "tts-row";
+      p.appendChild(row);
+      content.appendChild(p);
+      // The audio skips the blank so it never gives the answer away
+      addTts(row, spokenGap(gapSentence), "Lyt til sætningen");
+      currentOptions = shuffle([currentEntry.word].concat(distractors("word", 3)));
+      addOptionButtons(optionsDiv, currentOptions, (opt) => opt === currentEntry.word);
     }
 
     function renderTranslateQuestion(content, optionsDiv) {
-      content.innerHTML = `<p>${currentEntry.sentence_en}</p>`;
-      // Options: correct Danish sentence + wrong ones
-      const distractors = dataset
-        .filter((e) => e.sentence_da !== currentEntry.sentence_da)
-        .map((e) => e.sentence_da);
-      shuffle(distractors);
-      const opts = [currentEntry.sentence_da, distractors[0], distractors[1], distractors[2]];
-      currentOptions = shuffle(opts.slice());
-      currentOptions.forEach((opt) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => handleAnswer(opt === currentEntry.sentence_da));
-        optionsDiv.appendChild(btn);
-      });
+      content.innerHTML = `<p>${esc(currentEntry.sentence_en)}</p>`;
+      currentOptions = shuffle([currentEntry.sentence_da].concat(distractors("sentence_da", 3)));
+      addOptionButtons(optionsDiv, currentOptions, (opt) => opt === currentEntry.sentence_da);
     }
 
     function renderOrderQuestion(content) {
-      // Split sentence into parts (simple split on spaces and punctuation)
+      // Split sentence into parts (simple split on spaces)
       const parts = currentEntry.sentence_da.split(/\s+/);
-      // Shuffle parts to create scrambled array
       const scrambled = shuffle(parts.slice());
       content.innerHTML = `<p>Sæt ordene i den rigtige rækkefølge, så de danner en sætning:</p>`;
       const reorderDiv = document.createElement("div");
       reorderDiv.id = "reorderParts";
-      scrambled.forEach((part, index) => {
+      scrambled.forEach((part) => {
         const btn = document.createElement("button");
+        btn.type = "button";
         btn.textContent = part;
+        btn.setAttribute("aria-pressed", "false");
         btn.addEventListener("click", () => selectReorderPart(btn, part));
         reorderDiv.appendChild(btn);
       });
       content.appendChild(reorderDiv);
+      const preview = document.createElement("div");
+      preview.id = "reorderPreview";
+      preview.setAttribute("aria-live", "polite");
+      content.appendChild(preview);
+      updateReorderPreview();
+      const undoBtn = document.createElement("button");
+      undoBtn.type = "button";
+      undoBtn.id = "undoReorderBtn";
+      undoBtn.textContent = "Fortryd sidste ord";
+      undoBtn.addEventListener("click", undoReorder);
+      content.appendChild(undoBtn);
       const submitBtn = document.createElement("button");
+      submitBtn.type = "button";
       submitBtn.textContent = "Tjek rækkefølgen";
       submitBtn.addEventListener("click", () => {
         const answer = reorderSelections.join(" ");
@@ -820,124 +1059,139 @@
       content.appendChild(submitBtn);
     }
 
-    function selectReorderPart(btn, part) {
-      if (btn.classList.contains("selected")) return;
-      btn.classList.add("selected");
-      reorderSelections.push(part);
+    function updateReorderPreview() {
+      const el = document.getElementById("reorderPreview");
+      if (!el) return;
+      el.textContent = reorderSelections.length
+        ? "Din sætning: " + reorderSelections.join(" ")
+        : "Tryk på ordene i den rigtige rækkefølge. Tryk på et valgt ord for at fjerne det igen.";
     }
 
-    function renderCategoryQuestion(content) {
-      content.innerHTML = `<p>Hvilken gruppe hører <strong>${currentEntry.word}</strong> til i?</p>`;
-      // Provide list of categories (7 categories per spec)
-      const categories = [
-        "Time",
-        "Place",
-        "Manner",
-        "Frequency",
-        "Coordinating conjunction",
-        "Subordinating conjunction",
-        "Correlative conjunction",
-      ];
-      const catLabels = {
-        "Time": "Tid",
-        "Place": "Sted",
-        "Manner": "Måde",
-        "Frequency": "Hyppighed",
-        "Coordinating conjunction": "Sideordnende konjunktion",
-        "Subordinating conjunction": "Underordnende konjunktion",
-        "Correlative conjunction": "Parvis konjunktion",
-      };
-      const options = document.createElement("div");
-      options.id = "options";
-      categories.forEach((cat) => {
+    // Clicking a tile places it; clicking a placed tile removes it again.
+    function selectReorderPart(btn, part) {
+      if (!awaitingAnswer) return;
+      const i = reorderBtns.indexOf(btn);
+      if (i >= 0) {
+        reorderBtns.splice(i, 1);
+        reorderSelections.splice(i, 1);
+        btn.classList.remove("selected");
+        btn.setAttribute("aria-pressed", "false");
+      } else {
+        reorderBtns.push(btn);
+        reorderSelections.push(part);
+        btn.classList.add("selected");
+        btn.setAttribute("aria-pressed", "true");
+      }
+      updateReorderPreview();
+    }
+
+    function undoReorder() {
+      if (!awaitingAnswer || reorderBtns.length === 0) return;
+      const btn = reorderBtns[reorderBtns.length - 1];
+      selectReorderPart(btn, btn.textContent);
+    }
+
+    // Categories offered in Ordklasse-jagten; every entry category must resolve to one of these.
+    const CATEGORY_BUTTONS = [
+      { key: "Time", label: "Tid" },
+      { key: "Place", label: "Sted" },
+      { key: "Manner", label: "Måde" },
+      { key: "Frequency", label: "Hyppighed" },
+      { key: "Cause/Effect", label: "Årsag og følge" },
+      { key: "Sentence", label: "Sætningsadverbium" },
+      { key: "Coordinating conjunction", label: "Sideordnende konjunktion" },
+      { key: "Subordinating conjunction", label: "Underordnende konjunktion" },
+      { key: "Correlative conjunction", label: "Parvis konjunktion" },
+    ];
+
+    function categoryKey(cat) {
+      const c = cat || "";
+      if (/Coordinating/i.test(c)) return "Coordinating conjunction";
+      if (/Subordinating/i.test(c)) return "Subordinating conjunction";
+      if (/Correlative/i.test(c)) return "Correlative conjunction";
+      if (/Cause/i.test(c)) return "Cause/Effect";
+      if (/Sentence/i.test(c)) return "Sentence";
+      if (/Time/i.test(c)) return "Time";
+      if (/Place/i.test(c)) return "Place";
+      if (/Manner/i.test(c)) return "Manner";
+      if (/Frequency/i.test(c)) return "Frequency";
+      return "";
+    }
+
+    function categoryLabel(cat) {
+      const k = categoryKey(cat);
+      const b = CATEGORY_BUTTONS.find((x) => x.key === k);
+      return b ? b.label : cat;
+    }
+
+    function renderCategoryQuestion(content, optionsDiv) {
+      const p = document.createElement("p");
+      p.appendChild(document.createTextNode("Hvilken gruppe hører "));
+      const strong = document.createElement("strong");
+      strong.textContent = currentEntry.word;
+      p.appendChild(strong);
+      p.appendChild(document.createTextNode(" til i?"));
+      const row = document.createElement("span");
+      row.className = "tts-row";
+      p.appendChild(row);
+      content.appendChild(p);
+      addTts(row, currentEntry.word, "Lyt til ordet");
+      const correctCat = categoryKey(currentEntry.category);
+      CATEGORY_BUTTONS.forEach((c) => {
         const btn = document.createElement("button");
-        btn.textContent = catLabels[cat];
-        btn.addEventListener("click", () => {
-          const corrCat = currentEntry.category;
-          // Determine high‑level category
-          let correctCat = "";
-          if (/Time/i.test(corrCat)) correctCat = "Time";
-          else if (/Place/i.test(corrCat)) correctCat = "Place";
-          else if (/Manner/i.test(corrCat)) correctCat = "Manner";
-          else if (/Frequency/i.test(corrCat)) correctCat = "Frequency";
-          else if (/Coordinating/i.test(corrCat)) correctCat = "Coordinating conjunction";
-          else if (/Subordinating/i.test(corrCat)) correctCat = "Subordinating conjunction";
-          else if (/Correlative/i.test(corrCat)) correctCat = "Correlative conjunction";
-          handleAnswer(cat === correctCat);
-        });
-        options.appendChild(btn);
+        btn.textContent = c.label;
+        btn.dataset.cat = c.key;
+        btn.addEventListener("click", () => handleAnswer(c.key === correctCat));
+        optionsDiv.appendChild(btn);
       });
-      content.appendChild(options);
     }
 
     function renderConnectorQuestion(content, optionsDiv) {
-      // Build two clauses: take existing sentence and split at comma or period
-      const parts = currentEntry.sentence_da.split(/[.,;]/);
-      let clause1, clause2;
-      if (parts.length >= 2) {
-        clause1 = parts[0].trim();
-        clause2 = parts[1].trim();
-      } else {
-        // If no punctuation, create generic clauses
-        clause1 = currentEntry.sentence_da;
-        clause2 = "";
-      }
-      content.innerHTML = `<p>${clause1} … ${clause2}</p>`;
-      // Provide connectors: include current word and some distractors (only conjunctions)
-      const conjunctions = dataset
-        .filter((e) => /conjunction/i.test(e.category))
-        .map((e) => e.word);
-      const unique = Array.from(new Set(conjunctions));
-      shuffle(unique);
-      const opts = [currentEntry.word];
-      for (let i = 0; i < unique.length && opts.length < 4; i++) {
-        if (unique[i] !== currentEntry.word) opts.push(unique[i]);
-      }
-      currentOptions = shuffle(opts.slice());
-      currentOptions.forEach((opt) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => handleAnswer(opt === currentEntry.word));
-        optionsDiv.appendChild(btn);
-      });
+      // The target word is always blanked so the prompt never contains the answer
+      const gapSentence = blankWord(currentEntry.sentence_da, currentEntry.word);
+      const p = document.createElement("p");
+      appendGapText(p, gapSentence);
+      const row = document.createElement("span");
+      row.className = "tts-row";
+      p.appendChild(row);
+      content.appendChild(p);
+      addTts(row, spokenGap(gapSentence), "Lyt til sætningen");
+      // Options: the target word plus other connectors
+      const conj = dataset.filter((e) => /conjunction/i.test(e.category));
+      currentOptions = shuffle([currentEntry.word].concat(distractors("word", 3, conj)));
+      addOptionButtons(optionsDiv, currentOptions, (opt) => opt === currentEntry.word);
     }
 
     function renderListeningQuestion(content, optionsDiv) {
-      content.innerHTML = `<p id="listenSentence">${currentEntry.sentence_da}</p>`;
-      // Hide the sentence after a short delay
-      setTimeout(() => {
-        const el = document.getElementById("listenSentence");
-        if (el) el.textContent = "(Sætningen er skjult)";
-      }, 3000);
-      // Provide options: missing word and distractors
-      const distractors = dataset
-        .filter((e) => e.word !== currentEntry.word)
-        .map((e) => e.word);
-      shuffle(distractors);
-      const opts = [currentEntry.word, distractors[0], distractors[1], distractors[2]];
-      currentOptions = shuffle(opts.slice());
-      currentOptions.forEach((opt) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.addEventListener("click", () => handleAnswer(opt === currentEntry.word));
-        optionsDiv.appendChild(btn);
-      });
+      const canSpeak = !!(window.DanskCore && DanskCore.tts && DanskCore.tts.isAvailable() && DanskCore.tts.hasDanishVoice());
+      const p = document.createElement("p");
+      p.id = "listenSentence";
+      // The sentence text is never shown; without audio the word is blanked instead
+      p.appendChild(document.createTextNode(canSpeak
+        ? "Lyt til sætningen. Hvilket af ordene hører du?"
+        : "Der er ingen dansk stemme på denne enhed. Vælg det ord, der mangler: " + blankWord(currentEntry.sentence_da, currentEntry.word)));
+      const row = document.createElement("span");
+      row.className = "tts-row";
+      p.appendChild(row);
+      content.appendChild(p);
+      addTts(row, currentEntry.sentence_da, "Lyt til sætningen");
+      // Distractors must not occur in the spoken sentence
+      const inSentence = (e) => !sentenceHasWord(currentEntry.sentence_da, e.word);
+      currentOptions = shuffle([currentEntry.word].concat(distractors("word", 3, dataset, inSentence)));
+      addOptionButtons(optionsDiv, currentOptions, (opt) => opt === currentEntry.word);
+      // Explicit listening prompt: play once, but only after the learner has interacted with the page
+      if (canSpeak && userActive) DanskCore.tts.speak(currentEntry.sentence_da);
     }
 
     function startBossRound() {
-      // Generate five mixed challenges in sequence
-      const bossModes = [
-        MODES.MEANING,
-        MODES.GAP,
-        MODES.TRANSLATE,
-        MODES.ORDER,
-        MODES.CATEGORY,
-      ];
-      reviewQueue = bossModes.map((mode) => {
-        return { entry: dataset[Math.floor(Math.random() * dataset.length)], mode };
-      });
-      reviewActive = true;
-      loadQuestion(reviewQueue[0].mode);
+      // Five mixed challenges from the active zone
+      const bossModes = [MODES.MEANING, MODES.GAP, MODES.TRANSLATE, MODES.ORDER, MODES.CATEGORY];
+      let entries = zoneEntries();
+      if (entries.length === 0) entries = dataset;
+      bossQueue = bossModes.map((mode) => ({ entry: entries[Math.floor(Math.random() * entries.length)], mode }));
+      bossTotal = bossQueue.length;
+      bossActive = true;
+      loadQuestion();
     }
 
     /* === Answer Handling === */
@@ -946,13 +1200,15 @@
       awaitingAnswer = false;
       const feedback = document.getElementById("feedback");
       const options = document.querySelectorAll("#options button");
+      const correctKey = categoryKey(currentEntry.category);
       options.forEach((btn) => {
         if (
           (currentMode === MODES.MEANING && btn.textContent === currentEntry.meaning) ||
           (currentMode === MODES.GAP && btn.textContent === currentEntry.word) ||
           (currentMode === MODES.TRANSLATE && btn.textContent === currentEntry.sentence_da) ||
           (currentMode === MODES.CONNECTOR && btn.textContent === currentEntry.word) ||
-          (currentMode === MODES.LISTENING && btn.textContent === currentEntry.word)
+          (currentMode === MODES.LISTENING && btn.textContent === currentEntry.word) ||
+          (currentMode === MODES.CATEGORY && btn.dataset.cat === correctKey)
         ) {
           btn.classList.add("correct");
         }
@@ -974,6 +1230,7 @@
         // Add to savedWords if not already
         if (!progress.savedWords[w]) progress.savedWords[w] = 0;
       }
+      if (correct && reviewActive) recordReviewSuccess(currentEntry.word);
       progress.total++;
       progress.wordsPracticed++;
       // Update category stats
@@ -986,6 +1243,33 @@
       // Update level
       updateLevel();
       saveProgress();
+      refreshReviewList();
+    }
+
+    // Generic Danish note used when an entry (for example from an imported CSV) has no note of its own.
+    function fallbackNote(entry) {
+      switch (categoryKey(entry.category)) {
+        case "Time": return "Tidsadverbier fortæller, hvornår noget sker, eller hvor længe det varer.";
+        case "Place": return "Stedsadverbier fortæller, hvor noget sker, eller hvorhen noget går.";
+        case "Manner": return "Måde-adverbier fortæller, hvordan noget sker.";
+        case "Frequency": return "Hyppighedsadverbier fortæller, hvor ofte noget sker.";
+        case "Cause/Effect": return "Adverbier som ‘derfor’ viser en følge af det, der lige er sagt.";
+        case "Sentence": return "Sætningsadverbier kommenterer hele sætningen og står tæt ved udsagnsordet.";
+        case "Coordinating conjunction": return "Sideordnende konjunktioner binder to hovedsætninger sammen uden at ændre ordstillingen.";
+        case "Subordinating conjunction": return "Underordnende konjunktioner indleder en bisætning.";
+        case "Correlative conjunction": return "Parvise konjunktioner består af to ord, der hører sammen.";
+        default: return "";
+      }
+    }
+
+    function correctAnswerText() {
+      switch (currentMode) {
+        case MODES.MEANING: return currentEntry.meaning;
+        case MODES.TRANSLATE:
+        case MODES.ORDER: return currentEntry.sentence_da;
+        case MODES.CATEGORY: return categoryLabel(currentEntry.category);
+        default: return currentEntry.word;
+      }
     }
 
     function showAnswerExplanation(correct) {
@@ -993,34 +1277,59 @@
       const explanation = document.createElement("div");
       explanation.style.marginTop = "0.3rem";
       if (correct) {
-        explanation.innerHTML = `<em>${currentEntry.word}:</em> ${currentEntry.meaning}`;
+        explanation.innerHTML = `<em>${esc(currentEntry.word)}:</em> ${esc(currentEntry.meaning)}`;
       } else {
-        explanation.innerHTML = `Det rigtige svar er <strong>${currentEntry.word}</strong> – ${currentEntry.meaning}<br>Dansk: ${currentEntry.sentence_da}<br>Engelsk: ${currentEntry.sentence_en}`;
+        const note = currentEntry.note || fallbackNote(currentEntry);
+        explanation.innerHTML =
+          `<div>Det rigtige svar er <strong>${esc(correctAnswerText())}</strong></div>` +
+          `<div class="fb-sentence">Dansk: ${esc(currentEntry.sentence_da)} <span class="tts-row"></span></div>` +
+          (note ? `<div class="fb-note">${esc(note)}</div>` : "") +
+          (currentEntry.sentence_en ? `<div class="fb-hint"><small>Engelsk hjælp: ${esc(currentEntry.sentence_en)}</small></div>` : "");
       }
       feedback.appendChild(explanation);
-      // After a delay, load next question automatically (except in review)
-      setTimeout(() => {
-        if (reviewActive && reviewQueue.length > 0) {
-          // If wrong, push the item back to queue end
+      // Replay the correct Danish sentence
+      const row = explanation.querySelector(".tts-row") || (function () {
+        const r = document.createElement("span");
+        r.className = "tts-row";
+        explanation.appendChild(r);
+        return r;
+      })();
+      addTts(row, currentEntry.sentence_da, "Lyt til hele sætningen");
+      clearTimeout(advanceTimer);
+      const advance = () => {
+        clearTimeout(advanceTimer);
+        if (reviewActive) {
+          // If wrong, push the item back to the end of the queue
           if (!correct) reviewQueue.push({ entry: currentEntry, mode: currentMode });
-          if (reviewQueue.length === 0) {
-            reviewActive = false;
-            updateDashboard();
-            populateMap();
-            document.getElementById("game").innerHTML = '<p>Repetitionen er færdig!</p><span data-sd-sprite="pokal" data-scale="6" class="sd-bob" aria-hidden="true"></span>';
-            if (window.Sjovt) { Sjovt.hydrate(); Sjovt.fx.celebrate(); }
-          } else {
-            const next = reviewQueue.shift();
-            currentEntry = next.entry;
-            currentMode = next.mode;
-            renderGame();
-          }
-          return;
+          loadQuestion();
+        } else if (bossActive) {
+          loadQuestion();
+        } else {
+          zoneStep++;
+          if (zoneStep >= MODE_ROTATION.length) startBossRound();
+          else loadQuestion(zoneModes[zoneStep], currentZone);
         }
-        loadQuestion(currentMode);
         updateDashboard();
         populateMap();
-      }, 2000);
+      };
+      if (correct) {
+        // A correct answer keeps the short automatic advance.
+        advanceTimer = setTimeout(advance, 2000);
+      } else {
+        // A wrong answer waits for the learner: answer, note and replay stay in view until "Næste".
+        updateDashboard();
+        populateMap();
+        const next = document.createElement("button");
+        next.type = "button";
+        next.id = "nextBtn";
+        next.className = "fb-next";
+        next.textContent = "Næste";
+        next.addEventListener("click", advance);
+        feedback.appendChild(next);
+        try { next.focus({ preventScroll: true }); } catch (e) { next.focus(); }
+        scrollFeedbackIntoView();
+        // The feedback box is styled (padding, icon) by the hook below; it scrolls the box into view afterwards.
+      }
     }
 
     function updateLevel() {
@@ -1033,41 +1342,109 @@
     }
 
     /* === Review Mode === */
-    function openReview() {
-      const modal = document.getElementById("reviewModal");
+    function reviewRemaining(word) {
+      const m = progress.mistakes[word];
+      if (m) return Math.max(0, (m.needed || 3) - (m.completed || 0));
+      return Math.max(0, 3 - (progress.savedWords[word] || 0));
+    }
+
+    function recordReviewSuccess(word) {
+      const m = progress.mistakes[word];
+      if (m) m.completed = (m.completed || 0) + 1;
+      else progress.savedWords[word] = (progress.savedWords[word] || 0) + 1;
+      if (reviewRemaining(word) === 0) {
+        delete progress.mistakes[word];
+        delete progress.savedWords[word];
+      }
+    }
+
+    function reviewWords() {
+      return Array.from(new Set([...Object.keys(progress.savedWords), ...Object.keys(progress.mistakes)]))
+        .filter((w) => dataset.some((e) => e.word === w));
+    }
+
+    function refreshReviewList() {
       const list = document.getElementById("reviewList");
+      if (!list) return;
       list.innerHTML = "";
-      // Build list from mistakes and savedWords
-      const reviewWords = new Set([
-        ...Object.keys(progress.savedWords),
-        ...Object.keys(progress.mistakes),
-      ]);
-      if (reviewWords.size === 0) {
+      const words = reviewWords();
+      if (words.length === 0) {
         list.innerHTML = `<li>Ingen gemte ord eller fejl endnu.</li>`;
       } else {
-        reviewWords.forEach((word) => {
-          const entry = dataset.find((e) => e.word === word);
-          if (!entry) return;
+        words.forEach((word) => {
           const li = document.createElement("li");
-          const needed = progress.mistakes[word] ? progress.mistakes[word].needed - (progress.mistakes[word].completed || 0) : (progress.savedWords[word] || 1);
-          li.innerHTML = `<strong>${word}</strong> – mangler ${needed} rigtige svar, før det er klaret`;
+          li.dataset.word = word;
+          li.innerHTML = `<strong>${esc(word)}</strong> – mangler ${reviewRemaining(word)} rigtige svar, før det er klaret`;
           list.appendChild(li);
         });
       }
-      modal.classList.remove("hidden");
-      // Build reviewQueue with entries
-      reviewQueue = [];
-      reviewWords.forEach((word) => {
-        const entry = dataset.find((e) => e.word === word);
-        if (entry) {
-          // Use meaning mode for review; could randomize
-          reviewQueue.push({ entry, mode: MODES.MEANING });
-        }
-      });
-      if (reviewQueue.length > 0) {
-        reviewActive = true;
-        loadQuestion(reviewQueue[0].mode);
+      const startBtn = document.getElementById("startReviewBtn");
+      const endBtn = document.getElementById("endReviewBtn");
+      if (startBtn) {
+        startBtn.disabled = !reviewActive && words.length === 0;
+        startBtn.textContent = reviewActive ? "Fortsæt repetition" : "Start repetition";
       }
+      if (endBtn) endBtn.classList.toggle("hidden", !reviewActive);
+    }
+
+    function openReview() {
+      refreshReviewList();
+      openModal("reviewModal");
+      // Prefer the start button as the first control; the trap focuses the first enabled control otherwise
+      const startBtn = document.getElementById("startReviewBtn");
+      if (startBtn && !startBtn.disabled) startBtn.focus();
+      else document.getElementById("closeReviewBtn").focus();
+    }
+
+    function closeReviewModal(restore) {
+      closeModal("reviewModal", restore);
+    }
+
+    function startReview() {
+      if (reviewActive) { closeReviewModal(false); focusFirstControl(); return; }
+      const words = reviewWords();
+      if (words.length === 0) return;
+      clearTimeout(advanceTimer);
+      bossActive = false;
+      bossQueue = [];
+      // Use meaning mode for review; could randomize
+      reviewQueue = words.map((word) => ({ entry: dataset.find((e) => e.word === word), mode: MODES.MEANING }));
+      reviewActive = true;
+      closeReviewModal(false);
+      refreshReviewList();
+      loadQuestion();
+    }
+
+    function endReview() {
+      clearTimeout(advanceTimer);
+      reviewActive = false;
+      reviewQueue = [];
+      closeReviewModal(false);
+      refreshReviewList();
+      startZone(currentZone || zones[0]);
+      updateDashboard();
+      populateMap();
+    }
+
+    function finishReview() {
+      clearTimeout(advanceTimer);
+      reviewActive = false;
+      reviewQueue = [];
+      awaitingAnswer = false;
+      refreshReviewList();
+      updateDashboard();
+      populateMap();
+      const game = document.getElementById("game");
+      game.innerHTML = '<p>Repetitionen er færdig!</p><span data-sd-sprite="pokal" data-scale="6" class="sd-bob" aria-hidden="true"></span>';
+      const back = document.createElement("button");
+      back.type = "button";
+      back.id = "backToPracticeBtn";
+      back.textContent = "← Tilbage";
+      back.title = "Tilbage til øvelserne";
+      back.addEventListener("click", () => startZone(currentZone || zones[0]));
+      game.appendChild(document.createElement("div")).appendChild(back);
+      if (window.Sjovt) { Sjovt.hydrate(); Sjovt.fx.celebrate(); }
+      if (userActive) { try { back.focus({ preventScroll: true }); } catch (e) { back.focus(); } }
     }
 
     /* === CSV Import === */
@@ -1096,29 +1473,16 @@
       updateDashboard();
       populateMap();
       // Start with a random zone/mode
-      startZone(zones[0]);
-      // Dark mode toggle
-      const darkToggle = document.getElementById("darkToggle");
-      if (localStorage.getItem("danishDarkMode") === "true") {
-        document.body.classList.add("dark");
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else if (localStorage.getItem("danishDarkMode") === "false") {
-        document.documentElement.setAttribute("data-theme", "light");
-      }
-      darkToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark");
-        const isDark = document.body.classList.contains("dark");
-        localStorage.setItem("danishDarkMode", isDark);
-        document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-      });
+      startZone(zones.find((z) => dataset.some(z.filter)) || zones[0]);
+      // Theme: the shared bar (shared/sjovt.js, sd:theme) owns light/dark (US-040)
       // Import modal events
       const importBtn = document.getElementById("importBtn");
       const importModal = document.getElementById("importModal");
       importBtn.addEventListener("click", () => {
-        importModal.classList.remove("hidden");
+        openModal("importModal");
       });
       document.getElementById("cancelImportBtn").addEventListener("click", () => {
-        importModal.classList.add("hidden");
+        closeModal("importModal");
       });
       document.getElementById("loadDataBtn").addEventListener("click", () => {
         const text = document.getElementById("csvInput").value;
@@ -1141,17 +1505,14 @@
         } else {
           alert("Der blev ikke fundet nogen gyldige poster. Tjek din CSV.");
         }
-        importModal.classList.add("hidden");
+        closeModal("importModal");
       });
       // Settings modal
       const settingsModal = document.getElementById("settingsModal");
       document.getElementById("settingsBtn").addEventListener("click", () => {
-        settingsModal.classList.remove("hidden");
+        openModal("settingsModal");
       });
-      document.getElementById("closeSettingsBtn").addEventListener("click", () => {
-        settingsModal.classList.add("hidden");
-        document.getElementById("exportArea").classList.add("hidden");
-      });
+      document.getElementById("closeSettingsBtn").addEventListener("click", closeSettingsModal);
       document.getElementById("exportProgressBtn").addEventListener("click", () => {
         const area = document.getElementById("exportArea");
         area.classList.toggle("hidden");
@@ -1160,7 +1521,7 @@
       });
       document.getElementById("resetProgressBtn").addEventListener("click", () => {
         if (confirm("Vil du nulstille alle dine fremskridt?")) {
-          localStorage.removeItem("danishSentenceBuilderProgress");
+          try { localStorage.removeItem("danishSentenceBuilderProgress"); } catch (e) {}
           progress = {
             score: 0,
             correct: 0,
@@ -1185,16 +1546,31 @@
       document.getElementById("reviewBtn").addEventListener("click", () => {
         openReview();
       });
-      document.getElementById("closeReviewBtn").addEventListener("click", () => {
-        document.getElementById("reviewModal").classList.add("hidden");
-        reviewActive = false;
-        reviewQueue = [];
-        updateDashboard();
-        populateMap();
-        document.getElementById("game").innerHTML = "";
-      });
+      document.getElementById("closeReviewBtn").addEventListener("click", () => closeReviewModal());
+      document.getElementById("startReviewBtn").addEventListener("click", startReview);
+      document.getElementById("endReviewBtn").addEventListener("click", endReview);
       // Global keyboard shortcuts
+      const markActive = () => { userActive = true; };
+      document.addEventListener("pointerdown", markActive, true);
+      document.addEventListener("keydown", markActive, true);
+      // Esc closes the open dialog and returns focus to its opener
       document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        if (modalState.importModal) { e.preventDefault(); closeModal("importModal"); }
+        else if (modalState.settingsModal) { e.preventDefault(); closeSettingsModal(); }
+        else if (modalState.reviewModal) { e.preventDefault(); closeReviewModal(); }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+        const t = e.target;
+        // Never trigger shortcuts while typing in a field
+        if (t && (t.isContentEditable || (t.closest && t.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')))) return;
+        // Ignore shortcuts while a dialog is open
+        if (document.querySelector("#importModal:not(.hidden), #settingsModal:not(.hidden), #reviewModal:not(.hidden)")) return;
+        if (e.key.toLowerCase() === "r") {
+          openReview();
+          return;
+        }
         // Number keys 1–4 map to current options
         if (!awaitingAnswer) return;
         const keyNum = parseInt(e.key);
@@ -1204,12 +1580,11 @@
           if (btn) btn.click();
         }
         if (e.key === "Enter") {
+          // A focused button handles Enter itself
+          if (t && t.closest && t.closest("button, a")) return;
           // For order questions, submit order
           const submit = Array.from(document.querySelectorAll("#content button")).find((b) => b.textContent === "Tjek rækkefølgen");
           if (submit) submit.click();
-        }
-        if (e.key.toLowerCase() === "r") {
-          openReview();
         }
       });
     });
@@ -1230,6 +1605,7 @@
         if (!was) return;
         var fb = document.getElementById("feedback");
         if (fb) fb.className = correct ? "fb-ok" : "fb-bad";
+        if (fb && !correct) { try { scrollFeedbackIntoView(); } catch (e) { /* optional */ } }
         if (correct) { S.fx.correct(last); }
         else {
           S.fx.wrong(last);

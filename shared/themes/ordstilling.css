@@ -38,7 +38,7 @@ html.sd-page .masthead h1 {
 html.sd-page .masthead .tag { font-family: var(--sd-font-display); color: var(--sd-text); font-size: 15px; letter-spacing: .06em; margin-top: 10px; }
 html.sd-page .rank {
   font-family: var(--sd-font-display); font-weight: 700; font-size: 15px; letter-spacing: .04em; text-transform: uppercase;
-  background: var(--sd-ink); color: var(--sd-cream); border: 0; border-radius: 0; box-shadow: 0 0 0 4px var(--sd-orange); padding: 6px 14px; margin-top: 14px;
+  border: 0; border-radius: 0; padding: 6px 14px; margin-top: 14px;
 }
 @media (max-width: 420px) { html.sd-page .mast-row .sd-sprite svg { width: 54px; height: auto; } html.sd-page .mast-row { gap: 12px; } }
 
@@ -52,12 +52,7 @@ html.sd-page .intro-line { font-family: var(--sd-font-display); font-weight: 700
 html.sd-page .tiers { gap: 8px; margin-bottom: 16px; }
 html.sd-page .tier-pill {
   font-family: var(--sd-font-body); font-weight: 700; font-size: 13px; letter-spacing: 0; border: 0; border-radius: 0; padding: 4px 10px; margin: 2px;
-  background: var(--sd-ink); color: var(--sd-cream);
 }
-html.sd-page .t-a1 { background: #0F7A33; color: #fff; }
-html.sd-page .t-a2 { background: #2B3FD6; color: #fff; }
-html.sd-page .t-b1 { background: var(--sd-amber); color: #101010; }
-html.sd-page .t-b2 { background: #D4145A; color: #fff; }
 html.sd-page .lvlfilter { gap: 8px; margin-bottom: 20px; }
 html.sd-page .lvlfilter .tier-pill {
   font-family: var(--sd-font-display); font-size: 16px; min-height: 44px; min-width: 56px; padding: 6px 14px; opacity: 1; cursor: pointer;
@@ -83,8 +78,6 @@ html.sd-page .casebtn.done .num { background: var(--sd-green); color: #fff; }
 html.sd-page .casebtn .ct { font-family: var(--sd-font-display); font-weight: 700; font-size: 18px; line-height: 1.25; text-transform: uppercase; letter-spacing: .02em; padding-right: 44px; }
 html.sd-page .casebtn .cf { font-family: var(--sd-font-body); font-size: 14px; color: #3A3326; font-weight: 400; margin-top: 4px; }
 html.sd-page .casebtn .lvl { top: 8px; right: 8px; border-radius: 0; font-family: var(--sd-font-body); font-weight: 700; font-size: 12px; letter-spacing: 0; padding: 2px 6px; }
-html.sd-page .lb-a1 { background: #0F7A33; color: #fff; } html.sd-page .lb-a2 { background: #2B3FD6; color: #fff; }
-html.sd-page .lb-b1 { background: var(--sd-amber); color: #101010; } html.sd-page .lb-b2 { background: #D4145A; color: #fff; }
 html.sd-page .lock { font-family: var(--sd-font-display); font-weight: 700; font-size: 13px; letter-spacing: .06em; opacity: 1; color: #4a4434; }
 html.sd-page .stamp {
   font-family: var(--sd-font-display); font-weight: 700; font-size: 14px; color: #fff; background: var(--sd-green); border: 0; border-radius: 0;
@@ -92,10 +85,10 @@ html.sd-page .stamp {
 }
 html.sd-page .casebtn .best { font-family: var(--sd-font-body); font-size: 13px; color: #3A3326; left: 64px; bottom: 8px; }
 html.sd-page .casebtn.done { padding-bottom: 30px; }
-html.sd-page .final-card { padding: 16px 14px; text-align: center; background: var(--sd-cream); }
+html.sd-page .final-card { padding: 16px 14px; text-align: center; background: var(--sd-cream); color: #101010; }
 html.sd-page .final-card .ct { padding-right: 0; }
 html.sd-page .final-card .lvl { position: static; display: inline-block; margin-bottom: 6px; }
-html.sd-page .final-card.locked { filter: none; background: #DCD3B8; }
+html.sd-page .final-card.locked { filter: none; background: var(--sd-panel-2); color: var(--sd-text-soft); }
 html.sd-page .progress-note { font-family: var(--sd-font-display); font-weight: 700; color: var(--sd-text); font-size: 16px; letter-spacing: .04em; margin: 22px 0 6px; }
 html.sd-page .bar, html.sd-page .qbar { height: 20px; background: var(--sd-panel-2); border: 0; border-radius: 0; box-shadow: var(--sd-box); overflow: hidden; margin: 10px auto 4px; max-width: none; }
 html.sd-page .bar { max-width: 380px; }
@@ -156,14 +149,14 @@ html.sd-page .answer.no::after { content: "✗ FORKERT"; background: #D4145A; }
 html.sd-page .pool { gap: 12px; margin: 4px 4px 12px; }
 html.sd-page .tile {
   font-family: var(--sd-font-body); font-weight: 700; font-size: 17px; min-height: 48px; padding: 8px 14px; border: 0; border-radius: 0; margin: 4px;
-  background: var(--sd-white); color: #101010; box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); transition: none; cursor: pointer;
+  background: var(--sd-panel-2); color: var(--sd-text); box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); transition: none; cursor: pointer;
 }
-html.sd-page .tile:hover { transform: translate(-2px, -2px); background: var(--sd-cream); box-shadow: var(--sd-box), 5px 5px 0 0 var(--sd-ink); }
+html.sd-page .tile:hover { transform: translate(-2px, -2px); background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 5px 5px 0 0 var(--sd-ink); }
 html.sd-page .tile:active { transform: translate(2px, 2px); box-shadow: var(--sd-box); }
-html.sd-page .tile.inans { background: var(--sd-cream); box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); }
+html.sd-page .tile.inans { background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); }
 html.sd-page .tile.used { opacity: 0; width: 0; min-width: 0; min-height: 0; height: 0; padding: 0; margin: 0; box-shadow: none; overflow: hidden; }
 html.sd-page .tile.locked { pointer-events: none; }
-html.sd-page .answer.ok .tile.inans, html.sd-page .answer.no .tile.inans { background: var(--sd-white); }
+html.sd-page .answer.ok .tile.inans, html.sd-page .answer.no .tile.inans { background: var(--sd-white); color: #101010; }
 
 html.sd-page .controls { gap: 16px; margin-top: 16px; flex-wrap: wrap; }
 html.sd-page .btn {
@@ -192,12 +185,6 @@ html.sd-page .explain .tr { font-style: normal; font-size: 16px; color: #3A3326;
 html.sd-page .explain .why { font-size: 16px; line-height: 1.6; color: #101010; }
 html.sd-page .explain .why b { color: #101010; background: var(--sd-cream); padding: 0 4px; }
 html.sd-page .explain.show .inner { animation: sd-enter .28s steps(4) both; }
-html.sd-page .speaker {
-  width: 48px; height: 48px; border: 0; border-radius: 0; background: var(--sd-cream); color: #101010; font-family: var(--sd-font-display); font-weight: 700; font-size: 22px;
-  box-shadow: var(--sd-box), 3px 3px 0 0 var(--sd-ink); transition: none; margin: 4px; cursor: pointer;
-}
-html.sd-page .speaker:hover { background: var(--sd-white); transform: none; }
-html.sd-page .speaker:active { transform: translate(2px, 2px); box-shadow: var(--sd-box); }
 
 /* complete */
 html.sd-page .complete { padding: 8px 4px; }
@@ -235,3 +222,16 @@ html.sd-page .controls .btn.clear { flex: 1 1 120px; }
 @media (max-width: 420px) { html.sd-page .btn { font-size: 16px; padding: 12px 10px; } }
 html.sd-page .casebtn:disabled:not(.final-card) { padding-bottom: 36px; }
 html.sd-page .lock { font-family: var(--sd-font-body); font-weight: 700; font-size: 12px; letter-spacing: .04em; }
+
+/* US-013: collapsible case story so tiles + UNDERSØG stay above the fold from statement 2 on */
+html.sd-page .storybox > summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-family: var(--sd-font-display); font-weight: 700; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; color: var(--sd-text); }
+html.sd-page .storybox[open] > summary { margin-bottom: 4px; }
+
+/* D-ORD: "Læs sagen" toggle, collapsed on every statement */
+html.sd-page .storybox > summary::-webkit-details-marker { display: none; }
+html.sd-page .storybox > summary::before { content: "▸"; margin-right: 8px; }
+html.sd-page .storybox[open] > summary::before { content: "▾"; }
+html.sd-page .storybox .sb-open { display: none; }
+html.sd-page .storybox[open] .sb-open { display: inline; }
+html.sd-page .storybox[open] .sb-closed { display: none; }
+html.sd-page .storybox > summary:focus-visible { outline: 3px solid var(--sd-text); outline-offset: 2px; }

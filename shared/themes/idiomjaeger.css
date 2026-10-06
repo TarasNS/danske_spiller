@@ -98,19 +98,20 @@ html.sd-page .btn:disabled { opacity: 1; cursor: default; }
 html.sd-page .menu-grid { gap: 8px 16px; }
 html.sd-page .menu-grid .btn { padding: 16px 10px; gap: 8px; text-align: center; }
 html.sd-page .menu-grid .btn .ico { font-size: 0; line-height: 0; display: none; }      /* decorative emoji hidden; sprites used on the main menu */
-html.sd-page .menu-grid .btn .ico.sd-sprite { display: inline-block; font-size: inherit; line-height: normal; }
+html.sd-page .menu-grid .btn .ico.sd-sprite { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; min-height: 64px; font-size: inherit; line-height: normal; }   /* 64px tile = footprint of the 32px shaded siblings; the flat pokal (2px pixels) is centred in it */
 html.sd-page .menu-grid .btn .sub { font-family: var(--sd-font-body); font-weight: 400; font-size: 14px; text-transform: none; letter-spacing: 0; opacity: 1; color: inherit; }
 html.sd-page .menu-grid .btn.primary .sub { color: #101010; }
 html.sd-page .mt { margin-top: 18px; }
 
 /* ------------------------------------------------------------------- forms */
 html.sd-page select, html.sd-page input[type=text] {
-  font-family: var(--sd-font-body); font-size: 16px; min-height: 48px; padding: 8px 12px; margin: 4px; border: 0; border-radius: 0;
-  background: var(--sd-white); color: #101010; box-shadow: var(--sd-box), inset 4px 4px 0 rgba(16,16,16,.12); max-width: calc(100% - 8px);
+  font-family: var(--sd-font-body); font-size: 16px; min-height: 48px; margin: 4px; border: 0; border-radius: 0;
+  box-shadow: var(--sd-box), inset 4px 4px 0 rgba(16,16,16,.12); max-width: calc(100% - 8px);
 }
+html.sd-page input[type=text] { padding: 8px 12px; background: var(--sd-white); color: #101010; }
 html.sd-page input[type=text] { width: calc(100% - 8px) !important; }
 html.sd-page input[type=text]::placeholder { color: #6b6350; opacity: 1; }
-html.sd-page select:disabled, html.sd-page input:disabled { opacity: 1; background: #E7DFC6; color: #3A3326; }
+html.sd-page input:disabled { opacity: 1; background: #E7DFC6; color: #3A3326; }
 html.sd-page label.flt { font-family: var(--sd-font-display); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: var(--sd-text); gap: 4px; }
 html.sd-page .text-input-row { gap: 12px; align-items: flex-start; flex-wrap: wrap; }
 html.sd-page .text-input-row input { flex: 1 1 200px; width: auto !important; }
@@ -163,15 +164,7 @@ html.sd-page .explain {
 html.sd-page .explain b { color: var(--sd-text); }
 html.sd-page .explain i { font-style: normal; background: var(--sd-cream); color: #101010; padding: 0 4px; }
 
-/* speaker button */
-html.sd-page .speaker {
-  width: 44px; height: 44px; border-radius: 0; margin-left: 8px; padding: 0; font-size: 0; line-height: 1; border: 0;
-  background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 0 6px 0 -4px var(--sd-ink); margin-block: 4px; transition: none;
-}
-html.sd-page .speaker::before { content: "♪"; font-family: var(--sd-font-display); font-weight: 700; font-size: 22px; }
-html.sd-page .speaker:hover { transform: none; background: var(--sd-orange); }
-html.sd-page .speaker:active { transform: translateY(2px); box-shadow: var(--sd-box); }
-html.sd-page .speaker.small { width: 44px; height: 44px; font-size: 0; margin-left: 6px; }
+/* TTS listen button: shared/tts-button.css (.dc-tts-button, --sm inline in explanations/cards) */
 
 /* ----------------------------------------------------- dictionary / learn list */
 html.sd-page .list { max-height: none; overflow: visible; padding: 4px; gap: 16px; }
@@ -189,6 +182,7 @@ html.sd-page .tag, html.sd-page .lvl-badge {
   border-radius: 0; font-family: var(--sd-font-body); font-weight: 700; font-size: 14px; line-height: 1.4; padding: 2px 8px; margin: 2px 4px 2px 0;
   background: var(--sd-ink); color: var(--sd-cream); text-transform: uppercase; letter-spacing: .02em;
 }
+html.sd-page .lvl-badge { background: var(--sd-panel); color: var(--sd-text); box-shadow: inset 0 0 0 2px var(--sd-line); }
 html.sd-page .tag.cat { background: var(--sd-orange); color: #101010; }
 html.sd-page .lvl-A2 { box-shadow: inset 0 -3px 0 var(--sd-green); }
 html.sd-page .lvl-B1 { box-shadow: inset 0 -3px 0 #2B3FD6; }
@@ -208,7 +202,6 @@ html.sd-page .mem-card.flipped { background: var(--sd-panel-2); color: var(--sd-
 html.sd-page .mem-card.flipped .face { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 html.sd-page .mem-card.matched { background: var(--sd-ok-bg); color: var(--sd-text); opacity: 1; box-shadow: var(--sd-box-ok), 0 8px 0 -4px var(--sd-ok); cursor: default; }
 html.sd-page .mem-card.matched::after { content: "✓"; position: absolute; top: 2px; right: 6px; font-family: var(--sd-font-display); font-size: 18px; color: var(--sd-ok); }
-html.sd-page .mem-card .speaker.small { margin: 0; }
 
 /* -------------------------------------------------------------- match pairs */
 html.sd-page .match-cols { gap: 16px; padding: 4px; }
@@ -283,3 +276,15 @@ html.sd-page.ij-compact .wrap { padding-top: 12px; }
 /* dark world: black sprite outlines vanish on dark panels, so seat them on a cream tile */
 :root[data-theme="dark"] .menu-grid .ico.sd-sprite, :root[data-theme="dark"] .ij-hero .sd-sprite, :root[data-theme="dark"] header.app .compass.sd-sprite { background: var(--sd-cream); padding: 6px; box-shadow: var(--sd-box); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .menu-grid .ico.sd-sprite, :root:not([data-theme="light"]) .ij-hero .sd-sprite, :root:not([data-theme="light"]) header.app .compass.sd-sprite { background: var(--sd-cream); padding: 6px; box-shadow: var(--sd-box); } }
+
+/* US-033: pixel icons (sprites) instead of OS colour emoji */
+html.sd-page .badge .ico { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; font-size: 0; line-height: 0; background: var(--sd-cream); padding: 4px; box-shadow: var(--sd-box); }
+html.sd-page .ij-streak { display: inline-flex; vertical-align: middle; background: var(--sd-cream); padding: 2px; font-size: 0; line-height: 0; }
+
+/* US-037 (Idiomjæger slice): confetti sits behind the results text; headings wrap at word boundaries without clipping */
+html.sd-page .sd-conf { z-index: 1; }
+html.sd-page #app { position: relative; z-index: 2; }
+html.sd-page .section-title, html.sd-page .badge .t, html.sd-page .menu-grid .btn { overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; }
+html.sd-page .panel.center .row { flex-wrap: wrap; }
+
+html.sd-page h2.section-title[tabindex="-1"]:focus { outline: none; }

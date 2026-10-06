@@ -1,0 +1,55 @@
+/* =============================================================================
+   SJOVT shared extras (US-039, Batch 5a): components that sjovt.css (frozen) does not have.
+   Link AFTER sjovt.css and the game's theme CSS:
+     <link rel="stylesheet" href="../shared/sd-extras.css">
+   Contents: .sd-gap (sentence blank) | .sd-badge--panel (neutral level badge) | select.sd-select (pixel chevron) | .sd-surface (dark-mode-safe card)
+   All colours come from sjovt.css tokens (--sd-*) with light-mode fallbacks, so dark mode follows automatically.
+   ============================================================================= */
+
+/* ---- 1. .sd-gap : THE sentence-blank placeholder (VIS-018) -----------------------------------------------
+   Chosen: dashed 4px underline box (the explainer's .xp-tile.is-gap), because it is pixel-grid native, keeps the
+   baseline of the sentence, and works in both themes. Replaces: Forbindeord "_____" tint box, Konjunktioner "?" over dashed
+   underline, Tidsmaskinen "?" framed box. (Boejningsvaerkstedet's "·" in empty table CELLS is a cell filler, not a sentence blank: leave.)
+   Markup: <span class="sd-gap" role="img" aria-label="mellemrum"></span>  (empty => shows "?");  with an answer:
+           <span class="sd-gap is-filled">word</span>;  after checking add is-ok / is-bad (feedback colours are allowed here). */
+.sd-gap { display: inline-block; box-sizing: border-box; min-width: 3.5em; min-height: 1.4em; padding: 0 .35em; margin: 0 .15em;
+  text-align: center; font: inherit; font-weight: 700; line-height: 1.4; vertical-align: baseline; color: var(--sd-text, #101010);
+  background: var(--sd-panel-2, #FFE9B0); border: 0; border-bottom: 4px dashed var(--sd-line, #101010); border-radius: 0; }
+.sd-gap:empty::before { content: "?"; opacity: .6; }
+.sd-gap.is-filled { border-bottom-style: solid; }
+.sd-gap.is-ok  { background: var(--sd-ok-bg, #CFF1C9);  border-bottom: 4px solid var(--sd-ok, #148A3C); }
+.sd-gap.is-bad { background: var(--sd-bad-bg, #FFD0DE); border-bottom: 4px solid var(--sd-bad, #D4145A); }
+
+/* ---- 2. level / category badges (VIS-019) ------------------------------------------------------------------
+   sjovt.css ALREADY defines .sd-badge (ink bg, cream text; --orange, --cream variants; the portal uses "sd-badge sd-badge--cream" for levels).
+   Do NOT redefine it. Added here only: a neutral framed variant that follows light/dark. Green/red are reserved for correct/wrong:
+   never use them (or --sd-ok/--sd-bad) for A1..C1 levels or categories. Use:  <span class="sd-badge sd-badge--panel">B1</span>
+   (or the existing sd-badge--cream). Different levels are told apart by their TEXT, not by colour. */
+.sd-badge.sd-badge--panel { background: var(--sd-panel, #FFF4D6); color: var(--sd-text, #101010); box-shadow: inset 0 0 0 2px var(--sd-line, #101010); }
+
+/* ---- 3. select reset + pixel chevron (VIS-023) --------------------------------------------------------------
+   Use class sd-select on the native <select> (sjovt.css gives .sd-select its box); this removes the OS arrow and draws a pixel chevron.
+   Specificity is raised (:root:root:root = 0,4,1) so game theme rules like `html.sd-page select` (0,1,2) cannot win, no !important.
+   >=48px high, focus ring comes from sjovt.css (.sd-page :focus-visible) with a standalone fallback below. */
+:root:root:root select.sd-select { -webkit-appearance: none; -moz-appearance: none; appearance: none; box-sizing: border-box;
+  min-height: 48px; padding: 10px 44px 10px 14px; cursor: pointer; text-overflow: ellipsis;
+  background-color: var(--sd-panel, #FFF4D6); color: var(--sd-text, #101010);
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 20px 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23101010' d='M0 0h2v1H0zM8 0h2v1H8zM1 1h2v1H1zM7 1h2v1H7zM2 2h2v1H2zM6 2h2v1H6zM3 3h4v1H3z'/%3E%3C/svg%3E"); }
+:root:root:root select.sd-select::-ms-expand { display: none; }
+:root:root:root select.sd-select:focus-visible { outline: 4px solid var(--sd-focus, #2B3FD6); outline-offset: 3px; }
+:root:root:root select.sd-select:disabled { opacity: 1; cursor: not-allowed; background-color: var(--sd-panel-2, #E7DFC6); color: var(--sd-text-soft, #3A3326); }
+:root:root[data-theme="dark"] select.sd-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23FFE9B0' d='M0 0h2v1H0zM8 0h2v1H8zM1 1h2v1H1zM7 1h2v1H7zM2 2h2v1H2zM6 2h2v1H6zM3 3h4v1H3z'/%3E%3C/svg%3E"); }
+@media (prefers-color-scheme: dark) {
+  :root:root:not([data-theme="light"]) select.sd-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23FFE9B0' d='M0 0h2v1H0zM8 0h2v1H8zM1 1h2v1H1zM7 1h2v1H7zM2 2h2v1H2zM6 2h2v1H6zM3 3h4v1H3z'/%3E%3C/svg%3E"); }
+}
+:root:root:root select.sd-select option { background: var(--sd-panel, #FFF4D6); color: var(--sd-text, #101010); }
+
+/* ---- 4. dark-surface rule (VIS-020) ----------------------------------------------------------------------------
+   ONE rule: cards/tiles use panel tokens, so they go dark with the page. Outlier games (Magiske Verber mode cards, Praepositioner mode
+   cards, Dansk Mester first course card, Flashcards card) keep hard-coded light pastels/white in dark mode: in their theme file either
+   add class "sd-surface" to those elements, or replace the hard-coded background/colour with
+   `background: var(--sd-panel); color: var(--sd-text); border-color: var(--sd-line)`. Game colour stays as an ACCENT
+   (left stripe / top border), never as the card fill. --2 = the slightly stronger panel tone (selected / hover rows). */
+.sd-surface { background: var(--sd-panel, #FFF4D6); color: var(--sd-text, #101010); border-color: var(--sd-line, #101010); }
+.sd-surface--2 { background: var(--sd-panel-2, #FFE9B0); }

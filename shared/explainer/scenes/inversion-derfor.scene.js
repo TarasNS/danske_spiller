@@ -8,7 +8,7 @@ window.EXPLAINER_SCENE = {
   verify: false,
   steps: [
     // Part 1: wrong order (subjekt foer verbum) is marked, then the verb moves before the subject
-    { type: "sentence", words: ["han var syg", "derfor", "han", "blev", "hjemme"], t: 2000 },
+    { type: "sentence", words: ["Han var syg,", "derfor", "han", "blev", "hjemme"], t: 2000 },
     { type: "highlight", word: 1, color: "Y", t: 1200 },
     { type: "highlight", words: [2, 3], color: "R", t: 1600 },   // wrong: subjekt foer verbum (no arrow: label overlaps wrapped row at 360px)
     { type: "move", word: 3, to: 2, t: 1800 },
@@ -16,12 +16,12 @@ window.EXPLAINER_SCENE = {
     { type: "rule", lines: ["derfor / alligevel:", "verbum – subjekt", "derfor blev han hjemme"], t: 3500 },
 
     // Part 2: second derfor example
-    { type: "cycle", sentence: { words: ["hun var dygtig", "derfor", "hun", "fik", "jobbet"] }, t: 2000 },
+    { type: "cycle", sentence: { words: ["Hun var dygtig,", "derfor", "hun", "fik", "jobbet"] }, t: 2000 },
     { type: "move", word: 3, to: 2, t: 1800 },
     { type: "highlight", words: [2, 3], color: "G", t: 1500 },
 
     // Part 3: alligevel
-    { type: "cycle", sentence: { words: ["han var træt", "alligevel", "han", "læste"] }, t: 2000 },
+    { type: "cycle", sentence: { words: ["Han var træt,", "alligevel", "han", "læste"] }, t: 2000 },
     { type: "move", word: 3, to: 2, t: 1800 },
     { type: "highlight", words: [2, 3], color: "G", t: 1500 },
     { type: "pause", t: 500 },

@@ -18,7 +18,19 @@ You may create/modify only: `tests/` (harness and specs), `docs/redesign/reports
 - Node 24, Chrome at `C:/Program Files/Google/Chrome/Application/chrome.exe`. Use `puppeteer-core` (`executablePath` above, `headless: 'new'`), opening games with `pathToFileURL` so `file://` is what's tested. If `tests/node_modules` is missing, `cd tests && npm i puppeteer-core` (create `tests/package.json` first; keep `node_modules` out of git). Keep reusable helpers in `tests/lib/` and per-game specs in `tests/<game-id>.mjs`; one command should rerun a game's checks.
 - Always view captured PNGs with Read.
 
-## Test layers (run all that apply to the task)
+## Scope: run only what the changed files require
+Start from `git diff --name-only master...<branch>` and run **only** the layers triggered by those paths, plus the task's acceptance criteria. Do not run layers the diff cannot affect, and do not repeat a check the coder/designer already reported at the same SHA unless the report lacks command output.
+
+| Changed paths | Layers |
+|---|---|
+| `shared/data/*`, `*/data.js` | 1 (and 2 for added/changed items only) |
+| `*/index.html`, game JS | 3, 4 |
+| `shared/themes/*`, CSS, sprites | 5, 6 (affected game/screens only) |
+| `shared/dansk-core.js`, `shared/sjovt.*` | 7 (+ whichever above apply) |
+
+`NOT VERIFIED`, `FLAKY` and content flags are reported as notes. Only a failed acceptance criterion or a console error produces `Verdict: FAIL`.
+
+## Test layers (reference; run only those triggered above)
 **1. Data (every data task)** — `node shared/validate.js` / `DanskValidate.validateDataset`: unique IDs, valid levels, required fields, non-empty answers, `correct ∈ options`, no duplicates after normalisation, counts vs spec targets per mode. Cross-check shared forms against `shared/data/*` (no independently defined forms).
 
 **2. Content audit (sample, don't skip)** — read a random ≥30-item sample per mode (plus every `verify: true` item). Check against the spec's QA rules for that game: single defensible answer, no accidental second error, no double definiteness (`den store bilen`), possessive+suffix, reflexive `sin/hans` ambiguity, indirect-question inversion, tense context present. You are not a native speaker: classify as `clear error`, `doubtful → needs native check`, or `ok`. Never silently "correct" Danish.

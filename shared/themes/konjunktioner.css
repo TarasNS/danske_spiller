@@ -24,10 +24,10 @@ html.sd-page {
 }
 html.sd-page, html.sd-page body { height: auto; }
 html.sd-page body {
-  display: block; min-height: calc(100dvh - var(--sd-bar-h)); padding: 20px 14px 40px;
+  display: block; min-height: calc(100dvh - var(--sd-bar-h)); padding: 0;
   font-family: var(--sd-font-body); overflow-x: hidden;
 }
-html.sd-page .wrap { margin: 0 auto; width: min(600px, 100%); }
+html.sd-page .wrap { margin: 0 auto; width: min(628px, 100%); padding: 20px 14px 40px; }
 html.sd-page .shell {
   background: var(--sd-panel); border-radius: 0; padding: 20px 20px 24px; margin: 4px;
   box-shadow: var(--sd-box), var(--sd-drop);
@@ -52,22 +52,11 @@ html.sd-page .pbar { height: 16px; border-radius: 0; background: var(--sd-bg-2);
 html.sd-page .pfill { border-radius: 0; background: repeating-linear-gradient(90deg, var(--sd-orange) 0 12px, var(--sd-cream) 12px 16px); transition: none; }
 
 /* chips */
-html.sd-page .chip { border-radius: 0; font-family: var(--sd-font-body); font-weight: 700; font-size: 14px; padding: 4px 10px; background: var(--sd-ink) !important; color: var(--sd-cream); text-transform: uppercase; letter-spacing: .02em; }
-html.sd-page .chip.hoved { background: var(--sd-orange) !important; color: #101010; }
-html.sd-page .chip.led { background: var(--sd-blue) !important; color: #fff; }
-html.sd-page .chip.hv { background: #0F7A33 !important; color: #fff; }
+html.sd-page .chip { border-radius: 0; font-family: var(--sd-font-body); font-weight: 700; font-size: 14px; padding: 4px 10px; text-transform: uppercase; letter-spacing: .02em; }
 html.sd-page .review-badge { border-radius: 0; background: var(--sd-ink); color: var(--sd-cream); box-shadow: none; font-family: var(--sd-font-body); font-size: 14px; }
 
 /* sentence */
 html.sd-page .sentence { font-family: var(--sd-font-body); font-weight: 700; font-size: clamp(18px, 4.6vw, 24px); line-height: 1.6; overflow-wrap: anywhere; hyphens: auto; }
-html.sd-page .blank { border-bottom: 4px dashed var(--sd-primary); color: var(--sd-text); font-weight: 700; padding: 0 4px; }
-html.sd-page .blank.filled { border-bottom-style: solid; }
-html.sd-page .speaker {
-  width: 48px; height: 48px; border-radius: 0; background: var(--sd-cream); color: #101010; margin: 4px; font-family: var(--sd-font-display); font-size: 22px; font-weight: 700;
-  box-shadow: var(--sd-box), var(--sd-bevel), 0 8px 0 -4px var(--sd-ink);
-}
-html.sd-page .speaker:active { transform: translateY(4px); box-shadow: var(--sd-box), var(--sd-bevel); }
-
 /* answers */
 html.sd-page .opts { gap: 16px; margin: 0 4px; }
 html.sd-page .candy {
@@ -128,15 +117,9 @@ html.sd-page .panel h2 { font-family: var(--sd-font-display); font-weight: 700; 
 html.sd-page .panel p { color: var(--sd-text); font-size: 16px; line-height: 1.6; }
 html.sd-page .panel .big { font-size: 0; margin: 10px 0; min-height: 96px; display: flex; align-items: center; justify-content: center; }
 html.sd-page .legend { font-size: 14px; gap: 10px; }
-html.sd-page .legend span { border-radius: 0; box-shadow: var(--sd-box); margin: 4px; padding: 4px 10px; font-family: var(--sd-font-body); background: var(--sd-ink) !important; color: var(--sd-cream); }
-html.sd-page .legend span:nth-child(1) { background: var(--sd-orange) !important; color: #101010; }
-html.sd-page .legend span:nth-child(2) { background: var(--sd-blue) !important; color: #fff; }
-html.sd-page .legend span:nth-child(3) { background: var(--sd-green) !important; color: #fff; }
+html.sd-page .legend span { margin: 4px; padding: 4px 10px; font-family: var(--sd-font-body); font-size: 14px; }
 html.sd-page .flt { display: block; margin-top: 14px; font-family: var(--sd-font-display); font-weight: 700; font-size: 16px; text-transform: uppercase; }
-html.sd-page #lvlSelect {
-  font-family: var(--sd-font-body); font-size: 16px; min-height: 48px; padding: 8px 12px; margin: 4px 4px 4px 8px; border: 0; border-radius: 0;
-  background: var(--sd-white); color: #101010; box-shadow: var(--sd-box);
-}
+html.sd-page #lvlSelect { font-family: var(--sd-font-body); font-size: 16px; margin: 4px 4px 4px 8px; border: 0; border-radius: 0; box-shadow: var(--sd-box); }
 
 /* combo + effects */
 html.sd-page .combo {
@@ -152,7 +135,7 @@ html.sd-page .particle { border-radius: 0; width: 10px; height: 10px; box-shadow
 @media (prefers-reduced-motion: reduce) { html.sd-page .combo.show { animation: none; opacity: 1; } html.sd-page .particle { display: none; } }
 
 @media (max-width: 480px) {
-  html.sd-page body { padding: 14px 8px 32px; }
+  html.sd-page .wrap { padding: 14px 8px 32px; }
   html.sd-page .shell { padding: 14px 12px 18px; }
   html.sd-page .hud { gap: 4px; }
   html.sd-page .stat .val { font-size: 20px; }

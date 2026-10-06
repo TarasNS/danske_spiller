@@ -1,15 +1,21 @@
-// Functional spec for tidsmaskinen. Run from the worktree cwd:
+// Functional spec for tidsmaskinen. The game file is resolved relative to this script (<repo>/tidsmaskinen/index.html),
+// so it can be started from any cwd; only --shots uses a cwd-relative default (set SHOT_ROOT otherwise).
+// Dump files (tids-content.json, tids-rounds.json, tids-dumps.json) go to OUT, default <os tmpdir>/tids-spectest (never the repo); the path is printed.
 //   cd <worktree> && SHOT_ROOT=<main>/docs/redesign/screenshots OUT=<dir> node <main>/tests/tidsmaskinen.mjs [--shots] [--only=a,b,c]
 // Sections: boot, rounds, unlock, timed, persist, kbd, layout, theme, root
 import { launch, openGame, sleep, hasHorizontalOverflow, smallTapTargets, focusRingProblems, unlabelledButtons, shot } from './lib/harness.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
+import { fileURLToPath } from 'node:url';
 
-const FILE = 'tidsmaskinen/index.html';
+const FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'tidsmaskinen', 'index.html');
 const SHOTS = process.argv.includes('--shots');
 const ONLY = (process.argv.find(a => a.startsWith('--only=')) || '').replace('--only=', '').split(',').filter(Boolean);
 const want = s => !ONLY.length || ONLY.includes(s);
-const OUT = process.env.OUT || '.';
+const OUT = process.env.OUT || path.join(os.tmpdir(), 'tids-spectest');
+fs.mkdirSync(OUT, { recursive: true });
+console.log('NOTE dump files are written to ' + OUT);
 const MODES = ['present_vs_preterite','preterite_vs_perfect','pluperfect','future','modal','conditional','infinitive','passive','imperative'];
 const POOLS = [120,180,100,140,180,140,140,180,80];
 const results = [];
@@ -301,7 +307,7 @@ try {
     note('correct animation class (press) present', `${pressed}/${rights.length}`);
     rec('correct: positive animation class + sound (oscillators)', pressed >= rights.length * 0.95 && all.every(r => r.osc > 0), `press=${pressed}/${rights.length}`);
     const wrongs = all.filter(r => r.expect === 'wrong' && r.slip);
-    const badSlip = wrongs.filter(r => r.slip.notes !== 1 || !/Rigtigt svar:/.test(r.slip.text) || r.slip.tts !== 1 || !r.slip.btns.some(b => /Videre/.test(b)) || !r.slip.btns.some(b => /Afspil igen/.test(b)) || !r.slip.text.includes(r.note) || !r.dispAnswer.every(d => r.slip.text.includes(d)) || r.slip.focus !== 'Videre');
+    const badSlip = wrongs.filter(r => r.slip.notes !== 1 || !/Rigtigt svar:/.test(r.slip.text) || r.slip.tts !== 1 || !r.slip.btns.some(b => /Videre/.test(b)) || !r.slip.btns.some(b => /Lyt/.test(b)) || !r.slip.text.includes(r.note) || !r.dispAnswer.every(d => r.slip.text.includes(d)) || r.slip.focus !== 'Videre');
     rec('wrong: correct answer + exactly one note + replay + Videre (focused)', wrongs.length > 0 && badSlip.length === 0, `n=${wrongs.length} bad=${badSlip.length} ${badSlip.slice(0, 2).map(r => r.id + ':' + JSON.stringify(r.slip)).join(' || ')}`);
     const waited = wrongs.filter(r => r.stillWaiting !== undefined);
     rec('wrong: waits for input (no auto-advance after 1.6 s)', waited.length > 0 && waited.every(r => r.stillWaiting), `checked=${waited.length}`);
@@ -526,7 +532,7 @@ try {
     const el = Date.now() - t0;
     rec('timed: real expiry after ~20 s shows "Tiden er gået" + answer + one note, waits', slip && /Tiden er gået/.test(slip.text) && /Rigtigt svar: \S/.test(slip.text) && slip.notes === 1 && el >= 19000 && el <= 22500, JSON.stringify({ el, slip }));
     const srsAfter = await srsDump(page);
-    rec('timed expiry: no SRS write (item key + pattern + counts unchanged)', JSON.stringify(srsBefore) === JSON.stringify(srsAfter) && !(srsAfter.items[key]), `key present=${!!srsAfter.items[key]}`);
+    rec('timed expiry: no SRS write (item key + pattern + counts unchanged)', JSON.stringify(srsBefore) === JSON.stringify(srsAfter) && JSON.stringify(srsBefore?.items?.[key] ?? null) === JSON.stringify(srsAfter?.items?.[key] ?? null), `key before=${JSON.stringify(srsBefore?.items?.[key] ?? null)} after=${JSON.stringify(srsAfter?.items?.[key] ?? null)}`);
     const optsDis = await page.$$eval('#item-host .opt', ns => ns.every(n => n.disabled));
     const revealed = await page.$$eval('#item-host .opt.reveal-correct', ns => ns.length);
     rec('timed expiry: options locked and correct option revealed', optsDis && revealed === 1, `dis=${optsDis} reveal=${revealed}`);
@@ -645,18 +651,18 @@ try {
     note('modal pattern keys', patKeys.join(' ; '));
     rec('pattern keys follow pattern:tidsmaskinen:<type>:<a>:<b>', patKeys.length > 0 && patKeys.every(k => /^pattern:tidsmaskinen:[a-z-]+:[^:]+:[^:]+$/.test(k)), patKeys.slice(0, 3).join(' ; '));
     // mute persists + silent
-    note('sound state before mute click', await page.evaluate(() => document.getElementById('btn-sound').textContent + ' dc=' + localStorage.getItem('dc:sound-enabled')));
-    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#btn-sound'); await sleep(100);
-    const snd = await page.$eval('#btn-sound', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
+    note('sound state before mute click', await page.evaluate(() => document.getElementById('sd-sound-btn').textContent + ' dc=' + localStorage.getItem('dc:sound-enabled')));
+    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#sd-sound-btn'); await sleep(100);
+    const snd = await page.$eval('#sd-sound-btn', n => n.textContent + '|' + n.getAttribute('aria-pressed'));
     await page.reload({ waitUntil: 'load' }); await sleep(1500);
-    const snd2 = await page.$eval('#btn-sound', n => n.textContent);
+    const snd2 = await page.$eval('#sd-sound-btn', n => n.textContent);
     await page.click('#btn-play'); await sleep(250);
     const o0 = await page.evaluate(() => window.__osc);
     await playItem(page, 'c'); await playItem(page, 'w');
     const o1 = await page.evaluate(() => window.__osc);
     rec('mute: label changes, persists across reload, no audio nodes created', /✗/.test(snd) && /✗/.test(snd2) && o1 === o0, `${snd} reload=${snd2} osc ${o0}->${o1}`);
     await page.keyboard.press('Escape'); await sleep(150);
-    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#btn-sound'); await page.click('#btn-play'); await sleep(250);
+    await page.evaluate(() => window.scrollTo(0, 0)); await page.click('#sd-sound-btn'); await page.click('#btn-play'); await sleep(250);
     const o2 = await page.evaluate(() => window.__osc); await playItem(page, 'c'); const o3 = await page.evaluate(() => window.__osc);
     rec('unmuted: audio nodes created (sanity)', o3 > o2, `${o2}->${o3}`);
     // TTS replay click calls speechSynthesis
@@ -682,7 +688,7 @@ try {
     const order = [];
     for (let i = 0; i < 22; i++) { await page.keyboard.press('Tab'); order.push(await page.evaluate(() => { const e = document.activeElement; return e.id || (e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 18) || e.tagName; })); }
     console.log('tab order:', order.join(' > '));
-    rec('start: Tab reaches header, all 9 modes, 4 levels, 2 pace chips, Spil', ['btn-dark', 'btn-sound', 'btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-9][^0-9]/.test(o)).length === 9 && ['A2', 'B1', 'B2', 'C1', 'Træning', 'Med tid'].every(x => order.some(o => o.replace('✓ ', '') === x)), order.join(' > '));
+    rec('start: Tab reaches header, all 9 modes, 4 levels, 2 pace chips, Spil', ['sd-theme-btn', 'sd-sound-btn', 'btn-play'].every(x => order.includes(x)) && order.filter(o => /^[1-9][^0-9]/.test(o)).length === 9 && ['A2', 'B1', 'B2', 'C1', 'Træning', 'Med tid'].every(x => order.some(o => o.replace('✓ ', '') === x)), order.join(' > '));
     const fr = await focusRingProblems(page, 22);
     rec('start: focus ring visible on every focus stop', fr.length === 0, fr.join(','));
     for (let mi = 0; mi < 9; mi++) {
@@ -821,10 +827,10 @@ try {
   if (want('theme')) {
     let r = await openGame(browser, FILE, { viewport: 'mobile', colorScheme: 'dark', init: INIT });
     let p = r.page; await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await sleep(1500);
-    const th1 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    await p.click('#btn-dark'); const th2 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    await p.click('#btn-dark'); const th3 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
-    rec('dark: prefers-color-scheme applies data-theme; toggle button flips both ways', th1 === 'dark' && th2 !== th1 && th3 === th1, `${th1} -> ${th2} -> ${th3}`);
+    const th1 = await p.evaluate(() => document.documentElement.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); // US-040: no attribute until the user chooses (OS drives CSS)
+    await p.click('#sd-theme-btn'); const th2 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    await p.click('#sd-theme-btn'); const th3 = await p.evaluate(() => document.documentElement.getAttribute('data-theme'));
+    rec('dark: prefers-color-scheme drives the theme; bar toggle flips both ways', th1 === 'dark' && th2 !== th1 && th3 === th1, `${th1} -> ${th2} -> ${th3}`);
     await p.close();
     r = await openGame(browser, FILE, { viewport: 'mobile', reducedMotion: true, init: INIT }); p = r.page;
     await p.evaluate(() => localStorage.clear()); await p.reload({ waitUntil: 'load' }); await sleep(1500);

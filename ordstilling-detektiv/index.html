@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="da" data-explainer="v2-ordstilling,ikke-placering">
+<html lang="da" data-explainer="v2-ordstilling,ikke-placering,adverbier-placering,modalverber,foernutid-har,konjunktioner">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -243,14 +243,6 @@ body{
 .explain.bad .verdict{color:var(--red2)}
 .explain .sol{font-family:'Special Elite',monospace;font-size:17px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .explain .tr{font-size:13px;color:#5a4830;font-style:italic;margin-bottom:9px}
-.speaker{
-  width:34px;height:34px;border-radius:50%;display:inline-grid;place-items:center;
-  font-size:1rem;flex:none;cursor:pointer;border:1.5px solid #7a6030;
-  background:linear-gradient(180deg,#fffaf0,#efe0bf);box-shadow:0 3px 0 #b59a64;
-  transition:transform .07s, box-shadow .07s;
-}
-.speaker:hover{transform:translateY(-1px)}
-.speaker:active{transform:translateY(2px) scale(.96);box-shadow:0 1px 0 #b59a64}
 .explain .why{font-size:13px;line-height:1.55;color:#3a2c18}
 .explain .why b{color:var(--red2)}
 
@@ -282,25 +274,27 @@ body{
 <link rel="stylesheet" href="../shared/sjovt.css">
 <script src="../shared/sjovt.js"></script>
 <link rel="stylesheet" href="../shared/themes/ordstilling.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 <link rel="stylesheet" href="../shared/explainer/modal.css">
 <script src="../shared/explainer/modal.js"></script>
 </head>
 <body>
 <div class="wrap">
   <div class="masthead">
-    <div class="mast-row"><span data-sd-sprite="lup" data-scale="6" class="sd-bob" aria-hidden="true"></span><h1>Ordstillingsdetektiven</h1></div>
+    <div class="mast-row"><span data-sd-sprite="lup" data-scale="6" class="sd-bob" aria-hidden="true"></span><h1>Ordstillings&shy;detektiven</h1></div>
     <div class="tag">Ordstillings&shy;detektiven — 12 sager · A1 → B2</div>
-    <div class="rank" id="rankBadge">Rang: Detektivelev</div>
+    <div class="rank sd-badge sd-badge--panel" id="rankBadge">Rang: Detektivelev</div>
   </div>
 
   <!-- ================= MAP ================= -->
   <div class="card" id="mapScreen">
     <p class="intro-line">SAGSMAPPER — POLITIETS GRAMMATIKAFDELING</p>
     <div class="tiers">
-      <span class="tier-pill t-a1">A1 · Sag 1–3</span>
-      <span class="tier-pill t-a2">A2 · Sag 4–6</span>
-      <span class="tier-pill t-b1">B1 · Sag 7–10</span>
-      <span class="tier-pill t-b2">B2 · Sag 11–12</span>
+      <span class="tier-pill sd-badge sd-badge--panel">A1 · Sag 1–3</span>
+      <span class="tier-pill sd-badge sd-badge--panel">A2 · Sag 4–6</span>
+      <span class="tier-pill sd-badge sd-badge--panel">B1 · Sag 7–10</span>
+      <span class="tier-pill sd-badge sd-badge--panel">B2 · Sag 11–12</span>
     </div>
     <div class="lvlfilter" id="lvlFilter"></div>
     <div class="map" id="mapGrid"></div>
@@ -313,7 +307,7 @@ body{
   <!-- ================= PLAY ================= -->
   <div class="card hidden" id="playScreen">
     <div class="topbar">
-      <button class="back" id="backBtn">‹ Sagskort</button>
+      <button class="back" id="backBtn" aria-label="Tilbage til sagskort">← TILBAGE</button>
       <span class="timer hidden" id="timer">0:00</span>
       <div class="hud">
         <div class="stat"><div class="l">Point</div><div class="v" id="scoreV">0</div></div>
@@ -365,29 +359,29 @@ const CASES = [
  story:"Kaffen i frokoststuen er forsvundet, og chef Madsen er rasende. Hvert vidne giver en enkel forklaring – men ordene er blandet sammen. Sæt hver grundsætning rigtigt sammen, så kantinen kan åbne igen.",
  grammarTip:"Danske hovedsætninger følger rækkefølgen <b>grundled → udsagnsled → genstandsled</b>. Udsagnsleddet står på anden plads, lige efter grundleddet. Hold det enkelt og direkte.",
  sents:[
-  {da:"Jeg drikker kaffe", en:"I drink coffee"},
-  {da:"Han læser en bog", en:"He reads a book"},
+  {da:"Jeg drikker kaffe", en:"I drink coffee", alt:["Kaffe drikker jeg"]},
+  {da:"Han læser en bog", en:"He reads a book", alt:["En bog læser han"]},
   {da:"Vi spiller fodbold", en:"We play football"},
   {da:"Hun spiser et æble", en:"She eats an apple"},
   {da:"De ser en film", en:"They watch a film"},
-  {da:"Jeg køber mælk", en:"I buy milk"},
+  {da:"Jeg køber mælk", en:"I buy milk", alt:["Mælk køber jeg"]},
   {da:"Børnene tegner billeder", en:"The children draw pictures"},
   {da:"Manden kører bilen", en:"The man drives the car"},
   {da:"Pigen synger en sang", en:"The girl sings a song"},
-  {da:"Vi besøger bedstemor", en:"We visit grandma"},
+  {da:"Vi besøger bedstemor", en:"We visit grandma", alt:["Bedstemor besøger vi"]},
   {da:"Læreren retter opgaver", en:"The teacher corrects assignments"},
-  {da:"Jeg skriver en email", en:"I write an email"},
+  {da:"Jeg skriver en e-mail", en:"I write an email"},
   {da:"Hun maler væggen", en:"She paints the wall"},
   {da:"De bygger et hus", en:"They build a house"},
   {da:"Drengen kaster bolden", en:"The boy throws the ball"},
   {da:"Min mor laver mad", en:"My mum makes food"},
-  {da:"Vi drikker te", en:"We drink tea"},
+  {da:"Vi drikker te", en:"We drink tea", alt:["Te drikker vi"]},
   {da:"Han spiser morgenmad", en:"He eats breakfast"},
-  {da:"Jeg åbner vinduet", en:"I open the window"},
+  {da:"Jeg åbner vinduet", en:"I open the window", alt:["Vinduet åbner jeg"]},
   {da:"Pigen læser avisen", en:"The girl reads the newspaper"},
   {da:"Vi vasker bilen", en:"We wash the car"},
-  {da:"Han lukker døren", en:"He closes the door"},
-  {da:"Jeg elsker musik", en:"I love music"},
+  {da:"Han lukker døren", en:"He closes the door", alt:["Døren lukker han"]},
+  {da:"Jeg elsker musik", en:"I love music", alt:["Musik elsker jeg"]},
   {da:"De planter blomster", en:"They plant flowers"},
   {da:"Far laver kaffe", en:"Dad makes coffee"}
  ]
@@ -422,7 +416,7 @@ const CASES = [
   {da:"Hver weekend handler vi ind", en:"Every weekend we go shopping"},
   {da:"I dag har vi et vigtigt møde", en:"Today we have an important meeting"},
   {da:"I aftes så jeg nyhederne", en:"Last night I watched the news"},
-  {da:"Næste uge starter jeg på et nyt job", en:"Next week I start a new job"}
+  {da:"I næste uge starter jeg på et nyt job", en:"Next week I start a new job"}
  ]
 },
 {
@@ -532,39 +526,39 @@ const CASES = [
  story:"Hovedmistænkte er forsvundet. For at finde ham må du forhøre alle – men dine spørgsmål er kommet i uorden. Sæt dem rigtigt sammen for at opklare sagen.",
  grammarTip:"To slags spørgsmål: <b>spørgeordsspørgsmål</b> har spørgeordet først og derefter verbet (<b>Hvor bor du?</b>). <b>Ja/nej-spørgsmål</b> har <i>verbet først</i> (<b>Drikker du kaffe?</b>).",
  sents:[
-  {da:"Hvor bor du", en:"Where do you live?"},
-  {da:"Hvornår kommer han", en:"When is he coming?"},
-  {da:"Hvad arbejder hun med", en:"What does she work with?"},
-  {da:"Hvem er du", en:"Who are you?"},
-  {da:"Hvorfor græder barnet", en:"Why is the child crying?"},
-  {da:"Hvordan har du det", en:"How are you?"},
-  {da:"Hvor meget koster det", en:"How much does it cost?"},
-  {da:"Hvilken bus tager du", en:"Which bus do you take?"},
-  {da:"Drikker du kaffe", en:"Do you drink coffee?"},
-  {da:"Bor I i København", en:"Do you live in Copenhagen?"},
-  {da:"Kommer hun til festen", en:"Is she coming to the party?"},
-  {da:"Hvor ligger stationen", en:"Where is the station?"},
-  {da:"Hvornår starter mødet", en:"When does the meeting start?"},
-  {da:"Hvad hedder du", en:"What's your name?"},
-  {da:"Hvem ringer du til", en:"Who are you calling?"},
-  {da:"Hvorfor er du så glad", en:"Why are you so happy?"},
-  {da:"Hvordan kommer jeg til lufthavnen", en:"How do I get to the airport?"},
-  {da:"Spiser I kød", en:"Do you eat meat?"},
-  {da:"Hvor arbejder din far", en:"Where does your father work?"},
-  {da:"Hvad laver børnene", en:"What are the children doing?"},
-  {da:"Hvornår rejser I", en:"When are you travelling?"},
-  {da:"Taler du dansk", en:"Do you speak Danish?"},
-  {da:"Hvem laver mad i aften", en:"Who's cooking tonight?"},
-  {da:"Hvor gammel er du", en:"How old are you?"},
-  {da:"Hvad koster billetten", en:"What does the ticket cost?"},
-  {da:"Forstår du spørgsmålet", en:"Do you understand the question?"}
+  {da:"Hvor bor du?", en:"Where do you live?"},
+  {da:"Hvornår kommer han?", en:"When is he coming?"},
+  {da:"Hvad arbejder hun med?", en:"What does she work with?"},
+  {da:"Hvem er du?", en:"Who are you?"},
+  {da:"Hvorfor græder barnet?", en:"Why is the child crying?"},
+  {da:"Hvordan har du det?", en:"How are you?"},
+  {da:"Hvor meget koster det?", en:"How much does it cost?"},
+  {da:"Hvilken bus tager du?", en:"Which bus do you take?"},
+  {da:"Drikker du kaffe?", en:"Do you drink coffee?"},
+  {da:"Bor I i København?", en:"Do you live in Copenhagen?"},
+  {da:"Kommer hun til festen?", en:"Is she coming to the party?"},
+  {da:"Hvor ligger stationen?", en:"Where is the station?"},
+  {da:"Hvornår starter mødet?", en:"When does the meeting start?"},
+  {da:"Hvad hedder du?", en:"What's your name?"},
+  {da:"Hvem ringer du til?", en:"Who are you calling?"},
+  {da:"Hvorfor er du så glad?", en:"Why are you so happy?"},
+  {da:"Hvordan kommer jeg til lufthavnen?", en:"How do I get to the airport?"},
+  {da:"Spiser I kød?", en:"Do you eat meat?"},
+  {da:"Hvor arbejder din far?", en:"Where does your father work?"},
+  {da:"Hvad laver børnene?", en:"What are the children doing?"},
+  {da:"Hvornår rejser I?", en:"When are you travelling?"},
+  {da:"Taler du dansk?", en:"Do you speak Danish?"},
+  {da:"Hvem laver mad i aften?", en:"Who's cooking tonight?"},
+  {da:"Hvor gammel er du?", en:"How old are you?"},
+  {da:"Hvad koster billetten?", en:"What does the ticket cost?"},
+  {da:"Forstår du spørgsmålet?", en:"Do you understand the question?"}
  ]
 },
 {
  n:7, title:"Den skjulte besked", cefr:"B1", lvl:"lb-b1",
  focus:"Modalverber",
- story:"En kodet besked afslører, hvad de mistænkte <i>kan</i>, <i>skal</i> og <i>vil</i>. Modalverberne er nøglen – tyd hver linje ved at sætte hovedverbet til sidst.",
- grammarTip:"Med et modalverbum (<b>kan, skal, vil, må, bør</b>) står <i>modalverbet</i> på anden plads, og hovedverbet står til sidst i infinitiv: <b>Jeg · kan · tale dansk</b>. <b>Ikke</b> står imellem dem: <b>Han kan ikke komme</b>.",
+ story:"En kodet besked afslører, hvad de mistænkte <i>kan</i>, <i>skal</i> og <i>vil</i>. Modalverberne er nøglen – tyd hver linje ved at sætte modalverbet på anden plads og hovedverbet i infinitiv efter grundleddet.",
+ grammarTip:"Med et modalverbum (<b>kan, skal, vil, må, bør</b>) står <i>modalverbet</i> på anden plads. Infinitiven står efter grundleddet (og evt. <b>ikke</b>); objekt og andre led følger efter: <b>Jeg · kan · tale dansk</b>, <b>Han · kan · ikke · komme</b>.",
  sents:[
   {da:"Jeg kan tale dansk", en:"I can speak Danish"},
   {da:"Hun skal arbejde i morgen", en:"She has to work tomorrow"},
@@ -598,7 +592,7 @@ const CASES = [
  n:8, title:"Det låste arkiv", cefr:"B1", lvl:"lb-b1",
  focus:"Førnutid (har + tillægsform)",
  story:"Bag den låste arkivdør ligger optegnelser om det, der allerede er sket. Hver post bruger <i>har</i> + en tillægsform. Genskab historien for at åbne boksen.",
- grammarTip:"Førnutid = <b>har</b> (på anden plads) + <b>tillægsformen til sidst</b>: <b>Jeg · har · købt en bil</b>. Adverbier som ikke og aldrig står før tillægsformen: <b>Jeg har ikke set …</b>.",
+ grammarTip:"Førnutid = <b>har</b> (på anden plads) + tillægsformen. Tillægsformen står efter grundleddet (og evt. <b>ikke</b>/<b>aldrig</b>); objekt og andre led følger efter: <b>Jeg · har · købt · en bil</b>, <b>Jeg · har · ikke · set …</b>.",
  sents:[
   {da:"Jeg har købt en bil", en:"I have bought a car"},
   {da:"Hun har besøgt Aarhus", en:"She has visited Aarhus"},
@@ -616,7 +610,7 @@ const CASES = [
   {da:"Han har rejst til mange lande", en:"He has travelled to many countries"},
   {da:"Jeg har lavet mad til alle", en:"I have made food for everyone"},
   {da:"Børnene har sovet godt", en:"The children have slept well"},
-  {da:"Hun har sendt en email", en:"She has sent an email"},
+  {da:"Hun har sendt en e-mail", en:"She has sent an email"},
   {da:"Vi har talt med chefen", en:"We have talked to the boss"},
   {da:"Han har mistet sit job", en:"He has lost his job"},
   {da:"Jeg har ikke set ham i dag", en:"I haven't seen him today"},
@@ -665,7 +659,7 @@ const CASES = [
  n:10, title:"Skyggenetværket", cefr:"B1", lvl:"lb-b1",
  focus:"Flere konjunktioner (selvom, når, hvis, mens)",
  story:"Et skjult netværk kommunikerer i betingelsesskode: <i>hvis</i> det ene, <i>når</i> det andet, <i>selvom</i> det tredje. Når bisætningen står først, vender hovedsætningen om. Nøgl netværket op.",
- grammarTip:"Når en bisætning (<b>selvom, når, hvis, mens</b>) står <i>først</i>, udfylder hele sætningen forreste plads – så hovedsætningen må vende om: komma, og derefter <b>verbum før grundled</b>: <b>Hvis du har tid, kan vi mødes</b>.",
+ grammarTip:"Når en bisætning (<b>selvom, når, hvis, mens</b>) står <i>først</i>, udfylder hele bisætningen forreste plads – så hovedsætningen må vende om: komma, og derefter <b>verbum før grundled</b>: <b>Hvis du har tid, kan vi mødes</b>.",
  sents:[
   {da:"Selvom det regner, går jeg en tur", en:"Even though it's raining, I'm going for a walk"},
   {da:"Når mødet er slut, tager vi hjem", en:"When the meeting is over, we go home"},
@@ -698,7 +692,7 @@ const CASES = [
  n:11, title:"Dobbeltagenten", cefr:"B2", lvl:"lb-b2",
  focus:"Blandede sætningsstrukturer",
  story:"En af detektiverne på holdet er dobbeltagent. Rapporterne blander alt – forreste led, modalverber, nægtelse og bisætninger. Kun en mester i ordstilling kan få øje på uoverensstemmelsen.",
- grammarTip:"Her kombineres flere regler på én gang. Hold styr på rækkefølgen: forreste led → verbum på anden plads → grundled → <b>adverbium/ikke</b> → øvrige verber. Lad modalverbet eller hjælpeverbet stå på anden plads, og skub hovedverberne til sidst.",
+ grammarTip:"Her kombineres flere regler på én gang. Hold styr på rækkefølgen: forreste led → verbum på anden plads → grundled → <b>adverbium/ikke</b> → øvrige verber. Lad modalverbet eller hjælpeverbet stå på anden plads; infinitiven/tillægsformen står efter grundleddet (og evt. ikke), og objekt og andre led følger efter.",
  sents:[
   {da:"I går kunne jeg ikke komme til mødet", en:"Yesterday I couldn't come to the meeting"},
   {da:"På kontoret arbejder han stadig på rapporten", en:"At the office he's still working on the report"},
@@ -731,7 +725,7 @@ const CASES = [
  n:12, title:"Hjernen bag", cefr:"B2", lvl:"lb-b2",
  focus:"Sammensatte sætninger med flere led (B2)",
  story:"Det afsluttende opgør. Hjernen taler kun i komplekse sætninger med flere led – fortidige betingelser, forretningsrapporter, lagdelt V2. Genskab hvert udsagn for at gøre dig fortjent til titlen Mesterdetektiv.",
- grammarTip:"På B2-niveau kæder sætningerne flere led sammen og bruger sammensatte tider. Principperne gælder stadig: står bisætningen først, vender hovedsætningen om; hjælpeverbet står på anden plads, tillægsform eller infinitiv til sidst; adverbier står før det infinitte verbum.",
+ grammarTip:"På B2-niveau kæder sætningerne flere led sammen og bruger sammensatte tider. Principperne gælder stadig: står bisætningen først, vender hovedsætningen om; hjælpeverbet står på anden plads; infinitiven/tillægsformen står efter grundleddet (og evt. ikke), og objekt og andre led følger efter; adverbier står før det infinitte verbum.",
  sents:[
   {da:"Selvom virksomheden voksede hurtigt, lykkedes det ikke at øge indtjeningen", en:"Even though the company grew quickly, it didn't manage to increase earnings"},
   {da:"Hvis projektet var blevet godkendt tidligere, kunne vi have leveret hurtigere", en:"If the project had been approved earlier, we could have delivered faster"},
@@ -805,9 +799,9 @@ function speak(text){
 }
 function speakerBtn(text, cls){
   const b = document.createElement("button");
-  b.className = "speaker " + (cls||"");
+  b.className = "dc-tts-button " + (cls||"");
   b.type = "button";
-  b.textContent = "♪"; b.title = "Lyt";
+  b.title = "Lyt til sætningen";
   b.setAttribute("aria-label","Lyt til sætningen");
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
@@ -851,7 +845,7 @@ function renderMap(){
     b.disabled=!unlocked;
     b.innerHTML=
       `<span class="num">${done?"✓":c.n}</span>`+
-      `<span class="lvl ${c.lvl}">${c.cefr}</span>`+
+      `<span class="lvl sd-badge sd-badge--panel">${c.cefr}</span>`+
       `<span class="ct">${c.title}</span>`+
       `<span class="cf">${c.focus}</span>`+
       (done?`<span class="stamp">Løst</span>`:"")+
@@ -865,7 +859,7 @@ function renderMap(){
   const fUnlocked=allSolved();
   f.className="casebtn final-card"+(fUnlocked?"":" locked");
   f.disabled=!fUnlocked;
-  f.innerHTML=`<span class="lvl lb-b2">FINALE</span>`+
+  f.innerHTML=`<span class="lvl sd-badge sd-badge--panel">FINALE</span>`+
     `<span class="ct">Den afsluttende efterforskning</span>`+
     `<span class="cf">100 blandede spørgsmål · tilpasser sig · på tid · alle emner</span>`+
     (fUnlocked?(prog.finalBest?`<div class="best" style="position:static;margin-top:6px">bedst ${prog.finalBest} %</div>`:""):`<span class="lock" style="position:static;display:block;margin-top:6px">Løs alle 12 sager for at låse op</span>`);
@@ -882,7 +876,12 @@ $("resetBtn").onclick=()=>{
   if(confirm("Vil du nulstille alle fremskridt og stempler?")){prog={solved:{},best:{},weak:{},finalBest:0};saveP(prog);renderMap();}
 };
 $("weakBtn").onclick=()=>startWeak();
-$("backBtn").onclick=()=>{ stopTimer(); show("map"); renderMap(); };
+$("backBtn").onclick=()=>{ stopTimer(); show("map"); renderMap(); focusMapStart(); };
+
+function focusMapStart(){
+  const b=document.querySelector("#mapGrid .casebtn:not(:disabled)");
+  if(b){ try{ b.focus({preventScroll:true}); }catch(e){} }
+}
 
 function startWeak(){
   const pool=[];
@@ -899,7 +898,7 @@ function startWeak(){
   $("caseHead").innerHTML=
     `<div class="file">ØVETILSTAND · ALLE NIVEAUER</div>`+
     `<h2>Svage sætninger</h2>`+
-    `<div class="story">Gennemgå de sætninger, du har haft svært ved. Hvert rigtigt svar gør puljen mindre – den skrumper, efterhånden som du øver dig.</div>`+
+    `<details class="storybox"><summary><span class="sb-closed">Læs sagen</span><span class="sb-open">Skjul sagen</span></summary><div class="story">Gennemgå de sætninger, du har haft svært ved. Hvert rigtigt svar gør puljen mindre – den skrumper, efterhånden som du øver dig.</div></details>`+
     `<div class="focus">${q.length} sætning${q.length===1?"":"er"} i puljen</div>`;
   show("play"); renderHUD(); loadQuestion();
 }
@@ -927,7 +926,7 @@ function startCase(n){
   $("caseHead").innerHTML=
     `<div class="file">SAGSMAPPE #${String(n).padStart(2,"0")} · ${c.cefr}</div>`+
     `<h2>${c.title}</h2>`+
-    `<div class="story">${c.story}</div>`+
+    `<details class="storybox"><summary><span class="sb-closed">Læs sagen</span><span class="sb-open">Skjul sagen</span></summary><div class="story">${c.story}</div></details>`+
     `<div class="focus">Fokus: ${c.focus}</div>`;
   show("play"); renderHUD(); loadQuestion();
 }
@@ -948,7 +947,7 @@ function startFinal(){
   $("caseHead").innerHTML=
     `<div class="file">SÆRLIG SAGSMAPPE · ALLE NIVEAUER</div>`+
     `<h2>Den afsluttende efterforskning</h2>`+
-    `<div class="story">100 blandede udsagn fra alle sagerne. Sværhedsgraden stiger, dine svage punkter dukker oftere op, og uret tikker. Bevis, at du er mesterdetektiven.</div>`+
+    `<details class="storybox"><summary><span class="sb-closed">Læs sagen</span><span class="sb-open">Skjul sagen</span></summary><div class="story">100 blandede udsagn fra alle sagerne. Sværhedsgraden stiger, dine svage punkter dukker oftere op, og uret tikker. Bevis, at du er mesterdetektiven.</div></details>`+
     `<div class="focus">Tilpasser sig · På tid · A1 → B2</div>`;
   show("play"); renderHUD(); startTimer(); loadQuestion();
 }
@@ -956,7 +955,7 @@ function startFinal(){
 function renderHUD(){
   $("scoreV").textContent=G.score;
   $("streakV").textContent=G.streak;
-  $("livesV").textContent=(G.mode==="final"||G.mode==="weak")?"∞":"♥".repeat(G.lives)+"♡".repeat(3-G.lives);
+  $("livesV").textContent=(G.mode==="final"||G.mode==="weak")?"∞":"♥".repeat(Math.max(0,Math.min(3,G.lives)))+"♡".repeat(Math.max(0,3-Math.max(0,G.lives)));
 }
 
 /* ---------- timer (final) ---------- */
@@ -1003,41 +1002,75 @@ function loadQuestion(){
   $("checkBtn").classList.remove("hidden");
   $("clearBtn").classList.remove("hidden");
   renderHUD();
+  const sb=document.querySelector("#caseHead .storybox");
+  /* D-ORD: story collapsed by default on every statement incl. the 1st; the learner's choice sticks until the case ends */
+  if(sb){ sb.open=!!G.storyOpen; sb.ontoggle=()=>{ if(G) G.storyOpen=sb.open; }; }
+  keepAnswerInView(G.i===0);
+  focusFirstTile();
+}
+
+/* US-031: keep focus on a sensible control (never BODY) after render. */
+function focusFirstTile(){
+  const t=$("pool").querySelector(".tile:not(.used)");
+  if(t){ try{ t.focus({preventScroll:true}); }catch(e){ t.focus(); } }
+}
+
+/* Keep tiles + UNDERSØG reachable (US-013). Scroll is instant (no smooth), so it is also reduced-motion safe. */
+function keepAnswerInView(first){
+  const q=$("qArea"), chk=$("checkBtn");
+  if(!q||!chk) return;
+  q.style.scrollMarginTop="64px";
+  /* D-ORD: on the 1st statement bring the whole case card (HUD, header, prompt) to the top first; the checks below then fall back to #qArea if it does not fit */
+  const ps=$("playScreen");
+  if(first&&ps){ ps.style.scrollMarginTop="64px"; try{ ps.scrollIntoView({block:"start",behavior:"auto"}); }catch(e){ ps.scrollIntoView(true); } }
+  const r=chk.getBoundingClientRect();
+  const pr=($("promptLbl")||q).getBoundingClientRect();
+  /* also scroll when the prompt/English line is above or under the 56px MENU bar */
+  if(r.bottom>window.innerHeight||r.top<0||pr.top<64||pr.top>window.innerHeight){ try{ q.scrollIntoView({block:"start",behavior:"auto"}); }catch(e){ q.scrollIntoView(true); } }
 }
 
 function placeTile(el,o){
   if(el.classList.contains("used")) return;
-  el.classList.add("used");
+  el.classList.add("used"); el.tabIndex=-1;
   cur.placed.push(o.t);
   const ans=$("answer"); ans.classList.remove("empty");
   const chip=document.createElement("button");
   chip.className="tile inans"; chip.textContent=o.t;
   chip.onclick=()=>{ // return to pool
     if(ans.classList.contains("locked"))return;
-    el.classList.remove("used");
+    el.classList.remove("used"); el.removeAttribute("tabindex");
     chip.remove();
     const k=cur.placed.indexOf(o.t); // remove first matching
     // rebuild placed from remaining chips to stay accurate
     cur.placed=[...ans.querySelectorAll(".tile")].map(c=>c.textContent);
     if(cur.placed.length===0) ans.classList.add("empty");
     $("checkBtn").disabled=cur.placed.length!==cur.correct.length;
+    try{ el.focus({preventScroll:true}); }catch(e){}
   };
   ans.appendChild(chip);
   $("checkBtn").disabled=cur.placed.length!==cur.correct.length;
+  /* US-031: the clicked tile is now invisible - move focus on */
+  const nxt=$("checkBtn").disabled?$("pool").querySelector(".tile:not(.used)"):$("checkBtn");
+  if(nxt){ try{ nxt.focus({preventScroll:true}); }catch(e){} }
 }
 
 $("clearBtn").onclick=()=>{
   const ans=$("answer"); if(ans.classList.contains("locked"))return;
   ans.innerHTML=""; ans.classList.add("empty");
   cur.placed=[];
-  $("pool").querySelectorAll(".tile").forEach(t=>t.classList.remove("used"));
+  $("pool").querySelectorAll(".tile").forEach(t=>{t.classList.remove("used");t.removeAttribute("tabindex");});
   $("checkBtn").disabled=true;
+  focusFirstTile();
 };
 
 $("checkBtn").onclick=()=>{
   const built=[...$("answer").querySelectorAll(".tile")].map(c=>c.textContent);
   cur.placed=built;
-  const ok=built.join(" ")===cur.correct.join(" ");
+  const norm=a=>a.join(" ").toLowerCase();
+  const variants=[cur.correct].concat((cur.item.alt||[]).map(a=>Array.isArray(a)?a:a.split(" ")));
+  const hit=variants.findIndex(v=>norm(v)===norm(built));
+  const ok=hit!==-1;
+  cur.builtText=ok?variants[hit].join(" "):"";
   $("answer").classList.add("locked");
   $("answer").classList.add(ok?"ok":"no");
   Sjovt.fx[ok?"correct":"wrong"]($("answer"));
@@ -1071,7 +1104,7 @@ function showExplain(ok){
   const ex=$("explain");
   ex.className="explain show "+(ok?"good":"bad");
   $("verdict").textContent=ok?"✓ Sagens logik holder!":"✗ Ordstillingen holder ikke.";
-  const solidText=cur.correct.join(" ");
+  const solidText=ok&&cur.builtText?cur.builtText:cur.correct.join(" ");
   const solEl=$("sol");
   solEl.innerHTML="";
   const solTextSpan=document.createElement("span");
@@ -1083,8 +1116,11 @@ function showExplain(ok){
   if(G.mode!=="final" && G.mode!=="weak" && G.lives<=0){
     $("nextBtn").textContent="Se resultatet ▸";
   }else{
-    $("nextBtn").textContent = (G.i>=G.queue.length-1)?"Finish ▸":"Next ▸";
+    $("nextBtn").textContent = (G.i>=G.queue.length-1)?"Afslut ▸":"Næste ▸";
   }
+  const nb=$("nextBtn");
+  try{ nb.focus({preventScroll:true}); }catch(e){ nb.focus(); }
+  try{ nb.scrollIntoView({block:"nearest",behavior:"auto"}); }catch(e){ nb.scrollIntoView(false); }
 }
 
 $("nextBtn").onclick=()=>{
@@ -1115,10 +1151,11 @@ function finishSession(){
         : `Fremragende! Du har ryddet alle svage sætninger fra puljen.`}</p>`+
       `<div class="controls" style="margin-top:16px">
          <button class="btn clear" id="againBtn">Øv igen</button>
-         <button class="btn check" id="mapBtn2">Tilbage til kortvalg ▸</button>
+         <button class="btn check" id="mapBtn2" aria-label="Tilbage til sagskort">← TILBAGE</button>
        </div>`;
     $("againBtn").onclick=()=>startWeak();
-    $("mapBtn2").onclick=()=>{show("map");renderMap();};
+    try{ $("againBtn").focus({preventScroll:true}); }catch(e){}
+    $("mapBtn2").onclick=()=>{show("map");renderMap();focusMapStart();};
   }else if(G.mode==="case"){
     const passed=G.lives>0 && pct>=60;
     if(passed){
@@ -1128,7 +1165,7 @@ function finishSession(){
     }
     const next=CASES.find(x=>x.n===G.caseN+1);
     area.innerHTML=
-      `<div class="res-sprites" aria-hidden="true">${passed?'<span data-sd-sprite="pokal" data-scale="6"></span>':''}<span data-sd-sprite="lup" data-scale="6" class="${passed?'sd-hop':'sd-wig'}"></span>${passed?'<span data-sd-sprite="stjerne" data-scale="6"></span>':''}</div>`+
+      `<div class="res-sprites" aria-hidden="true">${passed?'<span data-sd-sprite="pokal" data-scale="2"></span>':''}<span data-sd-sprite="lup" data-scale="6" class="${passed?'sd-hop':'sd-wig'}"></span>${passed?'<span data-sd-sprite="stjerne" data-scale="2"></span>':''}</div>`+
       (passed?`<div class="bigstamp">LØST</div>`:`<div class="bigstamp" style="color:#8a6a30;border-color:#8a6a30;transform:rotate(-4deg)">GENÅBN</div>`)+
       `<h2>${G.c.title}</h2>`+
       `<div class="score">${G.correct} / ${G.total} rigtige · ${pct} %</div>`+
@@ -1137,26 +1174,28 @@ function finishSession(){
         : `Du løb tør for spor. Du skal have mindst 60 % rigtige (og beholde et liv) for at stemple sagen som <b>løst</b>. Prøv igen – ordene bliver blandet forfra hver gang.`}</p>`+
       `<div class="controls" style="margin-top:16px">
          <button class="btn clear" id="againBtn">Prøv sagen igen</button>
-         <button class="btn check" id="mapBtn2">Sagskort ▸</button>
+         <button class="btn check" id="mapBtn2" aria-label="Tilbage til sagskort">← TILBAGE</button>
        </div>`;
     $("againBtn").onclick=()=>startCase(G.caseN);
-    $("mapBtn2").onclick=()=>{show("map");renderMap();};
+    try{ $("againBtn").focus({preventScroll:true}); }catch(e){}
+    $("mapBtn2").onclick=()=>{show("map");renderMap();focusMapStart();};
   }else{
     prog.finalBest=Math.max(prog.finalBest,pct); saveP(prog);
     const m=Math.floor(G.time/60),s=G.time%60;
     const title = pct>=90?"MESTERDETEKTIV":pct>=70?"Skarp efterforsker":pct>=50?"Dygtig opklarer":"Fortsæt efterforskningen";
     area.innerHTML=
-      `<div class="res-sprites" aria-hidden="true"><span data-sd-sprite="pokal" data-scale="6"></span><span data-sd-sprite="lup" data-scale="6" class="sd-hop"></span></div>`+
+      `<div class="res-sprites" aria-hidden="true"><span data-sd-sprite="pokal" data-scale="2"></span><span data-sd-sprite="lup" data-scale="6" class="sd-hop"></span></div>`+
       `<div class="bigstamp" style="${pct>=90?'':'color:#8a6a30;border-color:#8a6a30'}">${pct>=90?'MESTER':'SAG'}</div>`+
       `<h2>${title}</h2>`+
       `<div class="score">${G.correct} / ${G.total} · ${pct} %</div>`+
       `<p>Tid: <b>${m}:${String(s).padStart(2,"0")}</b> · Point: <b>${G.score}</b>${pct>=90?"<br>Du har styr på dansk ordstilling fra A1 til B2.":"<br>De punkter, du fejlede, dukker oftere op næste gang."}</p>`+
       `<div class="controls" style="margin-top:16px">
          <button class="btn clear" id="againBtn">Kør igen</button>
-         <button class="btn check" id="mapBtn2">Sagskort ▸</button>
+         <button class="btn check" id="mapBtn2" aria-label="Tilbage til sagskort">← TILBAGE</button>
        </div>`;
     $("againBtn").onclick=()=>startFinal();
-    $("mapBtn2").onclick=()=>{show("map");renderMap();};
+    try{ $("againBtn").focus({preventScroll:true}); }catch(e){}
+    $("mapBtn2").onclick=()=>{show("map");renderMap();focusMapStart();};
   }
 }
 

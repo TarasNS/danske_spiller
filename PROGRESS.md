@@ -50,7 +50,7 @@ Sound `sequence(steps)`: `[{ type, frequency, duration, gain, delay? }]` — ini
 |---|---|---|---|---|---|
 | Bøjningsværkstedet | `boejningsvaerkstedet/` | A1–B2 | 6 | ~2,050 | Parchment #E8DDC4, Brass #B88A44, Wood #7A5134 |
 | Pronomenmysteriet | `pronomenmysteriet/` | A2–B2 | 6 | 760 | Navy #17233F, Gold #D2A94F, Paper #F0E7D2 |
-| Sætningsmaskinen | `saetningsmaskinen/` | A2–C1 | 7 | 1,020 | Cream #F2E7CC, Coral #D96D5F, Blue #4E82A6 |
+| Sætningsmaskinen | `saetningsmaskinen/` | A2–C1 | 7 | 1,020 target (current: 99) | Cream #F2E7CC, Coral #D96D5F, Blue #4E82A6 |
 | Tidsmaskinen | `tidsmaskinen/` | A2–C1 | 9 + Timed | 1,260 | Deep blue #17263B, Amber #B67A3D, Cyan #3C93A8 |
 | Skrivekontrollen | `skrivekontrollen/` | B1–C1 | 7 | 1,190 | Paper #E8E0C8, Ink #23231F, Proof red #A13D3D |
 
@@ -79,20 +79,25 @@ Sound `sequence(steps)`: `[{ type, frequency, duration, gain, delay? }]` — ini
 
 - id: saetning-data
   spec: saetningsmaskinen
-  status: completed
-  title: "Sætningsmaskinen — data.js: 1,020 items across 7 modes"
-  completed_date: 2026-10-03
-  completed_commit: 1293499
+  status: todo
+  title: "Sætningsmaskinen — data.js: 1,020 items across 7 modes (target; current 99 hand-written items)"
+  notes: "REOPENED (decision #9, QA story US-051, see stories/implementation/US-051.md). The earlier 'completed' (commit 1293499, 1,020 items) was wrong: ~920 of those items were clone-generator filler (Array(N).fill(null).map(...)) and were removed. Real current count in saetningsmaskinen/data.js = 99 items: adverb_placement 40, main_to_subordinate 10, direct_question 10, indirect_question 10, relative_clause 10, der_or_det 9, clause_chain 10 (target 140/160/140/140/180/160/100). Authoring the ~920 missing items requires new Danish content plus native-speaker review. Not done until data reaches the intended size."
+  previous_completed_date: 2026-10-03
+  previous_completed_commit: 1293499
 
 - id: saetning-game-1
   spec: saetningsmaskinen
   status: todo
+  blocked_by: saetning-data
   title: "Sætningsmaskinen — index.html: block tile theme, Modes 1–4 (ikke-flytt, main→sub, spørgsmål, indirekte)"
+  notes: "BLOCKED until saetning-data reaches the intended size (currently 99 of 1,020 items; see saetning-data)."
 
 - id: saetning-game-2
   spec: saetningsmaskinen
   status: todo
+  blocked_by: saetning-data
   title: "Sætningsmaskinen — Modes 5–7: relativværksted, der/det, sætningskæde + SRS + register in index.html"
+  notes: "BLOCKED until saetning-data reaches the intended size (currently 99 of 1,020 items; see saetning-data)."
 
 - id: tids-data-polish
   spec: tidsmaskinen

@@ -30,16 +30,17 @@
 .xp *, .xp *::before, .xp *::after { box-sizing: border-box; }
 .xp [hidden] { display: none !important; }
 
-.xp-bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: .6em; padding: .3em .6em;
+.xp-bar { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .1em .6em; padding: .3em .6em;
   background: var(--xp-orange); color: #101010; font-weight: 700; font-size: .72em; min-height: 2.2em; }
-.xp-bar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.xp-bar-title { flex: 1 1 8em; min-width: 0; overflow-wrap: anywhere; line-height: 1.15; }   /* wraps instead of truncating */
 .xp-bar-right { display: flex; align-items: center; gap: .5em; flex: none; }
-.xp-badge { background: #101010; color: #FFC25A; padding: .1em .45em; }
+.xp-badge { background: #101010; color: #FFC25A; padding: .1em .45em; white-space: nowrap; text-transform: uppercase; }
 .xp-badge-verify { background: #FFF4D6; color: #101010; }
 .xp-count { font-variant-numeric: tabular-nums; }
 
 .xp-stage { position: relative; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .xp-sent { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .7em .5em; padding: 2.4em .6em 1.2em; max-width: 100%; }
+.xp-stage.is-rule .xp-sent { display: none; }   /* the empty sentence row would push the rule card off-centre */
 .xp-idle { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;
   opacity: .8; font-size: .8em; }
 .xp-layer, .xp-arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
@@ -79,10 +80,11 @@
 /* ---------- controls */
 .xp-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; padding: 12px 4px; font-family: var(--xp-font); color: var(--xp-text); }
 .xp-btn { min-width: 44px; min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
-  font: 700 14px/1 var(--xp-font); background: var(--xp-btn); color: var(--xp-btn-text); border: 0; border-radius: 0; margin: 4px;
+  font: 700 14px/1 var(--xp-font); text-transform: uppercase; background: var(--xp-btn); color: var(--xp-btn-text); border: 0; border-radius: 0; margin: 4px;
   box-shadow: 0 -4px 0 0 var(--xp-line), 0 4px 0 0 var(--xp-line), -4px 0 0 0 var(--xp-line), 4px 0 0 0 var(--xp-line); }
 .xp-btn:hover { background: #FFC25A; color: #101010; }
 .xp-btn:active { transform: translateY(2px); }
+.xp-btn { transition: background-color .12s steps(2, end); }
 .xp-btn.xp-play { background: var(--xp-orange); color: #101010; }
 .xp-btn:focus-visible { outline: 3px solid var(--xp-focus); outline-offset: 5px; }
 .xp-btn .xp-ico { width: 16px; height: 16px; }

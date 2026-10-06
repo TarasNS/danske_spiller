@@ -66,33 +66,20 @@ html.sd-page .panel {
 html.sd-page .cat {
   font-family: var(--sd-font-display); font-weight: 700; font-size: 16px; letter-spacing: .06em; color: #101010; margin-bottom: 16px; gap: 10px;
 }
-html.sd-page .cat > span:first-child { background: var(--sd-orange); color: #101010; padding: 4px 10px; box-shadow: var(--sd-box); margin: 4px; }
+html.sd-page .cat > span:first-child { padding: 4px 10px; margin: 4px; }
 html.sd-page .cat::before { display: none; }
-html.sd-page .cat .en { color: var(--sd-text-soft); letter-spacing: .02em; font-family: var(--sd-font-body); font-weight: 400; font-size: 14px; text-transform: none; }
 html.sd-page .sentence { font-family: var(--sd-font-body); font-size: clamp(18px, 4.6vw, 22px); line-height: 1.7; color: var(--sd-text); overflow-wrap: anywhere; }
-html.sd-page .speaker {
-  width: 48px; height: 48px; border: 0; border-radius: 0; margin: 4px; font-family: var(--sd-font-display); font-weight: 700; font-size: 22px;
-  background: var(--sd-cream); color: #101010; box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); transition: none;
-}
-html.sd-page .speaker:hover { background: var(--sd-white); box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); }
-html.sd-page .speaker:active { transform: translate(2px, 2px); box-shadow: var(--sd-box); }
-html.sd-page .blank {
-  min-width: 96px; border-bottom: 4px solid var(--sd-orange); color: var(--sd-text); font-weight: 700; animation: none; background: var(--sd-panel-2);
-}
-html.sd-page .blank.filled { border-bottom-color: var(--sd-ok); color: #0B5F27; text-shadow: none; background: var(--sd-ok-bg); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .blank.filled { color: #5FD47E; } }
-
 /* options */
 html.sd-page .opts { gap: 16px; margin-top: 24px; }
 html.sd-page .opt {
-  margin: 4px; min-height: 52px; border: 0; border-radius: 0; background: var(--sd-white); color: #101010;
+  margin: 4px; min-height: 52px; border: 0; border-radius: 0; background: var(--sd-panel); color: var(--sd-text);
   font-family: var(--sd-font-body); font-weight: 700; font-size: 17px; letter-spacing: 0; padding: 12px 14px; overflow-wrap: anywhere;
   box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); transition: none;
 }
 html.sd-page .opt::before { color: var(--sd-orange); font-family: var(--sd-font-display); margin-right: 10px; }
-html.sd-page .opt:hover:not(:disabled) { transform: translate(-2px, -2px); background: var(--sd-cream); border: 0; box-shadow: var(--sd-box), 6px 6px 0 0 var(--sd-ink); }
+html.sd-page .opt:hover:not(:disabled) { transform: translate(-2px, -2px); background: var(--sd-cream); color: #101010; border: 0; box-shadow: var(--sd-box), 6px 6px 0 0 var(--sd-ink); }
 html.sd-page .opt:disabled { color: #101010; opacity: 1; }
-html.sd-page .opt:disabled:not(.correct):not(.wrong) { background: #E8DFC6; color: #4a4434; box-shadow: var(--sd-box); }
+html.sd-page .opt:disabled:not(.correct):not(.wrong) { background: var(--sd-panel-2); color: var(--sd-text-soft); box-shadow: var(--sd-box); }
 html.sd-page .opt.correct { background: #CFF1C9; color: #0b3d1a; box-shadow: var(--sd-box-ok), 4px 4px 0 0 var(--sd-ok); }
 html.sd-page .opt.correct::before { color: var(--sd-ok); }
 html.sd-page .opt.wrong { background: #FFD0DE; color: #5a0a26; box-shadow: var(--sd-box-bad), 4px 4px 0 0 var(--sd-bad); animation: none; }
@@ -124,6 +111,15 @@ html.sd-page .weak-btn { background: var(--sd-cream); font-size: 15px; padding: 
 html.sd-page .weak-btn:hover { background: var(--sd-white); transform: translateY(-2px); box-shadow: var(--sd-box), var(--sd-bevel), 0 12px 0 -4px var(--sd-ink); }
 html.sd-page .back-btn { background: var(--sd-panel); color: var(--sd-text); font-size: 14px; padding: 8px 14px; margin: 4px 4px 10px; }
 html.sd-page .back-btn:hover { background: var(--sd-cream); color: #101010; }
+/* reset (US-030) */
+html.sd-page .tools { margin: 20px 4px 0; }
+html.sd-page .reset-btn {
+  border: 0; border-radius: 0; font-family: var(--sd-font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  background: var(--sd-panel); color: var(--sd-text); min-height: 48px; min-width: 48px; padding: 10px 16px; font-size: 14px; cursor: pointer;
+  box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink);
+}
+html.sd-page .reset-btn:hover { background: var(--sd-cream); color: #101010; }
+html.sd-page .reset-btn:active { transform: translate(2px, 2px); box-shadow: var(--sd-box); }
 html.sd-page .weak-banner {
   background: var(--sd-cream); color: #101010; border: 0; border-radius: 0; margin: 4px 4px 16px; padding: 12px 14px;
   box-shadow: var(--sd-box), 4px 4px 0 0 var(--sd-ink); font-size: 15px; letter-spacing: 0; font-family: var(--sd-font-body);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" data-explainer="konjunktioner">
+<html lang="da" data-explainer="konjunktioner,konjunktioner-betydning">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,20 +120,6 @@ h1{
   display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
 }
 .sentence-text{flex:1 1 auto}
-.blank{
-  display:inline-block;min-width:64px;border-bottom:4px dotted var(--c-purple);
-  margin:0 4px;color:var(--c-purple);font-weight:800;
-}
-.blank.filled{border-bottom-style:solid}
-.speaker{
-  width:38px;height:38px;border-radius:50%;display:inline-grid;place-items:center;
-  font-size:1rem;flex:none;cursor:pointer;border:none;
-  background:linear-gradient(160deg,var(--c-teal2),var(--c-teal));
-  box-shadow:0 4px 0 #129b8d, inset 0 2px 4px rgba(255,255,255,.5);
-  transition:transform .08s, box-shadow .08s;
-}
-.speaker:active{transform:scale(.92) translateY(2px);box-shadow:0 2px 0 #129b8d}
-
 /* candy answer grid */
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .candy{
@@ -234,6 +220,8 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
 </style>
 <link rel="stylesheet" href="../shared/sjovt.css">
 <link rel="stylesheet" href="../shared/themes/konjunktioner.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 <link rel="stylesheet" href="../shared/explainer/modal.css">
 <script src="../shared/explainer/modal.js"></script>
 </head>
@@ -275,12 +263,12 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
     <p>Udfyld hullet i sætningen med den rigtige <b>konjunktion</b>. Svar rigtigt for at opbygge en serie og få point — og læs reglen efter hvert svar.</p>
     <p>Du har <b>5 liv</b> <span data-sd-sprite="hjerte" data-scale="2"></span>. Klar?</p>
     <div class="legend">
-      <span style="background:linear-gradient(135deg,#ff595e,#ff9f1c)">Hovedsætning</span>
-      <span style="background:linear-gradient(135deg,#9b5de5,#3a86ff)">Bisætning</span>
-      <span style="background:linear-gradient(135deg,#19c3b2,#52d869)">Hv-ord</span>
+      <span class="sd-badge sd-badge--panel">Hovedsætning</span>
+      <span class="sd-badge sd-badge--panel">Bisætning</span>
+      <span class="sd-badge sd-badge--panel">Hv-ord</span>
     </div>
     <label class="flt" for="lvlSelect">Niveau
-      <select id="lvlSelect">
+      <select id="lvlSelect" class="sd-select">
         <option value="all">Alle niveauer</option>
       </select>
     </label>
@@ -315,11 +303,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;margin-top:14px;font-
 <script>
 // ===== RULE DEFINITIONS (display word + explanation) =====
 const RULES = {
-  og:["og","<b>og</b> — hovedsætningskonjunktion. Betyder en <b>sideordning / tilføjelse</b>. Ordstilling efter: <b>SVA</b> (subjekt–verbum–adverbium).","A1"],
-  men:["men","<b>men</b> — hovedsætningskonjunktion. Betyder en <b>modsætning</b>. Ordstilling efter: <b>SVA</b>.","A1"],
-  eller:["eller","<b>eller</b> — hovedsætningskonjunktion. Betyder et <b>alternativ</b>. Ordstilling efter: <b>SVA</b>.","A1"],
-  for:["for","<b>for</b> — hovedsætningskonjunktion. Betyder en <b>forklaring</b>. Ordstilling efter: <b>SVA</b>.","A1"],
-  saa_k:["så","<b>så</b> — hovedsætningskonjunktion. Betyder en <b>konsekvens</b> (= derfor). Ordstilling efter: <b>SVA</b>.","A1"],
+  og:["og","<b>og</b> — hovedsætningskonjunktion. Betyder en <b>sideordning / tilføjelse</b>. Ordstilling efter: <b>hovedsætningsordstilling (V2)</b> – verbet står på 2. plads.","A1"],
+  men:["men","<b>men</b> — hovedsætningskonjunktion. Betyder en <b>modsætning</b>. Ordstilling efter: <b>hovedsætningsordstilling (V2)</b>.","A1"],
+  eller:["eller","<b>eller</b> — hovedsætningskonjunktion. Betyder et <b>alternativ</b>. Ordstilling efter: <b>hovedsætningsordstilling (V2)</b>.","A1"],
+  for:["for","<b>for</b> — hovedsætningskonjunktion. Betyder en <b>forklaring</b>. Ordstilling efter: <b>hovedsætningsordstilling (V2)</b>.","A1"],
+  saa_k:["så","<b>så</b> — hovedsætningskonjunktion. Betyder en <b>konsekvens</b> (= derfor). Ordstilling efter: <b>hovedsætningsordstilling (V2)</b>.","A1"],
   at:["at","<b>at</b> — bisætningskonjunktion. Indleder en <b>objektsætning</b>. Ordstilling: <b>SAV</b> (subjekt–adverbium–verbum).","A2"],
   om:["om","<b>om</b> — bisætningskonjunktion. Indleder en <b>spørgende bisætning</b> (ja/nej-spørgsmål). Ordstilling: <b>SAV</b>.","B1"],
   fordi:["fordi","<b>fordi</b> — bisætningskonjunktion. Betyder en <b>forklaring / årsag</b>. Ordstilling: <b>SAV</b>.","A2"],
@@ -421,7 +409,7 @@ const RAW = [
 ["at","Læreren sagde, ___ vi skulle læse kapitel tre.",["om","når","som"]],
 ["at","Hun glemte, ___ butikken lukker tidligt om søndagen.",["om","hvis","der"]],
 ["at","Vi besluttede, ___ vi ville blive en dag mere.",["om","fordi","når"]],
-["at","Det føles, ___ sommeren aldrig kommer i år.",["om","som","da"]],
+["at","Jeg føler, ___ sommeren aldrig kommer i år.",["om","som","da"]],
 ["at","Jeg er sikker på, ___ han kommer for sent.",["om","hvis","der"]],
 // --- LEDSÆTNING: om ---
 ["om","Han spørger, ___ de gerne vil komme.",["at","fordi","når"]],
@@ -446,15 +434,15 @@ const RAW = [
 ["fordi","Hun smiler, ___ hun lige har vundet.",["at","om","hvis"]],
 ["fordi","Vejen var glat, ___ det havde frosset om natten.",["at","som","når"]],
 ["fordi","Han fik ros, ___ han havde hjulpet til.",["at","om","der"]],
-["fordi","Jeg er glad, ___ du endelig er kommet hjem.",["at","når","som"]],
+["fordi","Jeg er glad, ___ du endelig er kommet hjem.",["om","der","hvor"]],
 // --- LEDSÆTNING: eftersom ---
-["eftersom","___ det allerede er sent, går vi i seng nu.",["fordi","når","hvis"]],
-["eftersom","Vi tager paraplyen med, ___ det ser ud til at regne.",["da","om","der"]],
-["eftersom","___ ingen meldte sig, måtte jeg selv gøre det.",["så","som","når"]],
+["eftersom","___ det allerede er sent, går vi i seng nu.",["at","om","der"]],
+["eftersom","Vi tager paraplyen med, ___ det ser ud til at regne.",["der","at","hvem"]],
+["eftersom","___ ingen meldte sig, måtte jeg selv gøre det.",["der","som","at"]],
 ["eftersom","Han fik bøde, ___ han kørte for stærkt.",["om","hvis","der"]],
-["eftersom","___ butikkerne er lukkede, handler vi i morgen.",["men","som","når"]],
+["eftersom","___ butikkerne er lukkede, handler vi i morgen.",["men","som","at"]],
 ["eftersom","Jeg lytter ekstra godt, ___ jeg ikke vil misse noget.",["om","der","hvis"]],
-["eftersom","___ du allerede har spist, laver jeg kun mad til mig selv.",["og","som","når"]],
+["eftersom","___ du allerede har spist, laver jeg kun mad til mig selv.",["og","som","at"]],
 ["eftersom","Vi blev inde, ___ stormen var på vej.",["om","der","hvis"]],
 // --- LEDSÆTNING: selvom ---
 ["selvom","Jeg kommer til festen, ___ jeg ikke er helt rask.",["fordi","når","hvis"]],
@@ -485,7 +473,7 @@ const RAW = [
 ["naar","Ring til mig, ___ du er fremme.",["da","om","som"]],
 ["naar","___ foråret kommer, blomstrer træerne.",["da","hvis","at"]],
 ["naar","Hun bliver glad, ___ hun ser sine børnebørn.",["da","om","der"]],
-["naar","Jeg drikker te, ___ jeg fryser.",["da","som","hvis"]],
+["naar","Jeg drikker te, ___ jeg fryser.",["at","der","hvem"]],
 ["naar","___ klokken ringer, går eleverne ud.",["da","om","at"]],
 ["naar","Vi mødes, ___ du har tid.",["da","der","som"]],
 ["naar","Han synger altid, ___ han er i godt humør.",["da","hvis","om"]],
@@ -493,7 +481,7 @@ const RAW = [
 ["naar","Hunden logrer, ___ den ser sin ejer.",["da","der","om"]],
 // --- LEDSÆTNING: idet ---
 ["idet","Telefonen ringede, ___ jeg kom ind i stuen.",["når","om","hvis"]],
-["idet","Hun vinkede, ___ toget kørte fra perronen.",["da","som","der"]],
+["idet","Hun vinkede, ___ toget kørte fra perronen.",["om","der","hvis"]],
 ["idet","___ han åbnede døren, faldt brevet ud.",["hvis","om","at"]],
 ["idet","Jeg er udmattet, ___ jeg har cyklet halvtreds kilometer.",["når","hvis","som"]],
 ["idet","Publikum klappede, ___ skuespilleren trådte ind.",["om","der","hvis"]],
@@ -501,14 +489,14 @@ const RAW = [
 ["idet","Han snublede, ___ han skulle til at rejse sig.",["om","der","hvis"]],
 ["idet","Sagen er enkel, ___ alle beviser peger samme vej.",["når","som","om"]],
 // --- LEDSÆTNING: mens ---
-["mens","Telefonen ringede, ___ jeg var ude i haven.",["da","hvis","om"]],
+["mens","Telefonen ringede, ___ jeg var ude i haven.",["om","der","at"]],
 ["mens","Du kan lave kaffe, ___ jeg dækker bord.",["da","som","der"]],
-["mens","___ hun læste, hørte han musik.",["da","at","om"]],
+["mens","___ hun læste, hørte han musik.",["at","om","der"]],
 ["mens","Pas på maden, ___ jeg lige svarer telefonen.",["da","hvis","som"]],
 ["mens","Han kan godt lide kaffe, ___ hun foretrækker te.",["da","der","om"]],
-["mens","___ de andre sov, listede hun ud.",["da","at","hvis"]],
-["mens","Vi ventede udenfor, ___ det blev mørkt.",["da","som","der"]],
-["mens","Jeg sang, ___ jeg vaskede op.",["da","om","hvis"]],
+["mens","___ de andre sov, listede hun ud.",["at","om","der"]],
+["mens","Vi ventede udenfor, ___ det blev mørkt.",["om","der","at"]],
+["mens","Jeg sang, ___ jeg vaskede op.",["om","at","der"]],
 ["mens","Læs videre, ___ jeg henter et glas vand.",["da","der","som"]],
 ["mens","Han er meget rolig, ___ hans bror er hidsig.",["da","at","om"]],
 // --- LEDSÆTNING: hvorimod ---
@@ -521,23 +509,23 @@ const RAW = [
 ["hvorimod","Han taler meget, ___ hun næsten altid tier.",["fordi","da","når"]],
 ["hvorimod","Det første forslag var dyrt, ___ det andet var gratis.",["fordi","som","der"]],
 // --- LEDSÆTNING: før ---
-["foer","Min mormor døde, ___ jeg blev født.",["da","hvis","som"]],
+["foer","Min mormor døde, ___ jeg blev født.",["om","der","at"]],
 ["foer","Vask hænder, ___ du spiser.",["da","om","der"]],
-["foer","___ vi gik, slukkede vi alle lysene.",["da","at","om"]],
-["foer","Han nåede toget, lige ___ det kørte.",["da","som","hvis"]],
+["foer","___ vi gik, slukkede vi alle lysene.",["at","om","der"]],
+["foer","Han nåede toget, lige ___ det kørte.",["om","der","at"]],
 ["foer","Jeg vil læse bogen, ___ jeg ser filmen.",["da","der","om"]],
 ["foer","Tænk dig om, ___ du svarer.",["da","hvis","som"]],
 ["foer","Det blev mørkt, længe ___ vi nåede hjem.",["da","om","der"]],
-["foer","Hun lærte at læse, ___ hun begyndte i skole.",["da","som","hvis"]],
+["foer","Hun lærte at læse, ___ hun begyndte i skole.",["om","der","at"]],
 // --- LEDSÆTNING: inden ---
 ["inden","Vi skal nå at pakke, ___ taxaen kommer.",["da","som","der"]],
 ["inden","___ du går, så husk din jakke.",["da","at","om"]],
-["inden","Han ville sige farvel, ___ han rejste.",["da","hvis","som"]],
+["inden","Han ville sige farvel, ___ han rejste.",["om","der","at"]],
 ["inden","Læg mærke til skiltene, ___ du drejer.",["da","der","om"]],
-["inden","Vi nåede lige hjem, ___ uvejret brød løs.",["da","som","hvis"]],
+["inden","Vi nåede lige hjem, ___ uvejret brød løs.",["om","der","at"]],
 ["inden","Drik din kaffe, ___ den bliver kold.",["da","der","om"]],
 ["inden","___ filmen begynder, køber vi popcorn.",["da","at","som"]],
-["inden","Hun ringede, ___ hun kørte hjemmefra.",["da","hvis","der"]],
+["inden","Hun ringede, ___ hun kørte hjemmefra.",["om","der","at"]],
 // --- LEDSÆTNING: indtil ---
 ["indtil","Han skal blive hjemme, ___ han er rask.",["da","som","hvis"]],
 ["indtil","Vi ventede på perronen, ___ toget kom.",["da","der","om"]],
@@ -554,7 +542,7 @@ const RAW = [
 ["siden","Vi har været venner, ___ vi var små.",["da","som","der"]],
 ["siden","Han har spillet klaver, ___ han var fem år.",["da","når","om"]],
 ["siden","Der er sket meget, ___ du rejste.",["da","som","hvis"]],
-["siden","Jeg har ikke spist sukker, ___ nytår.",["da","der","når"]],
+["siden","Jeg har ikke spist sukker, ___ vi fejrede nytår.",["da","der","når"]],
 ["siden","Byen har forandret sig, ___ jeg flyttede væk.",["da","når","om"]],
 // --- LEDSÆTNING: dengang ---
 ["dengang","Jeg besøgte ham tit, ___ jeg boede i USA.",["når","hvis","som"]],
@@ -598,24 +586,24 @@ const RAW = [
 ["som","Det er noget, ___ jeg aldrig vil glemme.",["der","om","når"]],
 // --- LEDSÆTNING: end (sammenligning) ---
 ["end","Jeg er bedre til tennis, ___ jeg er til badminton.",["som","der","at"]],
-["end","Han er højere, ___ sin storebror.",["som","når","om"]],
+["end","Han er højere ___ sin storebror.",["som","når","om"]],
 ["end","Det tog længere tid, ___ vi havde regnet med.",["som","der","hvis"]],
-["end","Hun løber hurtigere, ___ de fleste i klassen.",["som","at","om"]],
+["end","Hun løber hurtigere ___ de fleste i klassen.",["som","at","om"]],
 ["end","Bogen var bedre, ___ jeg havde forventet.",["som","der","når"]],
 ["end","Der kom flere gæster, ___ vi havde plads til.",["som","hvis","at"]],
-["end","Vinteren blev koldere, ___ sidste år.",["som","der","om"]],
+["end","Vinteren blev koldere ___ sidste år.",["som","der","om"]],
 ["end","Det er billigere at tage toget, ___ at flyve.",["som","når","at"]],
 // --- LEDSÆTNING: ligesom ---
 ["ligesom","Priserne stiger, ___ de gjorde sidste år.",["fordi","da","når"]],
-["ligesom","Hun danser smukt, ___ sin mor gjorde.",["fordi","der","om"]],
+["ligesom","Hun danser smukt, ___ hendes mor gjorde.",["fordi","der","om"]],
 ["ligesom","Det gik galt, ___ jeg havde frygtet.",["fordi","at","hvis"]],
 ["ligesom","Han klarer sig godt, ___ alle havde forudset.",["fordi","der","når"]],
 ["ligesom","Vejret blev dårligt, ___ meteorologerne sagde.",["fordi","da","om"]],
-["ligesom","Maden smagte præcis, ___ da bedstemor lavede den.",["fordi","der","hvis"]],
+["ligesom","Maden smagte præcis ___ da bedstemor lavede den.",["fordi","der","hvis"]],
 ["ligesom","Han synger godt, ___ hans far altid har gjort.",["fordi","at","når"]],
 ["ligesom","Festen blev en succes, ___ vi havde håbet.",["fordi","der","om"]],
 // --- LEDSÆTNING: hvis (betingelse) ---
-["hvis","Vi tager på stranden, ___ solen skinner.",["da","når","som"]],
+["hvis","Vi tager på stranden, ___ solen skinner.",["der","at","som"]],
 ["hvis","___ du skynder dig, når du bussen.",["da","som","at"]],
 ["hvis","Jeg hjælper dig, ___ du beder pænt om det.",["da","der","om"]],
 ["hvis","___ det sner i morgen, bliver skolen lukket.",["da","som","når"]],
@@ -628,28 +616,28 @@ const RAW = [
 ["hvis","Tag en trøje, ___ du fryser senere.",["da","når","der"]],
 ["hvis","___ alle er enige, går vi videre.",["da","som","om"]],
 // --- HV-ORD: hvem ---
-["hvem","Jeg ved ikke, ___ min nye lærer er.",["hvad","hvor","hvordan"]],
+["hvem","Jeg ved ikke, ___ min nye lærer er.",["hvornår","at","hvis"]],
 ["hvem","Kan du sige mig, ___ der har ringet?",["hvad","hvornår","hvor"]],
 ["hvem","Hun spurgte, ___ jeg skulle mødes med.",["hvad","hvorfor","hvordan"]],
 ["hvem","Det er uklart, ___ der skal betale regningen.",["hvad","hvor","hvornår"]],
 ["hvem","Gæt engang, ___ jeg mødte i byen!",["hvad","hvordan","hvorfor"]],
 ["hvem","Vi diskuterede, ___ der skulle holde tale.",["hvad","hvor","hvornår"]],
-["hvem","Han fortalte ikke, ___ han stemte på.",["hvad","hvordan","hvor"]],
-["hvem","Politiet undersøger, ___ der stod bag.",["hvad","hvornår","hvorfor"]],
+["hvem","Han fortalte ikke, ___ han stemte på.",["hvornår","hvorfor","at"]],
+["hvem","Politiet undersøger, ___ der stod bag.",["hvornår","hvorfor","hvordan"]],
 // --- HV-ORD: hvor ---
 ["hvor","Han ved godt, ___ han skal rejse hen.",["hvem","hvad","hvornår"]],
 ["hvor","Kan du vise mig, ___ stationen ligger?",["hvem","hvad","hvordan"]],
 ["hvor","Jeg har glemt, ___ jeg lagde nøglerne.",["hvem","hvorfor","hvornår"]],
-["hvor","Vi diskuterede, ___ vi skulle holde ferie.",["hvem","hvad","hvordan"]],
+["hvor","Vi diskuterede, ___ vi skulle holde ferie.",["hvem","hvad","der"]],
 ["hvor","Det står på skiltet, ___ udgangen er.",["hvem","hvorfor","hvornår"]],
 ["hvor","Hun spurgte, ___ toilettet var.",["hvem","hvad","hvordan"]],
 ["hvor","Ingen ved, ___ skatten er gemt.",["hvem","hvornår","hvorfor"]],
-["hvor","Fortæl mig, ___ du voksede op.",["hvem","hvad","hvordan"]],
+["hvor","Fortæl mig, ___ du voksede op.",["hvem","hvad","der"]],
 // --- HV-ORD: hvornår ---
 ["hvornaar","Det er ikke besluttet, ___ deres ferie starter.",["hvem","hvor","hvad"]],
-["hvornaar","Kan du sige mig, ___ toget kører?",["hvem","hvor","hvordan"]],
+["hvornaar","Kan du sige mig, ___ toget kører?",["hvem","hvad","der"]],
 ["hvornaar","Jeg ved ikke, ___ butikken åbner.",["hvem","hvad","hvorfor"]],
-["hvornaar","Vi aftalte ikke, ___ vi skulle mødes.",["hvem","hvor","hvordan"]],
+["hvornaar","Vi aftalte ikke, ___ vi skulle mødes.",["hvem","hvad","der"]],
 ["hvornaar","Hun spurgte, ___ filmen begynder.",["hvem","hvad","hvor"]],
 ["hvornaar","Det afhænger af vejret, ___ vi tager afsted.",["hvem","hvorfor","hvor"]],
 ["hvornaar","Jeg husker ikke, ___ jeg sidst så ham.",["hvem","hvad","hvordan"]],
@@ -669,18 +657,18 @@ const RAW = [
 ["hvad","Kan du gætte, ___ der er i pakken?",["hvem","hvornår","hvorfor"]],
 ["hvad","Han spurgte, ___ klokken var.",["hvem","hvor","hvordan"]],
 ["hvad","Det er svært at vide, ___ fremtiden bringer.",["hvem","hvornår","hvor"]],
-["hvad","Fortæl mig, ___ du tænker på.",["hvem","hvor","hvorfor"]],
+["hvad","Fortæl mig, ___ du tænker på.",["hvor","hvornår","der"]],
 ["hvad","Vi diskuterede, ___ vi skulle give hende i gave.",["hvem","hvornår","hvordan"]],
 ["hvad","Jeg hørte ikke, ___ du sagde.",["hvem","hvor","hvornår"]],
 // --- HV-ORD: hvordan ---
-["hvordan","Vi må finde ud af, ___ vi kommer hjem.",["hvem","hvad","hvornår"]],
+["hvordan","Vi må finde ud af, ___ vi kommer hjem.",["hvem","hvad","der"]],
 ["hvordan","Hun viste mig, ___ man bager brød.",["hvem","hvor","hvorfor"]],
 ["hvordan","Jeg ved ikke, ___ maskinen virker.",["hvem","hvad","hvornår"]],
 ["hvordan","Kan du forklare, ___ man løser opgaven?",["hvem","hvor","hvorfor"]],
 ["hvordan","Det afhænger af, ___ du griber det an.",["hvem","hvad","hvornår"]],
-["hvordan","Han fortalte, ___ ulykken skete.",["hvem","hvad","hvornår"]],
-["hvordan","Vi talte om, ___ vi bedst kan spare penge.",["hvem","hvornår","hvor"]],
-["hvordan","Ingen vidste, ___ branden var startet.",["hvem","hvad","hvornår"]],
+["hvordan","Han fortalte, ___ ulykken skete.",["hvem","hvad","der"]],
+["hvordan","Vi talte om, ___ vi bedst kan spare penge.",["hvem","hvad","der"]],
+["hvordan","Ingen vidste, ___ branden var startet.",["hvem","hvad","der"]],
 // --- EKSTRA (når 300) ---
 ["og","Vi tændte bålet, ___ vi grillede pølser.",["men","for","så"]],
 ["men","Han er rig, ___ han er ikke lykkelig.",["og","så","for"]],
@@ -731,10 +719,9 @@ function speak(text){
 }
 function speakerBtn(text, cls){
   const b = document.createElement("button");
-  b.className = "speaker " + (cls||"");
+  b.className = "dc-tts-button " + (cls||"");
   b.type = "button";
-  b.textContent = "♪";
-  b.setAttribute("aria-label","Udtal sætningen");
+  b.setAttribute("aria-label","Lyt til sætningen");
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -780,7 +767,7 @@ function start(){
 
 function renderLives(){
   const el=$('lives'); el.innerHTML=''; el.setAttribute('aria-label',lives+' liv tilbage'); el.setAttribute('role','img');
-  for(let i=0;i<5;i++){ const s=document.createElement('span'); s.className='life'+(i<lives?'':' lost'); s.innerHTML=window.Sjovt?Sjovt.spriteSVG('hjerte',3):''; el.appendChild(s); }
+  for(let i=0;i<5;i++){ const s=document.createElement('span'); s.className='life'+(i<lives?'':' lost'); s.innerHTML=window.Sjovt?Sjovt.spriteSVG('hjerte',2):''; el.appendChild(s); }
 }
 function updateHud(){
   $('scoreVal').textContent=score;
@@ -799,11 +786,11 @@ function renderQuestion(q){
   $('next').classList.add('hidden');
 
   const chip=$('chip');
-  chip.className='chip '+q.cat;
+  chip.className='chip sd-badge sd-badge--panel '+q.cat;
   chip.textContent=catName[q.cat];
 
   const parts = q.text.split('___');
-  $('sentence').innerHTML = '<span class="sentence-text">' + parts[0] + '<span class="blank" id="blank">?</span>' + (parts[1]||'') + '</span>';
+  $('sentence').innerHTML = '<span class="sentence-text">' + parts[0] + '<span class="sd-gap" id="blank" role="img" aria-label="mellemrum"></span>' + (parts[1]||'') + '</span>';
   $('sentence').appendChild(speakerBtn(q.text.replace('___', q.answer), 'sentence-speaker'));
 
   const opts = shuffle([q.answer, ...q.distractors]);
@@ -870,7 +857,7 @@ function choose(btn,word){
 
   const blank=$('blank');
   blank.textContent=current.answer;
-  blank.classList.add('filled');
+  blank.classList.add('filled','is-filled'); blank.removeAttribute('role'); blank.removeAttribute('aria-label');
 
   if(correct){
     btn.classList.add('correct');
@@ -884,16 +871,14 @@ function choose(btn,word){
       burstAt(btn,true);
       if(streak>=3) showCombo('SERIE x'+mult+'! +'+gain);
     }
-    blank.style.color='var(--c-green)';
-    blank.style.borderColor='var(--c-green)';
+    blank.classList.add('is-ok');
   } else {
     btn.classList.add('wrong');
     if(window.Sjovt) Sjovt.fx.wrong(btn);
     // highlight the real answer
     const ans=buttons.find(b=>b.textContent===current.answer);
     if(ans){ans.classList.remove('dim');ans.classList.add('correct');}
-    blank.style.color='var(--c-red)';
-    blank.style.borderColor='var(--c-red)';
+    blank.classList.add('is-bad');
     if(!inReview){
       streak=0;
       lives--;
@@ -977,7 +962,8 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
     if(!$('startScreen').classList.contains('hidden')) start();
     else if(!$('overScreen').classList.contains('hidden')) start();
-    else if(answered && lives>0) nextQuestion();
+    else if(!$('reviewDoneScreen').classList.contains('hidden')) start();
+    else if(answered && (lives>0 || inReview)) nextQuestion();
   }
   if(answered) return;
   const n=parseInt(e.key);

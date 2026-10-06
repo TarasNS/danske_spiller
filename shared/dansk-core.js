@@ -460,9 +460,14 @@
 
   // -- darkMode ------------------------------------------------------------
 
-  var DARK_MODE_KEY = 'dc:dark-mode';
+  // Single source of truth is the shared bar (shared/sjovt.js, key `sd:theme`).
+  // These helpers delegate to window.Sjovt.theme when present and otherwise use
+  // the same key, so the portal, the bar and every game always agree.
+  var THEME_KEY = 'sd:theme';
 
-  function darkModePreferred() {
+  function darkModeCurrent() {
+    var attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'dark' || attr === 'light') return attr;
     try {
       return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
     } catch (err) {
@@ -470,22 +475,18 @@
     }
   }
 
-  function darkModeApply(mode) {
-    document.documentElement.setAttribute('data-theme', mode);
-  }
-
   function darkModeInit() {
-    var stored = DanskCore.store.get(DARK_MODE_KEY);
-    var mode = (stored === 'dark' || stored === 'light') ? stored : darkModePreferred();
-    darkModeApply(mode);
-    return mode;
+    var stored = null;
+    try { stored = window.localStorage.getItem(THEME_KEY); } catch (err) { stored = null; }
+    if (stored === 'dark' || stored === 'light') document.documentElement.setAttribute('data-theme', stored);
+    return darkModeCurrent();
   }
 
   function darkModeToggle() {
-    var current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    var next = current === 'dark' ? 'light' : 'dark';
-    darkModeApply(next);
-    DanskCore.store.set(DARK_MODE_KEY, next);
+    if (window.Sjovt && window.Sjovt.theme) return window.Sjovt.theme.toggle();
+    var next = darkModeCurrent() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { window.localStorage.setItem(THEME_KEY, next); } catch (err) { /* ignore */ }
     return next;
   }
 
@@ -506,10 +507,11 @@
   var soundEnabled = true;
   var soundEnabledLoaded = false;
 
+  // The stored value (written by the shared bar or by toggle) always wins, so
+  // there is no stale in-memory copy; `soundEnabled` is only the fallback.
   function soundLoadEnabled() {
-    if (soundEnabledLoaded) return soundEnabled;
     var stored = DanskCore.store.get(SOUND_ENABLED_KEY);
-    soundEnabled = stored !== false;
+    if (stored === true || stored === false) soundEnabled = stored;
     soundEnabledLoaded = true;
     return soundEnabled;
   }
@@ -522,10 +524,11 @@
   }
 
   function soundToggle() {
-    soundLoadEnabled();
-    soundEnabled = !soundEnabled;
-    DanskCore.store.set(SOUND_ENABLED_KEY, soundEnabled);
-    return soundEnabled;
+    var next = !soundLoadEnabled();
+    soundEnabled = next;
+    if (window.Sjovt && window.Sjovt.sound) return window.Sjovt.sound.set(next);
+    DanskCore.store.set(SOUND_ENABLED_KEY, next);
+    return next;
   }
 
   function soundIsEnabled() {
@@ -602,19 +605,23 @@
 
   // -- ttsButton / focusTrap / announce -----------------------------------
 
-  function ttsButton(text, container) {
+  // ttsButton(text, container[, label]) - the one "listen" button. Default label "Lyt" (Danish); pass e.g. "Lyt til sætningen" to override.
+  // Look comes from shared/tts-button.css (pixel speaker, 48x48); without that file the base styles keep it a >=44px button.
+  function ttsButton(text, container, label) {
     if (!container) return null;
     injectBaseStyles();
+    var baseLabel = (typeof label === 'string' && label) ? label : 'Lyt';
     var button = document.createElement('button');
     button.type = 'button';
     button.className = 'dc-tts-button';
-    button.setAttribute('aria-label', 'Afspil igen');
+    button.setAttribute('aria-label', baseLabel);
+    button.title = baseLabel;
     button.innerHTML = '<span aria-hidden="true">&#128266;</span>';
     // Voice lists load asynchronously: re-check when they arrive. No Danish voice => say so instead of silence.
     function syncVoiceState() {
       var ok = DanskCore.tts.hasDanishVoice();
-      button.setAttribute('aria-label', ok ? 'Afspil igen' : 'Afspil igen (ingen dansk stemme fundet på denne enhed)');
-      button.title = ok ? '' : 'Ingen dansk stemme fundet på denne enhed';
+      button.setAttribute('aria-label', ok ? baseLabel : baseLabel + ' (ingen dansk stemme fundet på denne enhed)');
+      button.title = ok ? baseLabel : 'Ingen dansk stemme fundet på denne enhed';
       button.style.opacity = ok ? '' : '0.5';
     }
     syncVoiceState();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" data-explainer="tider-nutid-datid,foernutid-har">
+<html lang="da" data-explainer="tider-nutid-datid,foernutid-har,foernutid-er">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -196,22 +196,10 @@ h1{
   color:#fbf3e0;font-weight:400;text-shadow:0 1px 10px rgba(0,0,0,.5);
 }
 .q-prompt .pre{display:block;color:var(--muted);font-size:.78em;font-style:italic;margin-bottom:6px}
-.q-prompt .blank{color:var(--gold2);font-weight:500;border-bottom:3px dotted var(--gold);padding:0 6px}
 .q-chain{font-family:var(--heading);letter-spacing:1px}
-.q-chain .blank{color:var(--gold2)}
 
-/* speaker / pronounce button */
+/* TTS button: shared/tts-button.css */
 .q-prompt-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-.speaker{
-  width:40px;height:40px;border-radius:50%;flex:none;
-  background:linear-gradient(180deg, rgba(28,35,72,.85), rgba(18,22,44,.9));
-  border:1px solid rgba(212,175,55,.45);color:var(--gold2);
-  display:inline-grid;place-items:center;font-size:1.1rem;cursor:pointer;
-  box-shadow:0 4px 14px rgba(0,0,0,.4);transition:transform .1s ease, border-color .15s ease;
-}
-.speaker:hover{border-color:var(--amber)}
-.speaker:active{transform:scale(.92)}
-.speaker.sm{width:30px;height:30px;font-size:.85rem}
 
 .options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
 .opt{
@@ -266,6 +254,8 @@ h1{
 <link rel="stylesheet" href="shared/sjovt.css">
 <script src="shared/sjovt.js"></script>
 <link rel="stylesheet" href="shared/themes/magiske-verber.css">
+<link rel="stylesheet" href="shared/tts-button.css">
+<link rel="stylesheet" href="shared/sd-extras.css">
 <link rel="stylesheet" href="shared/explainer/modal.css"><script src="shared/explainer/modal.js"></script>
 </head>
 <body>
@@ -291,7 +281,7 @@ h1{
 
   <!-- DIFFICULTY -->
   <div id="screen-diff" class="panel hidden">
-    <button type="button" class="back-link" onclick="goMenu()">‹ Tilbage til hovedmenu</button>
+    <button type="button" class="back-link" onclick="goMenu()">← TILBAGE</button>
     <h2 class="center title" id="diffTitle" style="color:var(--gold2)"></h2>
     <p class="center" style="color:var(--muted);margin:.2em 0 0" id="diffDesc"></p>
     <div class="diff-grid" id="diffGrid"></div>
@@ -300,7 +290,7 @@ h1{
 
   <!-- GAME -->
   <div id="screen-game" class="panel hidden">
-    <button type="button" class="back-link" onclick="quitGame()">‹ Forlad spil</button>
+    <button type="button" class="back-link" onclick="quitGame()">✕ Forlad spil</button>
     <div class="hud">
       <span class="chip" id="hudGame"></span>
       <span class="chip" id="hudProgress"></span>
@@ -335,7 +325,7 @@ h1{
 
   <!-- STATS -->
   <div id="screen-stats" class="panel hidden">
-    <button type="button" class="back-link" onclick="goMenu()">‹ Tilbage til hovedmenu</button>
+    <button type="button" class="back-link" onclick="goMenu()">← TILBAGE</button>
     <h2 class="center title" style="color:var(--gold2)">Din Tryllebog</h2>
     <div class="stat-grid">
       <div class="stat"><div class="sv" id="stAcc">0%</div><div class="sl">Samlet træfsikkerhed</div></div>
@@ -412,7 +402,7 @@ const V = {
   'vælge':  {pr:'vælger',  pa:'valgte',  pp:'valgt',   aux:'har',en:'choose',  irr:true},
   'lægge':  {pr:'lægger',  pa:'lagde',   pp:'lagt',    aux:'har',en:'put/lay', irr:true},
   'synge':  {pr:'synger',  pa:'sang',    pp:'sunget',  aux:'har',en:'sing',    irr:true},
-  'rejse':  {pr:'rejser',  pa:'rejste',  pp:'rejst',   aux:'er', en:'travel',  irr:false},
+  'rejse':  {pr:'rejser',  pa:'rejste',  pp:'rejst',   aux:'har',en:'travel',  irr:false},
   // ---- regular workhorses ----
   'arbejde':{pr:'arbejder',pa:'arbejdede',pp:'arbejdet',aux:'har',en:'work',  irr:false},
   'spille': {pr:'spiller', pa:'spillede',pp:'spillet', aux:'har',en:'play',    irr:false},
@@ -424,7 +414,7 @@ const V = {
   'vente':  {pr:'venter',  pa:'ventede', pp:'ventet',  aux:'har',en:'wait',    irr:false},
   'møde':   {pr:'møder',   pa:'mødte',   pp:'mødt',    aux:'har',en:'meet',    irr:false},
   'betale': {pr:'betaler', pa:'betalte', pp:'betalt',  aux:'har',en:'pay',     irr:false},
-  'begynde':{pr:'begynder',pa:'begyndte',pp:'begyndt', aux:'har',en:'begin',   irr:false},
+  'begynde':{pr:'begynder',pa:'begyndte',pp:'begyndt', aux:'er', en:'begin',   irr:false},
   'lære':   {pr:'lærer',   pa:'lærte',   pp:'lært',    aux:'har',en:'learn/teach',irr:false},
   'bruge':  {pr:'bruger',  pa:'brugte',  pp:'brugt',   aux:'har',en:'use',     irr:false},
   'tænke':  {pr:'tænker',  pa:'tænkte',  pp:'tænkt',   aux:'har',en:'think',   irr:false},
@@ -438,7 +428,7 @@ const V = {
 };
 
 /* ---------- SENTENCE ENTRIES ----------
-   v: verb key. lvl: 1=Easy(A1) 2=Medium(A2/B1) 3=Hard(B1/B2).
+   v: verb key. lvl: 1=Easy(A2) 2=Medium(A2/B1) 3=Hard(B1/B2).
    Use [v] as the placeholder for the verb form in each tense.
    present sentence starts with subject (verb mid, lowercase).
    past sentence starts with a time adverbial (V2 inversion).
@@ -446,144 +436,150 @@ const V = {
 */
 const ENTRIES = [
   // skrive
-  {v:'skrive',lvl:1,p:'Jeg [v] en mail til min chef.',d:'I går [v] jeg en mail til min chef.',pf:'Jeg har [v] en mail til min chef.',en:'I write an email to my boss.'},
-  {v:'skrive',lvl:2,p:'Hun [v] en stil i skolen.',d:'I sidste uge [v] hun en lang stil.',pf:'Hun har [v] en god stil.',en:'She writes an essay at school.'},
+  {v:'skrive',lvl:1,p:'Jeg [v] en mail til min chef lige nu.',d:'I går [v] jeg en mail til min chef.',pf:'Jeg har [v] en mail til min chef.',en:'I am writing an email to my boss right now.'},
+  {v:'skrive',lvl:2,p:'Hun [v] en stil i skolen lige nu.',d:'I sidste uge [v] hun en lang stil.',pf:'Hun har [v] en god stil.',en:'She is writing an essay at school right now.'},
   // læse
-  {v:'læse',lvl:1,p:'Jeg [v] en bog hver aften.',d:'I aftes [v] jeg en spændende bog.',pf:'Jeg har [v] hele bogen.',en:'I read a book every evening.'},
-  {v:'læse',lvl:2,p:'Chefen [v] din besked om morgenen.',d:'I morges [v] chefen din besked.',pf:'Chefen har [v] din besked.',en:'The boss reads your message in the morning.'},
+  {v:'læse',lvl:1,p:'Jeg [v] en bog lige nu.',d:'I aftes [v] jeg en spændende bog.',pf:'Jeg har [v] hele bogen.',en:'I am reading a book right now.'},
+  {v:'læse',lvl:2,p:'Chefen [v] din besked i øjeblikket.',d:'I morges [v] chefen din besked.',pf:'Chefen har [v] din besked.',en:'The boss is reading your message at the moment.'},
   // spise
-  {v:'spise',lvl:1,p:'Vi [v] aftensmad klokken seks.',d:'I aftes [v] vi sammen med familien.',pf:'Vi har [v] aftensmad.',en:'We eat dinner at six.'},
-  {v:'spise',lvl:1,p:'Børnene [v] morgenmad i køkkenet.',d:'I morges [v] børnene morgenmad.',pf:'Børnene har [v] morgenmad.',en:'The children eat breakfast in the kitchen.'},
+  {v:'spise',lvl:1,p:'Vi [v] aftensmad lige nu.',d:'I aftes [v] vi sammen med familien.',pf:'Vi har [v] aftensmad.',en:'We are eating dinner right now.'},
+  {v:'spise',lvl:1,p:'Børnene [v] morgenmad i køkkenet lige nu.',d:'I morges [v] børnene morgenmad.',pf:'Børnene har [v] morgenmad.',en:'The children are eating breakfast in the kitchen right now.'},
   // drikke
-  {v:'drikke',lvl:1,p:'Jeg [v] kaffe hver morgen.',d:'I morges [v] jeg te i stedet.',pf:'Jeg har [v] alt for meget kaffe.',en:'I drink coffee every morning.'},
-  {v:'drikke',lvl:2,p:'Gæsterne [v] vand til maden.',d:'Til festen [v] gæsterne vand til maden.',pf:'Gæsterne har [v] vand til maden.',en:'The guests drink water with the meal.'},
+  {v:'drikke',lvl:1,p:'Jeg [v] kaffe lige nu.',d:'I morges [v] jeg te i stedet.',pf:'Jeg har [v] alt for meget kaffe.',en:'I am drinking coffee right now.'},
+  {v:'drikke',lvl:2,p:'Gæsterne [v] vand til maden lige nu.',d:'I lørdags [v] gæsterne vand til maden.',pf:'Gæsterne har [v] vand til maden.',en:'The guests are drinking water with the meal right now.'},
   // gå (aux er)
-  {v:'gå',lvl:1,p:'Jeg [v] på arbejde klokken otte.',d:'I går [v] jeg på arbejde.',pf:'Jeg er [v] på arbejde.',en:'I go to work at eight.'},
-  {v:'gå',lvl:2,p:'Børnene [v] i skole hver dag.',d:'I mandags [v] børnene i skole.',pf:'Børnene er [v] i skole.',en:'The children walk to school every day.'},
+  {v:'gå',lvl:1,p:'Jeg [v] på arbejde om en halv time.',d:'I går [v] jeg på arbejde.',pf:'Jeg er [v] på arbejde.',en:'I go to work in half an hour.'},
+  {v:'gå',lvl:2,p:'Børnene [v] i skole i morgen tidlig.',d:'I mandags [v] børnene i skole.',pf:'Børnene er [v] i skole.',en:'The children walk to school tomorrow morning.'},
   // komme (aux er)
-  {v:'komme',lvl:1,p:'Min mor [v] på besøg i weekenden.',d:'I weekenden [v] min mor på besøg.',pf:'Min mor er [v] på besøg.',en:'My mother comes to visit at the weekend.'},
-  {v:'komme',lvl:2,p:'Toget [v] til tiden om morgenen.',d:'I morges [v] toget til tiden.',pf:'Toget er [v] til tiden i dag.',en:'The train comes on time in the morning.'},
+  {v:'komme',lvl:1,p:'Min mor [v] på besøg næste weekend.',d:'I sidste weekend [v] min mor på besøg.',pf:'Min mor er [v] på besøg.',en:'My mother comes to visit next weekend.'},
+  {v:'komme',lvl:2,p:'Toget [v] om fem minutter.',d:'I morges [v] toget til tiden.',pf:'Toget er [v] til tiden i dag.',en:'The train comes in five minutes.'},
   // se
-  {v:'se',lvl:1,p:'Vi [v] en film om aftenen.',d:'I går [v] vi en god film.',pf:'Vi har [v] filmen to gange.',en:'We watch a film in the evening.'},
-  {v:'se',lvl:2,p:'Turisterne [v] mange seværdigheder.',d:'På ferien [v] turisterne mange seværdigheder.',pf:'Turisterne har [v] mange seværdigheder.',en:'The tourists see many sights.'},
+  {v:'se',lvl:1,p:'Vi [v] en film lige nu.',d:'I går [v] vi en god film.',pf:'Vi har [v] filmen to gange.',en:'We are watching a film right now.'},
+  {v:'se',lvl:2,p:'Turisterne [v] mange seværdigheder i øjeblikket.',d:'Sidste sommer [v] turisterne mange seværdigheder.',pf:'Turisterne har [v] mange seværdigheder.',en:'The tourists are seeing many sights at the moment.'},
   // tage
-  {v:'tage',lvl:1,p:'Jeg [v] toget til arbejde.',d:'I går [v] jeg bussen i stedet.',pf:'Jeg har [v] toget hjem.',en:'I take the train to work.'},
-  {v:'tage',lvl:2,p:'Hun [v] billeder på rejsen.',d:'På ferien [v] hun mange billeder.',pf:'Hun har [v] hundrede billeder.',en:'She takes pictures on the trip.'},
+  {v:'tage',lvl:1,p:'Jeg [v] toget til arbejde i morgen.',d:'I går [v] jeg bussen i stedet.',pf:'Jeg har [v] toget hjem.',en:'I take the train to work tomorrow.'},
+  {v:'tage',lvl:2,p:'Hun [v] billeder på rejsen lige nu.',d:'Sidste sommer [v] hun mange billeder.',pf:'Hun har [v] hundrede billeder.',en:'She is taking pictures on the trip right now.'},
   // få
-  {v:'få',lvl:2,p:'Hun [v] en ny opgave hver uge.',d:'I går [v] hun en svær opgave.',pf:'Hun har [v] en ny opgave.',en:'She gets a new task every week.'},
-  {v:'få',lvl:1,p:'Jeg [v] et brev fra banken.',d:'I går [v] jeg et brev fra banken.',pf:'Jeg har [v] et vigtigt brev.',en:'I get a letter from the bank.'},
+  {v:'få',lvl:2,p:'Hun [v] en ny opgave i næste uge.',d:'I går [v] hun en svær opgave.',pf:'Hun har [v] en ny opgave.',en:'She gets a new task next week.'},
+  {v:'få',lvl:1,p:'Jeg [v] et brev fra banken i morgen.',d:'I går [v] jeg et brev fra banken.',pf:'Jeg har [v] et vigtigt brev.',en:'I get a letter from the bank tomorrow.'},
   // give
-  {v:'give',lvl:2,p:'Lederen [v] os feedback på mødet.',d:'På mødet [v] lederen os feedback.',pf:'Lederen har [v] os god feedback.',en:'The manager gives us feedback at the meeting.'},
-  {v:'give',lvl:1,p:'Jeg [v] min ven en gave.',d:'Til fødselsdagen [v] jeg ham en gave.',pf:'Jeg har [v] ham en gave.',en:'I give my friend a present.'},
+  {v:'give',lvl:2,p:'Lederen [v] os feedback på mødet i morgen.',d:'I går [v] lederen os feedback på mødet.',pf:'Lederen har [v] os god feedback.',en:'The manager gives us feedback at the meeting tomorrow.'},
+  {v:'give',lvl:1,p:'Jeg [v] min ven en gave i morgen.',d:'I lørdags [v] jeg ham en gave til fødselsdagen.',pf:'Jeg har [v] ham en gave.',en:'I give my friend a present tomorrow.'},
   // sige
-  {v:'sige',lvl:2,p:'Han [v] altid sin mening.',d:'På mødet [v] han sin mening.',pf:'Han har [v] sin mening klart.',en:'He always says his opinion.'},
-  {v:'sige',lvl:1,p:'Læreren [v] godmorgen til klassen.',d:'I morges [v] læreren godmorgen.',pf:'Læreren har [v] det flere gange.',en:'The teacher says good morning to the class.'},
+  {v:'sige',lvl:2,p:'Han [v] sin mening lige nu.',d:'I går [v] han sin mening på mødet.',pf:'Han har [v] sin mening klart.',en:'He is saying his opinion right now.'},
+  {v:'sige',lvl:1,p:'Læreren [v] godmorgen til klassen lige nu.',d:'I morges [v] læreren godmorgen.',pf:'Læreren har [v] det flere gange.',en:'The teacher is saying good morning to the class right now.'},
   // være
-  {v:'være',lvl:1,p:'Jeg [v] træt i dag.',d:'I går [v] jeg også træt.',pf:'Jeg har [v] meget træt på det sidste.',en:'I am tired today.'},
-  {v:'være',lvl:2,p:'Vejret [v] dårligt om vinteren.',d:'I sidste uge [v] vejret rigtig dårligt.',pf:'Vejret har [v] dårligt hele ugen.',en:'The weather is bad in winter.'},
+  {v:'være',lvl:1,p:'Jeg [v] træt lige nu.',d:'I går [v] jeg også træt.',pf:'Jeg har [v] meget træt på det sidste.',en:'I am tired right now.'},
+  {v:'være',lvl:2,p:'Vejret [v] dårligt i øjeblikket.',d:'I sidste uge [v] vejret rigtig dårligt.',pf:'Vejret har [v] dårligt hele ugen.',en:'The weather is bad at the moment.'},
   // blive (aux er)
-  {v:'blive',lvl:2,p:'Vejret [v] bedre om sommeren.',d:'I sidste uge [v] vejret pludselig bedre.',pf:'Vejret er [v] meget bedre.',en:'The weather becomes better in summer.'},
-  {v:'blive',lvl:3,p:'Hun [v] læge efter studiet.',d:'Sidste år [v] hun færdig som læge.',pf:'Hun er [v] en dygtig læge.',en:'She becomes a doctor after her studies.'},
+  {v:'blive',lvl:2,p:'Vejret [v] bedre i morgen.',d:'I sidste uge [v] vejret pludselig bedre.',pf:'Vejret er [v] meget bedre.',en:'The weather gets better tomorrow.'},
+  {v:'blive',lvl:3,p:'Hun [v] læge om to år.',d:'Sidste år [v] hun færdig som læge.',pf:'Hun er [v] en dygtig læge.',en:'She becomes a doctor in two years.'},
   // gøre
-  {v:'gøre',lvl:2,p:'Jeg [v] altid mit bedste.',d:'I går [v] jeg mit bedste.',pf:'Jeg har [v] mit bedste hele ugen.',en:'I always do my best.'},
-  {v:'gøre',lvl:3,p:'Holdet [v] et godt stykke arbejde.',d:'På projektet [v] holdet et godt stykke arbejde.',pf:'Holdet har [v] et godt stykke arbejde i år.',en:'The team does a good job.'},
+  {v:'gøre',lvl:2,p:'Jeg [v] mit bedste lige nu.',d:'I går [v] jeg mit bedste.',pf:'Jeg har [v] mit bedste hele ugen.',en:'I am doing my best right now.'},
+  {v:'gøre',lvl:3,p:'Holdet [v] et godt stykke arbejde i øjeblikket.',d:'Sidste år [v] holdet et godt stykke arbejde på projektet.',pf:'Holdet har [v] et godt stykke arbejde i år.',en:'The team is doing a good job at the moment.'},
   // finde
-  {v:'finde',lvl:2,p:'Jeg [v] aldrig mine nøgler.',d:'I morges [v] jeg endelig mine nøgler.',pf:'Jeg har [v] mine nøgler igen.',en:'I never find my keys.'},
-  {v:'finde',lvl:3,p:'Forskerne [v] nye løsninger.',d:'Sidste år [v] de en vigtig løsning.',pf:'De har [v] en god løsning.',en:'The researchers find new solutions.'},
+  {v:'finde',lvl:2,p:'Jeg [v] forhåbentlig mine nøgler i morgen.',d:'I morges [v] jeg endelig mine nøgler.',pf:'Jeg har [v] mine nøgler igen.',en:'I will hopefully find my keys tomorrow.'},
+  {v:'finde',lvl:3,p:'Forskerne [v] nye løsninger i øjeblikket.',d:'Sidste år [v] de en vigtig løsning.',pf:'De har [v] en god løsning.',en:'The researchers are finding new solutions at the moment.'},
   // holde
-  {v:'holde',lvl:3,p:'Vi [v] møde hver mandag.',d:'I mandags [v] vi et langt møde.',pf:'Vi har [v] et vigtigt møde i dag.',en:'We hold a meeting every Monday.'},
-  {v:'holde',lvl:2,p:'Bussen [v] ved stoppestedet.',d:'I morges [v] bussen ved stoppestedet.',pf:'Bussen har [v] ved stoppestedet i ti minutter.',en:'The bus stops at the bus stop.'},
+  {v:'holde',lvl:3,p:'Vi [v] møde i morgen.',d:'I mandags [v] vi et langt møde.',pf:'Vi har [v] et vigtigt møde i dag.',en:'We hold a meeting tomorrow.'},
+  {v:'holde',lvl:2,p:'Bussen [v] ved stoppestedet lige nu.',d:'I morges [v] bussen ved stoppestedet.',pf:'Bussen har [v] ved stoppestedet i ti minutter.',en:'The bus is stopping at the bus stop right now.'},
   // sove
-  {v:'sove',lvl:1,p:'Barnet [v] hele natten.',d:'I nat [v] barnet rigtig godt.',pf:'Barnet har [v] hele natten.',en:'The child sleeps all night.'},
-  {v:'sove',lvl:2,p:'Jeg [v] altid godt om vinteren.',d:'I weekenden [v] jeg godt igen.',pf:'Jeg har [v] godt på det sidste.',en:'I always sleep well in winter.'},
+  {v:'sove',lvl:1,p:'Barnet [v] lige nu.',d:'I går [v] barnet rigtig godt hele natten.',pf:'Barnet har [v] hele natten.',en:'The child is sleeping right now.'},
+  {v:'sove',lvl:2,p:'Jeg [v] godt i øjeblikket.',d:'I sidste weekend [v] jeg godt igen.',pf:'Jeg har [v] godt på det sidste.',en:'I am sleeping well at the moment.'},
   // løbe
-  {v:'løbe',lvl:2,p:'Jeg [v] en tur i parken.',d:'I går [v] jeg ti kilometer.',pf:'Jeg har [v] en lang tur i dag.',en:'I run in the park.'},
-  {v:'løbe',lvl:3,p:'Hun [v] maraton hvert år.',d:'Sidste år [v] hun sit første maraton.',pf:'Hun har [v] tre maratonløb.',en:'She runs a marathon every year.'},
+  {v:'løbe',lvl:2,p:'Jeg [v] en tur i parken lige nu.',d:'I går [v] jeg ti kilometer.',pf:'Jeg har [v] en lang tur i dag.',en:'I am running in the park right now.'},
+  {v:'løbe',lvl:3,p:'Hun [v] maraton næste år.',d:'Sidste år [v] hun sit første maraton.',pf:'Hun har [v] tre maratonløb.',en:'She runs a marathon next year.'},
   // sælge
-  {v:'sælge',lvl:3,p:'Firmaet [v] mange produkter.',d:'Sidste år [v] firmaet rekordmange produkter.',pf:'Firmaet har [v] alle produkterne.',en:'The company sells many products.'},
-  {v:'sælge',lvl:2,p:'Han [v] sin gamle cykel.',d:'I sidste uge [v] han sin gamle cykel.',pf:'Han har [v] sin gamle cykel.',en:'He sells his old bicycle.'},
+  {v:'sælge',lvl:3,p:'Firmaet [v] mange produkter i øjeblikket.',d:'Sidste år [v] firmaet rekordmange produkter.',pf:'Firmaet har [v] alle produkterne.',en:'The company is selling many products at the moment.'},
+  {v:'sælge',lvl:2,p:'Han [v] sin gamle cykel i morgen.',d:'I sidste uge [v] han sin gamle cykel.',pf:'Han har [v] sin gamle cykel.',en:'He sells his old bicycle tomorrow.'},
   // bringe
-  {v:'bringe',lvl:3,p:'Posten [v] pakker hver dag.',d:'I går [v] posten en stor pakke.',pf:'Posten har [v] dine pakker.',en:'The mail brings parcels every day.'},
+  {v:'bringe',lvl:3,p:'Posten [v] dine pakker i morgen.',d:'I går [v] posten en stor pakke.',pf:'Posten har [v] dine pakker.',en:'The mail brings your parcels tomorrow.'},
   // hjælpe
-  {v:'hjælpe',lvl:3,p:'Jeg [v] min søster med lektier.',d:'I går [v] jeg min søster med lektier.',pf:'Jeg har [v] min søster med lektier mange gange.',en:'I help my sister with homework.'},
-  {v:'hjælpe',lvl:2,p:'Kollegerne [v] hinanden på arbejdet.',d:'På projektet [v] de hinanden meget.',pf:'De har [v] hinanden med rapporten.',en:'The colleagues help each other at work.'},
+  {v:'hjælpe',lvl:3,p:'Jeg [v] min søster med lektier lige nu.',d:'I går [v] jeg min søster med lektier.',pf:'Jeg har [v] min søster med lektier mange gange.',en:'I am helping my sister with homework right now.'},
+  {v:'hjælpe',lvl:2,p:'Kollegerne [v] hinanden på arbejdet i øjeblikket.',d:'I sidste uge [v] de hinanden meget på projektet.',pf:'De har [v] hinanden med rapporten.',en:'The colleagues are helping each other at work at the moment.'},
   // forstå
-  {v:'forstå',lvl:3,p:'Jeg [v] ikke spørgsmålet.',d:'Til eksamen [v] jeg endelig spørgsmålet.',pf:'Jeg har [v] spørgsmålet nu.',en:'I do not understand the question.'},
+  {v:'forstå',lvl:3,p:'Jeg [v] ikke spørgsmålet lige nu.',d:'I går [v] jeg endelig spørgsmålet til eksamen.',pf:'Jeg har [v] spørgsmålet nu.',en:'I do not understand the question right now.'},
   // stå
-  {v:'stå',lvl:3,p:'Bilen [v] i garagen.',d:'I går [v] bilen ude på vejen.',pf:'Bilen har [v] i garagen hele dagen.',en:'The car stands in the garage.'},
+  {v:'stå',lvl:3,p:'Bilen [v] i garagen lige nu.',d:'I går [v] bilen ude på vejen.',pf:'Bilen har [v] i garagen hele dagen.',en:'The car is standing in the garage right now.'},
   // ligge
-  {v:'ligge',lvl:3,p:'Byen [v] ved kysten.',d:'Dengang [v] byen længere fra kysten.',pf:'Byen har [v] ved kysten i mange år.',en:'The town lies by the coast.'},
+  {v:'ligge',lvl:3,p:'Byen [v] nu tæt på kysten.',d:'Dengang [v] byen længere fra kysten.',pf:'Byen har [v] ved kysten i mange år.',en:'The town now lies close to the coast.'},
   // sidde
-  {v:'sidde',lvl:3,p:'Vi [v] i sofaen og hygger.',d:'I aftes [v] vi længe i sofaen og snakkede.',pf:'Vi har [v] i sofaen hele dagen.',en:'We sit on the sofa and relax.'},
+  {v:'sidde',lvl:3,p:'Vi [v] i sofaen og hygger lige nu.',d:'I aftes [v] vi længe i sofaen og snakkede.',pf:'Vi har [v] i sofaen hele dagen.',en:'We are sitting on the sofa and relaxing right now.'},
   // vide
-  {v:'vide',lvl:3,p:'Jeg [v] ikke svaret.',d:'Dengang [v] jeg ikke svaret.',pf:'Jeg har [v] svaret hele tiden.',en:'I do not know the answer.'},
+  {v:'vide',lvl:3,p:'Jeg [v] ikke svaret lige nu.',d:'Dengang [v] jeg ikke svaret.',pf:'Jeg har [v] svaret hele tiden.',en:'I do not know the answer right now.'},
   // spørge
-  {v:'spørge',lvl:3,p:'Eleven [v] læreren om hjælp.',d:'Til timen [v] eleven læreren om hjælp.',pf:'Eleven har [v] læreren om hjælp.',en:'The pupil asks the teacher for help.'},
+  {v:'spørge',lvl:3,p:'Eleven [v] læreren om hjælp lige nu.',d:'I går [v] eleven læreren om hjælp i timen.',pf:'Eleven har [v] læreren om hjælp.',en:'The pupil is asking the teacher for help right now.'},
   // følge
-  {v:'følge',lvl:3,p:'Jeg [v] altid nyhederne.',d:'I sidste uge [v] jeg nyhederne tæt.',pf:'Jeg har [v] nyhederne hele tiden.',en:'I always follow the news.'},
+  {v:'følge',lvl:3,p:'Jeg [v] nyhederne tæt i øjeblikket.',d:'I sidste uge [v] jeg nyhederne tæt.',pf:'Jeg har [v] nyhederne hele tiden.',en:'I am following the news closely at the moment.'},
   // vælge
-  {v:'vælge',lvl:3,p:'Vi [v] en ny formand i dag.',d:'Sidste år [v] vi en ny formand.',pf:'Vi har [v] en ny formand.',en:'We choose a new chairman today.'},
+  {v:'vælge',lvl:3,p:'Vi [v] en ny formand i morgen.',d:'Sidste år [v] vi en ny formand.',pf:'Vi har [v] en ny formand.',en:'We choose a new chairman tomorrow.'},
   // lægge
-  {v:'lægge',lvl:3,p:'Jeg [v] bøgerne på bordet.',d:'I morges [v] jeg bøgerne på bordet.',pf:'Jeg har [v] bøgerne på bordet.',en:'I put the books on the table.'},
+  {v:'lægge',lvl:3,p:'Jeg [v] bøgerne på bordet lige nu.',d:'I morges [v] jeg bøgerne på bordet.',pf:'Jeg har [v] bøgerne på bordet.',en:'I am putting the books on the table right now.'},
   // synge
-  {v:'synge',lvl:2,p:'Koret [v] en smuk sang.',d:'Til koncerten [v] koret en smuk sang.',pf:'Koret har [v] en smuk sang.',en:'The choir sings a beautiful song.'},
-  // rejse (aux er)
-  {v:'rejse',lvl:2,p:'Vi [v] til Spanien om sommeren.',d:'Sidste sommer [v] vi til Spanien.',pf:'Vi er [v] til Spanien flere gange i år.',en:'We travel to Spain in the summer.'},
+  {v:'synge',lvl:2,p:'Koret [v] en smuk sang lige nu.',d:'I lørdags [v] koret en smuk sang til koncerten.',pf:'Koret har [v] en smuk sang.',en:'The choir is singing a beautiful song right now.'},
+  // rejse (aux har: gentagne rejser)
+  {v:'rejse',lvl:2,p:'Vi [v] til Spanien næste sommer.',d:'Sidste sommer [v] vi til Spanien.',pf:'Vi har [v] til Spanien flere gange i år.',en:'We travel to Spain next summer.'},
   // arbejde
-  {v:'arbejde',lvl:1,p:'Jeg [v] på et kontor i byen.',d:'I går [v] jeg på kontoret i byen.',pf:'Jeg har [v] på kontoret i fem år.',en:'I work in an office in the city.'},
-  {v:'arbejde',lvl:2,p:'Hun [v] som sygeplejerske.',d:'Sidste år [v] hun som sygeplejerske.',pf:'Hun har [v] som sygeplejerske hele ugen.',en:'She works as a nurse.'},
+  {v:'arbejde',lvl:1,p:'Jeg [v] på et kontor i byen i øjeblikket.',d:'I går [v] jeg på kontoret i byen.',pf:'Jeg har [v] på kontoret i fem år.',en:'I am working in an office in the city at the moment.'},
+  {v:'arbejde',lvl:2,p:'Hun [v] som sygeplejerske i øjeblikket.',d:'Sidste år [v] hun som sygeplejerske.',pf:'Hun har [v] som sygeplejerske hele ugen.',en:'She is working as a nurse at the moment.'},
   // spille
-  {v:'spille',lvl:1,p:'Børnene [v] fodbold i parken.',d:'I går [v] børnene fodbold hele aftenen.',pf:'Børnene har [v] et godt spil fodbold.',en:'The children play football in the park.'},
-  {v:'spille',lvl:2,p:'Han [v] klaver hver dag.',d:'Til festen [v] han klaver.',pf:'Han har [v] klaver i ti år.',en:'He plays the piano every day.'},
+  {v:'spille',lvl:1,p:'Børnene [v] fodbold i parken lige nu.',d:'I går [v] børnene fodbold hele aftenen.',pf:'Børnene har [v] et godt spil fodbold.',en:'The children are playing football in the park right now.'},
+  {v:'spille',lvl:2,p:'Han [v] klaver lige nu.',d:'I lørdags [v] han klaver til festen.',pf:'Han har [v] klaver i ti år.',en:'He is playing the piano right now.'},
   // bo
-  {v:'bo',lvl:1,p:'Vi [v] i en lille lejlighed.',d:'Dengang [v] vi i en lille lejlighed.',pf:'Vi har [v] i en lille lejlighed i tre år.',en:'We live in a small flat.'},
+  {v:'bo',lvl:1,p:'Vi [v] i en lille lejlighed i øjeblikket.',d:'Dengang [v] vi i en lille lejlighed.',pf:'Vi har [v] i en lille lejlighed i tre år.',en:'We live in a small flat at the moment.'},
   // lave
-  {v:'lave',lvl:1,p:'Jeg [v] mad til familien.',d:'I aftes [v] jeg mad til familien.',pf:'Jeg har [v] mad til familien.',en:'I make food for the family.'},
-  {v:'lave',lvl:2,p:'Eleverne [v] deres lektier.',d:'I går [v] de deres lektier.',pf:'De har [v] alle deres lektier.',en:'The pupils do their homework.'},
+  {v:'lave',lvl:1,p:'Jeg [v] mad til familien lige nu.',d:'I aftes [v] jeg mad til familien.',pf:'Jeg har [v] mad til familien.',en:'I am making food for the family right now.'},
+  {v:'lave',lvl:2,p:'Eleverne [v] deres lektier lige nu.',d:'I går [v] de deres lektier.',pf:'De har [v] alle deres lektier.',en:'The pupils are doing their homework right now.'},
   // købe
-  {v:'købe',lvl:1,p:'Jeg [v] brød i supermarkedet.',d:'I går [v] jeg brød i supermarkedet.',pf:'Jeg har [v] brød til jul.',en:'I buy bread at the supermarket.'},
-  {v:'købe',lvl:2,p:'De [v] et hus uden for byen.',d:'Sidste år [v] de et hus uden for byen.',pf:'De har [v] et hus uden for byen.',en:'They buy a house outside the city.'},
+  {v:'købe',lvl:1,p:'Jeg [v] brød i supermarkedet lige nu.',d:'I går [v] jeg brød i supermarkedet.',pf:'Jeg har [v] brød til jul.',en:'I am buying bread at the supermarket right now.'},
+  {v:'købe',lvl:2,p:'De [v] et hus uden for byen næste år.',d:'Sidste år [v] de et hus uden for byen.',pf:'De har [v] et hus uden for byen.',en:'They buy a house outside the city next year.'},
   // tale
-  {v:'tale',lvl:2,p:'Jeg [v] dansk og engelsk.',d:'På mødet [v] jeg dansk og engelsk.',pf:'Jeg har [v] dansk og engelsk.',en:'I speak Danish and English.'},
+  {v:'tale',lvl:2,p:'Jeg [v] dansk og engelsk lige nu.',d:'I går [v] jeg dansk og engelsk på mødet.',pf:'Jeg har [v] dansk og engelsk.',en:'I am speaking Danish and English right now.'},
   // høre
-  {v:'høre',lvl:1,p:'Jeg [v] musik i toget.',d:'I går [v] jeg musik i toget.',pf:'Jeg har [v] musik i toget.',en:'I listen to music on the train.'},
-  {v:'høre',lvl:2,p:'Hun [v] altid godt efter.',d:'Til foredraget [v] hun godt efter.',pf:'Hun har [v] godt efter hele tiden.',en:'She always listens carefully.'},
+  {v:'høre',lvl:1,p:'Jeg [v] musik i toget lige nu.',d:'I går [v] jeg musik i toget.',pf:'Jeg har [v] musik i toget.',en:'I am listening to music on the train right now.'},
+  {v:'høre',lvl:2,p:'Hun [v] godt efter lige nu.',d:'I går [v] hun godt efter under foredraget.',pf:'Hun har [v] godt efter hele tiden.',en:'She is listening carefully right now.'},
   // vente
-  {v:'vente',lvl:1,p:'Jeg [v] på bussen.',d:'I morges [v] jeg på bussen i ti minutter.',pf:'Jeg har [v] længe på bussen.',en:'I wait for the bus.'},
+  {v:'vente',lvl:1,p:'Jeg [v] på bussen lige nu.',d:'I morges [v] jeg på bussen i ti minutter.',pf:'Jeg har [v] længe på bussen.',en:'I am waiting for the bus right now.'},
   // møde
-  {v:'møde',lvl:2,p:'Jeg [v] min ven i byen.',d:'I går [v] jeg min ven i byen.',pf:'Jeg har [v] min ven mange gange.',en:'I meet my friend in town.'},
+  {v:'møde',lvl:2,p:'Jeg [v] min ven i byen i morgen.',d:'I går [v] jeg min ven i byen.',pf:'Jeg har [v] min ven mange gange.',en:'I meet my friend in town tomorrow.'},
   // betale
-  {v:'betale',lvl:2,p:'Jeg [v] regningen hver måned.',d:'I går [v] jeg regningen.',pf:'Jeg har [v] regningen.',en:'I pay the bill every month.'},
+  {v:'betale',lvl:2,p:'Jeg [v] regningen i morgen.',d:'I går [v] jeg regningen.',pf:'Jeg har [v] regningen.',en:'I pay the bill tomorrow.'},
   // begynde
-  {v:'begynde',lvl:2,p:'Filmen [v] klokken otte.',d:'I går [v] filmen endelig.',pf:'Filmen har [v] uden mig.',en:'The film begins at eight.'},
+  {v:'begynde',lvl:2,p:'Filmen [v] klokken otte i morgen.',d:'I går [v] filmen endelig.',pf:'Filmen er [v] uden mig.',en:'The film begins at eight tomorrow.'},
   // lære
-  {v:'lære',lvl:2,p:'Jeg [v] dansk på et kursus.',d:'Sidste år [v] jeg dansk på et kursus.',pf:'Jeg har [v] meget dansk på kurset.',en:'I learn Danish in a course.'},
+  {v:'lære',lvl:2,p:'Jeg [v] dansk på et kursus i øjeblikket.',d:'Sidste år [v] jeg dansk på et kursus.',pf:'Jeg har [v] meget dansk på kurset.',en:'I am learning Danish in a course at the moment.'},
   // bruge
-  {v:'bruge',lvl:2,p:'Jeg [v] computeren på arbejdet.',d:'I går [v] jeg computeren hele dagen.',pf:'Jeg har [v] computeren meget i denne måned.',en:'I use the computer at work.'},
+  {v:'bruge',lvl:2,p:'Jeg [v] computeren på arbejdet lige nu.',d:'I går [v] jeg computeren hele dagen.',pf:'Jeg har [v] computeren meget i denne måned.',en:'I am using the computer at work right now.'},
   // tænke
-  {v:'tænke',lvl:2,p:'Jeg [v] tit på fremtiden.',d:'I går [v] jeg meget på fremtiden.',pf:'Jeg har [v] meget på fremtiden.',en:'I often think about the future.'},
+  {v:'tænke',lvl:2,p:'Jeg [v] meget på fremtiden lige nu.',d:'I går [v] jeg meget på fremtiden.',pf:'Jeg har [v] meget på fremtiden.',en:'I am thinking a lot about the future right now.'},
   // sende
-  {v:'sende',lvl:2,p:'Jeg [v] en pakke til min ven.',d:'I går [v] jeg en pakke til min ven.',pf:'Jeg har [v] ham pakken.',en:'I send a parcel to my friend.'},
+  {v:'sende',lvl:2,p:'Jeg [v] en pakke til min ven lige nu.',d:'I går [v] jeg en pakke til min ven.',pf:'Jeg har [v] ham pakken.',en:'I am sending a parcel to my friend right now.'},
   // besøge
-  {v:'besøge',lvl:2,p:'Vi [v] min bedstemor om søndagen.',d:'I weekenden [v] vi min bedstemor.',pf:'Vi har [v] min bedstemor mange gange.',en:'We visit my grandmother on Sundays.'},
+  {v:'besøge',lvl:2,p:'Vi [v] min bedstemor næste søndag.',d:'I sidste weekend [v] vi min bedstemor.',pf:'Vi har [v] min bedstemor mange gange.',en:'We visit my grandmother next Sunday.'},
   // ringe
-  {v:'ringe',lvl:1,p:'Jeg [v] til min mor hver dag.',d:'I går [v] jeg til min mor.',pf:'Jeg har [v] til min mor.',en:'I call my mother every day.'},
+  {v:'ringe',lvl:1,p:'Jeg [v] til min mor lige nu.',d:'I går [v] jeg til min mor.',pf:'Jeg har [v] til min mor.',en:'I am calling my mother right now.'},
   // huske
-  {v:'huske',lvl:2,p:'Jeg [v] altid hendes fødselsdag.',d:'I morges [v] jeg hendes fødselsdag.',pf:'Jeg har [v] hendes fødselsdag.',en:'I always remember her birthday.'},
+  {v:'huske',lvl:2,p:'Jeg [v] hendes fødselsdag og køber en gave nu.',d:'I morges [v] jeg hendes fødselsdag.',pf:'Jeg har [v] hendes fødselsdag.',en:'I remember her birthday and buy a present now.'},
   // lukke
-  {v:'lukke',lvl:1,p:'Jeg [v] vinduet om aftenen.',d:'I går [v] jeg vinduet tidligt.',pf:'Jeg har [v] vinduet.',en:'I close the window in the evening.'},
+  {v:'lukke',lvl:1,p:'Jeg [v] vinduet lige nu.',d:'I går [v] jeg vinduet tidligt.',pf:'Jeg har [v] vinduet.',en:'I am closing the window right now.'},
   // åbne
-  {v:'åbne',lvl:1,p:'Butikken [v] klokken ti.',d:'I morges [v] butikken klokken ti.',pf:'Butikken har [v] klokken ti i dag.',en:'The shop opens at ten.'},
+  {v:'åbne',lvl:1,p:'Butikken [v] klokken ti i morgen.',d:'I morges [v] butikken klokken ti.',pf:'Butikken har [v] klokken ti i dag.',en:'The shop opens at ten tomorrow.'},
   // hente
-  {v:'hente',lvl:1,p:'Jeg [v] børnene i børnehaven.',d:'I går [v] jeg børnene i børnehaven.',pf:'Jeg har [v] børnene i børnehaven.',en:'I pick up the children from kindergarten.'}
+  {v:'hente',lvl:1,p:'Jeg [v] børnene i børnehaven lige nu.',d:'I går [v] jeg børnene i børnehaven.',pf:'Jeg har [v] børnene i børnehaven.',en:'I am picking up the children from kindergarten right now.'}
 ];
 
 /* ---------- option builder: ensures 3 distinct options incl. correct ---------- */
-function buildOptions(correct, verbKey){
+/* Time cues: a sentence is 'anchored' when it contains an explicit past/present time expression.
+   Without an anchor the competing tense form is left out of the options so only one answer is valid. */
+const PAST_CUE = /(^|\s)(i går|i aftes|i morges|i lørdags|i mandags|i sidste \S+|sidste \S+|dengang)(\s|$)/i;
+const PRES_CUE = /(^|\s)(lige nu|nu|i øjeblikket|i morgen|næste \S+|om \S+ (minutter|time|timer|år)|om en halv time)(\s|[.,]|$)/i;
+const hasPastCue = s => PAST_CUE.test(s);
+const hasPresCue = s => PRES_CUE.test(s);
+function buildOptions(correct, verbKey, exclude){
   const v = V[verbKey];
   const stem = verbKey.endsWith('e') ? verbKey.slice(0,-1) : verbKey;
   const distractPool = uniq([v.pr, v.pa, v.pp, stem+'ede', stem+'er', stem+'et', stem+'te'])
-    .filter(x => x && x !== correct);
+    .filter(x => x && x !== correct && !(exclude && exclude.includes(x)));
   const opts = [correct];
   for(const d of shuffle(distractPool)){
     if(opts.length>=3) break;
@@ -597,7 +593,7 @@ function buildOptions(correct, verbKey){
 
 const TENSE_NAME = {nutid:'Nutid', datid:'Datid', forn:'Førnutid'};
 const fill = (tpl, form) => tpl.replace('[v]', form);
-const blankHtml = (tpl) => tpl.replace('[v]', '<span class="blank">_____</span>');
+const blankHtml = (tpl) => tpl.replace('[v]', '<span class="sd-gap" role="img" aria-label="mellemrum"></span>');
 
 /* ---------- QUESTION POOL GENERATION ---------- */
 const QUESTIONS = [];
@@ -613,17 +609,17 @@ ENTRIES.forEach(e=>{
 
   // GAME 1 — Verb Form Arena (past blank)
   {
-    const o = buildOptions(v.pa, inf);
+    const o = buildOptions(v.pa, inf, hasPastCue(e.d) ? null : [v.pr]);
     addQ({game:'arena',lvl:e.lvl,verb:inf,
       instruction:'Vælg den rigtige form af verbet.',
       prompt:blankHtml(e.d),
       options:o.options,correct:o.correctIndex,
-      explanation:`Datid af "${inf}" er "${v.pa}". Tidsudtrykket peger på fortiden.`,
+      explanation:`Datid af "${inf}" er "${v.pa}".${hasPastCue(e.d) ? ' Tidsudtrykket peger på fortiden.' : ''}`,
       en:e.en, speak:pastText});
   }
   // GAME 1 — Verb Form Arena (present blank) variant
   {
-    const o = buildOptions(v.pr, inf);
+    const o = buildOptions(v.pr, inf, hasPresCue(e.p) ? null : [v.pa]);
     addQ({game:'arena',lvl:e.lvl,verb:inf,
       instruction:'Vælg den rigtige form af verbet.',
       prompt:blankHtml(e.p),
@@ -633,9 +629,9 @@ ENTRIES.forEach(e=>{
   }
   // GAME 2 — Time Machine (present -> past)
   {
-    const o = buildOptions(v.pa, inf);
+    const o = buildOptions(v.pa, inf, hasPastCue(e.d) ? null : [v.pr]);
     addQ({game:'timemachine',lvl:e.lvl,verb:inf,
-      instruction:'Tidsmaskinen flytter sætningen til I GÅR. Vælg den rigtige form.',
+      instruction:'Tidsmaskinen flytter sætningen til fortiden. Vælg den rigtige form.',
       prompt:`<span class="pre">Nutid: ${presText}</span>${blankHtml(e.d)}`,
       options:o.options,correct:o.correctIndex,
       explanation:`Når tiden flyttes til fortiden, bliver "${v.pr}" til datid "${v.pa}".`,
@@ -664,7 +660,7 @@ ENTRIES.forEach(e=>{
   // GAME 5 — Sentence Repair (show wrong present form in a past sentence)
   {
     const wrongSentence = fill(e.d, v.pr); // present form where past is needed
-    const o = buildOptions(v.pa, inf);
+    const o = buildOptions(v.pa, inf, hasPastCue(e.d) ? null : [v.pr]);
     addQ({game:'repair',lvl:e.lvl,verb:inf,
       instruction:'Find fejlen! Verbet står i den forkerte tid. Vælg den rigtige form.',
       prompt:`<span class="pre">Forkert: ${wrongSentence}</span>${blankHtml(e.d)}`,
@@ -702,7 +698,7 @@ Object.keys(V).forEach(inf=>{
     const o = buildOptions(v.pa, inf);
     addQ({game:'irregular',lvl:useLvl,verb:inf,
       instruction:'Udfyld kæden. Hvad er DATID?',
-      prompt:`<span class="q-chain">${inf} → ${v.pr} → <span class="blank">_____</span> → ${v.pp}</span>`,
+      prompt:`<span class="q-chain">${inf} → ${v.pr} → <span class="sd-gap" role="img" aria-label="mellemrum"></span> → ${v.pp}</span>`,
       options:o.options,correct:o.correctIndex,
       explanation:`Bøjning: ${inf} → ${v.pr} → ${v.pa} → ${v.pp}. Et uregelmæssigt verbum.`,
       en:V[inf].en, speak:`${inf}, ${v.pr}, ${v.pa}, ${v.pp}`});
@@ -712,7 +708,7 @@ Object.keys(V).forEach(inf=>{
     const o = buildOptions(v.pp, inf);
     addQ({game:'irregular',lvl:useLvl,verb:inf,
       instruction:'Udfyld kæden. Hvad er TILLÆGSFORMEN (førnutid)?',
-      prompt:`<span class="q-chain">${inf} → ${v.pr} → ${v.pa} → <span class="blank">_____</span></span>`,
+      prompt:`<span class="q-chain">${inf} → ${v.pr} → ${v.pa} → <span class="sd-gap" role="img" aria-label="mellemrum"></span></span>`,
       options:o.options,correct:o.correctIndex,
       explanation:`Bøjning: ${inf} → ${v.pr} → ${v.pa} → ${v.pp}. Bruges som "${v.aux} ${v.pp}".`,
       en:V[inf].en, speak:`${inf}, ${v.pr}, ${v.pa}, ${v.pp}`});
@@ -720,21 +716,21 @@ Object.keys(V).forEach(inf=>{
 });
 
 /* ---------- GAME METADATA ---------- */
-const GAME_SPR = {arena:'hat',timemachine:'snegl',perfect:'cykel',irregular:'hjerte',repair:'molle',detective:'flag',speed:'stjerne',mixed:'pokal'};
+const GAME_SPR = {arena:'bog',timemachine:'tidsstjerne',perfect:'ur',irregular:'kort',repair:'tandhjul',detective:'pin',speed:'tryllestav',mixed:'terning'};
 const GAMES = {
-  arena:       {n:'Verbalarenaen',     ico:'⚔️', d:'Vælg den rigtige verbumform i sætningen.'},
+  arena:       {n:'Verbumarenaen', h:'Verbum&shy;arenaen',    ico:'⚔️', d:'Vælg den rigtige verbumform i sætningen.'},
   timemachine: {n:'Tidsmaskinen',ico:'⏳', d:'Sætningen skifter tid — vælg den rigtige form.'},
-  perfect:     {n:'Førnutidsbyggeren',ico:'🏗️', d:'Byg førnutid med har/er + tillægsform.'},
-  irregular:   {n:'Laboratoriet for uregelmæssige verber',  ico:'🧪', d:'Træn de vigtige uregelmæssige verber.'},
-  repair:      {n:'Sætningsværkstedet',     ico:'🔧', d:'Find og ret den forkerte verbumform.'},
-  detective:   {n:'Verbumdetektiven',      ico:'🔍', d:'Læs sætningen og find tiden.'},
-  speed:       {n:'Hurtigduellen',     ico:'⚡', d:'Så mange spørgsmål som muligt på 60 sekunder.'},
+  perfect:     {n:'Førnutidsbyggeren', h:'Før&shy;nutids&shy;byggeren',ico:'🏗️', d:'Byg førnutid med har/er + tillægsform.'},
+  irregular:   {n:'Laboratoriet for uregelmæssige verber', h:'Laboratoriet for uregel&shy;mæssige verber',  ico:'🧪', d:'Træn de vigtige uregelmæssige verber.'},
+  repair:      {n:'Sætningsværkstedet', h:'Sætnings&shy;værk&shy;stedet',     ico:'🔧', d:'Find og ret den forkerte verbumform.'},
+  detective:   {n:'Verbumdetektiven', h:'Verbum&shy;detektiven',      ico:'🔍', d:'Læs sætningen og find tiden.'},
+  speed:       {n:'Hurtigduellen', h:'Hurtig&shy;duellen',     ico:'⚡', d:'Så mange spørgsmål som muligt på 60 sekunder.'},
   mixed:       {n:'Blandet repetition',   ico:'🎲', d:'Tilfældige spørgsmål fra alle spil og tider.'}
 };
 const GAME_ORDER = ['arena','timemachine','perfect','irregular','repair','detective','speed','mixed'];
-const DIFF_SPR = {easy:'snegl',medium:'cykel',hard:'molle'};
+const DIFF_STARS = {easy:1,medium:2,hard:3}; /* difficulty = 1/2/3 stars (one sprite, one density) */
 const DIFFS = {
-  easy:  {n:'Nem',    lvl:1, sym:'🪶', label:'A1'},
+  easy:  {n:'Nem',    lvl:1, sym:'🪶', label:'A2'},
   medium:{n:'Mellem', lvl:2, sym:'🔮', label:'A2 / B1'},
   hard:  {n:'Svær',   lvl:3, sym:'🐉', label:'B1 / B2'}
 };
@@ -758,13 +754,23 @@ let S = null; // current round
 
 /* ---------- DOM helpers ---------- */
 const $ = id => document.getElementById(id);
+function stars(dk,sc){ let h=""; for(let i=0;i<DIFF_STARS[dk];i++) h+=spr('stjerne',sc); return h; }
 function spr(n,sc,cls){ return window.Sjovt?'<span class="sd-sprite '+(cls||"")+'">'+Sjovt.spriteSVG(n,sc||3)+'</span>':""; }
-function showScreen(name){
+/* US-031: after a screen change focus lands on the first sensible control (set after the screen is visible).
+   'game' is handled by renderQuestion (first option). The first paint does not steal focus. */
+const FOCUS_TARGET = {menu:'.game-card', diff:'.diff.active', result:'.btn.gold', stats:'.back-link'};
+function focusScreen(name){
+  const sel = FOCUS_TARGET[name]; if(!sel) return;
+  const el = $('screen-'+name).querySelector(sel);
+  if(el && !$('screen-'+name).classList.contains('hidden')) try{ el.focus({preventScroll:true}); }catch(e){}
+}
+function showScreen(name, noFocus){
   ['menu','diff','game','result','stats'].forEach(s=>$('screen-'+s).classList.add('hidden'));
   $('screen-'+name).classList.remove('hidden');
   $('screen-'+name).classList.remove('fadein'); void $('screen-'+name).offsetWidth; $('screen-'+name).classList.add('fadein');
   if(window.Sjovt) Sjovt.fx.enter($('screen-'+name));
   window.scrollTo({top:0,behavior:'smooth'});
+  if(!noFocus) focusScreen(name);
 }
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
 
@@ -795,10 +801,9 @@ function speak(text){
 }
 function speakerBtn(text, cls){
   const b = document.createElement('button');
-  b.className = 'speaker ' + (cls||'');
+  b.className = 'dc-tts-button ' + (cls||'');
   b.type = 'button';
-  b.textContent = '▶';
-  b.setAttribute('aria-label','Udtal sætningen');
+  b.setAttribute('aria-label','Lyt');
   b.addEventListener('click', e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -810,10 +815,10 @@ function buildMenu(){
     const g = GAMES[key];
     const done = P.completed[key] ? ' ✓' : '';
     const card = document.createElement('div');
-    card.className='game-card';
+    card.className='game-card sd-surface';
     card.setAttribute('role','button'); card.tabIndex=0;
     card.onclick=()=>openDiff(key);
-    card.innerHTML=`<div class="ico">${spr(GAME_SPR[key],4)}</div><div><div class="gc-t">${g.n}${done?'<span class="gc-done">'+done+'</span>':''}</div><div class="gc-d">${g.d}</div></div>`;
+    card.innerHTML=`<div class="ico">${spr(GAME_SPR[key],4)}</div><div><div class="gc-t">${g.h||g.n}${done?'<span class="gc-done">'+done+'</span>':''}</div><div class="gc-d">${g.d}</div></div>`;
     grid.appendChild(card);
   });
   updateMenuBar();
@@ -835,16 +840,16 @@ function openDiff(gameKey){
   pendingGame = gameKey;
   selectedDiff = selectedDiff || 'easy';
   const g = GAMES[gameKey];
-  $('diffTitle').innerHTML = spr(GAME_SPR[gameKey],4)+' <span></span>'; $('diffTitle').lastElementChild.textContent = g.n;
+  $('diffTitle').innerHTML = spr(GAME_SPR[gameKey],4)+' <span>'+(g.h||g.n)+'</span>';
   $('diffDesc').textContent = g.d;
   const grid = $('diffGrid'); grid.innerHTML='';
   Object.keys(DIFFS).forEach(dk=>{
     const d = DIFFS[dk];
     const el = document.createElement('div');
-    el.className='diff'+(selectedDiff===dk?' active':'');
+    el.className='diff sd-surface'+(selectedDiff===dk?' active':'');
     el.setAttribute('role','button'); el.tabIndex=0; el.setAttribute('aria-pressed',selectedDiff===dk?'true':'false');
     el.onclick=()=>{ selectedDiff=dk; document.querySelectorAll('.diff').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false');}); el.classList.add('active'); el.setAttribute('aria-pressed','true'); };
-    el.innerHTML=`<div class="ds">${spr(DIFF_SPR[dk],4)}</div><div class="dn">${d.n}</div><div class="dl">${d.label}</div>`;
+    el.innerHTML=`<div class="ds">${stars(dk,4)}</div><div class="dn">${d.n}</div><div class="dl">${d.label}</div>`;
     grid.appendChild(el);
   });
   showScreen('diff');
@@ -899,6 +904,18 @@ function startTimer(){
   },1000);
 }
 
+/* explainer modal: freeze the Hurtigduel countdown while it is open; resume only the same round this listener paused */
+let xpPausedS=null;
+document.addEventListener('explainer:open',()=>{ if(S&&S.timer){ clearInterval(S.timer); S.timer=null; xpPausedS=S; } });
+document.addEventListener('explainer:close',()=>{
+  const r=xpPausedS; xpPausedS=null;
+  if(!r||S!==r||r.timer||!r.speed||r.timeLeft<=0||$('screen-game').classList.contains('hidden')) return;
+  r.timer=setInterval(()=>{
+    r.timeLeft--; $('hudTimer').textContent=r.timeLeft;
+    if(r.timeLeft<=0){ clearInterval(r.timer); endRound(); }
+  },1000);
+});
+
 /* ---------- RENDER QUESTION ---------- */
 function renderQuestion(){
   const q = S.queue[S.idx];
@@ -927,6 +944,8 @@ function renderQuestion(){
     b.onclick=()=>answer(i,b);
     opts.appendChild(b);
   });
+  /* US-031: focus the first option after each render */
+  if(!$('screen-game').classList.contains('hidden')){ const f=opts.firstElementChild; if(f) try{ f.focus({preventScroll:true}); }catch(e){} }
 }
 
 /* ---------- ANSWER ---------- */
@@ -970,7 +989,26 @@ function answer(i, el){
     $('nextRow').classList.remove('hidden');
     const last = (S.idx >= S.queue.length-1);
     $('nextBtn').textContent = last ? 'Se resultat →' : 'Næste →';
+    /* US-031: focus moves to Næste so Enter advances (also after a mouse click on an option) */
+    try{ $('nextBtn').focus({preventScroll:true}); }catch(e){}
+    revealNext();
   }
+}
+
+/* US-055: bring the feedback block and Næste into view after an answer (instant under reduced motion) */
+function revealNext(){
+  const btn=$('nextBtn'), fb=$('feedback');
+  const reduce = (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) || document.documentElement.getAttribute('data-sd-motion')==='off';
+  const behavior = reduce ? 'auto' : 'smooth';
+  try{
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const fbTop = fb.getBoundingClientRect().top;
+    const btnBottom = btn.getBoundingClientRect().bottom;
+    const need = Math.max(0, btnBottom - vh + 12);   // scroll down just enough to show Næste
+    const maxUp = Math.max(0, fbTop - 64);           // keep the feedback top below the MENU bar
+    if(need>maxUp) btn.scrollIntoView({block:'nearest', behavior});  // too tall: Næste wins
+    else if(need>0) window.scrollBy({top:need, behavior});
+  }catch(e){ try{ btn.scrollIntoView({block:'nearest'}); }catch(_){} }
 }
 
 function recordResult(q, correct){
@@ -1017,11 +1055,11 @@ function endRound(){
   $('resTitle').textContent = S.review ? 'Gennemgangen er færdig!' : (S.speed? 'Tiden er gået!':'Runden er færdig!');
   // badges
   const badges=[];
-  if(acc===100 && S.answered>=5) badges.push('★ Perfekt runde');
-  if(S.bestStreak>=8) badges.push('★ Serie på '+S.bestStreak);
-  if(S.speed) badges.push('★ '+S.correct+' på 60 sek');
-  if(acc>=80) badges.push('★ Troldmandsniveau');
-  $('resBadges').innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join('');
+  if(acc===100 && S.answered>=5) badges.push(spr('stjerne',2)+' Perfekt runde');
+  if(S.bestStreak>=8) badges.push(spr('stjerne',2)+' Serie på '+S.bestStreak);
+  if(S.speed) badges.push(spr('stjerne',2)+' '+S.correct+' på 60 sek');
+  if(acc>=80) badges.push(spr('pokal',2)+' Troldmandsniveau');
+  $('resBadges').innerHTML = badges.map(b=>`<span class="sd-badge sd-badge--panel badge">${b}</span>`).join('');
   updateMenuBar();
   showScreen('result');
   if(window.Sjovt) Sjovt.fx.celebrate();
@@ -1054,7 +1092,7 @@ function showStats(){
   const mb=$('masteryBox'); mb.innerHTML='';
   ['easy','medium','hard'].forEach(dk=>{
     const d=P.perDiff[dk]; const pct=d.t?Math.round(d.c/d.t*100):0;
-    mb.innerHTML+=`<div class="mastery-row"><span class="ml">${spr(DIFF_SPR[dk],2)} ${DIFFS[dk].n}</span><div class="bar"><i style="width:${pct}%"></i></div><span class="mp">${pct}%</span></div>`;
+    mb.innerHTML+=`<div class="mastery-row"><span class="ml">${stars(dk,2)} ${DIFFS[dk].n}</span><div class="bar"><i style="width:${pct}%"></i></div><span class="mp">${pct}%</span></div>`;
   });
   // weakest / strongest verbs
   const arr = Object.keys(P.perVerb).map(k=>{
@@ -1091,7 +1129,7 @@ document.addEventListener('keydown',e=>{
 
 /* ---------- INIT ---------- */
 buildMenu();
-showScreen('menu');
+showScreen('menu', true);
 </script>
 </body>
 </html>

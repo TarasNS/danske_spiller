@@ -13,7 +13,7 @@ const verbs = [
     { infinitive: 'holde', present: 'holder', past: 'holdt', pastParticiple: 'holdt', translation: 'to hold', example: 'Hun holder hans hånd.', exampleEn: 'She holds his hand.', cefr: 'A2', note: 'Datid og tillægsform er begge »holdt«. Indgår i mange udtryk, fx »holde op« og »holde ferie«.' },
     { infinitive: 'hedde', present: 'hedder', past: 'hed', pastParticiple: 'heddet', translation: 'to be called', example: 'Hvad hedder du?', exampleEn: 'What is your name?', cefr: 'A1', note: 'Bruges kun om navne: »Hvad hedder du?« er den almindelige måde at spørge om nogens navn.' },
     { infinitive: 'gå', present: 'går', past: 'gik', pastParticiple: 'gået', translation: 'to go/walk', example: 'Vi går i skole hver dag.', exampleEn: 'We go to school every day.', cefr: 'A1', note: 'Uregelmæssigt verbum: datid »gik«. »Gå i skole« betyder at være skoleelev; »gå til skole« betyder at gå derhen.' },
-    { infinitive: 'rejse', present: 'rejser', past: 'rejste', pastParticiple: 'rejst', translation: 'to travel', example: 'De rejser til Italien om sommeren.', exampleEn: 'They travel to Italy in the summer.', cefr: 'A2', note: 'Regelmæssigt verbum (-te/-t). Kan også betyde »tage af sted«, fx »Toget rejser klokken 8«.' },
+    { infinitive: 'rejse', present: 'rejser', past: 'rejste', pastParticiple: 'rejst', translation: 'to travel', example: 'De rejser til Italien om sommeren.', exampleEn: 'They travel to Italy in the summer.', cefr: 'A2', note: 'Regelmæssigt verbum (-te/-t). Kan også betyde »tage af sted«, fx »Hun rejser i morgen tidlig«. Om tog siger man »køre« eller »afgå«.' },
     { infinitive: 'bære', present: 'bærer', past: 'bar', pastParticiple: 'båret', translation: 'to carry', example: 'Han bærer en tung taske.', exampleEn: 'He carries a heavy bag.', cefr: 'B1', note: 'Uregelmæssigt verbum: »bærer«, »bar«, »båret«. Bruges også om at have tøj på: »bære hat«.' },
     { infinitive: 'trække', present: 'trækker', past: 'trak', pastParticiple: 'trukket', translation: 'to pull/drag', example: 'Hun trækker vognen op ad bakken.', exampleEn: 'She pulls the cart up the hill.', cefr: 'B1', note: 'Uregelmæssigt verbum: »trækker«, »trak«, »trukket«. »Trække vejret« betyder at ånde.' },
     { infinitive: 'ligge', present: 'ligger', past: 'lå', pastParticiple: 'ligget', translation: 'to lie', example: 'Katten ligger på sofaen.', exampleEn: 'The cat is lying on the sofa.', cefr: 'A2', note: 'Uregelmæssigt verbum: datid »lå«. Må ikke forveksles med »lægge«.' },
@@ -46,7 +46,7 @@ const verbs = [
     { infinitive: 'slide', present: 'slider', past: 'sled', pastParticiple: 'slidt', translation: 'to wear out', example: 'Skoene slider hurtigt på asfalten.', exampleEn: 'The shoes wear out quickly on the asphalt.', cefr: 'B2', note: 'Uregelmæssigt verbum: datid »sled«. Bruges også overført: »slide sig op« betyder at udmatte sig selv.' },
     { infinitive: 'stige', present: 'stiger', past: 'steg', pastParticiple: 'steget', translation: 'to rise', example: 'Prisen stiger hver måned.', exampleEn: 'The price rises every month.', cefr: 'B1', note: 'Uregelmæssigt verbum: datid »steg«. Bruges om priser, temperaturer og om at klatre.' },
     { infinitive: 'tie', present: 'tier', past: 'tav', pastParticiple: 'tiet', translation: 'to be silent', example: 'Han tier, når hun taler.', exampleEn: 'He stays silent when she speaks.', cefr: 'B2', note: 'Datid »tav« afviger fra infinitiv. »Tie stille« betyder at forholde sig helt tavs.' },
-    { infinitive: 'vride', present: 'vrider', past: 'vred', pastParticiple: 'vredet', translation: 'to twist/wring', example: 'Hun vrider vasketøjet.', exampleEn: 'She wrings the laundry.', cefr: 'B2', note: 'Uregelmæssigt verbum: datid »vred«. Bruges også overført: »vride sig« betyder at skrue sig.' },
+    { infinitive: 'vride', present: 'vrider', past: 'vred', pastParticiple: 'vredet', translation: 'to twist/wring', example: 'Hun vrider vasketøjet.', exampleEn: 'She wrings the laundry.', cefr: 'B2', note: 'Uregelmæssigt verbum: datid »vred«. Bruges også overført: »vride sig« betyder at sno sig, fx af smerte eller for at slippe fri.' },
     { infinitive: 'byde', present: 'byder', past: 'bød', pastParticiple: 'budt', translation: 'to offer/bid', example: 'Han byder på et gammelt maleri.', exampleEn: 'He bids on an old painting.', cefr: 'B2', note: 'Uregelmæssigt verbum (y–ø–u): »bød«, »budt«. »Byde velkommen« betyder at modtage nogen.' },
     { infinitive: 'lyve', present: 'lyver', past: 'løj', pastParticiple: 'løjet', translation: 'to lie', example: 'Han lyver, når det passer ham.', exampleEn: 'He lies when it suits him.', cefr: 'B1', note: 'Uregelmæssigt verbum: datid »løj«. Må ikke forveksles med »ligge«.' },
     { infinitive: 'synge', present: 'synger', past: 'sang', pastParticiple: 'sunget', translation: 'to sing', example: 'Børnene synger en sang.', exampleEn: 'The children are singing a song.', cefr: 'A2', note: 'Uregelmæssigt verbum (y–a–u): »sang«, »sunget«.' },
@@ -65,7 +65,7 @@ const verbs = [
     { infinitive: 'kunne', present: 'kan', past: 'kunne', pastParticiple: 'kunnet', translation: 'to be able/can', example: 'Jeg kan tale dansk.', exampleEn: 'I can speak Danish.', cefr: 'A1', note: 'Modalverbum: nutid »kan«. Datid og infinitiv er ens (»kunne«).' },
     { infinitive: 'skulle', present: 'skal', past: 'skulle', pastParticiple: 'skullet', translation: 'to have to/shall', example: 'Vi skal mødes klokken fem.', exampleEn: "We're meeting at five o'clock.", cefr: 'A1', note: 'Modalverbum: nutid »skal«. Datid og infinitiv er ens. Udtrykker pligt eller en plan.' },
     { infinitive: 'ville', present: 'vil', past: 'ville', pastParticiple: 'villet', translation: 'to want/will', example: 'Hun vil rejse til Spanien.', exampleEn: 'She wants to travel to Spain.', cefr: 'A1', note: 'Modalverbum: nutid »vil«. Datid og infinitiv er ens. Udtrykker lyst eller vilje.' },
-    { infinitive: 'måtte', present: 'må', past: 'måtte', pastParticiple: 'måttet', translation: 'to must', example: 'Du må ikke ryge her.', exampleEn: 'You must not smoke here.', cefr: 'A1', note: 'Modalverbum: nutid »må«. »Må ikke« (forbud) er noget helt andet end »behøver ikke«.' },
+    { infinitive: 'måtte', present: 'må', past: 'måtte', pastParticiple: 'måttet', translation: 'may / must', example: 'Du må ikke ryge her.', exampleEn: 'You must not smoke here.', cefr: 'A1', note: 'Modalverbum: nutid »må«. »Må ikke« (forbud) er noget helt andet end »behøver ikke«.' },
     { infinitive: 'burde', present: 'bør', past: 'burde', pastParticiple: 'burdet', translation: 'to ought to/should', example: 'Du bør spise flere grøntsager.', exampleEn: 'You should eat more vegetables.', cefr: 'B1', note: 'Modalverbum: nutid »bør«. Datid og infinitiv er ens. Udtrykker en opfordring eller moralsk pligt.' },
     { infinitive: 'turde', present: 'tør', past: 'turde', pastParticiple: 'turdet', translation: 'to dare', example: 'Han tør ikke springe ud i vandet.', exampleEn: "He doesn't dare jump into the water.", cefr: 'B2', note: 'Modalverbum: nutid »tør«. Datid og infinitiv er ens. I skriftsprog kan »vove« også bruges.' },
     { infinitive: 'sætte', present: 'sætter', past: 'satte', pastParticiple: 'sat', translation: 'to put/place', example: 'Hun sætter koppen på bordet.', exampleEn: 'She puts the cup on the table.', cefr: 'A2', note: 'Uregelmæssigt verbum: »satte«, »sat«. »Sætte sig« betyder at sidde ned; »sætte i gang« betyder at starte noget.' },
@@ -73,7 +73,7 @@ const verbs = [
     { infinitive: 'nyde', present: 'nyder', past: 'nød', pastParticiple: 'nydt', translation: 'to enjoy', example: 'Vi nyder solen på terrassen.', exampleEn: 'We enjoy the sun on the terrace.', cefr: 'B1', note: 'Uregelmæssigt verbum: »nød«, »nydt«. Bruges om at få glæde af noget, fx sol eller en god middag.' },
     { infinitive: 'tilbringe', present: 'tilbringer', past: 'tilbragte', pastParticiple: 'tilbragt', translation: 'to spend (time)', example: 'De tilbringer sommeren ved kysten.', exampleEn: 'They spend the summer by the coast.', cefr: 'B1', note: 'Følger »bringe«: »tilbragte«, »tilbragt«. Bruges kun om tid, ikke om penge.' },
     { infinitive: 'fortsætte', present: 'fortsætter', past: 'fortsatte', pastParticiple: 'fortsat', translation: 'to continue', example: 'Hun fortsætter med at træne hver dag.', exampleEn: 'She continues to train every day.', cefr: 'A2', note: 'Følger »sætte«: »fortsatte«, »fortsat«. Bruges ofte med »med at + infinitiv«.' },
-    { infinitive: 'opgive', present: 'opgiver', past: 'opgav', pastParticiple: 'opgivet', translation: 'to give up', example: 'Han opgiver aldrig så let.', exampleEn: 'He never gives up so easily.', cefr: 'B1', note: 'Følger »give«: »opgav«, »opgivet«. I formelt sprog betyder det også at oplyse, fx »opgive sin adresse«.' },
+    { infinitive: 'opgive', present: 'opgiver', past: 'opgav', pastParticiple: 'opgivet', translation: 'to give up', example: 'Han giver aldrig så let op.', exampleEn: 'He never gives up so easily.', cefr: 'B1', note: 'Følger »give«: »opgav«, »opgivet«. I formelt sprog betyder det også at oplyse, fx »opgive sin adresse«.' },
     { infinitive: 'springe', present: 'springer', past: 'sprang', pastParticiple: 'sprunget', translation: 'to jump', example: 'Børnene springer i vandpytterne.', exampleEn: 'The children jump in the puddles.', cefr: 'B1', note: 'Uregelmæssigt verbum (i–a–u). »Springe over« betyder at hoppe over eller undlade noget.' },
     { infinitive: 'tvinge', present: 'tvinger', past: 'tvang', pastParticiple: 'tvunget', translation: 'to force', example: 'Regnen tvinger os indenfor.', exampleEn: 'The rain forces us inside.', cefr: 'B1', note: 'Uregelmæssigt verbum (i–a–u). Efterfølges ofte af »til at + infinitiv«.' },
     { infinitive: 'tilføje', present: 'tilføjer', past: 'tilføjede', pastParticiple: 'tilføjet', translation: 'to add', example: 'Hun tilføjer salt til suppen.', exampleEn: 'She adds salt to the soup.', cefr: 'B1', note: 'Regelmæssigt verbum (-ede/-et). Bruges om at føje noget til, fx ingredienser eller oplysninger.' },
@@ -89,7 +89,7 @@ const verbs = [
     { infinitive: 'hjælpe', present: 'hjælper', past: 'hjalp', pastParticiple: 'hjulpet', translation: 'to help', example: 'Vi hjælper hinanden med opgaverne.', exampleEn: 'We help each other with the tasks.', cefr: 'A1', note: 'Uregelmæssigt verbum: »hjalp«, »hjulpet«. »Hjælpe til« betyder at give en hånd med.' },
     { infinitive: 'modtage', present: 'modtager', past: 'modtog', pastParticiple: 'modtaget', translation: 'to receive', example: 'Hun modtager en pakke i dag.', exampleEn: 'She receives a package today.', cefr: 'B1', note: 'Følger »tage«: »modtog«, »modtaget«. Mere formelt end »få«.' },
     { infinitive: 'ringe', present: 'ringer', past: 'ringede', pastParticiple: 'ringet', translation: 'to call', example: 'Jeg ringer til min mor hver søndag.', exampleEn: 'I call my mother every Sunday.', cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). »Ringe til« betyder at telefonere; »ringe på« betyder at ringe på en dørklokke.' },
-    { infinitive: 'ryge', present: 'ryger', past: 'røg', pastParticiple: 'røget', translation: 'to smoke', example: 'Han ryger ikke længere.', exampleEn: 'He no longer smokes.', cefr: 'B1', note: 'Uregelmæssigt verbum: datid »røg«. Kan også betyde at forsvinde, fx »Det røg ud af vinduet«.' },
+    { infinitive: 'ryge', present: 'ryger', past: 'røg', pastParticiple: 'røget', translation: 'to smoke', example: 'Han ryger ikke længere.', exampleEn: 'He no longer smokes.', cefr: 'B1', note: 'Uregelmæssigt verbum: datid »røg«. Kan også betyde at forsvinde, fx »Det røg ud ad vinduet«.' },
     { infinitive: 'smage', present: 'smager', past: 'smagte', pastParticiple: 'smagt', translation: 'to taste', example: 'Kagen smager virkelig godt.', exampleEn: 'The cake tastes really good.', cefr: 'A2', note: 'Regelmæssigt verbum (-te/-t). »Det smager godt« er det almindelige udtryk; »smage på« betyder at tage en bid.' },
     { infinitive: 'smide', present: 'smider', past: 'smed', pastParticiple: 'smidt', translation: 'to throw away', example: 'Han smider skraldet ud.', exampleEn: 'He throws the trash out.', cefr: 'B1', note: 'Uregelmæssigt verbum: datid »smed«. »Smide ud« betyder at kassere; »smide med« betyder at kaste rundt med noget.' },
     { infinitive: 'svømme', present: 'svømmer', past: 'svømmede', pastParticiple: 'svømmet', translation: 'to swim', example: 'Vi svømmer i havet om sommeren.', exampleEn: 'We swim in the sea in the summer.', cefr: 'A2', note: 'Regelmæssigt verbum (-ede/-et).' },
@@ -98,7 +98,7 @@ const verbs = [
     { infinitive: 'kysse', present: 'kysser', past: 'kyssede', pastParticiple: 'kysset', translation: 'to kiss', example: 'De kysser hinanden farvel.', exampleEn: 'They kiss each other goodbye.', cefr: 'A2', note: 'Regelmæssigt verbum (-ede/-et). »Kysse farvel« er en fast vending.' },
     { infinitive: 'kende', present: 'kender', past: 'kendte', pastParticiple: 'kendt', translation: 'to know (someone)', example: 'Jeg kender ham fra skolen.', exampleEn: 'I know him from school.', cefr: 'A1', note: 'Regelmæssigt verbum (-te/-t). Bruges om at kende personer og steder; »vide« bruges om fakta.' },
     { infinitive: 'forlade', present: 'forlader', past: 'forlod', pastParticiple: 'forladt', translation: 'to leave', example: 'Hun forlader huset klokken otte.', exampleEn: 'She leaves the house at eight o\'clock.', cefr: 'B1', note: 'Følger »lade«: »forlod«, »forladt«. Mere formelt end »gå« eller »tage af sted«.' },
-    { infinitive: 'mødes', present: 'mødes', past: 'mødtes', pastParticiple: 'mødt', translation: 'to meet (each other)', example: 'Vi mødes på caféen kl. tre.', exampleEn: 'We meet at the café at 3 o\'clock.', cefr: 'A2', note: 'Gensidigt s-verbum: nutid og infinitiv ender begge på -es. S\'et kan ikke undværes.' },
+    { infinitive: 'mødes', present: 'mødes', past: 'mødtes', pastParticiple: 'mødtes', translation: 'to meet (each other)', example: 'Vi mødes på caféen kl. tre.', exampleEn: 'We meet at the café at 3 o\'clock.', cefr: 'A2', note: 'Gensidigt s-verbum: nutid og infinitiv ender begge på -es. S\'et kan ikke undværes.' },
     { infinitive: 'låne', present: 'låner', past: 'lånte', pastParticiple: 'lånt', translation: 'to borrow', example: 'Jeg låner en bog fra biblioteket.', exampleEn: 'I borrow a book from the library.', cefr: 'A2', note: 'Regelmæssigt verbum (-te/-t). Bruges både om at låne og at låne ud – sammenhængen afgør, hvad der menes.' },
     { infinitive: 'træde', present: 'træder', past: 'trådte', pastParticiple: 'trådt', translation: 'to step', example: 'Han træder ud af bilen.', exampleEn: 'He steps out of the car.', cefr: 'B1', note: 'Uregelmæssigt verbum: datid »trådte«. Mere formelt end »gå«; indgår i »træde i kraft«.' },
     { infinitive: 'oversætte', present: 'oversætter', past: 'oversatte', pastParticiple: 'oversat', translation: 'to translate', example: 'Hun oversætter teksten til engelsk.', exampleEn: 'She translates the text into English.', cefr: 'B1', note: 'Følger »sætte«. »Oversætte fra … til …« angiver kilde- og målsprog.' },
@@ -139,13 +139,13 @@ const verbs = [
     { infinitive: 'lukke', present: 'lukker', past: 'lukkede', pastParticiple: 'lukket', translation: 'to close', example: 'Butikken lukker klokken seks.', exampleEn: "The store closes at six o'clock.", cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). »Lukke op« betyder tværtimod at åbne – et nyttigt par af modsætninger.' },
     { infinitive: 'male', present: 'maler', past: 'malede', pastParticiple: 'malet', translation: 'to paint', example: 'Han maler et billede af søen.', exampleEn: 'He paints a picture of the lake.', cefr: 'B1', note: 'Regelmæssigt verbum (-ede/-et). Bruges både om kunstmaleri og om at male et hus.' },
     { infinitive: 'åbne', present: 'åbner', past: 'åbnede', pastParticiple: 'åbnet', translation: 'to open', example: 'Hun åbner vinduet for frisk luft.', exampleEn: 'She opens the window for fresh air.', cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). »Åbne for« bruges om at dreje op for fx vand: »åbne for vandhanen«.' },
-    { infinitive: 'prøve', present: 'prøver', past: 'prøvede', pastParticiple: 'prøvet', translation: 'to try', example: 'Jeg prøver en ny opskrift.', exampleEn: 'I am trying a new recipe.', cefr: 'A2', note: 'Regelmæssigt verbum (-ede/-et). »Prøve at« betyder at forsøge; »prøve på« bruges om tøj, man prøver.' },
+    { infinitive: 'prøve', present: 'prøver', past: 'prøvede', pastParticiple: 'prøvet', translation: 'to try', example: 'Jeg prøver en ny opskrift.', exampleEn: 'I am trying a new recipe.', cefr: 'A2', note: 'Regelmæssigt verbum (-ede/-et). »Prøve at« betyder at forsøge; om tøj siger man »prøve en jakke« eller »prøve noget på«.' },
     { infinitive: 'reparere', present: 'reparerer', past: 'reparerede', pastParticiple: 'repareret', translation: 'to repair', example: 'Han reparerer cyklen i garagen.', exampleEn: 'He repairs the bike in the garage.', cefr: 'B1', note: 'Regelmæssigt -ere-verbum (-erede/-eret). Lidt formelt; i hverdagen siger man også »fikse« eller »sætte i stand«.' },
     { infinitive: 'savne', present: 'savner', past: 'savnede', pastParticiple: 'savnet', translation: 'to miss', example: 'Jeg savner mine venner.', exampleEn: 'I miss my friends.', cefr: 'A2', note: 'Regelmæssigt verbum (-ede/-et). Bruges om at længes efter personer eller ting; »mangle« bruges om at mangle noget.' },
     { infinitive: 'smile', present: 'smiler', past: 'smilede', pastParticiple: 'smilet', translation: 'to smile', example: 'Hun smiler, når hun ser ham.', exampleEn: 'She smiles when she sees him.', cefr: 'A2', note: 'Regelmæssigt verbum (-ede/-et). »Smile til nogen« betyder at smile mod en person. Substantivet er »et smil«.' },
     { infinitive: 'snakke', present: 'snakker', past: 'snakkede', pastParticiple: 'snakket', translation: 'to chat', example: 'Vi snakker om gamle dage.', exampleEn: 'We chat about old times.', cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). Hverdagssprog; i mere formelle sammenhænge siger man »tale«. »Snakke om« betyder at tale om.' },
     { infinitive: 'spille', present: 'spiller', past: 'spillede', pastParticiple: 'spillet', translation: 'to play', example: 'Han spiller fodbold om søndagene.', exampleEn: 'He plays football on Sundays.', cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). Bruges om sport og instrumenter; »lege« bruges om børns leg.' },
-    { infinitive: 'spørge', present: 'spørger', past: 'spurgte', pastParticiple: 'spurgt', translation: 'to ask', example: 'Hun spørger om vejen til stationen.', exampleEn: 'She asks for directions to the station.', cefr: 'A1', note: 'Uregelmæssigt verbum: »spurgte«, »spurgt«. »Spørge om« betyder at stille et spørgsmål om noget; »spørge efter« betyder at efterlyse.' },
+    { infinitive: 'spørge', present: 'spørger', past: 'spurgte', pastParticiple: 'spurgt', translation: 'to ask', example: 'Hun spørger om vejen til stationen.', exampleEn: 'She asks for directions to the station.', cefr: 'A1', note: 'Uregelmæssigt verbum: »spurgte«, »spurgt«. »Spørge om« betyder at stille et spørgsmål om noget; »spørge efter« bruges, når man beder om at få eller tale med nogen eller noget, fx »spørge efter chefen«.' },
     { infinitive: 'starte', present: 'starter', past: 'startede', pastParticiple: 'startet', translation: 'to start', example: 'Mødet starter om ti minutter.', exampleEn: 'The meeting starts in ten minutes.', cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). Kan ofte erstattes af »begynde«, men lyder lidt mere moderne og hverdagsagtigt.' },
     { infinitive: 'stoppe', present: 'stopper', past: 'stoppede', pastParticiple: 'stoppet', translation: 'to stop', example: 'Bussen stopper ved hjørnet.', exampleEn: 'The bus stops at the corner.', cefr: 'A1', note: 'Regelmæssigt verbum (-ede/-et). Kan ofte erstattes af »holde op«.' },
     { infinitive: 'studere', present: 'studerer', past: 'studerede', pastParticiple: 'studeret', translation: 'to study', example: 'Hun studerer medicin på universitetet.', exampleEn: 'She studies medicine at university.', cefr: 'A1', note: 'Regelmæssigt -ere-verbum (-erede/-eret). Bruges om studier på universitetet; »læse« er mere generelt.' },
@@ -258,10 +258,9 @@ function speak(text){
 }
 function speakerBtn(text, cls){
     const b = document.createElement("button");
-    b.className = "speaker " + (cls||"");
+    b.className = "dc-tts-button " + (cls||"");
     b.type = "button";
-    b.textContent = "▶";
-    b.setAttribute("aria-label","Pronounce");
+    b.setAttribute("aria-label","Lyt");
     b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
     return b;
 }
@@ -378,6 +377,8 @@ function buildCefrFilter() {
             if (!fv.includes(verbs[currentIndex])) {
                 currentIndex = verbs.indexOf(fv[0]);
             }
+            // US-043: never rest on an already-answered card (both buttons would be disabled)
+            if (!inReviewMode()) skipToUnanswered();
             renderAll();
         });
         filterRow.appendChild(btn);
@@ -385,6 +386,24 @@ function buildCefrFilter() {
 
     // Insert filter row between heading and verb list
     heading.insertAdjacentElement('afterend', filterRow);
+
+    // US-037: on small screens the sidebar sits below the card, so show the
+    // compact level-chip row above the card instead.
+    const mq = window.matchMedia ? window.matchMedia('(max-width: 480px)') : null;
+    function placeFilter() {
+        if (mq && mq.matches) {
+            const main = document.querySelector('.main-content');
+            const sb = main && main.querySelector('.scoreboard');
+            if (main && sb) main.insertBefore(filterRow, sb);
+        } else {
+            heading.insertAdjacentElement('afterend', filterRow);
+        }
+    }
+    if (mq) {
+        placeFilter();
+        if (mq.addEventListener) mq.addEventListener('change', placeFilter);
+        else if (mq.addListener) mq.addListener(placeFilter);
+    }
 }
 
 // Create and display the card for the current verb
@@ -459,11 +478,17 @@ function renderVerbList() {
     fv.forEach((verb) => {
         const index = verbs.indexOf(verb);
         const li = document.createElement('li');
-        li.textContent = verb.infinitive;
+        // US-043: keyboard-operable list item (real button inside the li)
+        const itemBtn = document.createElement('button');
+        itemBtn.type = 'button';
+        itemBtn.className = 'verb-item-btn';
+        itemBtn.textContent = verb.infinitive;
+        li.appendChild(itemBtn);
 
         // Determine status class
         if (index === currentIndex) {
             li.classList.add('now');
+            itemBtn.setAttribute('aria-current', 'true');
         } else if (fv.indexOf(verb) === fv.indexOf(verbs[currentIndex]) + 1) {
             li.classList.add('next');
         }
@@ -475,9 +500,12 @@ function renderVerbList() {
         }
 
         // Add click event to jump to card
-        li.addEventListener('click', () => {
+        itemBtn.addEventListener('click', () => {
             currentIndex = index;
             renderAll();
+            // renderAll rebuilds the list: keep keyboard focus on the chosen verb
+            const nowBtn = verbListEl.querySelector('li.now button');
+            if (nowBtn) nowBtn.focus();
         });
 
         verbListEl.appendChild(li);
@@ -544,33 +572,70 @@ function updateScoreboard() {
 
 // Render everything
 function renderAll() {
+    cancelAdvance();
     renderVerbList();
     renderCard();
     updateScoreboard();
 }
 
-// Move to the next card within the filtered set; if at the end, stay
-function goToNext() {
+// US-043: index of the next unanswered card in the filtered set after fromIdx
+// (wrapping around), or -1 when every card in the filter is answered.
+function nextUnanswered(fromIdx) {
     const fv = filteredVerbs();
-    const currentPosInFilter = fv.indexOf(verbs[currentIndex]);
-    if (currentPosInFilter < fv.length - 1) {
-        currentIndex = verbs.indexOf(fv[currentPosInFilter + 1]);
+    const pos = fv.indexOf(verbs[fromIdx]);
+    for (let k = 1; k <= fv.length; k++) {
+        const v = fv[(pos + k) % fv.length];
+        const idx = verbs.indexOf(v);
+        if (statuses[idx].status === 'unreviewed') return idx;
     }
+    return -1;
+}
+
+// If the current card is already answered, move to an unanswered one (if any)
+function skipToUnanswered() {
+    if (statuses[currentIndex].status === 'unreviewed') return;
+    const n = nextUnanswered(currentIndex);
+    if (n !== -1) currentIndex = n;
+}
+
+// Move to the next unanswered card within the filtered set; if none are left,
+// stay put (the "Bunken er færdig" panel is shown).
+function goToNext() {
+    const n = nextUnanswered(currentIndex);
+    if (n !== -1) currentIndex = n;
     renderAll();
+}
+
+// US-043: pending auto-advance. While one is pending, further answer clicks are ignored.
+let advanceTimer = null;
+let lastClickAccepted = false;   // read by the Sjovt hooks below
+function cancelAdvance() {
+    if (advanceTimer !== null) { clearTimeout(advanceTimer); advanceTimer = null; }
+    wrongBtn.classList.remove('disabled');
+    rightBtn.classList.remove('disabled');
+}
+function scheduleAdvance(fn) {
+    wrongBtn.classList.add('disabled');
+    rightBtn.classList.add('disabled');
+    advanceTimer = setTimeout(() => { advanceTimer = null; fn(); }, 1200);
 }
 
 // Handle marking as wrong — also auto-flips the card to reveal note
 wrongBtn.addEventListener('click', () => {
+    lastClickAccepted = false;
+    if (advanceTimer !== null) return;
     if (inReviewMode()) {
+        lastClickAccepted = true;
         // In review mode: verb stays 'wrong', flip to show answer, then advance
         const card = cardWrapper.querySelector('.flashcard');
         if (card && !card.classList.contains('is-flipped')) {
             card.classList.add('is-flipped');
         }
-        setTimeout(() => reviewGoToNext(), 1200);
+        scheduleAdvance(reviewGoToNext);
         return;
     }
     if (statuses[currentIndex].status === 'unreviewed') {
+        lastClickAccepted = true;
         statuses[currentIndex].status = 'wrong';
         wrongCount++;
         saveProgress();
@@ -580,13 +645,16 @@ wrongBtn.addEventListener('click', () => {
             card.classList.add('is-flipped');
         }
         // Delay advance so learner can read the note
-        setTimeout(() => goToNext(), 1200);
+        scheduleAdvance(goToNext);
     }
 });
 
 // Handle marking as correct
 rightBtn.addEventListener('click', () => {
+    lastClickAccepted = false;
+    if (advanceTimer !== null) return;
     if (inReviewMode()) {
+        lastClickAccepted = true;
         // Promote this verb from 'wrong' to 'correct' and advance
         if (statuses[currentIndex].status === 'wrong') {
             statuses[currentIndex].status = 'correct';
@@ -598,6 +666,7 @@ rightBtn.addEventListener('click', () => {
         return;
     }
     if (statuses[currentIndex].status === 'unreviewed') {
+        lastClickAccepted = true;
         statuses[currentIndex].status = 'correct';
         correctCount++;
         saveProgress();
@@ -607,6 +676,8 @@ rightBtn.addEventListener('click', () => {
 
 // Restart the game
 restartBtn.addEventListener('click', () => {
+    // US-011: never wipe progress without confirmation (wording matches Magiske Verber)
+    if (!confirm('Vil du nulstille alle fremskridt? Det kan ikke fortrydes.')) return;
     // Exit review mode if active before resetting
     if (inReviewMode()) {
         reviewDeck = null;
@@ -620,6 +691,8 @@ restartBtn.addEventListener('click', () => {
     wrongCount = 0;
     saveProgress();
     renderAll();
+    const sdFb = document.getElementById('sd-fb');
+    if (sdFb) { sdFb.className = 'sd-fb-line'; sdFb.textContent = ''; }
 });
 
 // Enter review mode when "Review Mistakes" is clicked
@@ -646,6 +719,7 @@ window.addEventListener('DOMContentLoaded', () => {
     currentIndex = saved.currentIndex;
     correctCount = saved.correctCount;
     wrongCount = saved.wrongCount;
+    skipToUnanswered();
 
     renderAll();
     // Reflect persisted mistake state on the Review button
@@ -667,16 +741,16 @@ window.addEventListener('DOMContentLoaded', () => {
         fbEl.textContent = (ok ? '✓ ' : '✗ ') + text;
     }
     wrongBtn.addEventListener('click', () => {
-        if (wrongBtn.disabled) return;
+        if (wrongBtn.disabled || !lastClickAccepted) return;
         setFb(false, 'Markeret som forkert – kortet er vendt, så du kan studere det');
         if (S) S.fx.wrong(wrongBtn);
     });
     rightBtn.addEventListener('click', () => {
-        if (rightBtn.disabled) return;
+        if (rightBtn.disabled || !lastClickAccepted) return;
         setFb(true, 'Markeret som rigtigt');
         if (S) S.fx.correct(rightBtn);
     });
-    restartBtn.addEventListener('click', () => { if (fbEl) { fbEl.className = 'sd-fb-line'; fbEl.textContent = ''; } });
+    // Feedback line is cleared inside the restart handler, only after the reset is confirmed.
 
     const baseUpdate = updateScoreboard;
     updateScoreboard = function () {

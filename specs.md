@@ -177,7 +177,7 @@ move the task to "Blocked" and stop.
 - **Levels:** A2–C1
 - **Domain:** Clause structure beyond basic V2 — adverb placement, transformations, questions, indirect questions, relative clauses, der/det, complex chains
 - **Scope boundary:** Ordstillingsdetektiven covers basic V2; do not reproduce large sets of ordinary V2 items.
-- **Modes (7):**
+- **Modes (7):** (item counts below are the *targets*, unchanged; *current* `data.js` holds 99 items after the US-051 removal of clone generators: 40/10/10/10/10/9/10 per mode)
   1. Ikke-flytteren — adverb placement in main vs. subordinate clause (140 items)
   2. Hovedsætning til ledsætning — main→subordinate transformation (160 items)
   3. Byg spørgsmålet — direct questions (140 items)

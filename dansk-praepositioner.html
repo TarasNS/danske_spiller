@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" data-explainer="i-paa,af-fra">
+<html lang="da" data-explainer="i-paa,til,af-fra">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,23 +134,15 @@ body{
 
 /* Exercise */
 .exhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:8px}
-.badge{background:var(--blue);color:#fff;font-size:.72rem;font-weight:bold;padding:5px 11px;border-radius:20px}
-.badge.theme{background:var(--yellow);color:#5a4500}
 .qcount{font-size:.8rem;color:var(--ink-soft);font-weight:bold}
 .prompt{font-size:.82rem;color:var(--ink-soft);margin:10px 0 4px;font-weight:bold}
 .sentence{font-size:1.5rem;line-height:1.5;margin:12px 0 6px;font-weight:bold}
-.sentence .blank{display:inline-block;min-width:74px;border-bottom:4px dotted var(--blue);text-align:center;color:var(--blue);padding:0 6px}
-.sentence .filled{color:var(--green)}
 .sentence .word{cursor:pointer;border-radius:6px;padding:1px 4px;transition:background .15s}
 .sentence .word:hover{background:#ffe9a8}
 .sentence .word.sel{background:var(--yellow);color:#5a4500}
 
-/* speaker / TTS button */
 .sentwrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .sentwrap .sentence{margin:0;flex:1;min-width:0}
-.speaker{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);display:inline-grid;place-items:center;font-size:1.1rem;box-shadow:var(--shadow);flex:none;cursor:pointer;font-family:inherit;}
-.speaker.sm{width:30px;height:30px;font-size:.9rem}
-.speaker:active{transform:scale(.92)}
 
 .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
 .opt{
@@ -255,6 +247,8 @@ footer{text-align:center;color:rgba(255,255,255,.85);font-size:.72rem;margin-top
 <link rel="stylesheet" href="shared/sjovt.css">
 <script src="shared/sjovt.js"></script>
 <link rel="stylesheet" href="shared/themes/praepositioner.css">
+<link rel="stylesheet" href="shared/tts-button.css">
+<link rel="stylesheet" href="shared/sd-extras.css">
 <link rel="stylesheet" href="shared/explainer/modal.css"><script src="shared/explainer/modal.js"></script>
 </head>
 <body>
@@ -263,7 +257,7 @@ footer{text-align:center;color:rgba(255,255,255,.85);font-size:.72rem;margin-top
   <div class="dex">
     <span class="dexlight sd-bob" data-sd-sprite="pin" data-scale="5" aria-hidden="true"></span>
     <div>
-      <h1>Præpositionsmester</h1>
+      <h1>Præpositions&shy;mester</h1>
       <p>Bliv god til de danske småord!</p>
     </div>
     <div class="minidots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
@@ -280,7 +274,7 @@ footer{text-align:center;color:rgba(255,255,255,.85);font-size:.72rem;margin-top
       <div class="section-title" style="color:var(--ink);margin-top:0">Vælg en øvelse</div>
       <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <label for="lvlSel" style="font-weight:bold;font-size:.9rem;color:var(--ink-soft)">CEFR-niveau:</label>
-        <select id="lvlSel" style="font-size:.9rem;font-family:inherit;padding:7px 12px;border:2px solid var(--line);border-radius:10px;color:var(--ink);background:#fff;cursor:pointer">
+        <select id="lvlSel" class="sd-select">
           <option value="">Alle niveauer</option>
           <option value="A1">A1 – Begynder</option>
           <option value="A2">A2 – Grundlæggende</option>
@@ -313,23 +307,30 @@ const PREPS = ["i","på","til","for","med","af","om","hos","fra","efter","uden",
 // confusion map: which wrong prepositions a learner is most likely to use
 const CONFUSE = {
   "i":["på","til","ved"], "på":["i","ved","til"], "til":["i","for","hos"],
-  "for":["til","af","om"], "med":["uden","af","ved"], "af":["fra","for","af"],
-  "om":["på","over","for"], "hos":["i","ved","til"], "fra":["af","fra","til"],
-  "efter":["til","for","under"], "uden":["med","uden","for"], "under":["over","i","ved"],
+  "for":["til","af","om"], "med":["uden","af","ved"], "af":["fra","for"],
+  "om":["på","over","for"], "hos":["i","ved","til"], "fra":["af","til"],
+  "efter":["til","for","under"], "uden":["med","for"], "under":["over","i","ved"],
   "over":["under","på","om"], "mellem":["under","ved","i"], "ved":["på","i","hos"]
 };
 
 const ITEMS = [];
-// gen(pattern, answer, fills, explanation, theme, {err, pair}, lvl)
+// gen(pattern, answer, fills, explanation, theme, {err, pair, wrong, not, noErr}, lvl)
 // pattern uses {a} for the preposition slot and {x} for the variable noun
 // lvl is a CEFR level ("A1","A2","B1","B2","C1") for the rule being taught
+// opts.err    the preposition swapped in for "Find fejlen"/"Ret sætningen" (must be ungrammatical in the frame)
+// opts.noErr  true = no safe error exists for this template: excluded from those two modes
+// opts.wrong  explicit distractors that are really wrong in this frame (used before CONFUSE)
+// opts.not    prepositions that are VALID in this frame and must never be offered as wrong options
 function gen(pattern, answer, fills, ex, theme, opts, lvl){
   opts = opts || {};
   fills.forEach(function(x){
     ITEMS.push({
       text: pattern.replace("{a}", answer).replace("{x}", x),
       a: answer, ex: ex, theme: theme,
-      err: opts.err || (CONFUSE[answer]?CONFUSE[answer][0]:"i"),
+      err: opts.noErr ? null : (opts.err || (CONFUSE[answer]?CONFUSE[answer][0]:"i")),
+      noErr: !!opts.noErr,
+      wrong: opts.wrong || null,
+      not: opts.not || null,
       pair: opts.pair || null,
       lvl: lvl
     });
@@ -340,29 +341,35 @@ function gen(pattern, answer, fills, ex, theme, opts, lvl){
 gen("Jeg bor {a} {x}.","i",["København","Aarhus","Odense","Aalborg","Esbjerg","Randers","en lejlighed","et rækkehus","centrum","en lille by"],
   "Byer, lande og boliger tager 'i': man bor i en by eller i et hus.","Bolig",{err:"på",pair:"i|på"},"A1");
 gen("Vi mødes {a} {x}.","i",["kantinen","mødelokalet","biografen","kælderen","klasselokalet","svømmehallen"],
-  "Indvendigt i lukkede rum bruger man 'i': i kantinen, i biografen.","Arbejde",{err:"på",pair:"i|på"},"A1");
+  "Inde i lukkede rum bruger man 'i': i kantinen, i biografen.","Arbejde",{err:"på",pair:"i|på",not:["ved"]},"A1");
 gen("Mødet ligger {a} {x}.","i",["januar","februar","marts","maj","august","oktober","december"],
   "Måneder og årstider tager 'i': i januar, i sommer.","Møder",{err:"på"},"A1");
 gen("Børnene går {a} {x}.","i",["skole","kirke","børnehave","biografen","byen","teatret"],
   "Faste udtryk med aktivitet: gå i skole, i kirke, i byen.","Familie",{err:"på"},"A2");
 gen("Der er mange varer {a} {x}.","i",["Netto","kurven","butikken","køleskabet","tasken","skuffen"],
   "Inde i en beholder eller butik: i kurven, i køleskabet.","Indkøb",{err:"på"},"A1");
-gen("Han sidder stadig {a} {x}.","i",["bilen","toget","sofaen","haven","mørket"],
+gen("Han sidder stadig {a} {x}.","i",["bilen","haven","mørket"],
   "Inde i et køretøj eller rum: i bilen, i toget.","Rejse",{err:"på"},"A2");
+// toget/sofaen: 'på' is also valid Danish here (US-019)
+gen("Han sidder stadig {a} {x}.","i",["toget","sofaen"],
+  "Inde i et køretøj eller rum: i bilen, i toget.","Rejse",{noErr:true,not:["på"]},"A2");
 
 /* ---------- på ---------- */
 gen("Jeg arbejder {a} {x}.","på",["kontoret","fabrikken","hospitalet","værkstedet","posthuset","biblioteket","en café","apoteket"],
   "Mange arbejdspladser og institutioner tager 'på': på kontoret, på hospitalet.","Arbejde",{err:"i",pair:"i|på"},"A1");
-gen("Bogen ligger {a} {x}.","på",["bordet","gulvet","hylden","skrivebordet","stolen","sengen","reolen"],
+gen("Bogen ligger {a} {x}.","på",["bordet","gulvet","skrivebordet","stolen"],
   "Oven på en flade bruger man 'på': på bordet, på gulvet.","Hjem",{err:"i",pair:"i|på"},"A1");
+// reolen/hylden/sengen: 'i' is also valid Danish here, so no error word and no 'i' distractor (US-019)
+gen("Bogen ligger {a} {x}.","på",["hylden","sengen","reolen"],
+  "Oven på en flade bruger man 'på': på bordet, på gulvet.","Hjem",{noErr:true,not:["i"]},"A1");
 gen("Vi ses {a} {x}.","på",["stationen","torvet","gaden","pladsen","hjørnet"],
-  "Åbne steder og pladser tager ofte 'på': på stationen, på torvet.","Rejse",{err:"i"},"A2");
+  "Åbne steder og pladser tager ofte 'på': på stationen, på torvet.","Rejse",{err:"i",not:["ved"]},"A2");
 gen("Hun er {a} {x} i dag.","på",["vagt","ferie","barsel","kursus","besøg","udflugt"],
   "Faste tilstandsudtryk: på arbejde, på ferie, på kursus.","Arbejde",{err:"i"},"A2");
 gen("Skriv det venligst {a} {x}.","på",["listen","tavlen","papiret","computeren","telefonen"],
   "På en overflade eller skærm: på listen, på tavlen.","Møder",{err:"i"},"A2");
 gen("Vi bor {a} {x}.","på",["landet","femte sal","et hotel","en bondegård","Frederiksberg"],
-  "Særlige bolig-udtryk tager 'på': på landet, på femte sal, på hotel.","Bolig",{err:"i",pair:"i|på"},"B1");
+  "Særlige boligudtryk tager 'på': på landet, på femte sal, på hotel.","Bolig",{err:"i",pair:"i|på"},"B1");
 
 /* ---------- til ---------- */
 gen("Jeg skal {a} {x} i morgen.","til",["København","mødet","lægen","tandlægen","frisøren","stranden","fest","koncert"],
@@ -373,7 +380,7 @@ gen("Hun gav gaven {a} {x}.","til",["sin mor","læreren","chefen","sin ven","nab
   "Modtageren af noget får 'til': give noget til nogen.","Familie",{err:"for"},"A2");
 gen("Hvad skal vi have {a} {x}?","til",["aftensmad","frokost","dessert","middag","morgenmad"],
   "Måltider som formål tager 'til': hvad skal vi have til frokost.","Mad",{err:"for"},"A1");
-gen("Brevet er {a} {x}.","til",["dig","direktøren","hele afdelingen","kunden","min familie"],
+gen("Brevet er adresseret {a} {x}.","til",["dig","direktøren","hele afdelingen","kunden","min familie"],
   "Modtageren af et brev eller en besked får »til«.","Arbejde",{err:"for"},"A2");
 gen("Jeg cykler {a} {x} hver dag.","til",["arbejde","skole","stationen","træning","byen"],
   "Målet for en fast tur tager »til«: cykle til arbejde.","Transport",{err:"på",pair:"i|til"},"A1");
@@ -402,7 +409,7 @@ gen("Hun bor sammen {a} {x}.","med",["sin kæreste","sin familie","en veninde","
 gen("Kan du hjælpe mig {a} {x}?","med",["opgaven","flytningen","maden","computeren","regnskabet","tasken"],
   "'Hjælpe med' styrer 'med' + det man hjælper med.","Arbejde",{err:"i"},"A2");
 gen("Jeg drikker kaffe {a} {x}.","med",["en kollega","mælk","en god ven","sukker","fløde"],
-  "Ledsagelse eller tilbehør: kaffe med mælk, kaffe med en ven.","Mad",{err:"uden",pair:"med|uden"},"A1");
+  "Ledsagelse eller tilbehør: kaffe med mælk, kaffe med en ven.","Mad",{err:"af",not:["uden"]},"A1");
 gen("Han betalte {a} {x}.","med",["kort","kontanter","mobilen","MobilePay"],
   "Betalingsmåden tager »med«: betale med kort.","Indkøb",{err:"i"},"A2");
 gen("Vi er meget tilfredse {a} {x}.","med",["resultatet","servicen","den nye kollega","mødet","produktet"],
@@ -426,7 +433,7 @@ gen("Jeg holder meget {a} {x}.","af",["min familie","klassisk musik","at rejse",
 gen("Vi taler {a} {x}.","om",["politik","vejret","arbejdet","fremtiden","ferien","problemet"],
   "Emne man taler om: tale om politik.","Samtale",{err:"på",pair:"om|på"},"A2");
 gen("Jeg er færdig {a} {x}.","om",["en time","ti minutter","et øjeblik","en uge","lidt"],
-  "Tid, der går, før noget sker, tager »om«: om en time.","Tid",{err:"i",pair:"om|på"},"A2");
+  "Tid, der går, før noget sker, tager »om«: om en time.","Tid",{err:"af",not:["på"]},"A2");
 gen("Bogen handler {a} {x}.","om",["kærlighed","krig","en familie","Danmarks historie","et mord"],
   "'Handle om' = have som emne, styrer 'om'.","Kultur",{err:"på"},"A2");
 gen("Han drømmer {a} {x}.","om",["et nyt job","en lang ferie","at vinde","et større hus"],
@@ -453,7 +460,7 @@ gen("Jeg kommer {a} {x}.","fra",["Danmark","Spanien","København","en lille by",
   "Oprindelse eller udgangspunkt tager 'fra': komme fra Danmark.","Rejse",{err:"af",pair:"af|fra"},"A1");
 gen("Toget kører {a} {x}.","fra",["perron 3","Aarhus","hovedstationen","spor 2"],
   "Afgangssted tager 'fra': toget kører fra perron 3.","Transport",{err:"af",pair:"af|fra"},"A2");
-gen("Brevet er {a} {x}.","fra",["banken","kommunen","min ven","Skat","min gamle skole"],
+gen("Vi har fået et brev {a} {x}.","fra",["banken","kommunen","min ven","Skat","min gamle skole"],
   "Afsenderen af noget tager 'fra': et brev fra banken.","Samfund",{err:"af",pair:"af|fra"},"A2");
 gen("Butikken har åbent {a} {x}.","fra",["klokken ni","mandag","tidlig morgen","i dag"],
   "Startpunkt i tid tager 'fra': åbent fra klokken ni.","Indkøb",{err:"af"},"B1");
@@ -462,11 +469,11 @@ gen("Hun er lige kommet hjem {a} {x}.","fra",["arbejde","ferie","udlandet","skol
 
 /* ---------- efter ---------- */
 gen("Vi spiser {a} {x}.","efter",["mødet","træning","arbejde","filmen","gæsterne er gået"],
-  "Tidspunkt, der følger efter noget: spise efter mødet.","Tid",{err:"til"},"A1");
+  "Tidspunkt, der følger efter noget: spise efter mødet.","Tid",{err:"til",not:["under"]},"A1");
 gen("Jeg leder {a} {x}.","efter",["mine nøgler","en ny lejlighed","et job","min telefon","en gave"],
   "'Lede efter' = søge, styrer altid 'efter'.","Hverdag",{err:"for"},"A2");
 gen("Han kom {a} {x}.","efter",["frokost","lukketid","alle andre","en lang dag"],
-  "Rækkefølge i tid: komme efter frokost.","Tid",{err:"til"},"A2");
+  "Rækkefølge i tid: komme efter frokost.","Tid",{err:"til",not:["under"]},"A2");
 gen("Hun længes {a} {x}.","efter",["sommeren","sin familie","ferie","hjemlandet"],
   "'Længes efter' styrer altid 'efter'.","Følelser",{err:"til"},"B1");
 gen("Vi rydder op {a} {x}.","efter",["festen","middagen","børnene","mødet"],
@@ -476,27 +483,27 @@ gen("Spørg lige {a} {x}.","efter",["vejen","prisen","chefen","din kollega"],
 
 /* ---------- uden ---------- */
 gen("Jeg drikker te {a} {x}.","uden",["mælk","sukker","citron","honning"],
-  "'Uden' = fravær af noget, modsat 'med'.","Mad",{err:"med",pair:"med|uden"},"A1");
+  "'Uden' = fravær af noget, modsat 'med'.","Mad",{err:"af",not:["med"]},"A1");
 gen("Han gik ud {a} {x}.","uden",["jakke","paraply","sko","en krone på lommen"],
   "Manglende ledsagelse eller udstyr: gå uden jakke.","Hverdag",{err:"med",pair:"med|uden"},"A2");
 gen("Vi klarer os ikke {a} {x}.","uden",["hjælp","penge","internet","vand","strøm"],
   "'Klare sig uden' = undvære noget.","Samfund",{err:"med",pair:"med|uden"},"B1");
 gen("Hun rejste {a} {x}.","uden",["bagage","sin mand","at sige farvel","problemer"],
-  "Fravær af noget eller nogen: rejse uden bagage.","Rejse",{err:"med",pair:"med|uden"},"A2");
+  "Fravær af noget eller nogen: rejse uden bagage.","Rejse",{noErr:true,not:["med"]},"A2");
 gen("Mødet sluttede {a} {x}.","uden",["en konklusion","resultat","en beslutning"],
-  "Uden noget som udfald: slutte uden resultat.","Møder",{err:"med",pair:"med|uden"},"B1");
+  "Uden noget som udfald: slutte uden resultat.","Møder",{noErr:true,not:["med"]},"B1");
 
 /* ---------- under ---------- */
 gen("Katten ligger {a} {x}.","under",["bordet","sengen","stolen","tæppet","sofaen","bilen"],
-  "Placering nedenunder noget: under bordet.","Hjem",{err:"over",pair:"under|over"},"A1");
+  "Placering nedenunder noget: under bordet.","Hjem",{err:"over",pair:"under|over",not:["i","ved"]},"A1");
 gen("Det skete {a} {x}.","under",["mødet","krigen","ferien","koncerten","middagen","rejsen"],
-  "Det tidsrum, noget foregår i: under mødet.","Tid",{err:"over"},"A2");
+  "Det tidsrum, noget foregår i: under mødet.","Tid",{err:"over",not:["i"]},"A2");
 gen("Temperaturen er {a} {x}.","under",["frysepunktet","nul grader","gennemsnittet","det normale"],
-  "Lavere end et niveau: under frysepunktet.","Samfund",{err:"over",pair:"under|over"},"B1");
+  "Lavere end et niveau: under frysepunktet.","Samfund",{err:"af",not:["over"]},"B1");
 gen("Børnene legede {a} {x}.","under",["bordet","trappen","træet","broen"],
   "Fysisk placering nedenunder: lege under bordet.","Familie",{err:"over",pair:"under|over"},"A1");
 gen("Hele projektet er stadig {a} {x}.","under",["udvikling","opbygning","planlægning","kontrol"],
-  "Igangværende proces: under udvikling.","Arbejde",{err:"over"},"B2");
+  "Igangværende proces: under udvikling.","Arbejde",{err:"over",not:["i"]},"B2");
 
 /* ---------- over ---------- */
 gen("Lampen hænger {a} {x}.","over",["bordet","sengen","sofaen","spisebordet"],
@@ -504,11 +511,11 @@ gen("Lampen hænger {a} {x}.","over",["bordet","sengen","sofaen","spisebordet"],
 gen("Vi snakkede sammen {a} {x}.","over",["en kop kaffe","en øl","en kande te","et glas vin"],
   "Mens man deler en drik: snakke over en kop kaffe.","Samtale",{err:"på"},"B1");
 gen("Der var {a} {x} til stede.","over",["hundrede mennesker","tusind gæster","halvdelen af byen"],
-  "Mere end et antal: over hundrede mennesker.","Samfund",{err:"på"},"B1");
+  "Mere end et antal: over hundrede mennesker.","Samfund",{err:"på",not:["under"]},"B1");
 gen("Broen går {a} {x}.","over",["floden","åen","havnen","motorvejen"],
   "Hen over noget: broen går over floden.","Rejse",{err:"under",pair:"under|over"},"A2");
 gen("Vi gik {a} {x}.","over",["gaden","vejen","pladsen","græsplænen","parkeringspladsen"],
-  "Hen over en flade: gå over gaden.","Hverdag",{err:"under",pair:"under|over"},"A2");
+  "Hen over en flade: gå over gaden.","Hverdag",{err:"under",pair:"under|over",not:["på"]},"A2");
 gen("Flyet fløj lavt {a} {x}.","over",["byen","havet","bjergene","skoven"],
   "Hen over noget i luften: flyve over byen.","Rejse",{err:"under",pair:"under|over"},"A2");
 
@@ -526,20 +533,23 @@ gen("Aftalen er {a} {x}.","mellem",["de to firmaer","os","parterne","nabolandene
 
 /* ---------- ved ---------- */
 gen("Huset ligger {a} {x}.","ved",["stranden","søen","skoven","havet","vejen","kysten"],
-  "Tæt på noget tager »ved«: huset ligger ved stranden.","Bolig",{err:"på"},"A2");
+  "Tæt på noget tager »ved«: huset ligger ved stranden.","Bolig",{err:"til",not:["på"]},"A2");
 gen("Vi mødes {a} {x}.","ved",["indgangen","springvandet","hoveddøren","kassen","porten"],
   "Mødested helt tæt på et konkret punkt: mødes ved indgangen.","Hverdag",{err:"i"},"A2");
 gen("Hun sidder {a} {x}.","ved",["vinduet","computeren","skrivebordet","bordet","klaveret"],
-  "Tæt på et møbel eller redskab: sidde ved computeren.","Arbejde",{err:"på"},"A2");
+  "Tæt på et møbel eller redskab: sidde ved computeren.","Arbejde",{err:"af",not:["i","på"]},"A2");
 gen("Vi bor lige {a} {x}.","ved",["havnen","parken","torvet","skolen","stationen"],
   "I umiddelbar nærhed: bo lige ved parken.","Bolig",{err:"på"},"A2");
-gen("Bilen holder {a} {x}.","ved",["fortovet","indkørslen","kantstenen","porten"],
+gen("Bilen holder {a} {x}.","ved",["fortovet","kantstenen","porten"],
   "Stå stille tæt ved noget: bilen holder ved fortovet.","Transport",{err:"på"},"B1");
+// indkørslen: you park IN the driveway (US-019 QA-106)
+gen("Bilen holder {a} {x}.","i",["indkørslen"],
+  "Inde i et afgrænset område: bilen holder i indkørslen.","Transport",{noErr:true,wrong:["til","for","med"]},"B1");
 
 /* ---------- EXTRA BATCH (everyday / work / family / travel / shopping / meetings / society) ---------- */
 gen("Der er tilbud {a} {x} i denne uge.","på",["kaffe","frugt","alle bøger","elektronik","sko","mælk"],
   "Tilbud og rabat på en vare tager »på«.","Indkøb",{err:"i",pair:"i|på"},"B1");
-gen("Vi skal lige nå {a} {x}.","til",["flyet","toget","bussen","mødet","færgen"],
+gen("Vi skal lige nå frem {a} {x}.","til",["stationen","hotellet","havnen","lufthavnen"],
   "At nå frem til noget tager 'til'.","Rejse",{err:"i"},"A2");
 gen("Send venligst rapporten {a} {x}.","til",["chefen","hele teamet","kunden","bestyrelsen","mig"],
   "Modtageren af noget man sender får 'til'.","Arbejde",{err:"for"},"A2");
@@ -566,17 +576,17 @@ gen("Suppen var desværre helt {a} {x}.","uden",["smag","salt","krydderi"],
 gen("Jeg kan slet ikke leve {a} {x}.","uden",["kaffe","musik","min telefon","internettet"],
   "At undvære noget: leve uden kaffe.","Hverdag",{err:"med",pair:"med|uden"},"A2");
 gen("Reglerne gælder {a} {x}.","under",["hele rejsen","prøvetiden","ferien","opholdet"],
-  "Noget, der gælder i et tidsrum, tager »under«.","Samfund",{err:"over",pair:"under|over"},"B1");
+  "Noget, der gælder i et tidsrum, tager »under«.","Samfund",{err:"over",pair:"under|over",not:["i"]},"B1");
 gen("Hunden sov {a} {x}.","under",["bordet","sengen","sofaen","trappen"],
   "Placering nedenunder noget tager 'under'.","Hjem",{err:"over",pair:"under|over"},"A1");
 gen("Mødet varede {a} {x}.","over",["en time","to timer","en hel dag"],
-  "Varighed mere end et mål tager 'over': varede over en time.","Møder",{err:"på"},"B1");
+  "Varighed mere end et mål tager 'over': varede over en time.","Møder",{err:"på",not:["under"]},"B1");
 gen("Vi aftalte det hele {a} {x}.","over",["telefonen","en frokost","en kop kaffe"],
   "Via et medie eller måltid: aftale noget over telefonen.","Arbejde",{err:"på"},"B2");
 gen("Forholdet {a} {x} er rigtig godt.","mellem",["kollegerne","de to lande","naboerne","parterne"],
   "Forholdet mellem to eller flere parter tager 'mellem'.","Samfund",{err:"ved"},"B1");
 gen("Han står og venter {a} {x}.","ved",["springvandet","statuen","rundkørslen","lyskrydset"],
-  "At stå tæt ved et konkret punkt tager 'ved'.","Hverdag",{err:"i"},"A2");
+  "At stå tæt ved et konkret punkt tager 'ved'.","Hverdag",{err:"af",not:["i","på"]},"A2");
 gen("Han sidder {a} {x} hele dagen.","i",["møder","kø","trafikken","et videomøde"],
   "At være optaget i noget tager 'i': sidde i møder, i trafikken.","Arbejde",{err:"på"},"B1");
 gen("Vi var på ferie {a} {x} sidste år.","i",["Spanien","Italien","Norge","Frankrig","Tyskland"],
@@ -599,12 +609,12 @@ const TRANS = [
   ["She lives in Copenhagen.","Hun bor i København.","i","Byer tager 'i'."],
   ["The meeting is in the morning.","Mødet er om morgenen.","om","Faste tider på døgnet tager 'om'."],
   ["The book is on the table.","Bogen ligger på bordet.","på","Oven på en flade tager 'på'."],
-  ["Thanks for your help.","Tak for hjælpen.","for","'Tak for' bruger altid 'for'."],
+  ["Thanks for your help.","Tak for hjælpen.","for","'Tak for' bruger altid 'for'.",["Tak for din hjælp."]],
   ["I am afraid of dogs.","Jeg er bange for hunde.","for","'Bange for' styrer 'for'."],
   ["He travels by train.","Han rejser med tog.","med","Transportmiddel tager 'med'."],
   ["The table is made of wood.","Bordet er lavet af træ.","af","Materiale tager 'af'."],
   ["We are talking about the weather.","Vi taler om vejret.","om","Emne tager 'om'."],
-  ["I will be done in an hour.","Jeg er færdig om en time.","om","Tid før noget sker tager 'om'."],
+  ["I will be done in an hour.","Jeg er færdig om en time.","om","Tid før noget sker tager 'om'.",["Jeg bliver færdig om en time."]],
   ["The cat is under the bed.","Katten er under sengen.","under","Placering nedenunder tager 'under'."],
   ["The lamp hangs over the table.","Lampen hænger over bordet.","over","Placering ovenover tager 'over'."],
   ["I come from Spain.","Jeg kommer fra Spanien.","fra","Oprindelse tager 'fra'."],
@@ -613,8 +623,8 @@ const TRANS = [
   ["The house is by the sea.","Huset ligger ved havet.","ved","Tæt på noget tager 'ved'."],
   ["Choose between tea and coffee.","Vælg mellem te og kaffe.","mellem","Valg mellem to ting tager 'mellem'."],
   ["I am going to the doctor.","Jeg skal til lægen.","til","Aftale/mål tager 'til'."],
-  ["We were at my grandmother's.","Vi var hos min mormor.","hos","Hjemme hos en person tager 'hos'."],
-  ["He works for a big company.","Han arbejder for et stort firma.","for","I tjeneste af nogen tager 'for'."],
+  ["We were at my grandmother's.","Vi var hos min mormor.","hos","Hjemme hos en person tager 'hos'.",["Vi var hos min farmor.","Vi var hos min bedstemor."]],
+  ["He works for a big company.","Han arbejder for et stort firma.","for","I nogens tjeneste tager 'for'."],
   ["The children go to school.","Børnene går i skole.","i","Fast udtryk: gå i skole."],
   ["I am on holiday.","Jeg er på ferie.","på","Fast udtryk: på ferie."],
   ["We look forward to the weekend.","Vi glæder os til weekenden.","til","'Glæde sig til' styrer 'til'."],
@@ -687,7 +697,7 @@ function record(answerPrep, correct){
 function addReview(item){
   // store a lightweight copy to repeat later
   if(prog.reviewQ.length>40) prog.reviewQ.shift();
-  prog.reviewQ.push({text:item.text,a:item.a,ex:item.ex,theme:item.theme,err:item.err});
+  prog.reviewQ.push({text:item.text,a:item.a,ex:item.ex,theme:item.theme,err:item.err,wrong:item.wrong||null,not:item.not||null});
   saveProg();
 }
 function clearReviewItem(text){
@@ -710,23 +720,32 @@ function activeLvl(){
 }
 function randItem(filter){
   const lvl = activeLvl();
-  let pool = ITEMS;
-  if(lvl) pool = ITEMS.filter(it => it.lvl === lvl);
-  if(pool.length===0) pool = ITEMS;
-  if(filter) pool = pool.filter(filter);
+  const byLvl = lvl ? ITEMS.filter(it => it.lvl === lvl) : ITEMS;
+  // fallback order: (level AND filter) -> (filter, all levels) -> level pool -> all items.
+  // With a filter (e.g. a pair group) we never leave the filtered pool while it has items.
+  let pool = filter ? byLvl.filter(filter) : byLvl;
+  if(pool.length===0 && filter) pool = ITEMS.filter(filter);
+  if(pool.length===0) pool = byLvl;
   if(pool.length===0) pool = ITEMS;
   return rand(pick(pool));
+}
+// a mistake/correct item needs a real, ungrammatical error word
+function hasSafeErr(it){
+  return !!it.err && !it.noErr && it.err!==it.a && !(new RegExp("(^|\\s)"+it.err+"(\\s|[.,!?])").test(it.text));
 }
 function blankSentence(item){ // replace the answer preposition (whole word) with a blank marker
   const re = new RegExp("(^|[\\s])"+item.a+"([\\s.,!?])");
   let done=false;
   return item.text.replace(re,function(m,p1,p2){ if(done) return m; done=true; return p1+"@@@"+p2; });
 }
-function distractorsFor(prep, n){
-  const c = (CONFUSE[prep]||[]).filter(p=>p!==prep);
+function distractorsFor(prep, n, item){
+  // item (optional) may carry .wrong (explicit wrong options) and .not (valid alternatives to never offer)
+  const not = (item && item.not) || [];
   let opts = [];
+  ((item && item.wrong) || []).forEach(x=>{ if(opts.indexOf(x)<0 && x!==prep && not.indexOf(x)<0) opts.push(x); });
+  const c = (CONFUSE[prep]||[]).filter(p=>p!==prep && not.indexOf(p)<0);
   c.forEach(x=>{ if(opts.indexOf(x)<0 && x!==prep) opts.push(x); });
-  const rest = shuffle(PREPS.filter(p=>p!==prep && opts.indexOf(p)<0));
+  const rest = shuffle(PREPS.filter(p=>p!==prep && opts.indexOf(p)<0 && not.indexOf(p)<0));
   while(opts.length<n && rest.length) opts.push(rest.shift());
   return opts.slice(0,n);
 }
@@ -762,10 +781,9 @@ function speak(text){
 }
 function speakerBtn(text, cls){
   const b = document.createElement("button");
-  b.className = "speaker " + (cls||"");
+  b.className = "dc-tts-button" + (cls==="sm" ? " dc-tts-button--sm" : "");
   b.type = "button";
-  b.textContent = "▶";
-  b.setAttribute("aria-label","Udtal sætningen");
+  b.setAttribute("aria-label","Lyt til sætningen");
   b.addEventListener("click", e=>{ e.stopPropagation(); speak(text); });
   return b;
 }
@@ -828,23 +846,23 @@ const MODES=[
   {id:"mc", t:"Flervalg", d:"Vælg mellem fire", e:"🎯", c:"c-blue"},
   {id:"drag", t:"Træk og slip", d:"Træk præpositionen ind", e:"🧲", c:"c-green"},
   {id:"mistake", t:"Find fejlen", d:"Hvilket ord er forkert?", e:"🔍", c:"c-yellow"},
-  {id:"correct", t:"Ret sætningen", d:"Skriv den korrekt", e:"📝", c:"c-purple"},
-  {id:"trans", t:"Oversættelse", d:"Engelsk → dansk", e:"🌍", c:"c-teal"},
-  {id:"pairs", t:"Forvekslingspar", d:"i vs på, af vs fra ...", e:"⚖️", c:"c-orange"},
+  {id:"correct", t:"Ret sæt&shy;ningen", d:"Skriv den korrekt", e:"📝", c:"c-purple"},
+  {id:"trans", t:"Over&shy;sættelse", d:"Engelsk → dansk", e:"🌍", c:"c-teal"},
+  {id:"pairs", t:"Forveks&shy;lings&shy;par", d:"i vs på, af vs fra ...", e:"⚖️", c:"c-orange"},
   {id:"speed", t:"Lynrunde", d:"60 sekunder!", e:"⚡", c:"c-pink"},
   {id:"review", t:"Gentag fejl", d:"Træn dine fejl", e:"🔁", c:"c-slate"},
-  {id:"stats", t:"Statistik", d:"Se din fremgang", e:"📊", c:"c-gold"}
+  {id:"stats", t:"Stati&shy;stik", d:"Se din fremgang", e:"📊", c:"c-gold"}
 ];
-const MODE_SPR={fill:"pin",mc:"stjerne",drag:"cykel",mistake:"hat",correct:"snegl",trans:"flag",pairs:"hjerte",speed:"molle",review:"snegl",stats:"pokal"};
+const MODE_SPR={fill:"snak",mc:"bog",drag:"tandhjul",mistake:"pin",correct:"ur",trans:"modsat",pairs:"slik",speed:"tryllestav",review:"lup",stats:"pokal"};
 function renderMenu(){
   const g=document.getElementById("menuGrid");
   g.innerHTML="";
   MODES.forEach(m=>{
     const b=document.createElement("button");
-    b.className="mode-btn "+m.c;
+    b.className="mode-btn sd-surface "+m.c;
     let extra="";
     if(m.id==="review"){ extra=' <span style="font-size:.7rem;background:rgba(0,0,0,.18);padding:1px 7px;border-radius:10px">'+prog.reviewQ.length+'</span>'; }
-    b.innerHTML='<span class="emoji">'+spr(MODE_SPR[m.id],4)+'</span><span class="t">'+m.t+extra+'</span><span class="d">'+m.d+'</span>';
+    b.innerHTML='<span class="emoji">'+spr(MODE_SPR[m.id],m.id==="stats"?2:4)+'</span><span class="t">'+m.t+extra+'</span><span class="d">'+m.d+'</span>';
     b.onclick=()=>{ if(m.id==="stats") openStats(); else startMode(m.id); };
     g.appendChild(b);
   });
@@ -868,12 +886,12 @@ function exShell(modeLabel, theme, bodyHtml){
   elEx.innerHTML=
     '<div class="card">'+
       '<div class="backrow">'+
-        '<button class="topbtn" onclick="goMenu()">‹ Menu</button>'+
+        '<button class="topbtn" onclick="goMenu()">← Tilbage</button>'+
         '<span class="qcount">Spørgsmål '+session.n+'</span>'+
       '</div>'+
       '<div class="exhead" style="margin-top:12px">'+
-        '<span class="badge">'+noEmoji(modeLabel)+'</span>'+
-        (theme?'<span class="badge theme">'+theme+'</span>':'')+
+        '<span class="sd-badge sd-badge--panel">'+noEmoji(modeLabel)+'</span>'+
+        (theme?'<span class="sd-badge sd-badge--panel">'+theme+'</span>':'')+
       '</div>'+
       bodyHtml+
       '<div class="fb" id="fb"></div>'+
@@ -888,6 +906,29 @@ function showFB(ok, item, correctText){
   if(!ok && correctText){ html+='<div>Rigtigt svar: <span class="corr">'+correctText+'</span></div>'; }
   if(item && item.ex){ html+='<div style="margin-top:6px"><b class="tipk">TIP</b> '+item.ex+'</div>'; }
   fb.innerHTML=html;
+}
+
+/* After an answer: put Next after the feedback box, move focus to it and make sure the verdict,
+   the correct answer, the TIP and Next are inside the viewport (instant scroll when motion is reduced). */
+function revealFeedback(nextBtn){
+  const fb=document.getElementById("fb");
+  if(!nextBtn) return;
+  try{ nextBtn.focus({preventScroll:true}); }catch(e){ try{ nextBtn.focus(); }catch(e2){} }
+  let reduced=false;
+  try{ reduced = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)
+    || document.documentElement.getAttribute("data-sd-motion")==="off"; }catch(e){}
+  const behavior = reduced ? "auto" : "smooth";
+  function run(){
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const a = fb ? fb.getBoundingClientRect() : nextBtn.getBoundingClientRect();
+    const b = nextBtn.getBoundingClientRect();
+    const top = Math.min(a.top,b.top), bottom = Math.max(a.bottom,b.bottom);
+    let dy = 0;
+    if(bottom > vh - 8) dy = bottom - vh + 16;      // bring the lower edge into view ...
+    if(top - dy < 8) dy = top - 8;                   // ... but never push the verdict off the top
+    if(Math.abs(dy) > 1) window.scrollBy({top:dy, behavior:behavior});
+  }
+  run();
 }
 
 function startMode(id){
@@ -908,7 +949,7 @@ function startMode(id){
 function nextFill(item){
   session.n++;
   item = item || randItem();
-  const html = blankSentence(item).replace("@@@",'<span class="blank">?</span>');
+  const html = blankSentence(item).replace("@@@",'<span class="sd-gap"></span>');
   exShell("✏️ Udfyld hullet", item.theme,
     '<p class="prompt">Skriv den præposition, der mangler:</p>'+
     '<div class="sentwrap"><div class="sentence">'+html+'</div></div>'+
@@ -921,8 +962,7 @@ function nextFill(item){
     const val=inp.value.trim().toLowerCase();
     if(!val) return;
     const ok = val===item.a;
-    document.querySelector(".blank").textContent=item.a;
-    document.querySelector(".blank").classList.toggle("filled",ok);
+    const g=document.querySelector(".sd-gap"); g.textContent=item.a; g.classList.add("is-filled"); g.classList.toggle("is-ok",ok); g.classList.toggle("is-bad",!ok);
     record(item.a,ok);
     if(ok){ const r=inp.getBoundingClientRect(); burst(r.left+r.width/2,r.top); if(prog.streak%5===0&&prog.streak)streakPop(prog.streak);}
     else addReview(item);
@@ -931,19 +971,20 @@ function nextFill(item){
     document.getElementById("fillCheck").onclick=()=>nextFill();
     inp.disabled=true;
     document.getElementById("fillNext").classList.add("hide");
+    revealFeedback(document.getElementById("fillCheck"));
   }
   document.getElementById("fillCheck").onclick=check;
   document.getElementById("fillNext").onclick=()=>nextFill();
-  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("fillCheck").onclick(); });
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); } if(e.key==="Enter") document.getElementById("fillCheck").onclick(); });
 }
 
 /* ---------- 2. MULTIPLE CHOICE ---------- */
 function nextMC(item){
   session.n++;
   item=item||randItem();
-  const opts=shuffle([item.a].concat(distractorsFor(item.a,3)));
-  const html=blankSentence(item).replace("@@@",'<span class="blank" id="mcBlank">?</span>');
-  exShell("🎯 Multiple choice", item.theme,
+  const opts=shuffle([item.a].concat(distractorsFor(item.a,3,item)));
+  const html=blankSentence(item).replace("@@@",'<span class="sd-gap" id="mcBlank"></span>');
+  exShell("🎯 Flervalg", item.theme,
     '<p class="prompt">Vælg den rigtige præposition:</p>'+
     '<div class="sentwrap"><div class="sentence">'+html+'</div></div>'+
     '<div class="opts" id="mcOpts"></div>');
@@ -958,13 +999,12 @@ function nextMC(item){
       b.classList.remove("dim");
       b.classList.add(ok?"correct":"wrong");
       if(!ok){ document.querySelectorAll("#mcOpts .opt").forEach(x=>{ if(x.textContent.endsWith(") "+item.a)){x.classList.remove("dim");x.classList.add("correct");} }); addReview(item); }
-      document.getElementById("mcBlank").textContent=item.a;
-      document.getElementById("mcBlank").classList.toggle("filled",ok);
+      {const g=document.getElementById("mcBlank"); g.textContent=item.a; g.classList.add("is-filled"); g.classList.toggle("is-ok",ok); g.classList.toggle("is-bad",!ok);}
       record(item.a,ok);
       if(ok){ burst(e.clientX,e.clientY); if(prog.streak%5===0&&prog.streak)streakPop(prog.streak); }
       showFB(ok,item,item.a);
       const nb=document.createElement("button");nb.className="btn full";nb.textContent="Næste →";nb.onclick=()=>nextMC();
-      box.after(nb);
+      document.getElementById("fb").after(nb); revealFeedback(nb);
     };
     box.appendChild(b);
   });
@@ -974,7 +1014,7 @@ function nextMC(item){
 function nextDrag(item){
   session.n++;
   item=item||randItem();
-  const chips=shuffle([item.a].concat(distractorsFor(item.a,3)));
+  const chips=shuffle([item.a].concat(distractorsFor(item.a,3,item)));
   const html=blankSentence(item).replace("@@@",'<span class="drop" id="dropZone">slip her</span>');
   exShell("🧲 Træk & slip", item.theme,
     '<p class="prompt">Træk den rigtige præposition ind i sætningen:</p>'+
@@ -997,7 +1037,7 @@ function nextDrag(item){
     showFB(ok,item,item.a);
     document.querySelectorAll(".chip").forEach(c=>c.classList.add("used"));
     const nb=document.createElement("button");nb.className="btn full";nb.textContent="Næste →";nb.onclick=()=>nextDrag();
-    cbox.after(nb);
+    document.getElementById("fb").after(nb); revealFeedback(nb);
   }
   chips.forEach(val=>{
     const c=document.createElement("button");c.className="chip";c.textContent=val;c.draggable=true;
@@ -1013,7 +1053,7 @@ function nextDrag(item){
 /* ---------- 4. FIND THE MISTAKE ---------- */
 function nextMistake(item){
   session.n++;
-  item=item||randItem(it=>it.err && it.err!==it.a && !(new RegExp("(^|\\s)"+it.err+"(\\s|[.,!?])").test(it.text)));
+  item=item||randItem(hasSafeErr);
   // tokenize the ORIGINAL correct text and swap only the first occurrence of item.a,
   // remembering its token index so grading checks position, not string value
   // (a sentence can legitimately contain the distractor word elsewhere)
@@ -1054,7 +1094,7 @@ function nextMistake(item){
           '<div style="margin-top:6px">Korrekt: <b>'+item.text+'</b></div>'+
           '<div style="margin-top:6px"><b class="tipk">TIP</b> '+item.ex+'</div>';
         const nb=document.createElement("button");nb.className="btn full";nb.textContent="Næste →";nb.onclick=()=>nextMistake();
-        sent.after(nb);
+        fb.after(nb); revealFeedback(nb);
       };
       sent.appendChild(span);
     } else {
@@ -1066,7 +1106,7 @@ function nextMistake(item){
 /* ---------- 5. SENTENCE CORRECTION ---------- */
 function nextCorrect(item){
   session.n++;
-  item=item||randItem(it=>it.err && it.err!==it.a && !(new RegExp("(^|\\s)"+it.err+"(\\s|[.,!?])").test(it.text)));
+  item=item||randItem(hasSafeErr);
   const wrongText = item.text.replace(new RegExp("(^|[\\s])"+item.a+"([\\s.,!?])"), "$1"+item.err+"$2");
   exShell("📝 Ret sætningen", item.theme,
     '<p class="prompt">Denne sætning har en forkert præposition. Skriv den korrekt:</p>'+
@@ -1090,6 +1130,7 @@ function nextCorrect(item){
     document.getElementById("corrShow").classList.add("hide");
     inp.disabled=true;
     if(ok){ const r=inp.getBoundingClientRect(); burst(r.left+r.width/2,r.top); }
+    revealFeedback(document.getElementById("corrCheck"));
   }
   document.getElementById("corrCheck").onclick=function(){
     const v=norm(inp.value); if(!v) return;
@@ -1097,7 +1138,7 @@ function nextCorrect(item){
     finish(ok);
   };
   document.getElementById("corrShow").onclick=()=>finish(false);
-  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("corrCheck").onclick(); });
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); } if(e.key==="Enter") document.getElementById("corrCheck").onclick(); });
 }
 
 /* ---------- 6. TRANSLATION ---------- */
@@ -1126,22 +1167,23 @@ function nextTrans(){
     document.getElementById("trShow").classList.add("hide");
     inp.disabled=true;
     if(ok){ const r=inp.getBoundingClientRect(); burst(r.left+r.width/2,r.top); }
+    revealFeedback(document.getElementById("trCheck"));
   }
   document.getElementById("trCheck").onclick=function(){
     const v=norm(inp.value); if(!v) return;
     // accept full match, or a close match that has the right preposition + key words
-    const ok = v===norm(t[1]);
+    const ok = v===norm(t[1]) || (t[4]||[]).some(function(alt){ return v===norm(alt); });
     finish(ok);
   };
   document.getElementById("trShow").onclick=()=>finish(false);
-  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("trCheck").onclick(); });
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); } if(e.key==="Enter") document.getElementById("trCheck").onclick(); });
 }
 
 /* ---------- 7. PREPOSITION PAIRS ---------- */
 let curPair=null;
 function startPairs(){
   // choose a pair group
-  elEx.innerHTML='<div class="card"><div class="backrow"><button class="topbtn" onclick="goMenu()">‹ Menu</button>'+
+  elEx.innerHTML='<div class="card"><div class="backrow"><button class="topbtn" onclick="goMenu()">← Tilbage</button>'+
     '<span class="qcount">Forvekslingspar</span></div>'+
     '<p class="prompt" style="margin-top:14px">Vælg et par, du vil træne:</p>'+
     '<div class="menu-grid" id="pairGrid" style="margin-top:8px"></div></div>';
@@ -1158,10 +1200,10 @@ function startPairs(){
 function nextPair(){
   session.n++;
   const p=curPair;
-  const item=randItem(it=> it.pair===p.key || (it.a===p.a && it.pair && it.pair.indexOf(p.a)>=0) );
+  const item=randItem(it=> (it.a===p.a || it.a===p.b) && (it.pair===p.key || (it.a===p.a && it.pair && it.pair.indexOf(p.a)>=0)) );
   // ensure options are exactly the two confusable prepositions
   const opts=shuffle([p.a,p.b]);
-  const html=blankSentence(item).replace("@@@",'<span class="blank" id="prBlank">?</span>');
+  const html=blankSentence(item).replace("@@@",'<span class="sd-gap" id="prBlank"></span>');
   exShell("⚖️ "+p.label, item.theme,
     '<p class="prompt">Hvilken passer her?</p>'+
     '<div class="sentwrap"><div class="sentence">'+html+'</div></div>'+
@@ -1175,13 +1217,12 @@ function nextPair(){
       document.querySelectorAll("#prOpts .opt").forEach(x=>{x.classList.add("dim");x.onclick=null;});
       b.classList.remove("dim");b.classList.add(ok?"correct":"wrong");
       if(!ok){ document.querySelectorAll("#prOpts .opt").forEach(x=>{ if(x.textContent===item.a){x.classList.remove("dim");x.classList.add("correct");} }); addReview(item);}
-      document.getElementById("prBlank").textContent=item.a;
-      document.getElementById("prBlank").classList.toggle("filled",ok);
+      {const g=document.getElementById("prBlank"); g.textContent=item.a; g.classList.add("is-filled"); g.classList.toggle("is-ok",ok); g.classList.toggle("is-bad",!ok);}
       record(item.a,ok);
       if(ok){ burst(e.clientX,e.clientY); if(prog.streak%5===0&&prog.streak)streakPop(prog.streak); }
       showFB(ok,item,item.a);
       const nb=document.createElement("button");nb.className="btn full";nb.textContent="Næste →";nb.onclick=()=>nextPair();
-      box.after(nb);
+      document.getElementById("fb").after(nb); revealFeedback(nb);
     };
     box.appendChild(b);
   });
@@ -1201,13 +1242,26 @@ function startSpeed(){
   },1000);
   show("ex");
 }
+/* explainer modal: freeze the Lynrunde countdown while it is open; resume only if this listener paused it and the round is still on screen */
+let xpPaused=false;
+document.addEventListener("explainer:open",()=>{ if(speedTimer){ clearInterval(speedTimer); speedTimer=null; xpPaused=true; } });
+document.addEventListener("explainer:close",()=>{
+  if(!xpPaused) return; xpPaused=false;
+  if(speedTimer||speedLeft<=0||elEx.classList.contains("hide")||!document.getElementById("spTimer")) return;
+  speedTimer=setInterval(()=>{
+    speedLeft--;
+    const t=document.getElementById("spTimer");
+    if(t){ t.textContent=speedLeft+"s"; t.classList.toggle("warn",speedLeft<=10); }
+    if(speedLeft<=0) endSpeed();
+  },1000);
+});
 function speedTick(first){
   const item=randItem();
-  const opts=shuffle([item.a].concat(distractorsFor(item.a,3)));
-  const html=blankSentence(item).replace("@@@",'<span class="blank">?</span>');
+  const opts=shuffle([item.a].concat(distractorsFor(item.a,3,item)));
+  const html=blankSentence(item).replace("@@@",'<span class="sd-gap"></span>');
   elEx.innerHTML=
     '<div class="card">'+
-    '<div class="backrow"><button class="topbtn" onclick="goMenu()">‹ Menu</button>'+
+    '<div class="backrow"><button class="topbtn" onclick="goMenu()">← Tilbage</button>'+
     '<span class="qcount">Lynrunde</span></div>'+
     '<div class="timer'+(speedLeft<=10?' warn':'')+'" id="spTimer">'+speedLeft+'s</div>'+
     '<div class="scoreline">Point: '+speedScore+' &nbsp;·&nbsp; ✓ '+speedHits+' &nbsp; ✗ '+speedMiss+'</div>'+
@@ -1220,7 +1274,7 @@ function speedTick(first){
     const b=document.createElement("button");b.className="opt";b.textContent=o;
     b.onclick=(e)=>{
       const ok=o===item.a;
-      if(ok){ speedScore+=10; speedHits++; prog.xp+=5; b.classList.add("correct"); burst(e.clientX,e.clientY); }
+      if(ok){ speedScore+=10; speedHits++;b.classList.add("correct"); burst(e.clientX,e.clientY); }
       else { speedMiss++; b.classList.add("wrong"); addReview(item);
         document.querySelectorAll("#spOpts .opt").forEach(x=>{ if(x.textContent===item.a) x.classList.add("correct"); }); }
       record(item.a,ok);
@@ -1233,8 +1287,9 @@ function speedTick(first){
 function endSpeed(){
   clearInterval(speedTimer); speedTimer=null;
   const acc=(speedHits+speedMiss)?Math.round(speedHits/(speedHits+speedMiss)*100):0;
-  const best=parseInt(localStorage.getItem("praep_speed_best")||"0");
-  if(speedScore>best) localStorage.setItem("praep_speed_best",speedScore);
+  let best=0;
+  try{ best=parseInt(localStorage.getItem("praep_speed_best")||"0"); }catch(e){}
+  try{ if(speedScore>best) localStorage.setItem("praep_speed_best",speedScore); }catch(e){}
   saveProg();
   if(window.Sjovt) Sjovt.fx.celebrate();
   elEx.innerHTML=
@@ -1264,8 +1319,8 @@ function nextReview(){
   }
   session.n++;
   const item=prog.reviewQ[0];
-  const opts=shuffle([item.a].concat(distractorsFor(item.a,3)));
-  const html=blankSentence(item).replace("@@@",'<span class="blank" id="rvBlank">?</span>');
+  const opts=shuffle([item.a].concat(distractorsFor(item.a,3,item)));
+  const html=blankSentence(item).replace("@@@",'<span class="sd-gap" id="rvBlank"></span>');
   exShell("🔁 Gentag fejl", item.theme,
     '<p class="prompt">Du svarede forkert sidst – prøv igen ('+prog.reviewQ.length+' tilbage):</p>'+
     '<div class="sentwrap"><div class="sentence">'+html+'</div></div>'+
@@ -1279,15 +1334,14 @@ function nextReview(){
       document.querySelectorAll("#rvOpts .opt").forEach(x=>{x.classList.add("dim");x.onclick=null;});
       b.classList.remove("dim");b.classList.add(ok?"correct":"wrong");
       if(!ok) document.querySelectorAll("#rvOpts .opt").forEach(x=>{ if(x.textContent===item.a){x.classList.remove("dim");x.classList.add("correct");} });
-      document.getElementById("rvBlank").textContent=item.a;
-      document.getElementById("rvBlank").classList.toggle("filled",ok);
+      {const g=document.getElementById("rvBlank"); g.textContent=item.a; g.classList.add("is-filled"); g.classList.toggle("is-ok",ok); g.classList.toggle("is-bad",!ok);}
       record(item.a,ok);
       if(ok){ clearReviewItem(item.text); burst(e.clientX,e.clientY); }
       else { prog.reviewQ.push(prog.reviewQ.shift()); saveProg(); } // move to back, try later
       showFB(ok,item,item.a);
       const nb=document.createElement("button");nb.className="btn full";nb.textContent= prog.reviewQ.length?"Næste →":"Færdig ✓";
       nb.onclick=()=>nextReview();
-      box.after(nb);
+      document.getElementById("fb").after(nb); revealFeedback(nb);
     };
     box.appendChild(b);
   });
@@ -1299,7 +1353,8 @@ function nextReview(){
 function openStats(){ renderStats(); show("stats"); }
 function renderStats(){
   const acc=prog.total?Math.round(prog.correct/prog.total*100):0;
-  const speedBest=parseInt(localStorage.getItem("praep_speed_best")||"0");
+  let speedBest=0;
+  try{ speedBest=parseInt(localStorage.getItem("praep_speed_best")||"0"); }catch(e){}
   // per-preposition accuracy
   const rows=PREPS.map(p=>{
     const d=prog.per[p]||{c:0,w:0}; const tot=d.c+d.w;
@@ -1323,7 +1378,7 @@ function renderStats(){
 
   elStats.innerHTML=
     '<div class="card">'+
-    '<div class="backrow"><button class="topbtn" onclick="goMenu()">‹ Menu</button>'+
+    '<div class="backrow"><button class="topbtn" onclick="goMenu()">← Tilbage</button>'+
     '<span class="qcount">Statistik</span></div>'+
     '<div class="statgrid" style="margin-top:14px">'+
     '<div class="stat"><div class="n">'+acc+'%</div><div class="l">Nøjagtighed</div></div>'+
@@ -1345,7 +1400,7 @@ function renderStats(){
 function resetProg(){
   if(confirm("Er du sikker? Al din fremgang slettes.")){
     prog=defaultProg(); saveProg();
-    localStorage.removeItem("praep_speed_best");
+    try{ localStorage.removeItem("praep_speed_best"); }catch(e){}
     updateTopBar(); renderStats(); renderMenu();
   }
 }

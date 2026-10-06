@@ -159,6 +159,7 @@
     ['B1', 'lyve', 'lyver', 'løj', 'løjet', 'lyv', 'har', null],
     ['B1', 'ride', 'rider', 'red', 'redet', 'rid', 'er', null],
     ['B1', 'bringe', 'bringer', 'bragte', 'bragt', 'bring', 'har', 'bringes'],
+    ['B2', 'gentage', 'gentager', 'gentog', 'gentaget', 'gentag', 'har', 'gentages'],
     ['A2', 'ske', 'sker', 'skete', 'sket', null, 'er', null],
     // Modal verbs: irregular present (no -r), no imperative
     ['A1', 'kunne', 'kan', 'kunne', 'kunnet', null, 'har', null],
@@ -243,7 +244,6 @@
     ['B1', 'hviske', 'tale meget lavt', false],
     ['B1', 'rulle', 'trille rundt', true],
     ['B1', 'træne', 'øve sig', false],
-    ['B1', 'forberede', 'gøre klar', true],
     ['B1', 'organisere', 'arrangere', true],
     ['B1', 'arrangere', 'ordne på forhånd', true],
     ['B1', 'informere', 'give oplysninger', true],
@@ -263,7 +263,6 @@
     ['B1', 'præsentere', 'fremvise', true],
     ['B1', 'notere', 'skrive ned', true],
     ['B1', 'vurdere', 'bedømme', true],
-    ['B2', 'gentage', 'sige eller gøre igen', true],
     ['A2', 'grine', 'le', false]
   ];
 
@@ -298,7 +297,8 @@
     ['A2', 'koge', 'varme i vand', true],
     ['A2', 'dele', 'give en del til andre', true],
     ['A2', 'føre', 'lede eller styre', true],
-    ['B1', 'nævne', 'omtale kort', true]
+    ['B1', 'nævne', 'omtale kort', true],
+    ['B1', 'forberede', 'gøre klar', true]
   ];
 
   // Weak class 1, vowel-final infinitives.

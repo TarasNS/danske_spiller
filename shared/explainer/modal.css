@@ -1,37 +1,58 @@
-/* Explainer modal - Sjovt Dansk pixel look. Loads after sjovt.css; falls back to literal values if tokens are missing. */
+/* Explainer modal - Sjovt Dansk pixel look. Loads after sjovt.css and uses its tokens
+   (--sd-primary / --sd-panel / --sd-box / --sd-drop ...); every use has a literal fallback so the modal also works without them. */
 html.xpm-open { overflow: hidden; }
 
 .xpm-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 0 12px; margin-left: 4px;
-  background: #F94F37; color: #101010; border: 0; border-radius: 0; cursor: pointer;
-  font: 700 14px/1 var(--sd-font-display, "Pixelify Sans", ui-monospace, monospace); letter-spacing: .02em; text-transform: uppercase;
-  box-shadow: 0 0 0 3px #101010; }
-.xpm-btn:hover { background: #FFC25A; }
-.xpm-btn:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+  background: var(--sd-primary, #F94F37); color: var(--sd-on-primary, #101010); border: 0; border-radius: 0; cursor: pointer;
+  font: 700 14px/1 var(--sd-font-display, "SD Mono", ui-monospace, monospace); letter-spacing: .02em; text-transform: uppercase;
+  box-shadow: 0 0 0 3px var(--sd-ink, #101010); transition: background-color .12s var(--sd-ease, steps(2, end)); }
+.xpm-btn:hover { background: var(--sd-cream, #FFC25A); }
+.xpm-btn:focus-visible { outline: 3px solid var(--sd-focus, #FFFFFF); outline-offset: 2px; }
+.xpm-btn .xpm-ico { flex: none; width: 8px; height: 14px; display: block; shape-rendering: crispEdges; }
 .xpm-btn-float { position: fixed; right: 12px; bottom: 12px; z-index: 950; }
-@media (max-width: 420px) { .xpm-btn .xpm-btn-t { display: none; } .xpm-btn { padding: 0 14px; } }
+.xpm-btn .xpm-btn-s { display: none; }
+@media (max-width: 420px) {
+  .xpm-btn .xpm-btn-t { display: none; }
+  .xpm-btn .xpm-btn-s { display: inline; }
+  .xpm-btn { padding: 0 10px; gap: 6px; }
+}
 
 .xpm { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 12px;
   background: rgba(16, 16, 16, .82); overflow-y: auto; }
-.xpm-panel { width: 100%; max-width: 720px; max-height: calc(100dvh - 24px); overflow-y: auto; background: #E1AD12;
-  color: #101010; padding: 12px; box-shadow: 0 0 0 4px #101010, 8px 8px 0 4px rgba(16, 16, 16, .55); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .xpm-panel { background: #1B1D2B; color: #FFF4D6; box-shadow: 0 0 0 4px #FFF4D6; } }
-:root[data-theme="dark"] .xpm-panel { background: #1B1D2B; color: #FFF4D6; box-shadow: 0 0 0 4px #FFF4D6; }
+.xpm-panel { width: 100%; max-width: 720px; max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow-y: auto;
+  background: var(--sd-panel, #FFF4D6); color: var(--sd-text, #101010); padding: 12px; margin: 4px;
+  box-shadow: var(--sd-box, 0 -4px 0 0 #101010, 0 4px 0 0 #101010, -4px 0 0 0 #101010, 4px 0 0 0 #101010), var(--sd-drop, 8px 8px 0 0 #101010);
+  animation: xpm-in .2s var(--sd-ease, steps(4, end)); }
+@keyframes xpm-in { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .xpm-panel { animation: none; } .xpm-btn, .xpm-close, .xpm-tab { transition: none; } }
 
 .xpm-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-.xpm-title { margin: 0; font: 700 18px/1.2 var(--sd-font-display, "Pixelify Sans", ui-monospace, monospace); overflow-wrap: anywhere; }
+.xpm-title { margin: 0; font: 700 16px/1.2 var(--sd-font-display, "SD Mono", ui-monospace, monospace); text-transform: uppercase; letter-spacing: .02em; overflow-wrap: anywhere; }
 .xpm-close, .xpm-tab { min-height: 44px; min-width: 44px; padding: 0 14px; border: 0; border-radius: 0; cursor: pointer;
-  font: 700 14px/1 var(--sd-font-display, "Pixelify Sans", ui-monospace, monospace); text-transform: uppercase;
-  background: #FFF4D6; color: #101010; box-shadow: 0 0 0 3px #101010; }
-.xpm-close:hover, .xpm-tab:hover { background: #FFC25A; }
-.xpm-close:focus-visible, .xpm-tab:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
-.xpm-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 3px 12px; }
-.xpm-tab[aria-selected="true"] { background: #F94F37; }
+  font: 700 14px/1 var(--sd-font-display, "SD Mono", ui-monospace, monospace); text-transform: uppercase; letter-spacing: .02em;
+  background: var(--sd-panel-2, #FFE9B0); color: var(--sd-text, #101010);
+  box-shadow: 0 0 0 3px var(--sd-line, #101010); transition: background-color .12s var(--sd-ease, steps(2, end)); }
+.xpm-close:hover, .xpm-tab:hover { background: var(--sd-cream, #FFC25A); color: #101010; }
+.xpm-close:focus-visible, .xpm-tab:focus-visible { outline: 3px solid var(--sd-focus, #2B3FD6); outline-offset: 2px; }
 
-/* monitor frame: art 48x40, screen rect 12.5% / 12.5% / 75% / 60% (see explainer.html in the skill) */
-.xpm-monitor { position: relative; width: 100%; aspect-ratio: 48 / 40; }
+/* scene chooser: ONE row, scrolls sideways, the active tab is always scrolled into view */
+.xpm-tabs { position: relative; display: flex; flex-wrap: nowrap; gap: 10px; margin: 0 0 10px; padding: 5px 5px 8px;
+  overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scroll-padding: 0 5px; scrollbar-width: thin; overscroll-behavior-x: contain; }
+.xpm-tab { flex: none; scroll-snap-align: start; white-space: nowrap; }
+.xpm-tab[aria-selected="true"] { background: var(--sd-primary, #F94F37); color: var(--sd-on-primary, #101010); }
+.xpm-tabs.more-r { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+.xpm-tabs.more-l { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent); }
+.xpm-tabs.more-l.more-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent); }
+
+.xpm-error { margin: 8px 0 12px; padding: 16px; font: 700 16px/1.4 var(--sd-font-display, "SD Mono", ui-monospace, monospace);
+  background: var(--sd-bad-bg, #FFD0DE); color: var(--sd-text, #101010); box-shadow: var(--sd-box-bad, 0 0 0 4px #D4145A); }
+
+/* monitor frame: art 48x40, screen rect 12.5% / 12.5% / 75% / 60%. Width is capped by the viewport height so the controls stay in the panel. */
+.xpm-monitor { position: relative; width: 100%; width: min(100%, calc((100vh - 330px) * 1.2)); width: min(100%, calc((100dvh - 330px) * 1.2));
+  min-width: 260px; max-width: 100%; aspect-ratio: 48 / 40; margin: 0 auto; }
 .xpm-frame { position: absolute; inset: 0; background: center / 100% 100% no-repeat; image-rendering: pixelated; z-index: 2; pointer-events: none; }
 .xpm-screen { position: absolute; left: 12.5%; top: 12.5%; width: 75%; height: 60%; background: #1B2A9A; overflow: hidden; z-index: 1; }
 .xpm .xpm-screen > .xpm-stage { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; }
 .xpm-screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
   background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .06) 0 1px, transparent 1px 3px); }
-.xpm-controls { margin-top: 14px; }
+.xpm-controls { margin-top: 8px; }

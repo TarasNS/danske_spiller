@@ -12,7 +12,7 @@ window.EXPLAINER_SCENE = {
     { type: "try", t: 1800, slot: 3, word: "bil", ok: false },
     { type: "try", t: 1800, slot: 3, word: "biler", ok: true },
     { type: "pause", t: 600 },
-    { type: "rule", t: 5400, lines: ["Ofte -er: bil → biler", "Ofte -e: hus → huse", "Hvert ord: barn → børn"] },
+    { type: "rule", t: 5400, lines: ["Ofte -er: bil → biler", "Ofte -e: hus → huse", "Nogle ord: barn → børn"] },
     { type: "cycle", t: 2600, sentence: { words: ["Jeg", "ser", "to", "{3}"], slots: { 3: { answer: "huse" } } } },
     { type: "try", t: 1800, slot: 3, word: "huse", ok: true },
     { type: "cycle", t: 2600, sentence: { words: ["Jeg", "ser", "to", "{3}"], slots: { 3: { answer: "drenge" } } } },

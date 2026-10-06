@@ -85,7 +85,7 @@
     { id: 'der-det-adjektiv-infinitiv', type: 'der_det', construction: 'extraposition_det', main_template: '', sub_template: 'Det er dejligt at være hjemme.', note: 'Det er foreløbigt subjekt for infinitivledet at være hjemme.', level: 'A2', verify: false },
     { id: 'der-eksistentiel-negation', type: 'der_det', construction: 'existential_der', main_template: '', sub_template: 'Der er ikke plads til flere.', note: 'Ikke placeres efter det finitte verbum og før subjektet i denne konstruktion.', level: 'B1', verify: false },
     { id: 'der-det-vejr-2', type: 'der_det', construction: 'weather_det', main_template: '', sub_template: 'Det sner meget om vinteren i Norge.', note: 'Vejrudtryk med det kan ikke erstattes af der.', level: 'A1', verify: false },
-    { id: 'der-praesentation-negation', type: 'der_det', construction: 'presentational_der', main_template: '', sub_template: 'Der kommer ingen gæster i dag.', note: 'Presentationelt der bruges også med negerede ubestemte subjekter.', level: 'B1', verify: false },
+    { id: 'der-praesentation-negation', type: 'der_det', construction: 'presentational_der', main_template: '', sub_template: 'Der kommer ingen gæster i dag.', note: 'Præsentationelt der bruges også med negerede ubestemte subjekter.', level: 'B1', verify: false },
 
     // -- conditional --------------------------------------------------
     // Coverage: real/open conditions, hypothetical present, counterfactual

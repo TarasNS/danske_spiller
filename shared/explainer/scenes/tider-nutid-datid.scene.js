@@ -8,7 +8,7 @@ window.EXPLAINER_SCENE = {
   verify: false,
   steps: [
     { type: "sentence", t: 3000, words: ["I", "går", "{2}", "jeg", "pizza"], slots: { 2: { answer: "spiste" } } },
-    { type: "highlight", t: 1200, word: 1, color: "Y" },
+    { type: "highlight", t: 1200, words: [0, 1], color: "Y" },
     { type: "try", t: 2000, slot: 2, word: "spiser", ok: false },
     { type: "try", t: 2000, slot: 2, word: "spiste", ok: true },
     { type: "pause", t: 600 },

@@ -256,25 +256,6 @@ body {
   gap: .5rem;
 }
 
-.speaker {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: inline-grid;
-  place-items: center;
-  font-size: 1rem;
-  flex: none;
-  cursor: pointer;
-  border: 2px solid var(--wl-gold);
-  background: rgba(255,255,255,.08);
-}
-.speaker:active { transform: scale(.92); }
-
-.speaker-front {
-  border-color: var(--wl-purple);
-  background: rgba(107,63,160,.1);
-}
-
 /* ---------- Buttons ---------- */
 .action-buttons { display: flex; gap: 1.1rem; margin-bottom: 1.2rem; }
 
@@ -299,7 +280,7 @@ body {
 .action-buttons button.right { background: linear-gradient(180deg, var(--wl-green-light), var(--wl-green)); }
 .action-buttons button.right:hover { background: linear-gradient(180deg, #93e96c, var(--wl-green)); }
 
-.restart { margin-top: .4rem; }
+.restart { margin-top: 2rem; }
 
 .restart button {
   padding: .5rem 1.1rem;

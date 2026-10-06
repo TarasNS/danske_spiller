@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da" data-explainer="tider-nutid-datid,foernutid-har,datid-foernutid,modalverber">
+<html lang="da" data-explainer="tider-nutid-datid,foernutid-har,datid-foernutid,modalverber,pluskvamperfektum,fremtid,hvis-betingelse,at-infinitiv,passiv,imperativ">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,7 +94,7 @@
   .tl-zname{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .tl-zone.lit{background:var(--zbg);border-width:3px;padding:calc(.3em - 1px) calc(.35em - 1px) calc(.4em - 1px)}
   .tl-zone.lit .tl-zname{color:var(--text)}
-  .tl-zone.lit .tl-zname::before{content:"▶ "}
+  .tl-zone.lit .tl-zname::before{content:"■ "}
   .tl-card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:.15em .4em;font-size:.82rem;line-height:1.3;overflow-wrap:anywhere}
   .tl-card .role{display:block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
   .tl-card.active{border:2px solid var(--zc);font-weight:700}
@@ -150,18 +150,19 @@
 <link rel="stylesheet" href="../shared/sjovt.css">
 <script src="../shared/sjovt.js"></script>
 <link rel="stylesheet" href="../shared/themes/tidsmaskinen.css">
+<link rel="stylesheet" href="../shared/tts-button.css">
+<link rel="stylesheet" href="../shared/sd-extras.css">
 <link rel="stylesheet" href="../shared/explainer/modal.css"><script src="../shared/explainer/modal.js"></script>
 </head>
 <body>
 <div class="shell">
   <header class="topbar">
-    <div class="brand"><span data-sd-sprite="ur" data-scale="3" aria-hidden="true"></span> Tidsmaskinen</div>
-    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
-    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
+    <div class="brand"><span data-sd-sprite="tidsstjerne" data-scale="3" aria-hidden="true"></span> Tidsmaskinen</div>
+    <button class="icon-btn" id="btn-reset" type="button" aria-label="Nulstil fremskridt" title="Nulstil fremskridt">NULSTIL</button>
   </header>
 
   <main id="start-screen" class="card">
-    <h1 class="title"><span data-sd-sprite="ur" data-scale="5" aria-hidden="true"></span>Tidsmaskinen</h1>
+    <h1 class="title"><span data-sd-sprite="tidsstjerne" data-scale="5" aria-hidden="true"></span>Tidsmaskinen</h1>
     <button class="primary" id="btn-play" type="button">Spil</button>
     <div class="group-label" id="lbl-mode">Tilstand</div>
     <div class="modes" id="mode-list" role="group" aria-labelledby="lbl-mode"></div>
@@ -284,8 +285,7 @@
   };
 
   DC.ui.darkMode.init();
-  DC.ui.sound.init(prefs.get('sound') !== false);
-  syncSoundLabel();
+  DC.ui.sound.init(true);   // US-040: mute lives in the shared bar (dc:sound-enabled)
 
   var savedLevels = prefs.get('levels');
   if (Array.isArray(savedLevels)) {
@@ -294,19 +294,17 @@
   }
   state.timed = prefs.get('timed') === true && timedUnlocked();
 
-  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
-  document.getElementById('btn-sound').addEventListener('click', function(){
-    var on = DC.ui.sound.toggle();
-    prefs.set('sound', on);
-    syncSoundLabel();
-    if (on) SOUND.select();
+  // US-030: reset progress (this game's keys only: srs:tidsmaskinen + tidsmaskinen:totalCorrect/hintDone/timed), after a Danish confirm
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    var ok = false;
+    try { ok = window.confirm('Nulstil al fremgang i Tidsmaskinen? Det kan ikke fortrydes.'); } catch(e){ ok = false; }
+    if (!ok) return;
+    try { window.localStorage.removeItem('srs:' + GAME_ID); } catch(e){}
+    ['totalCorrect','hintDone','timed'].forEach(function(k){ prefs.remove(k); });
+    srsState = DC.srs.load(GAME_ID);
+    state.timed = false;
+    if (el.start.classList.contains('hidden')) showStart(); else buildStartControls();
   });
-  function syncSoundLabel(){
-    var on = DC.ui.sound.isEnabled();
-    var b = document.getElementById('btn-sound');
-    b.textContent = on ? 'LYD' : 'LYD ✗';
-    b.setAttribute('aria-pressed', String(!on));
-  }
   document.getElementById('btn-play').addEventListener('click', startRound);
   document.getElementById('btn-back').addEventListener('click', showStart);
   document.addEventListener('keydown', function(e){
@@ -815,6 +813,22 @@
     tick();
     if (timerId === null && onExpire) timerId = setInterval(tick, 250);
   }
+  // explainer modal: hold the countdown while it is open (the deadline is pushed forward until it closes)
+  var xpHold = null;
+  document.addEventListener('explainer:open', function(){
+    if (timerId === null || xpHold) return;
+    var held = timerId, left = Math.max(0, deadline - Date.now());
+    xpHold = { id: held, left: left, iv: setInterval(function(){
+      if (timerId !== held){ clearInterval(xpHold.iv); xpHold = null; return; }
+      deadline = Date.now() + left + 60;
+    }, 40) };
+    deadline = Date.now() + left + 60;
+  });
+  document.addEventListener('explainer:close', function(){
+    if (!xpHold) return;
+    var h = xpHold; xpHold = null; clearInterval(h.iv);
+    if (timerId === h.id) deadline = Date.now() + h.left;
+  });
   function clearPending(){
     if (advanceTimer){ clearTimeout(advanceTimer); advanceTimer = null; }
     if (activeKeyHandler){ document.removeEventListener('keydown', activeKeyHandler); activeKeyHandler = null; }
@@ -826,7 +840,8 @@
     clearPending();
     buildStartControls();
     show('start');
-    document.getElementById('btn-play').focus();
+    window.scrollTo(0, 0);
+    document.getElementById('btn-play').focus({ preventScroll: true });
   }
 
   // ---- round lifecycle ----
@@ -865,7 +880,7 @@
     box.className = 'empty-state';
     box.innerHTML = '<p>Der er ingen opgaver til dette valg. Vælg et andet niveau.</p>';
     var back = document.createElement('button');
-    back.className = 'btn accent'; back.type = 'button'; back.textContent = 'Tilbage';
+    back.className = 'btn accent'; back.type = 'button'; back.textContent = '← TILBAGE';
     back.addEventListener('click', showStart);
     box.appendChild(back);
     el.itemHost.appendChild(box);
@@ -913,7 +928,7 @@
   function buildPrompt(item, P, wrap){
     var m = MODE_BY_KEY[effMode(item)];
     var tag = document.createElement('p');
-    tag.className = 'case-tag';
+    tag.className = 'case-tag sd-badge sd-badge--panel';
     tag.textContent = m ? m.name : '';
     wrap.appendChild(tag);
 
@@ -942,7 +957,7 @@
       if (i < arr.length - 1){
         blank = document.createElement('span');
         blanks.push(blank);
-        blank.className = 'blank';
+        blank.className = 'blank sd-gap';
         blank.textContent = '?';
         blank.setAttribute('aria-label', 'tomt felt');
         sent.appendChild(blank);
@@ -1090,7 +1105,7 @@
       if (!pr.blank) return;
       pr.blank.textContent = text;
       pr.blank.removeAttribute('aria-label');
-      pr.blank.classList.add(correct ? 'done-correct' : 'done-wrong');
+      pr.blank.classList.add(correct ? 'done-correct' : 'done-wrong', 'is-filled', correct ? 'is-ok' : 'is-bad');
     }
 
     function choose(btn){
@@ -1242,7 +1257,7 @@
       if (!b) return;
       b.textContent = text;
       b.removeAttribute('aria-label');
-      b.classList.add(ok ? 'done-correct' : 'done-wrong');
+      b.classList.add(ok ? 'done-correct' : 'done-wrong', 'is-filled', ok ? 'is-ok' : 'is-bad');
     }
     function showSlot(){
       var S = P.slots[si];

@@ -3,7 +3,9 @@
 // Schema (see prd.md § 1.4):
 // { id, level, base, common_form, neuter_form, definite_plural_form,
 //   comparative, superlative_indefinite, superlative_definite,
-//   periphrastic, irregular, indeclinable, note, verify }
+//   periphrastic, irregular, irregular_comparison, indeclinable, note, verify }
+//   irregular = neuter/agreement quirk (e.g. glad -> glad, not *gladt);
+//   irregular_comparison = true only for genuinely irregular comparison (god -> bedre).
 (function () {
   'use strict';
 
@@ -102,7 +104,7 @@
       definite_plural_form: stem + 'ne',
       comparative: 'mere ' + base,
       superlative_indefinite: 'mest ' + base,
-      superlative_definite: 'mest ' + base,
+      superlative_definite: 'mest ' + stem + 'ne',
       periphrastic: true,
       irregular: false,
       indeclinable: false,
@@ -129,7 +131,7 @@
       definite_plural_form: plural,
       comparative: 'mere ' + base,
       superlative_indefinite: 'mest ' + base,
-      superlative_definite: 'mest ' + base,
+      superlative_definite: 'mest ' + plural,
       periphrastic: true,
       irregular: false,
       indeclinable: false,
@@ -146,16 +148,16 @@
   // derive safely.
   var MANUAL = [
     // Irregular comparison
-    { id: 'god', level: 'A1', base: 'god', common_form: 'god', neuter_form: 'godt', definite_plural_form: 'gode', comparative: 'bedre', superlative_indefinite: 'bedst', superlative_definite: 'bedste', periphrastic: false, irregular: true, indeclinable: false, note: 'God bøjes uregelmæssigt: god → bedre → bedst.', verify: false },
-    { id: 'daarlig', level: 'A1', base: 'dårlig', common_form: 'dårlig', neuter_form: 'dårligt', definite_plural_form: 'dårlige', comparative: 'værre', superlative_indefinite: 'værst', superlative_definite: 'værste', periphrastic: false, irregular: true, indeclinable: false, note: 'Dårlig bøjes uregelmæssigt i gradbøjning: dårlig → værre → værst.', verify: false },
-    { id: 'gammel', level: 'A1', base: 'gammel', common_form: 'gammel', neuter_form: 'gammelt', definite_plural_form: 'gamle', comparative: 'ældre', superlative_indefinite: 'ældst', superlative_definite: 'ældste', periphrastic: false, irregular: true, indeclinable: false, note: 'Gammel mister e i bestemt/flertal (gamle) og gradbøjes uregelmæssigt: ældre, ældst.', verify: false },
-    { id: 'lille', level: 'A1', base: 'lille', common_form: 'lille', neuter_form: 'lille', definite_plural_form: 'små', comparative: 'mindre', superlative_indefinite: 'mindst', superlative_definite: 'mindste', periphrastic: false, irregular: true, indeclinable: false, note: 'Lille bruges kun i ental (fælleskøn og intetkøn); flertal/bestemt form er det helt andet ord små.', verify: false },
-    { id: 'mange', level: 'A1', base: 'mange', common_form: 'mange', neuter_form: 'mange', definite_plural_form: 'mange', comparative: 'flere', superlative_indefinite: 'flest', superlative_definite: 'fleste', periphrastic: false, irregular: true, indeclinable: true, note: 'Mange bruges kun om flertal af tællelige navneord og bøjes ikke i køn.', verify: true },
-    { id: 'faa', level: 'A1', base: 'få', common_form: 'få', neuter_form: 'få', definite_plural_form: 'få', comparative: 'færre', superlative_indefinite: 'færrest', superlative_definite: 'færreste', periphrastic: false, irregular: true, indeclinable: true, note: 'Få bruges kun om flertal af tællelige navneord og bøjes ikke i køn.', verify: true },
-    { id: 'stor', level: 'A1', base: 'stor', common_form: 'stor', neuter_form: 'stort', definite_plural_form: 'store', comparative: 'større', superlative_indefinite: 'størst', superlative_definite: 'største', periphrastic: false, irregular: true, indeclinable: false, note: 'Stor bøjes uregelmæssigt: stor → større → størst.', verify: false },
-    { id: 'ung', level: 'A1', base: 'ung', common_form: 'ung', neuter_form: 'ungt', definite_plural_form: 'unge', comparative: 'yngre', superlative_indefinite: 'yngst', superlative_definite: 'yngste', periphrastic: false, irregular: true, indeclinable: false, note: 'Ung gradbøjes uregelmæssigt: ung → yngre → yngst.', verify: false },
-    { id: 'lang', level: 'A1', base: 'lang', common_form: 'lang', neuter_form: 'langt', definite_plural_form: 'lange', comparative: 'længere', superlative_indefinite: 'længst', superlative_definite: 'længste', periphrastic: false, irregular: true, indeclinable: false, note: 'Lang gradbøjes uregelmæssigt med vokalskifte: lang → længere → længst.', verify: false },
-    { id: 'naer', level: 'B1', base: 'nær', common_form: 'nær', neuter_form: 'nært', definite_plural_form: 'nære', comparative: 'nærmere', superlative_indefinite: 'nærmest', superlative_definite: 'nærmeste', periphrastic: false, irregular: true, indeclinable: false, note: 'Nær gradbøjes uregelmæssigt med stammeudvidelse: nær → nærmere → nærmest.', verify: false },
+    { id: 'god', level: 'A1', base: 'god', common_form: 'god', neuter_form: 'godt', definite_plural_form: 'gode', comparative: 'bedre', superlative_indefinite: 'bedst', superlative_definite: 'bedste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'God bøjes uregelmæssigt: god → bedre → bedst.', verify: false },
+    { id: 'daarlig', level: 'A1', base: 'dårlig', common_form: 'dårlig', neuter_form: 'dårligt', definite_plural_form: 'dårlige', comparative: 'værre', superlative_indefinite: 'værst', superlative_definite: 'værste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Dårlig bøjes uregelmæssigt i gradbøjning: dårlig → værre → værst.', verify: false },
+    { id: 'gammel', level: 'A1', base: 'gammel', common_form: 'gammel', neuter_form: 'gammelt', definite_plural_form: 'gamle', comparative: 'ældre', superlative_indefinite: 'ældst', superlative_definite: 'ældste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Gammel mister e i bestemt/flertal (gamle) og gradbøjes uregelmæssigt: ældre, ældst.', verify: false },
+    { id: 'lille', level: 'A1', base: 'lille', common_form: 'lille', neuter_form: 'lille', definite_plural_form: 'små', comparative: 'mindre', superlative_indefinite: 'mindst', superlative_definite: 'mindste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Lille bruges i ubestemt ental (en/et lille) og bestemt ental (den/det lille); flertal er det helt andet ord små.', verify: false },
+    { id: 'mange', level: 'A1', base: 'mange', common_form: 'mange', neuter_form: 'mange', definite_plural_form: 'mange', comparative: 'flere', superlative_indefinite: 'flest', superlative_definite: 'fleste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: true, note: 'Mange bruges kun om flertal af tællelige navneord og bøjes ikke i køn.', verify: true },
+    { id: 'faa', level: 'A1', base: 'få', common_form: 'få', neuter_form: 'få', definite_plural_form: 'få', comparative: 'færre', superlative_indefinite: 'færrest', superlative_definite: 'færreste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: true, note: 'Få bruges kun om flertal af tællelige navneord og bøjes ikke i køn.', verify: true },
+    { id: 'stor', level: 'A1', base: 'stor', common_form: 'stor', neuter_form: 'stort', definite_plural_form: 'store', comparative: 'større', superlative_indefinite: 'størst', superlative_definite: 'største', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Stor bøjes uregelmæssigt: stor → større → størst.', verify: false },
+    { id: 'ung', level: 'A1', base: 'ung', common_form: 'ung', neuter_form: 'ungt', definite_plural_form: 'unge', comparative: 'yngre', superlative_indefinite: 'yngst', superlative_definite: 'yngste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Ung gradbøjes uregelmæssigt: ung → yngre → yngst.', verify: false },
+    { id: 'lang', level: 'A1', base: 'lang', common_form: 'lang', neuter_form: 'langt', definite_plural_form: 'lange', comparative: 'længere', superlative_indefinite: 'længst', superlative_definite: 'længste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Lang gradbøjes uregelmæssigt med vokalskifte: lang → længere → længst.', verify: false },
+    { id: 'naer', level: 'B1', base: 'nær', common_form: 'nær', neuter_form: 'nært', definite_plural_form: 'nære', comparative: 'nærmere', superlative_indefinite: 'nærmest', superlative_definite: 'nærmeste', periphrastic: false, irregular: true, irregular_comparison: true, indeclinable: false, note: 'Nær gradbøjes uregelmæssigt med stammeudvidelse: nær → nærmere → nærmest.', verify: false },
 
     // Monosyllables with consonant doubling or an unchanged neuter form
     { id: 'smuk', level: 'A1', base: 'smuk', common_form: 'smuk', neuter_form: 'smukt', definite_plural_form: 'smukke', comparative: 'smukkere', superlative_indefinite: 'smukkest', superlative_definite: 'smukkeste', periphrastic: false, irregular: false, indeclinable: false, note: 'Smuk fordobler k foran endelser med vokal: smukke, smukkere, smukkest.', verify: false },
@@ -164,7 +166,7 @@
     { id: 'toer', level: 'A2', base: 'tør', common_form: 'tør', neuter_form: 'tørt', definite_plural_form: 'tørre', comparative: 'tørrere', superlative_indefinite: 'tørrest', superlative_definite: 'tørreste', periphrastic: false, irregular: false, indeclinable: false, note: 'Tør fordobler r foran endelser med vokal: tørre, tørrere, tørrest.', verify: false },
     { id: 'groen', level: 'A1', base: 'grøn', common_form: 'grøn', neuter_form: 'grønt', definite_plural_form: 'grønne', comparative: 'grønnere', superlative_indefinite: 'grønnest', superlative_definite: 'grønneste', periphrastic: false, irregular: false, indeclinable: false, note: 'Grøn fordobler n foran endelser med vokal: grønne, grønnere, grønnest.', verify: false },
     { id: 'nem', level: 'A1', base: 'nem', common_form: 'nem', neuter_form: 'nemt', definite_plural_form: 'nemme', comparative: 'nemmere', superlative_indefinite: 'nemmest', superlative_definite: 'nemmeste', periphrastic: false, irregular: false, indeclinable: false, note: 'Nem fordobler m foran endelser med vokal: nemme, nemmere, nemmest.', verify: false },
-    { id: 'traet', level: 'A1', base: 'træt', common_form: 'træt', neuter_form: 'træt', definite_plural_form: 'trætte', comparative: 'mere træt', superlative_indefinite: 'mest træt', superlative_definite: 'mest træt', periphrastic: true, irregular: false, indeclinable: false, note: 'Træt ender allerede på t, så intetkønsformen er uændret (trætte i bestemt/flertal); gradbøjning sker i moderne sprogbrug oftest med mere/mest.', verify: true },
+    { id: 'traet', level: 'A1', base: 'træt', common_form: 'træt', neuter_form: 'træt', definite_plural_form: 'trætte', comparative: 'mere træt', superlative_indefinite: 'mest træt', superlative_definite: 'mest trætte', periphrastic: true, irregular: false, indeclinable: false, note: 'Træt ender allerede på t, så intetkønsformen er uændret (trætte i bestemt/flertal); gradbøjning sker i moderne sprogbrug oftest med mere/mest.', verify: true },
     { id: 'glad', level: 'A1', base: 'glad', common_form: 'glad', neuter_form: 'glad', definite_plural_form: 'glade', comparative: 'gladere', superlative_indefinite: 'gladest', superlative_definite: 'gladeste', periphrastic: false, irregular: true, indeclinable: false, note: 'Glad får ikke -t i intetkøn (undtagelse): et glad barn, ikke *gladt.', verify: false },
     { id: 'let', level: 'A1', base: 'let', common_form: 'let', neuter_form: 'let', definite_plural_form: 'lette', comparative: 'lettere', superlative_indefinite: 'lettest', superlative_definite: 'letteste', periphrastic: false, irregular: true, indeclinable: false, note: 'Let ender allerede på t, så intetkønsformen er uændret; t fordobles i lette, lettere, lettest.', verify: false },
     { id: 'smal', level: 'A2', base: 'smal', common_form: 'smal', neuter_form: 'smalt', definite_plural_form: 'smalle', comparative: 'smallere', superlative_indefinite: 'smallest', superlative_definite: 'smalleste', periphrastic: false, irregular: false, indeclinable: false, note: 'Smal fordobler l foran endelser med vokal: smalle, smallere, smallest.', verify: true },
@@ -181,8 +183,8 @@
     { id: 'oede', level: 'B1', base: 'øde', common_form: 'øde', neuter_form: 'øde', definite_plural_form: 'øde', comparative: 'mere øde', superlative_indefinite: 'mest øde', superlative_definite: 'mest øde', periphrastic: true, irregular: false, indeclinable: true, note: 'Øde er ubøjeligt: samme form i alle køn og tal.', verify: true },
     { id: 'gammeldags', level: 'B1', base: 'gammeldags', common_form: 'gammeldags', neuter_form: 'gammeldags', definite_plural_form: 'gammeldags', comparative: 'mere gammeldags', superlative_indefinite: 'mest gammeldags', superlative_definite: 'mest gammeldags', periphrastic: true, irregular: false, indeclinable: true, note: 'Gammeldags er ubøjeligt: samme form i alle køn og tal.', verify: false },
     { id: 'stakkels', level: 'B1', base: 'stakkels', common_form: 'stakkels', neuter_form: 'stakkels', definite_plural_form: 'stakkels', comparative: 'mere stakkels', superlative_indefinite: 'mest stakkels', superlative_definite: 'mest stakkels', periphrastic: true, irregular: false, indeclinable: true, note: 'Stakkels er ubøjeligt og bruges kun foranstillet: den stakkels mand.', verify: true },
-    { id: 'spaendende', level: 'A2', base: 'spændende', common_form: 'spændende', neuter_form: 'spændende', definite_plural_form: 'spændende', comparative: 'mere spændende', superlative_indefinite: 'mest spændende', superlative_definite: 'mest spændende', periphrastic: true, irregular: false, indeclinable: true, note: 'Spændende er et førnutids tillægsform (participium) og er ubøjeligt i alle køn og tal.', verify: false },
-    { id: 'interessant', level: 'A2', base: 'interessant', common_form: 'interessant', neuter_form: 'interessant', definite_plural_form: 'interessante', comparative: 'mere interessant', superlative_indefinite: 'mest interessant', superlative_definite: 'mest interessant', periphrastic: true, irregular: false, indeclinable: false, note: 'Interessant er uændret i intetkøn men får -e i bestemt/flertal (interessante); gradbøjning sker med mere/mest.', verify: false },
+    { id: 'spaendende', level: 'A2', base: 'spændende', common_form: 'spændende', neuter_form: 'spændende', definite_plural_form: 'spændende', comparative: 'mere spændende', superlative_indefinite: 'mest spændende', superlative_definite: 'mest spændende', periphrastic: true, irregular: false, indeclinable: true, note: 'Spændende er en nutids tillægsform (participium) og er ubøjeligt i alle køn og tal.', verify: false },
+    { id: 'interessant', level: 'A2', base: 'interessant', common_form: 'interessant', neuter_form: 'interessant', definite_plural_form: 'interessante', comparative: 'mere interessant', superlative_indefinite: 'mest interessant', superlative_definite: 'mest interessante', periphrastic: true, irregular: false, indeclinable: false, note: 'Interessant er uændret i intetkøn men får -e i bestemt/flertal (interessante); gradbøjning sker med mere/mest.', verify: false },
     { id: 'stille', level: 'B1', base: 'stille', common_form: 'stille', neuter_form: 'stille', definite_plural_form: 'stille', comparative: 'mere stille', superlative_indefinite: 'mest stille', superlative_definite: 'mest stille', periphrastic: true, irregular: false, indeclinable: true, note: 'Stille ender på ubetonet -e og er ubøjeligt; gradbøjning sker med mere/mest.', verify: true }
   ];
 
@@ -244,7 +246,7 @@
     ['B1', 'uafhængig'], ['A2', 'rigtig'], ['A2', 'færdig'], ['A2', 'tålmodig'],
     ['B1', 'utålmodig'], ['A2', 'modig'], ['A1', 'billig'], ['A2', 'giftig'],
     ['A2', 'kedelig'], ['B1', 'sørgelig'], ['A2', 'uheldig'], ['A1', 'heldig'],
-    ['A2', 'ærlig'], ['B1', 'uærlig'], ['A1', 'fattig'], ['A2', 'rig'],
+    ['A2', 'ærlig'], ['B1', 'uærlig'], ['A1', 'fattig'],
     ['A2', 'tilfældig'], ['B1', 'skyldig'], ['B1', 'uskyldig'], ['B1', 'blodig'],
     ['B1', 'gyldig'], ['B1', 'ugyldig'], ['B1', 'lovlig'], ['B1', 'ulovlig'],
     ['B2', 'dødelig'], ['B1', 'folkelig'], ['A2', 'kærlig'], ['B1', 'kongelig'],
@@ -283,7 +285,8 @@
     ['A2', 'dyb', 'som når langt ned', false], ['A2', 'fed', 'med meget fedt, eller sej', false],
     ['A2', 'flink', 'venlig og hjælpsom', false], ['A2', 'frisk', 'ny og sund, ikke gammel', false],
     ['A2', 'rask', 'ved godt helbred igen', false], ['B1', 'vred', 'meget sur, gal', false],
-    ['B1', 'tavs', 'som ikke siger noget', false], ['B1', 'barsk', 'hård og ubarmhjertig', false]
+    ['B1', 'tavs', 'som ikke siger noget', false], ['B1', 'barsk', 'hård og ubarmhjertig', false],
+    ['A2', 'rig', 'med mange penge', false]
   ].map(function (row) { return adjReg(row[0], row[1], row[2], row[3]); });
 
   window.DANSK_ADJECTIVES = MANUAL.concat(EN_WORDS, SOM_WORDS, ISK_WORDS, ET_WORDS, LOES_WORDS, IG_WORDS, REG_WORDS);
