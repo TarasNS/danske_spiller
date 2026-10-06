@@ -1,0 +1,67 @@
+{
+  "note": "Regression corpus for run_checks.cjs. Every rule the linter enforces has one positive and one negative case (references/promotion-rule.md, rule 6). A promoted rule that ships without both is not promoted. Never edit a case so a new article passes.",
+  "cases": [
+    {
+      "id": "pass-01",
+      "dir": "fixtures/pass-01",
+      "expect": "pass",
+      "reason": "valid da/en pair: schema complete, every claim sourced and fetched, keyword placed, LIX under ceiling"
+    },
+    {
+      "id": "fail-hedge",
+      "dir": "fixtures/fail-hedge",
+      "expect": "fail",
+      "match": "hedge \"omkring\" next to a number",
+      "reason": "an unsourced figure rescued with a hedge instead of being cut (the observed baseline failure)"
+    },
+    {
+      "id": "fail-unsourced",
+      "dir": "fixtures/fail-unsourced",
+      "expect": "fail",
+      "match": "has no source_url",
+      "reason": "a claim with no source at all"
+    },
+    {
+      "id": "fail-tier",
+      "dir": "fixtures/fail-tier",
+      "expect": "fail",
+      "match": "not an authority source",
+      "reason": "a fee claim citing a language school rather than the kommune or the legal text"
+    },
+    {
+      "id": "fail-search-extract",
+      "dir": "fixtures/fail-search-extract",
+      "expect": "fail",
+      "match": "verified only by \"search-extract\"",
+      "reason": "an exam date known only from a search snippet, because the page never loaded"
+    },
+    {
+      "id": "fail-derived",
+      "dir": "fixtures/fail-derived",
+      "expect": "fail",
+      "match": "must list the claim ids it was computed from",
+      "reason": "a total the writer worked out themselves, presented as if sourced"
+    },
+    {
+      "id": "fail-parity",
+      "dir": "fixtures/fail-parity",
+      "expect": "fail",
+      "match": "claim ids differ between versions",
+      "reason": "a claim dropped from the English version only"
+    },
+    {
+      "id": "fail-same-keyword",
+      "dir": "fixtures/fail-same-keyword",
+      "expect": "fail",
+      "match": "target_keyword are identical",
+      "reason": "English keyword translated from the Danish one instead of chosen for English search"
+    },
+    {
+      "id": "fail-lix",
+      "dir": "fixtures/fail-lix",
+      "expect": "fail",
+      "match": "above the B1 ceiling",
+      "reason": "nominalised academic Danish aimed at a B1 reader"
+    }
+  ]
+}
