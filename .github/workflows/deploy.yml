@@ -1,0 +1,45 @@
+name: Deploy to simply.com
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate datasets
+        run: node shared/validate.js
+
+      - name: Configure SSH
+        env:
+          SIMPLY_HOST: ${{ secrets.SIMPLY_HOST }}
+          SIMPLY_PORT: ${{ secrets.SIMPLY_PORT }}
+          SIMPLY_SSH_KEY: ${{ secrets.SIMPLY_SSH_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SIMPLY_SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -p "$SIMPLY_PORT" "$SIMPLY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload to public_html
+        env:
+          SIMPLY_HOST: ${{ secrets.SIMPLY_HOST }}
+          SIMPLY_PORT: ${{ secrets.SIMPLY_PORT }}
+          SIMPLY_USER: ${{ secrets.SIMPLY_USER }}
+        run: |
+          rsync -rltvz \
+            -e "ssh -i ~/.ssh/id_deploy -p $SIMPLY_PORT" \
+            --exclude='.git/' --exclude='.github/' --exclude='.claude/' \
+            --exclude='tests/' --exclude='docs/' --exclude='stories/' \
+            --exclude='qa/' --exclude='improvement/' \
+            --exclude='tmp_*.js' --exclude='.tmp_*' --exclude='build-loop.sh' \
+            --exclude='*.md' --exclude='*.csv' --exclude='.gitignore' \
+            ./ "$SIMPLY_USER@$SIMPLY_HOST:public_html/"
