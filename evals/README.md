@@ -23,4 +23,4 @@ Pick a small, single-concern fix with an objective outcome. Write a grader in `e
 - Locally, `~/.claude` skills/memory can still load. CI sets `EVAL_CLEAN_HOME=1` to use an empty HOME; for local runs set it too if you have an API key.
 - Env: `EVAL_BUDGET_USD` (default 3 per run), `EVAL_TIMEOUT_MS` (default 15 min).
 - Transcripts and diffs land in `evals-out/` (gitignored, uploaded as a CI artifact).
-- Needs the `ANTHROPIC_API_KEY` repo secret. Fork PRs skip the model job.
+- The model job needs the `ANTHROPIC_API_KEY` repo secret; without it that job skips with a notice (the model-free `graders` job still runs). Fork PRs skip it too.
