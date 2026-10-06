@@ -53,6 +53,16 @@ Danish UI text; TTS replay button on every Danish prompt; correct = animation + 
 
 `prd.md` (platform rules) > `specs.md` (per-game specs, owner-edited only) > `PROGRESS.md` (task queue). Never edit `prd.md`/`specs.md` during build runs; on conflict, move the task to Blocked. `SCRATCHPAD.md` is an append-only run log — read its "Resume Here" section first when continuing work. `specs.md` marks some games as complete with exclusions (e.g. no further antonym/synonym game) — check it before adding a game.
 
+## Worktrees and parallel streams
+
+Use a git worktree per stream when several agents or people work at once. Worktrees share one repository (commits, branches, remotes) but each has its own files, index and checked-out branch; uncommitted edits are invisible to other worktrees, and a branch can be checked out in only one worktree at a time.
+
+- **Split by file, not by count.** Tasks touching the same file (or `shared/*`, frozen files, schema/storage keys) stay in one stream, run in order. Independent games/files may run in parallel; max 3 streams. Each stream commits on its own branch; merge only after its checks pass, and don't push `master` casually (every push to `master` deploys to simply.com).
+- **A new worktree has only tracked files.** `tests/node_modules` is missing: run `cd tests && npm install`, or run `smoke.mjs` from the main checkout's `tests/` and pass the worktree's game path.
+- **Chrome path.** `tests/lib/harness.mjs` defaults to `C:/Program Files/Google/Chrome/Application/chrome.exe`. Without Chrome (e.g. only Edge), set `CHROME_PATH` to the browser executable.
+- **Play selector.** `smoke.mjs` defaults to `#btn-play`; some games differ (Konjunktioner `#startBtn`, Præpositioner `#menu .mode-btn`). Wrong selector = false FAILs; pass the right one as the second argument.
+- **Clean up when merged:** `git worktree remove <path>` then `git branch -d <branch>` (use `-D` only after confirming the work is in `master`). Stories/specs untracked in the main checkout are not present in a worktree: pass the text in the task prompt.
+
 ## Gotchas
 
 - Root `tmp_*.js`, `.tmp_cdp_test.mjs`, and `boejningsvaerkstedet/tmp_*.js` are debug harnesses (e.g. headless DOM shim to boot a game); don't ship them into games.
