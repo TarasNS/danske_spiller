@@ -1,4 +1,5 @@
 - [Harness contrast vs color-mix](harness-color-mix-contrast.md) — use hex not color-mix; play selectors per game; shots dir trap
 - [Worktree harness setup](worktree-harness-setup.md) — node_modules junction, own shot script, heredoc/stdin trap
 - [Inline CSS leftovers](inline-css-leftovers-in-themes.md) — reset game inline transform/animation; scrollTo(0,0) in shots
+- [Sprite codegen + CRLF](sprite-codegen-crlf.md) — script-drawn 32px sprites; normalise CRLF when patching sjovt.js
 - [Theme token specificity](theme-token-specificity.md) — override --sd-* in light and both dark selectors
