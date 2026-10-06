@@ -55,5 +55,26 @@ for (const loc of locs) {
   }
 }
 
+// 5. icons + share image on every page; "Øv videre" related-game links on every game page.
+for (const f of ['favicon.svg', 'favicon-36.png', 'apple-touch-icon.png', 'og-image.png']) {
+  check(fs.existsSync(path.join(ROOT, 'shared/icons', f)), `icon file exists: shared/icons/${f}`);
+}
+for (const loc of locs) {
+  const rel = loc.slice(SITE.length) || 'index.html';
+  if (!fs.existsSync(path.join(ROOT, rel))) continue;
+  const html = read(rel);
+  const fav = (html.match(/<link rel="icon" href="([^"]+favicon\.svg)"/) || [])[1];
+  check(fav && fs.existsSync(path.resolve(path.dirname(path.join(ROOT, rel)), fav)), `favicon link resolves: ${rel}`);
+  check(html.includes(`<meta property="og:image" content="${SITE}shared/icons/og-image.png" />`), `og:image: ${rel}`);
+}
+for (const u of arrayUrls) {
+  const rel = decodeURI(u).replace(/^\.\//, '');
+  const html = read(rel);
+  const block = (html.match(/<nav class="sd-next"[\s\S]*?<\/nav>/) || [''])[0];
+  const links = [...block.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
+  check(links.length === 2, `"Øv videre" has 2 links: ${rel}`);
+  for (const l of links) check(fs.existsSync(path.resolve(path.dirname(path.join(ROOT, rel)), l)), `"Øv videre" link resolves: ${rel} -> ${l}`);
+}
+
 console.log(fails ? `\n${fails} failed` : '\nall passed');
 process.exit(fails ? 1 : 0);

@@ -1,0 +1,28 @@
+# Sjovt Dansk favicon: the Pølle mascot (SPR.polle in shared/sjovt.js), 1px padding.
+# Rendered on the mustard page colour (#E1AD12) so it reads on light and dark browser tabs.
+# Build: python .claude/skills/pixel-art-icon-designer/scripts/render.py shared/icons/favicon.txt <out.png> --scale N --bg #E1AD12
+. = transparent
+K = #101010
+T = #EDB366
+O = #F94F37
+W = #FFFFFF
+C = #FFC25A
+---
+..................
+.....KKKKKKKK.....
+...KKTTTTTTTTKK...
+..KTTTTTTTTTTTTK..
+.KTTKKKKKKKKKKTTK.
+.KTKOOOOOOOOOOKTK.
+.KTKOWOOOOOOWOKTK.
+.KTKOKOOOOOOKOKTK.
+.KTKOOKOOOOKOOKTK.
+.KTKOOOKKKKOOOKTK.
+.KTKCOOOOOOOOCKTK.
+.KTTKKKKKKKKKKTTK.
+..KTTTTTTTTTTTTK..
+...KKKKKKKKKKKK...
+...KK........KK...
+..KKK........KKK..
+..................
+..................
