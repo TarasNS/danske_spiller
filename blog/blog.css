@@ -2,6 +2,7 @@
 .blog-wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 48px; }
 .sd-bar .sd-bar-logo { margin-left: auto; font-family: var(--sd-font-logo); font-size: 12px; color: var(--sd-cream); }
 .sd-bar .sd-bar-logo b { font-weight: 400; color: var(--sd-orange); }
+@media (max-width: 420px) { .sd-bar .sd-bar-logo { display: none; } }
 
 .crumbs { margin: 24px 0 8px; font-size: 14px; }
 .crumbs a { color: var(--sd-text); }

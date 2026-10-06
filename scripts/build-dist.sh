@@ -8,18 +8,21 @@ cd "$(dirname "$0")/.."
 DIRS=(
   "boejningsvaerkstedet" "danish_flashcards" "danske-phraser" "en-og-et" "forbindenor"
   "konjunktioner" "ordstilling-detektiv" "pronomenmysteriet" "saetningsmaskinen"
-  "shared" "tidsmaskinen" "blog"
+  "shared" "tidsmaskinen" "blog" "en"
 )
 
 rm -rf dist dist.manifest
 mkdir dist
 
-cp ./*.html robots.txt sitemap.xml .htaccess dist/
+cp ./*.html robots.txt sitemap.xml llms.txt .htaccess dist/
 for d in "${DIRS[@]}"; do
   [ -d "$d" ] || { echo "ERROR: expected directory '$d' is missing" >&2; exit 1; }
   mkdir -p "dist/$d"
   # tar keeps the tree and lets us exclude scratch files; spaces in names are fine.
-  tar -C "$d" --exclude='tmp_*' --exclude='*.md' --exclude='*.map' -cf - . | tar -C "dist/$d" -xf -
+  # Icon sources (shared/icons: grid spec, build scripts, card HTML) stay out; only the built images ship.
+  tar -C "$d" --exclude='tmp_*' --exclude='*.md' --exclude='*.map' \
+      --exclude='*.py' --exclude='build-*.mjs' --exclude='og-card.html' --exclude='favicon.txt' \
+      -cf - . | tar -C "dist/$d" -xf -
 done
 
 [ -f dist/index.html ] || { echo "ERROR: dist/index.html missing" >&2; exit 1; }

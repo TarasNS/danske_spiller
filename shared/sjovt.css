@@ -241,6 +241,16 @@ html.sd-page ::selection { background: var(--sd-ink); color: var(--sd-cream); }
 @media (max-width: 420px) { .sd-bar { gap: 4px; padding: 4px 6px; } .sd-bar .sd-bar-btn { padding: 0 6px; font-size: 13px; } .sd-bar a { padding: 0 6px; } }
 @media (max-width: 420px) { .sd-bar .sd-bar-logo span.t { display: none; } }
 
+/* "Øv videre": static related-game links at the end of each game page (crawlable internal links) */
+.sd-next { box-sizing: border-box; width: 100%; align-self: stretch; flex: none; clear: both; position: relative; z-index: 1;
+  margin: 0; padding: 20px 16px 28px; background: var(--sd-ink); color: var(--sd-cream); border-top: 4px solid var(--sd-orange);
+  font-family: var(--sd-font-display); }
+.sd-next .sd-next-h { max-width: 760px; margin: 0 auto 8px; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; color: var(--sd-cream); }
+.sd-next ul { max-width: 760px; margin: 0 auto; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.sd-next a { display: inline-flex; align-items: center; min-height: 44px; color: var(--sd-cream); font-weight: 700; font-size: 16px;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.sd-next a:hover { background: var(--sd-orange); color: #101010; }
+
 /* --------------------------------------------------------- sprite animations */
 @keyframes sd-bob   { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }
 @keyframes sd-hop   { 0%,100% { transform: translateY(0) } 40% { transform: translateY(-16px) } 60% { transform: translateY(-16px) } }
