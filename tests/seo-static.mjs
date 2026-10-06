@@ -1,0 +1,42 @@
+// Static SEO guards (no browser, no deps). Usage: node tests/seo-static.mjs
+// 1. Homepage: the static fallback cards match the `games` array (same URLs, same order).
+// 2. Sitemap: every <loc> is the canonical URL of an existing page.
+// 3. Game pages: ship the plain-HTML home link (<nav class="sd-bar" data-sd-static>).
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const SITE = 'https://sjovtdansk.dk/';
+const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
+let fails = 0;
+const check = (ok, msg) => { console.log(`${ok ? 'PASS' : 'FAIL'}  ${msg}`); if (!ok) fails++; };
+
+// 1. homepage cards
+const home = read('index.html');
+const arrayUrls = [...home.match(/const games = \[[\s\S]*?\n\];/)[0].matchAll(/url: "([^"]+)"/g)].map(m => m[1]);
+const gridHtml = home.match(/<div class="grid" id="games">([\s\S]*?)\n      <\/div>/)[1];
+const staticUrls = [...gridHtml.matchAll(/<a class="sd-card card" href="([^"]+)"/g)].map(m => m[1]);
+check(arrayUrls.length > 0 && JSON.stringify(arrayUrls) === JSON.stringify(staticUrls),
+  `homepage static cards match games array (${staticUrls.length}/${arrayUrls.length})`);
+for (const u of arrayUrls) check(fs.existsSync(path.join(ROOT, decodeURI(u))), `game link exists: ${u}`);
+
+// 2. sitemap <loc> == canonical
+const locs = [...read('sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+for (const loc of locs) {
+  const rel = loc.slice(SITE.length) || 'index.html';
+  const file = path.join(ROOT, rel);
+  if (!fs.existsSync(file)) { check(false, `sitemap page exists: ${rel}`); continue; }
+  const canon = (fs.readFileSync(file, 'utf8').match(/rel="canonical" href="([^"]+)"/) || [])[1];
+  check(canon === loc && !/\s/.test(loc), `sitemap loc = canonical: ${loc}`);
+}
+
+// 3. static home link on every game page (every sitemap page except the homepage)
+for (const loc of locs.filter(l => l !== SITE)) {
+  const rel = loc.slice(SITE.length);
+  if (!fs.existsSync(path.join(ROOT, rel))) continue;
+  check(/<nav class="sd-bar"[^>]*data-sd-static><a class="sd-bar-home" href="[^"]*index\.html">/.test(read(rel)), `static home link: ${rel}`);
+}
+
+console.log(fails ? `\n${fails} failed` : '\nall passed');
+process.exit(fails ? 1 : 0);

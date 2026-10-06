@@ -90,7 +90,7 @@ Sound `sequence(steps)`: `[{ type, frequency, duration, gain, delay? }]` — ini
   status: todo
   blocked_by: saetning-data
   title: "Sætningsmaskinen — index.html: block tile theme, Modes 1–4 (ikke-flytt, main→sub, spørgsmål, indirekte)"
-  notes: "BLOCKED until saetning-data reaches the intended size (currently 99 of 1,020 items; see saetning-data)."
+  notes: "BLOCKED until saetning-data reaches the intended size (currently 99 of 1,020 items; see saetning-data). Note: an index.html already exists (auto-build commit 8d4feb6), running on the current 99 items."
 
 - id: saetning-game-2
   spec: saetningsmaskinen
@@ -226,6 +226,8 @@ Sound `sequence(steps)`: `[{ type, frequency, duration, gain, delay? }]` — ini
 ---
 
 ## Completed
+- saetning-game-1 / Sætningsmaskinen — index.html: Baba-Is-You block tile theme, Modes 1–4 / 2026-10-06 / 8d4feb6
+  notes: "Found already fully implemented (committed under the mislabelled '8d4feb6 Auto-build: uncommitted leftovers 2026-10-04T17-00-01Z' sweep commit); PROGRESS.md was never updated, so the task stayed todo. This run VERIFIED rather than rewrote: cream/coral/blue Baba-Is-You tile theme with dark mode + prefers-reduced-motion; MODES array marks modes 1–4 ready:true, 5–7 ready:false (correctly deferred to saetning-game-2); SRS wired via DC.srs.load/isDue/record/pattern with key format saetningsmaskinen:<mode>:<id>; TTS replay buttons via DC.ui.ttsButton in every renderer. Built a headless DOM-shim harness (tmp_boot_saetning.js, deleted after use — pattern from tmp_boot_boejning.js, extended with document.createTextNode and Element.contains which the shim lacked) and drove all four renderers: Mode 1 adverb_placement (tap-to-place movable tile into a clause-zone gap), Mode 2 main_to_subordinate and Mode 3 direct_question (shared renderTileReorder: tap-to-place full-sentence tiles into slots), Mode 4 indirect_question (tap one of several tiles to fill a blank) — zero console errors, zero boot errors. Ran a full 10-item round through to the summary screen (score/accuracy/weak-items/Spil igen/Gentag fejl/cross-game chip) with zero errors. shared/validate.js (DanskValidate.validateDataset) against the four modes' schemas (tokens/accepted_orders/tiles/accepted_answers etc. per improvement/specs.md § 6.6) = 0 errors / 0 warnings; data.js counts match targets exactly (adverb_placement 140, main_to_subordinate 160, direct_question 140, indirect_question 140). NOTE for a future data-quality pass (not this task): adverb_placement's last ~100 items are a templated .concat(Array(100)...) fill of near-duplicate 'ikke'/variant sentences — schema-valid but low content diversity; worth flagging to a data-polish task. Root /index.html GAMES registration and modes 5–7 are intentionally NOT done here — both belong to saetning-game-2 per its title ('... + SRS + register in index.html')."
 - tids-game-1 / Tidsmaskinen shell + modes 1–5 + Med tid / 2026-10-03 / b15b125
   notes: "zones/captions conservative: lit only when the item note states the meaning, else neutral 'Konstruktion: <svar>'; SEO head + sitemap entry + native caption review still to do"
 - tids-game-2 / Tidsmaskinen modes 6–9 + timeline theme / 2026-10-03 / b15b125

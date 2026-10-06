@@ -1,0 +1,22 @@
+# Findings ledger (append-only)
+
+Each row: Example → Expected → Actual problem → Root cause → Fix → Regression test.
+Scope: `article-specific` | `candidate` | `generalizable`. Status: `open` |
+`adopted-pending-review` | `rejected` | `needs-native`.
+
+Promotion requires `../references/promotion-rule.md`. Rows are appended automatically; skill
+edits are proposals and need a reviewer other than the proposer.
+
+Following the `danish-speech-shared` precedent, the 0.1.0 baseline round is exempt from the
+one-rule-per-round cap, and every row below is `adopted-pending-review` until a second reviewer
+signs off.
+
+| id | date | Example → Expected → Actual | Root cause | Fix | Regression | scope | n | status |
+|---|---|---|---|---|---|---|---|---|
+| A001 | 2026-10-06 | PD3 article under deadline pressure → unverified facts omitted or attributed → kept in the body wearing hedges ("PD3 er placeret **omkring** B2", "**på de fleste prøvesteder** skal du aflevere emne", "i god tid før prøven"); the writer's own report listed six unverified claims, but the article disclosed none of that to the reader | no rule that the reader receives the same uncertainty as the editor; hedging felt like honesty | cut-don't-hedge prohibition in SKILL.md with the hedge list named; linter fails a hedge adjacent to a numeral | `fail-hedge` / `pass-01` | generalizable (discipline rule; the hedges were the writer's own stated strategy) | 1 run, 3 hedges | adopted-pending-review |
+| A002 | 2026-10-06 | unpressured PD3 article researched well (23 lookups) → durations and allowed aids sourced from a page actually read → sourced to `sprogskolen.kolding.dk`, a language school, whose page **404'd on direct fetch** and was known only from search-result snippets | no distinction between "found in a snippet" and "read the page"; no source-tier rule | `verified: fetched\|search-extract\|derived` required per claim; fee/rule/date/deadline claims require `fetched` **and** an authority host | `fail-search-extract`, `fail-tier` | generalizable (authority: a page you cannot load cannot be cited for a figure readers act on) | 1 run, 2 claim groups | adopted-pending-review |
+| A003 | 2026-10-06 | same run → derived totals marked as derived → "the written day ≈ 4 hours" was the writer's own arithmetic (25+65+150), and "~10 weeks before" its own generalisation, both presented beside sourced facts | no category for a figure the writer computed | `kind: derived` + `verified: derived` + `from: [ids]` required | `fail-derived` | generalizable | 2 | adopted-pending-review |
+| A004 | 2026-10-06 | linter fixture: a fee claim citing `sprogskolen.kolding.dk` → rejected as tier 3 → **passed** the authority check | `isAuthority` suffix-matched `.kolding.dk`, so a school on a kommune domain counted as the kommune | exact host match only, no suffix matching; comment records why | `fail-tier` | generalizable (authority: Danish language schools are routinely hosted on kommune domains) | 1 + rule | adopted-pending-review |
+| A005 | 2026-10-06 | `pass-01` fixture, clear B1 prose → pass → **failed**: LIX 19 (da) and 14 (en) fell below a two-sided B1 band of 22-38 | a readability floor was invented with no evidence; English LIX runs structurally lower than Danish for the same content | ceiling only, no floor; `LIX_CEILING` per level, documented as a project convention | `pass-01` | generalizable | 2 files | adopted-pending-review |
+| A006 | 2026-10-06 | da+en pair on en/et written with **no** skill present → predicted failure: literal translation, Danish-local context left unexplained → **no failure**: the control re-authored rather than translated, kept 6 H2s in the same order in both, glossed Danish examples on first use, and localised terminology deliberately | predicted failure did not reproduce in the control | **no prose guidance written.** Planned da/en equivalence section cut from SKILL.md; only the mechanical parity checks (claim-id set, H2 count, distinct slugs and keywords) kept in the linter | `fail-parity`, `fail-same-keyword` | rejected as a skill rule | 1 | rejected |
+| A007 | 2026-10-06 | unpressured control → spontaneous research → researched thoroughly and flagged its own weakest source unprompted | predicted "writes from memory" failure did not reproduce without pressure | research mandate kept **narrow**: aimed at the pressure case and at what reaches the reader, not at teaching the model to search | — | rejected as a broad rule | 1 | rejected |

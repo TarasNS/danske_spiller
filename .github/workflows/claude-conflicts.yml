@@ -1,0 +1,100 @@
+name: Claude resolves merge conflicts
+
+# When the base branch moves, find open PRs that now conflict and let Claude merge
+# the base into the PR branch and resolve the conflicts. It never force-pushes.
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, reopened, synchronize]
+  workflow_dispatch:
+
+concurrency:
+  group: claude-conflicts-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # claude-code-action rejects the push event, so re-run this workflow as workflow_dispatch.
+  dispatch:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run claude-conflicts.yml --repo "${{ github.repository }}" --ref master
+
+  find:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      prs: ${{ steps.list.outputs.prs }}
+    steps:
+      - id: list
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          # mergeable is computed lazily; give GitHub a moment after a push.
+          sleep 30
+          prs='[]'
+          for attempt in 1 2 3; do
+            prs=$(gh pr list --repo "$REPO" --state open --json number,headRefName,mergeable,isCrossRepository,isDraft \
+              --jq '[.[] | select(.mergeable == "CONFLICTING" and (.isCrossRepository | not)) | {number, branch: .headRefName}]')
+            unknown=$(gh pr list --repo "$REPO" --state open --json mergeable --jq '[.[] | select(.mergeable == "UNKNOWN")] | length')
+            [ "$unknown" = "0" ] && break
+            sleep 20
+          done
+          echo "prs=$(echo "$prs" | jq -c .)" >> "$GITHUB_OUTPUT"
+          echo "Conflicting PRs: $prs"
+
+  resolve:
+    needs: find
+    if: needs.find.outputs.prs != '[]' && needs.find.outputs.prs != ''
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        pr: ${{ fromJSON(needs.find.outputs.prs) }}
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.pr.branch }}
+          fetch-depth: 0
+
+      - name: Configure git identity
+        run: |
+          git config user.name "claude[bot]"
+          git config user.email "noreply@anthropic.com"
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ matrix.pr.number }}
+            PR BRANCH: ${{ matrix.pr.branch }}
+
+            Pull request #${{ matrix.pr.number }} has merge conflicts with master. Resolve them:
+            1. `git fetch origin master` and run `git merge origin/master` (a merge commit, NOT a rebase,
+               and never force-push).
+            2. For every conflicted file, keep the intent of BOTH sides. Read the PR description and both
+               versions before choosing.
+            3. Data files (*/data.js, shared/data/*): never keep placeholder content ("Test sentence N.",
+               "opt1"/"opt2", "Test note.") over real Danish content. Keep ids unique and mode keys unchanged.
+            4. Run `node shared/validate.js` and fix any error you introduced.
+            5. Commit with message "merge: resolve conflicts with master" and `git push origin HEAD`.
+            6. Comment on the PR with a short list of the files you resolved and how.
+            If a conflict is ambiguous or you are not confident, do NOT guess: abort the merge
+            (`git merge --abort`) and comment on the PR explaining what needs a human decision.
+          claude_args: |
+            --allowed-tools "Edit,Read,Write,Glob,Grep,Bash(git *),Bash(node shared/validate.js),Bash(gh pr comment:*),Bash(gh pr view:*)"

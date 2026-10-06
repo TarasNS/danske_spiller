@@ -1118,13 +1118,23 @@
 
   /* ----------------------------------------------------- game chrome bar */
   function buildBar() {
-    if (root.hasAttribute("data-sd-nobar") || doc.querySelector(".sd-bar") || doc.body.hasAttribute("data-sd-home")) return;
-    var bar = doc.createElement("nav");
-    bar.className = "sd-bar"; bar.setAttribute("aria-label", "Sjovt Dansk");
-    bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '"><span class="sd-arr" aria-hidden="true"></span>MENU</a>' +
-      '<span class="sd-bar-logo">' + '<span class="sd-sprite">' + spriteSVG("polle", 2) + '</span><span class="t">SJOVT <b>DANSK</b></span></span>' +
-      '<button type="button" class="sd-bar-btn" id="sd-theme-btn" aria-label="Mørk tilstand" title="Skift mellem lys og mørk tilstand">MØRK</button>' +
+    if (root.hasAttribute("data-sd-nobar") || doc.body.hasAttribute("data-sd-home")) return;
+    var logo = '<span class="sd-bar-logo">' + '<span class="sd-sprite">' + spriteSVG("polle", 2) + '</span><span class="t">SJOVT <b>DANSK</b></span></span>';
+    var controls = '<button type="button" class="sd-bar-btn" id="sd-theme-btn" aria-label="Mørk tilstand" title="Skift mellem lys og mørk tilstand">MØRK</button>' +
       '<button type="button" class="sd-bar-btn" id="sd-sound-btn" aria-label="Lydeffekter" title="Slå lydeffekter til eller fra (oplæsning med Lyt er upåvirket)">LYD</button>';
+    var bar = doc.querySelector(".sd-bar");
+    if (bar && bar.hasAttribute("data-sd-static")) {
+      /* Page ships a plain-HTML bar (crawlable home link); add the sprite logo and the controls. */
+      if (!bar.querySelector(".sd-bar-logo")) bar.insertAdjacentHTML("beforeend", logo);
+      bar.insertAdjacentHTML("beforeend", controls);
+    } else if (bar) {
+      return;
+    } else {
+      bar = doc.createElement("nav");
+      bar.className = "sd-bar"; bar.setAttribute("aria-label", "Sjovt Dansk");
+      bar.innerHTML = '<a class="sd-bar-home" href="' + homeUrl + '"><span class="sd-arr" aria-hidden="true"></span>MENU</a>' + logo + controls;
+      doc.body.insertBefore(bar, doc.body.firstChild);
+    }
     var tb = bar.querySelector("#sd-theme-btn"), sb = bar.querySelector("#sd-sound-btn");
     function paint() {
       tb.setAttribute("aria-pressed", String(themeIsDark()));
@@ -1135,7 +1145,6 @@
     win.addEventListener("sd:themechange", paint); win.addEventListener("sd:soundchange", paint);
     win.addEventListener("storage", function (e) { if (e.key === THEME_KEY) { applyTheme(); paint(); } else if (e.key === SOUND_KEY) paint(); });
     paint();
-    doc.body.insertBefore(bar, doc.body.firstChild);
     // --sd-bar-h = the rendered bar height (it can grow if the bar wraps on narrow screens)
     function measureBar() { var h = Math.round(bar.getBoundingClientRect().height); if (h > 0) root.style.setProperty("--sd-bar-h", h + "px"); }
     measureBar();

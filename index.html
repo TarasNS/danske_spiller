@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sjovt Dansk — lær dansk ved at spille</title>
-<meta name="description" content="Sjovt Dansk (sjovtdansk.dk): spil og øvelser der gør det sjovt at lære dansk — ordforråd, grammatik, vendinger, verber og præpositioner." />
-<meta property="og:title" content="Sjovt Dansk — lær dansk ved at spille" />
-<meta property="og:description" content="Lær dansk gratis gennem interaktive spil: ordforråd, grammatik, vendinger og verber. A1–B2. Spil nu." />
+<title>Lær dansk gratis med sjove spil og øvelser | Sjovt Dansk</title>
+<meta name="description" content="Lær dansk gratis online med korte spil: grammatik, ordforråd, verber, præpositioner og vendinger på A1–B2-niveau. Ingen login – vælg et spil og gå i gang." />
+<meta property="og:title" content="Lær dansk gratis med sjove spil og øvelser | Sjovt Dansk" />
+<meta property="og:description" content="Lær dansk gratis online med korte spil: grammatik, ordforråd, verber, præpositioner og vendinger på A1–B2-niveau. Ingen login – vælg et spil og gå i gang." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://sjovtdansk.dk/" />
 <meta property="og:locale" content="da_DK" />
@@ -19,14 +19,7 @@
   "@type": "WebSite",
   "name": "Sjovt Dansk",
   "url": "https://sjovtdansk.dk/",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://sjovtdansk.dk/#search?q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
-  }
+  "inLanguage": "da"
 }
 </script>
 <script type="application/ld+json">
@@ -35,13 +28,17 @@
   "@type": "EducationalOrganization",
   "name": "Sjovt Dansk",
   "url": "https://sjovtdansk.dk/",
-  "sameAs": ["https://sjovtdansk.dk/"],
   "description": "Interaktive spil til at lære dansk grammatik, ordforråd og vendinger.",
   "areaServed": {
     "@type": "Place",
     "name": "Verden"
   },
-  "educationalLevel": "A1 A2 B1 B2"
+  "educationalLevel": [
+    "A1",
+    "A2",
+    "B1",
+    "B2"
+  ]
 }
 </script>
 <script type="application/ld+json">
@@ -211,7 +208,23 @@
     </section>
 
     <section aria-label="Spil">
-      <div class="grid" id="games"></div>
+      <div class="grid" id="games">
+        <!-- Static cards for crawlers without JavaScript; renderGames() replaces them. Keep in sync with the games array (tests/homepage-links.mjs). -->
+        <a class="sd-card card" href="./danish-antonyms-game.html"><div class="body"><h3>Danske Antonymer</h3><div class="tags"><span class="sd-badge">Ordforråd</span> <span class="sd-badge">B1–B2</span></div><p class="desc">Øv modsætningsord med quiz og par-spil.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./danish_flashcards/danish_flashcards_game/index.html"><div class="body"><h3>Verb-glosekort</h3><div class="tags"><span class="sd-badge">Verber</span> <span class="sd-badge">A2–B1</span></div><p class="desc">Vend kortene og lær de danske verbers former.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./magiske_verber.html"><div class="body"><h3>Magiske Verber</h3><div class="tags"><span class="sd-badge">Verber</span> <span class="sd-badge">A2–B1</span></div><p class="desc">Træn verbernes bøjning i alle tider.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./dansk-praepositioner.html"><div class="body"><h3>Præpositionsmester</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">A2–B1</span></div><p class="desc">Få styr på de drilske småord: i, på, til, af …</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./danske-phraser/dansk-mester.html"><div class="body"><h3>Dansk Mester</h3><div class="tags"><span class="sd-badge">Vendinger</span> <span class="sd-badge">A1–A2</span></div><p class="desc">Lær hverdagsvendinger – fra hilsner til småsnak.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./en-og-et/index.html"><div class="body"><h3>En/Et-træner</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">A1–A2</span></div><p class="desc">Hold op med at gætte: lær, hvilke ord der er en-ord, og hvilke der er et-ord.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./konjunktioner/konjunktioner.html"><div class="body"><h3>Konjunktion Crush</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">B1</span></div><p class="desc">Bind sætningerne sammen med de rigtige konjunktioner.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./ordstilling-detektiv/index.html"><div class="body"><h3>Ordstillingsdetektiven</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">B1–B2</span></div><p class="desc">Knæk V2-reglen ved at få rodede sætninger på plads.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./forbindenor/Forbindenor.html"><div class="body"><h3>Forbindeord</h3><div class="tags"><span class="sd-badge">Ordforråd</span> <span class="sd-badge">B1</span></div><p class="desc">Vælg det rigtige forbindeord, og få sætningerne til at hænge sammen.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./idiomjaeger.html"><div class="body"><h3>Idiomjægeren</h3><div class="tags"><span class="sd-badge">Vendinger</span> <span class="sd-badge">B2</span></div><p class="desc">Jagten på danske idiomer – og hvad de egentlig betyder.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./boejningsvaerkstedet/index.html"><div class="body"><h3>Bøjningsværkstedet</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">A1–B2</span></div><p class="desc">Bøj hele navneleddet: flertal, bestemt form, tillægsord og komparation.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./adverbs.html"><div class="body"><h3>Adverbier og bindeord</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">B1–B2</span></div><p class="desc">Byg danske sætninger med adverbier og bindeord.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./pronomenmysteriet/index.html"><div class="body"><h3>Pronomenmysteriet</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">A2–B2</span></div><p class="desc">Opklar sagen: jeg/mig, min/mit/mine, sin eller hans, den/det/de og nogen/nogle/noget.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+        <a class="sd-card card" href="./tidsmaskinen/index.html"><div class="body"><h3>Tidsmaskinen</h3><div class="tags"><span class="sd-badge">Grammatik</span> <span class="sd-badge">A2–C1</span></div><p class="desc">Rejs langs tidslinjen: datid, perfektum, fremtid og modalverber i sammenhæng.</p><span class="sd-btn sd-btn--sm open">Spil →</span></div></a>
+      </div>
       <div class="empty sd-panel" id="empty" hidden>
         <span data-sd-sprite="hat" data-scale="6"></span>
         <p class="sd-text">Der er ingen spil, der passer til din søgning. Prøv et andet ord.</p>
@@ -220,6 +233,7 @@
 
     <section class="sd-panel sd-panel--hl" style="margin: 32px 4px; padding: 24px 28px;">
       <p style="margin: 0; font-size: 16px; line-height: 1.6;">Sjovt Dansk er gratis onlinespil, der hjælper dig med at lære dansk grammatik, ordforråd og vendinger. Hver øvelse er designet til at være sjov, hurtig og effektiv — perfekt til dansk som andetsprog på A1–B2-niveau. Spil på egen hånd eller brug Sjovt Dansk til at supplere din danskundervisning.</p>
+      <p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6;"><a href="blog/index.html" lang="en" style="color: inherit; font-weight: 700;">Blog: Danish grammar explained simply (in English) →</a></p>
     </section>
   </main>
 
@@ -248,7 +262,7 @@ const games = [
   { title: "Dansk Mester", description: "Lær hverdagsvendinger – fra hilsner til småsnak.", level: "A1–A2", type: "Vendinger",
     url: "./danske-phraser/dansk-mester.html", sprite: "snak", color: "#FF8226", bg: "#FF9E56", dark: "#452915" },
   { title: "En/Et-træner", description: "Hold op med at gætte: lær, hvilke ord der er en-ord, og hvilke der er et-ord.", level: "A1–A2", type: "Grammatik",
-    url: "./en%20og%20et/index.html", sprite: "terning", color: "#3FD35F", bg: "#69DD82", dark: "#1A3B21" },
+    url: "./en-og-et/index.html", sprite: "terning", color: "#3FD35F", bg: "#69DD82", dark: "#1A3B21" },
   { title: "Konjunktion Crush", description: "Bind sætningerne sammen med de rigtige konjunktioner.", level: "A1–B2", type: "Grammatik",
     url: "./konjunktioner/konjunktioner.html", sprite: "slik", color: "#8E8CFF", bg: "#A7A5FF", dark: "#2C2B45" },
   { title: "Ordstillingsdetektiven", description: "Knæk V2-reglen ved at få rodede sætninger på plads.", level: "A1–B2", type: "Grammatik",

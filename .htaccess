@@ -1,0 +1,15 @@
+# sjovtdansk.dk — deployed by scripts/build-dist.sh + scripts/deploy.sh. Edit here, not on the server.
+
+RewriteEngine On
+
+# One host only: https://sjovtdansk.dk (no http, no www).
+# The X-Forwarded-Proto check prevents a redirect loop if SSL is terminated at a proxy.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://sjovtdansk.dk%{REQUEST_URI} [R=301,L,NE]
+
+RewriteCond %{HTTP_HOST} ^www\.sjovtdansk\.dk$ [NC]
+RewriteRule ^ https://sjovtdansk.dk%{REQUEST_URI} [R=301,L,NE]
+
+# Old folder name with spaces -> en-og-et/
+RewriteRule ^en\ og\ et/(.*)$ /en-og-et/$1 [R=301,L,NE]

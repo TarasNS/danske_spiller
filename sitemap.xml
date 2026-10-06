@@ -31,7 +31,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://sjovtdansk.dk/en og et/index.html</loc>
+    <loc>https://sjovtdansk.dk/en-og-et/index.html</loc>
     <lastmod>2026-10-02</lastmod>
     <priority>0.9</priority>
   </url>
@@ -64,5 +64,50 @@
     <loc>https://sjovtdansk.dk/adverbs.html</loc>
     <lastmod>2026-10-02</lastmod>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/pronomenmysteriet/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/tidsmaskinen/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/saetningsmaskinen/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/blog/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/blog/danish-inversion/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/blog/og-fordi-derfor/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/blog/ikke-in-subordinate-clauses/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/blog/sin-or-hans/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sjovtdansk.dk/blog/har-or-er-perfect/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
   </url>
 </urlset>

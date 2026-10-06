@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dansk Mester — lær hverdagsvendinger og verber med præposition | Sjovt Dansk</title>
-<meta name="description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser på A1–B2-niveau." />
-<meta property="og:title" content="Dansk Mester — lær hverdagsvendinger og verber med præposition | Sjovt Dansk" />
-<meta property="og:description" content="Lær danske hverdagsvendinger og verber med præposition. Gratis øvelser på A1–B2-niveau." />
+<title>Danske fraser for begyndere – hverdagsdansk | Sjovt Dansk</title>
+<meta name="description" content="Danske fraser for begyndere: lær hilsner, småsnak og verber med præposition, du bruger hver dag. Gratis øvelser på A1–A2-niveau – spil i browseren." />
+<meta property="og:title" content="Danske fraser for begyndere – hverdagsdansk | Sjovt Dansk" />
+<meta property="og:description" content="Danske fraser for begyndere: lær hilsner, småsnak og verber med præposition, du bruger hver dag. Gratis øvelser på A1–A2-niveau – spil i browseren." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://sjovtdansk.dk/danske-phraser/dansk-mester.html" />
 <meta property="og:locale" content="da_DK" />
@@ -17,16 +17,29 @@
   "@context": "https://schema.org",
   "@type": "LearningResource",
   "name": "Dansk Mester",
-  "description": "Lær danske hverdagsvendinger og verber med præposition.",
+  "description": "Danske fraser for begyndere: lær hilsner, småsnak og verber med præposition, du bruger hver dag. Gratis øvelser på A1–A2-niveau – spil i browseren.",
   "url": "https://sjovtdansk.dk/danske-phraser/dansk-mester.html",
   "author": {
     "@type": "Organization",
     "name": "Sjovt Dansk"
   },
-  "teaches": ["Danske fraser", "Hverdagsdansk", "Vendinger"],
-  "educationalLevel": "A1 A2 B1 B2",
+  "teaches": [
+    "Danske fraser",
+    "Hverdagsdansk",
+    "Vendinger"
+  ],
+  "educationalLevel": [
+    "A1",
+    "A2",
+    "B1",
+    "B2"
+  ],
   "inLanguage": "da",
-  "isAccessibleForFree": true
+  "isAccessibleForFree": true,
+  "learningResourceType": [
+    "Spil",
+    "Øvelse"
+  ]
 }
 </script>
 <script type="application/ld+json">
@@ -86,7 +99,7 @@ body{
   display:flex;align-items:center;gap:10px;
   padding:6px 2px 14px;
 }
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.35rem;letter-spacing:.3px}
+.brand{margin:0;display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.35rem;letter-spacing:.3px}
 .brand .flag{
   width:34px;height:24px;border-radius:5px;overflow:hidden;flex:none;
   background:
@@ -323,6 +336,7 @@ body{
 <link rel="stylesheet" href="../shared/sd-extras.css">
 </head>
 <body>
+<nav class="sd-bar" aria-label="Sjovt Dansk" data-sd-static><a class="sd-bar-home" href="../index.html">← MENU</a></nav>
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="app"></div>
 
@@ -750,7 +764,7 @@ function filterItems(items){
 
 function topbar(){
   return `<div class="topbar">
-    <div class="brand"><span data-sd-sprite="snak" data-scale="3" aria-hidden="true"></span> Dansk Mester</div>
+    <h1 class="brand"><span data-sd-sprite="snak" data-scale="3" aria-hidden="true"></span> Dansk Mester</h1>
     <div class="spacer"></div>
     <div class="stat-chip xp" role="img" aria-label="XP: ${P.xp}"><span class="ico" data-sd-sprite="stjerne" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.xp}</span></div>
     <div class="stat-chip streak" role="img" aria-label="Dage i træk: ${P.currentStreak}"><span class="ico" data-sd-sprite="molle" data-scale="2" aria-hidden="true"></span><span aria-hidden="true">${P.currentStreak}</span></div>

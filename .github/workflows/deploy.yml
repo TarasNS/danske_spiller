@@ -1,45 +1,93 @@
-name: Deploy to simply.com
+name: Deploy to Simply.com
 
+# Production deploys happen ONLY from a push to master (the repo's default branch) or a manual run
+# of this workflow on master. Pull requests and feature branches never trigger or reach deploy.
 on:
   push:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: show what would change, upload nothing"
+        type: boolean
+        default: false
 
 concurrency:
   group: deploy-production
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
-  deploy:
+  test-and-build:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # No npm dependencies are needed for these checks (the site is plain static HTML/JS).
       - name: Validate datasets
         run: node shared/validate.js
 
-      - name: Configure SSH
-        env:
-          SIMPLY_HOST: ${{ secrets.SIMPLY_HOST }}
-          SIMPLY_PORT: ${{ secrets.SIMPLY_PORT }}
-          SIMPLY_SSH_KEY: ${{ secrets.SIMPLY_SSH_KEY }}
-        run: |
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "$SIMPLY_SSH_KEY" > ~/.ssh/id_deploy
-          chmod 600 ~/.ssh/id_deploy
-          ssh-keyscan -p "$SIMPLY_PORT" "$SIMPLY_HOST" >> ~/.ssh/known_hosts
+      - name: Speech normaliser tests
+        run: node tests/speech.test.cjs
 
-      - name: Upload to public_html
+      - name: SEO static checks
+        run: node tests/seo-static.mjs
+
+      - name: Blog static checks
+        run: node tests/blog-static.mjs
+
+      - name: Syntax-check JavaScript
+        run: |
+          set -euo pipefail
+          git ls-files -z -- 'shared/*.js' '*/data.js' 'danish_flashcards/**/*.js' | xargs -0 -n1 node --check
+
+      - name: Build production output
+        run: scripts/build-dist.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: |
+            dist
+            dist.manifest
+          # true so dist/.htaccess survives; build-dist.sh rejects every other dotfile.
+          include-hidden-files: true
+          retention-days: 7
+
+  deploy:
+    needs: test-and-build
+    if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4   # for scripts/ only
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+
+      - name: Deploy over SSH
         env:
           SIMPLY_HOST: ${{ secrets.SIMPLY_HOST }}
-          SIMPLY_PORT: ${{ secrets.SIMPLY_PORT }}
           SIMPLY_USER: ${{ secrets.SIMPLY_USER }}
+          SIMPLY_PORT: ${{ secrets.SIMPLY_PORT }}
+          SIMPLY_REMOTE_PATH: ${{ secrets.SIMPLY_REMOTE_PATH }}
+          SIMPLY_SSH_KEY: ${{ secrets.SIMPLY_SSH_KEY }}
+          SIMPLY_KNOWN_HOSTS: ${{ secrets.SIMPLY_KNOWN_HOSTS }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
         run: |
-          rsync -rltvz \
-            -e "ssh -i ~/.ssh/id_deploy -p $SIMPLY_PORT" \
-            --exclude='.git/' --exclude='.github/' --exclude='.claude/' \
-            --exclude='tests/' --exclude='docs/' --exclude='stories/' \
-            --exclude='qa/' --exclude='improvement/' \
-            --exclude='tmp_*.js' --exclude='.tmp_*' --exclude='build-loop.sh' \
-            --exclude='*.md' --exclude='*.csv' --exclude='.gitignore' \
-            ./ "$SIMPLY_USER@$SIMPLY_HOST:public_html/"
+          set -euo pipefail
+          umask 077
+          KEYDIR=$(mktemp -d)
+          trap 'rm -rf "$KEYDIR"' EXIT
+          printf '%s\n' "$SIMPLY_SSH_KEY" > "$KEYDIR/id"
+          printf '%s\n' "$SIMPLY_KNOWN_HOSTS" > "$KEYDIR/known_hosts"
+          export SSH_KEY_FILE="$KEYDIR/id" KNOWN_HOSTS_FILE="$KEYDIR/known_hosts"
+          scripts/deploy.sh

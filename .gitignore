@@ -11,3 +11,10 @@ danish_b1_b2_500_adverb_sentences.xlsx
 
 # Local build-loop config — contains the ntfy topic, which is a shared secret
 .build-env
+
+# Deploy build output
+dist/
+dist.manifest
+
+# Scratch output written by the game test specs
+pm-items.json

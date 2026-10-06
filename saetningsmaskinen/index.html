@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledsætninger og spørgsmål på dansk – øvelser | Sjovt Dansk</title>
+<meta name="description" content="Ledsætninger på dansk øvelser: byg sætninger med ordblokke, placer ikke rigtigt, og øv direkte og indirekte spørgsmål. Gratis på A2–C1-niveau." />
+<meta property="og:title" content="Ledsætninger og spørgsmål på dansk – øvelser | Sjovt Dansk" />
+<meta property="og:description" content="Ledsætninger på dansk øvelser: byg sætninger med ordblokke, placer ikke rigtigt, og øv direkte og indirekte spørgsmål. Gratis på A2–C1-niveau." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sjovtdansk.dk/saetningsmaskinen/index.html" />
+<meta property="og:locale" content="da_DK" />
+<link rel="canonical" href="https://sjovtdansk.dk/saetningsmaskinen/index.html" />
+<style>
+  :root{
+    --cream:#F2E7CC; --coral:#D96D5F; --blue:#4E82A6; --green:#5F8B68; --violet:#75639B;
+    --tile:#F8F2E4; --ink:#25262B; --wrongc:#B54A47;
+    --bg:#F2E7CC; --panel:#FBF6E8; --panel-2:#EADFC0; --text:#25262B; --muted:#6b6354;
+    --line:rgba(37,38,43,.3); --accent:#D96D5F; --accent-fg:#2B1410;
+    --dc-fg:var(--text); --dc-btn-bg:var(--tile); --dc-border:var(--line); --dc-accent:var(--accent); --dc-accent-fg:var(--accent-fg);
+    --dc-input-bg:#fff; --dc-correct:#3C7B61; --dc-correct-bg:rgba(60,123,97,.16);
+    --dc-wrong:var(--wrongc); --dc-wrong-bg:rgba(181,74,71,.16);
+  }
+  html[data-theme="dark"]{
+    --bg:#232019; --panel:#2E2A20; --panel-2:#3A3528; --text:#F2E7CC; --muted:#b9ae92;
+    --line:rgba(242,231,204,.3); --tile:#3A3528; --dc-input-bg:#232019;
+    --coral:#C97A6D; --blue:#5F90B4; --green:#6B9874; --violet:#8577A8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;padding:18px 12px 48px;line-height:1.5}
+  .shell{width:100%;max-width:680px;margin:0 auto}
+  header.topbar{display:flex;align-items:center;gap:.6em;margin-bottom:16px}
+  .brand{font-weight:700;font-size:1.3rem;flex:1 1 auto;display:flex;align-items:center;gap:.4em;min-width:0;overflow-wrap:anywhere}
+  .icon-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;font:inherit;font-size:.9rem;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;cursor:pointer}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 18px;overflow-wrap:anywhere}
+  h1.title{margin:.1em 0 .3em;font-size:1.8rem}
+  .lede{margin:.2em 0 1em;color:var(--muted)}
+  .group-label{font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:1em 0 .5em}
+  .chips{display:flex;flex-wrap:wrap;gap:.5em}
+  .chip{min-height:44px;min-width:44px;padding:.5em .95em;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer;font:inherit}
+  .chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:700}
+  .chip[aria-pressed="true"]::before{content:"✓ "}
+  .modes{display:flex;flex-wrap:wrap;gap:.5em}
+  .mode-btn{display:inline-flex;align-items:center;gap:.5em;min-height:44px;padding:.45em .85em;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer;font:inherit;text-align:left}
+  .mode-btn .num{width:26px;height:26px;flex:0 0 auto;border-radius:7px;background:var(--coral);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+  .mode-btn .mmeta{font-size:.78rem;color:var(--muted)}
+  .mode-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:700}
+  .mode-btn[aria-pressed="true"] .num{background:var(--accent-fg);color:var(--accent)}
+  .mode-btn[disabled]{opacity:.5;cursor:not-allowed}
+  button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .primary{margin-top:1.3em;width:100%;min-height:56px;font:inherit;font-size:1.2rem;font-weight:700;border:none;border-radius:12px;cursor:pointer;background:var(--accent);color:var(--accent-fg)}
+  .btn{min-height:44px;min-width:44px;padding:.55em 1.1em;border-radius:10px;cursor:pointer;font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--text)}
+  .btn.accent{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:700}
+
+  .playbar{display:flex;align-items:center;gap:.6em;margin-bottom:12px}
+  .progress{flex:1 1 auto;height:10px;border-radius:999px;background:var(--panel-2);overflow:hidden;border:1px solid var(--line)}
+  .progress > i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s ease}
+  .count{font-size:.85rem;color:var(--muted);min-width:3.2em;text-align:right}
+  .mode-tag{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 .5em}
+
+  /* ---- Baba-Is-You style word blocks ---- */
+  .clause-zone{border-radius:10px;padding:.5em .6em;margin:.3em 0;display:flex;flex-wrap:wrap;gap:.4em;align-items:center}
+  .clause-zone.main{background:rgba(217,109,95,.14);border:1px dashed var(--coral)}
+  .clause-zone.subordinate{background:rgba(78,130,166,.14);border:1px dashed var(--blue)}
+  .clause-zone-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);flex:1 1 100%}
+
+  .tile{min-height:44px;min-width:44px;padding:.5em .85em;border-radius:9px;border:2px solid var(--ink);background:var(--tile);color:var(--ink);cursor:pointer;font:inherit;font-weight:600;box-shadow:0 2px 0 var(--ink);transition:transform .12s ease}
+  .tile.coral{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+  .tile.blue{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+  .tile.violet{background:var(--violet);color:#fff;border-color:var(--violet);box-shadow:0 2px 0 rgba(0,0,0,.35)}
+  .tile:disabled{opacity:.3;cursor:default;box-shadow:none}
+  .tile:not(:disabled):hover{transform:rotate(-1.5deg) translateY(-1px)}
+  .tile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  @keyframes tile-pop{0%{transform:scale(1)}40%{transform:scale(1.12) rotate(2deg)}100%{transform:scale(1)}}
+  @keyframes tile-bounce{0%{transform:translateX(0)}30%{transform:translateX(-6px) rotate(-3deg)}60%{transform:translateX(5px) rotate(2deg)}100%{transform:translateX(0)}}
+  .tile.pop{animation:tile-pop .22s ease}
+  .tile.bounce{animation:tile-bounce .3s ease}
+  @media (prefers-reduced-motion: reduce){
+    .tile{transition:none}
+    .tile.pop,.tile.bounce{animation:none}
+  }
+
+  .bank{display:flex;flex-wrap:wrap;gap:.5em;margin-top:.5em}
+  .slots{display:flex;flex-wrap:wrap;gap:.4em;margin-top:.7em;min-height:44px;padding:.5em;border:1px dashed var(--line);border-radius:10px}
+  .slot-gap{min-height:44px;min-width:28px;border-bottom:3px dotted var(--muted);cursor:pointer;flex:0 0 auto}
+  .slot-gap:hover,.slot-gap:focus-visible{border-color:var(--accent)}
+  .slot-gap[aria-disabled="true"]{cursor:default}
+  .slot-fixed{min-height:44px;padding:.5em .85em;border-radius:9px;border:2px solid var(--ink);background:var(--panel-2);color:var(--text);font-weight:600;display:inline-flex;align-items:center}
+  .slot-empty{min-height:44px;min-width:44px}
+  .slot-item{min-height:44px;padding:.5em .85em;border-radius:9px;border:2px solid var(--ink);background:var(--tile);color:var(--ink);cursor:pointer;font:inherit;font-weight:600}
+
+  .source-line,.frame-line{font-size:1.1rem;margin:.3em 0;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+  .frame-line .dots{color:var(--muted);font-style:italic}
+  .prompt-line{font-size:1.2rem;line-height:1.6;margin:.4em 0;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+  .blank{display:inline-block;min-width:3.2em;border-bottom:3px dashed var(--accent);text-align:center;font-weight:700}
+  .blank.done-correct{border-bottom:3px solid var(--dc-correct);color:var(--dc-correct)}
+  .blank.done-wrong{border-bottom:3px solid var(--wrongc);color:var(--wrongc)}
+  html[data-theme="dark"] .blank.done-correct{color:#8fd1b3}
+  html[data-theme="dark"] .blank.done-wrong{color:#f0a0a5}
+  .result-correct{border-color:var(--dc-correct) !important;background:var(--dc-correct-bg) !important}
+  .result-wrong{border-color:var(--wrongc) !important;background:var(--dc-wrong-bg) !important}
+
+  .slip{margin-top:1em;border-left:4px solid var(--accent);background:var(--panel-2);border-radius:0 8px 8px 0;padding:.7em .9em}
+  .slip .sol{font-weight:700;color:var(--wrongc)}
+  html[data-theme="dark"] .slip .sol{color:#f0a0a5}
+  .slip .note{margin-top:.35em}
+  .slip .actions{margin-top:.7em;display:flex;gap:.5em;flex-wrap:wrap;align-items:center}
+
+  .sum-head{font-size:1.4rem;margin:.1em 0 .6em}
+  .sum-stats{display:flex;gap:1.4em;flex-wrap:wrap;margin-bottom:1em}
+  .sum-stats .stat b{display:block;font-size:1.8rem}
+  .sum-stats .stat span{font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .weak-list{list-style:none;padding:0;margin:.2em 0 1em;display:flex;flex-direction:column;gap:.4em}
+  .weak-list li{background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:.5em .7em}
+  .xgame{display:inline-flex;align-items:center;min-height:44px;margin-top:.4em;text-decoration:none;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:.55em .9em;border-radius:999px}
+  .sum-actions{display:flex;gap:.6em;flex-wrap:wrap;margin-top:1em}
+  .sum-actions .primary{width:auto;margin-top:0;padding:0 1.4em}
+  .empty-state{text-align:center;color:var(--muted);padding:1.5em .5em}
+  .hidden{display:none !important}
+  @keyframes press-in{0%{transform:scale(1)}45%{transform:scale(.98)}100%{transform:scale(1)}}
+  .press{animation:press-in .28s ease}
+  @media (prefers-reduced-motion: reduce){
+    .press{animation:none}
+    .progress > i{transition:none}
+  }
+</style>
+<link rel="stylesheet" href="../shared/sjovt.css">
+<script src="../shared/sjovt.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "Sætningsmaskinen",
+  "description": "Ledsætninger på dansk øvelser: byg sætninger med ordblokke, placer ikke rigtigt, og øv direkte og indirekte spørgsmål. Gratis på A2–C1-niveau.",
+  "url": "https://sjovtdansk.dk/saetningsmaskinen/index.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sjovt Dansk"
+  },
+  "teaches": [
+    "Ledsætninger",
+    "Placering af ikke",
+    "Direkte og indirekte spørgsmål",
+    "Dansk ordstilling"
+  ],
+  "educationalLevel": [
+    "A2",
+    "B1",
+    "B2",
+    "C1"
+  ],
+  "learningResourceType": [
+    "Spil",
+    "Øvelse"
+  ],
+  "inLanguage": "da",
+  "isAccessibleForFree": true
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Hjem",
+      "item": "https://sjovtdansk.dk/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Sætningsmaskinen",
+      "item": "https://sjovtdansk.dk/saetningsmaskinen/index.html"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<nav class="sd-bar" aria-label="Sjovt Dansk" data-sd-static><a class="sd-bar-home" href="../index.html">← MENU</a></nav>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><span data-sd-sprite="terning" data-scale="3" aria-hidden="true"></span> Sætningsmaskinen</div>
+    <button class="icon-btn" id="btn-dark" type="button" aria-label="Skift mørk tilstand" title="Mørk tilstand">MØRK</button>
+    <button class="icon-btn" id="btn-sound" type="button" aria-label="Slå lyd til eller fra" title="Lyd">LYD</button>
+  </header>
+
+  <main id="start-screen" class="card">
+    <h1 class="title"><span data-sd-sprite="terning" data-scale="5" aria-hidden="true"></span>Sætningsmaskinen</h1>
+    <p class="lede">Byg sætninger med ordblokke: ledsætninger, spørgsmål og mere.</p>
+    <div class="group-label" id="lbl-mode">Tilstand</div>
+    <div class="modes" id="mode-list" role="group" aria-labelledby="lbl-mode"></div>
+    <div class="group-label" id="lbl-level">Niveau</div>
+    <div class="chips" id="level-list" role="group" aria-labelledby="lbl-level"></div>
+    <button class="primary" id="btn-play" type="button">Spil</button>
+  </main>
+
+  <main id="play-screen" class="card hidden">
+    <div class="playbar">
+      <button class="icon-btn" id="btn-back" type="button" aria-label="Tilbage til start" title="Tilbage">✕</button>
+      <div class="progress" aria-hidden="true"><i id="progress-fill"></i></div>
+      <div class="count" id="progress-count">0/0</div>
+    </div>
+    <div id="item-host"></div>
+  </main>
+
+  <main id="summary-screen" class="card hidden">
+    <div id="summary-host"></div>
+  </main>
+</div>
+
+<script src="../shared/dansk-speech.js"></script>
+<script src="../shared/dansk-core.js"></script>
+<script src="./data.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  var DC = window.DanskCore;
+  var DATA = window.SAETNINGS_DATA || {};
+  var GAME_ID = 'saetningsmaskinen';
+  var ROUND_SIZE = 10;
+  var LEVELS = ['A2', 'B1', 'B2'];
+
+  var MODES = [
+    { key: 'adverb_placement',    num: 1, name: 'Ikke-flytteren',               ready: true },
+    { key: 'main_to_subordinate', num: 2, name: 'Hovedsætning til ledsætning',  ready: true },
+    { key: 'direct_question',     num: 3, name: 'Byg spørgsmålet',              ready: true },
+    { key: 'indirect_question',   num: 4, name: 'Indirekte spørgsmål',          ready: true },
+    { key: 'relative_clause',     num: 5, name: 'Relativværkstedet',            ready: false },
+    { key: 'der_or_det',          num: 6, name: 'Der eller det?',                ready: false },
+    { key: 'clause_chain',        num: 7, name: 'Sætningskæden',                ready: false }
+  ];
+  var MODE_BY_KEY = {};
+  MODES.forEach(function(m){ MODE_BY_KEY[m.key] = m; });
+
+  var CROSS = {
+    adverb_placement:    { href: '../adverbs.html', text: 'Træn adverbier → Adverbier og bindeord' },
+    main_to_subordinate: { href: '../konjunktioner/index.html', text: 'Træn bindeord → Konjunktioner' },
+    direct_question:     { href: '../ordstilling-detektiv/index.html', text: 'Træn ordstilling → Ordstillingsdetektiven' },
+    indirect_question:   { href: '../ordstilling-detektiv/index.html', text: 'Træn ordstilling → Ordstillingsdetektiven' }
+  };
+
+  // ---- sound theme (improvement/specs.md § 6.5) ----
+  var SOUND = {
+    select: function(){ DC.ui.sound.sequence([{ type: 'sine', frequency: 420, duration: 0.07, gain: 0.035 }]); },
+    correct: function(){ DC.ui.sound.sequence([
+      { type: 'sine', frequency: 180, duration: 0.06, gain: 0.05 },
+      { type: 'sine', frequency: 520, duration: 0.08, gain: 0.06, delay: 0.05 }
+    ]); },
+    wrong: function(){ DC.ui.sound.sequence([
+      { type: 'sine', frequency: 240, duration: 0.08, gain: 0.035 },
+      { type: 'sine', frequency: 150, duration: 0.08, gain: 0.03, delay: 0.08 }
+    ]); },
+    lockSentence: function(){ DC.ui.sound.sequence([
+      { type: 'triangle', frequency: 380, duration: 0.07, gain: 0.04 },
+      { type: 'triangle', frequency: 430, duration: 0.07, gain: 0.04, delay: 0.09 },
+      { type: 'triangle', frequency: 480, duration: 0.07, gain: 0.04, delay: 0.18 },
+      { type: 'triangle', frequency: 560, duration: 0.09, gain: 0.05, delay: 0.27 }
+    ]); },
+    roundComplete: function(){ DC.ui.sound.sequence([
+      { type: 'triangle', frequency: 220, duration: 0.09, gain: 0.06 },
+      { type: 'triangle', frequency: 277, duration: 0.09, gain: 0.06, delay: 0.10 },
+      { type: 'triangle', frequency: 330, duration: 0.09, gain: 0.06, delay: 0.20 },
+      { type: 'sine',     frequency: 660, duration: 0.35, gain: 0.06, delay: 0.34 }
+    ]); }
+  };
+
+  var prefs = DC.store.namespace(GAME_ID);
+  var srsState = DC.srs.load(GAME_ID);
+
+  var state = {
+    mode: 'adverb_placement',
+    levels: LEVELS.slice(),
+    round: [], idx: 0, correct: 0, missed: []
+  };
+
+  var el = {
+    start: document.getElementById('start-screen'),
+    play: document.getElementById('play-screen'),
+    summary: document.getElementById('summary-screen'),
+    modeList: document.getElementById('mode-list'),
+    levelList: document.getElementById('level-list'),
+    itemHost: document.getElementById('item-host'),
+    sumHost: document.getElementById('summary-host'),
+    fill: document.getElementById('progress-fill'),
+    pcount: document.getElementById('progress-count')
+  };
+
+  DC.ui.darkMode.init();
+  DC.ui.sound.init(prefs.get('sound') !== false);
+  syncSoundLabel();
+
+  var savedMode = prefs.get('mode');
+  if (savedMode && MODE_BY_KEY[savedMode]) state.mode = savedMode;
+  var savedLevels = prefs.get('levels');
+  if (Array.isArray(savedLevels) && savedLevels.length) {
+    var okLevels = savedLevels.filter(function(l){ return LEVELS.indexOf(l) !== -1; });
+    if (okLevels.length) state.levels = okLevels;
+  }
+
+  document.getElementById('btn-dark').addEventListener('click', function(){ DC.ui.darkMode.toggle(); });
+  document.getElementById('btn-sound').addEventListener('click', function(){
+    var on = DC.ui.sound.toggle();
+    prefs.set('sound', on);
+    syncSoundLabel();
+    if (on) SOUND.select();
+  });
+  function syncSoundLabel(){
+    var on = DC.ui.sound.isEnabled();
+    var b = document.getElementById('btn-sound');
+    b.textContent = on ? 'LYD' : 'LYD ✗';
+    b.setAttribute('aria-pressed', String(!on));
+  }
+  document.getElementById('btn-play').addEventListener('click', startRound);
+  document.getElementById('btn-back').addEventListener('click', showStart);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !el.play.classList.contains('hidden')) showStart();
+  });
+
+  // ---- helpers ----
+  function shuffle(arr){
+    for (var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(ch){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch];
+    });
+  }
+  function slug(s){ return String(s || '').toLowerCase().replace(/[^a-zæøå0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'x'; }
+  function effMode(item){ return item.mode || state.mode; }
+  function srsKey(item){ return GAME_ID + ':' + effMode(item) + ':' + item.id; }
+  var CONJUNCTIONS = ['efter at', 'at', 'fordi', 'selvom', 'hvis', 'når', 'da', 'mens', 'før'];
+  var HV_WORDS = ['hvem', 'hvad', 'hvor mange', 'hvor', 'hvornår', 'hvorfor', 'hvilken', 'hvilket'];
+  function patternBucket(item){
+    var m = effMode(item);
+    if (m === 'adverb_placement') return slug(item.movable_token);
+    if (m === 'main_to_subordinate') {
+      var frame = (item.frame || '').toLowerCase();
+      for (var i = 0; i < CONJUNCTIONS.length; i++) {
+        if (frame.indexOf(CONJUNCTIONS[i]) !== -1) return slug(CONJUNCTIONS[i]);
+      }
+      return 'other';
+    }
+    if (m === 'direct_question' || m === 'indirect_question') {
+      var hay = (m === 'direct_question' ? (item.full_answer || '') : (item.prompt || '') + ' ' + (item.accepted_answers || []).join(' ')).toLowerCase();
+      for (var j = 0; j < HV_WORDS.length; j++) {
+        if (hay.indexOf(HV_WORDS[j]) !== -1) return slug(HV_WORDS[j]);
+      }
+      return m === 'direct_question' ? 'ja-nej' : 'om';
+    }
+    return 'other';
+  }
+  function patternKey(item){ return 'pattern:' + GAME_ID + ':' + effMode(item) + ':' + patternBucket(item); }
+  function poolFor(modeKey, levels){
+    var all = Array.isArray(DATA[modeKey]) ? DATA[modeKey] : [];
+    return DC.level.filter(all, levels);
+  }
+  function arraysEqual(a, b){
+    if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+    return true;
+  }
+  function matchesAny(order, acceptedOrders){
+    for (var i = 0; i < acceptedOrders.length; i++) {
+      if (arraysEqual(order, acceptedOrders[i])) return true;
+    }
+    return false;
+  }
+
+  // ---- start controls ----
+  function buildStartControls(){
+    el.modeList.innerHTML = '';
+    MODES.forEach(function(m){
+      var pool = poolFor(m.key, LEVELS);
+      var ready = m.ready && pool.length > 0;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mode-btn';
+      btn.setAttribute('aria-pressed', String(m.key === state.mode));
+      if (!ready) { btn.disabled = true; btn.title = 'Kommer snart'; }
+      btn.innerHTML = '<span class="num" aria-hidden="true">' + m.num + '</span><span>' + esc(m.name) +
+        (ready ? '' : '<span class="mmeta"> · kommer snart</span>') + '</span>';
+      btn.addEventListener('click', function(){
+        if (btn.disabled) return;
+        state.mode = m.key;
+        prefs.set('mode', m.key);
+        updateModePressed();
+      });
+      el.modeList.appendChild(btn);
+    });
+    updateModePressed();
+
+    el.levelList.innerHTML = '';
+    LEVELS.forEach(function(lvl){
+      var c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'chip';
+      c.textContent = lvl;
+      c.setAttribute('aria-pressed', String(state.levels.indexOf(lvl) !== -1));
+      c.addEventListener('click', function(){
+        var i = state.levels.indexOf(lvl);
+        if (i === -1) state.levels.push(lvl);
+        else if (state.levels.length > 1) state.levels.splice(i, 1);
+        c.setAttribute('aria-pressed', String(state.levels.indexOf(lvl) !== -1));
+        prefs.set('levels', state.levels.slice());
+      });
+      el.levelList.appendChild(c);
+    });
+  }
+  function updateModePressed(){
+    var btns = el.modeList.querySelectorAll('.mode-btn');
+    for (var i = 0; i < btns.length; i++) btns[i].setAttribute('aria-pressed', String(MODES[i].key === state.mode));
+  }
+
+  function show(which){
+    el.start.classList.toggle('hidden', which !== 'start');
+    el.play.classList.toggle('hidden', which !== 'play');
+    el.summary.classList.toggle('hidden', which !== 'summary');
+  }
+
+  var advanceTimer = null;
+  function clearPending(){
+    if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+  }
+
+  function showStart(){
+    clearPending();
+    buildStartControls();
+    show('start');
+    document.getElementById('btn-play').focus();
+  }
+
+  // ---- round lifecycle ----
+  function buildRound(pool){
+    var shuffled = shuffle(pool.slice());
+    var due = shuffled.filter(function(it){ return DC.srs.isDue(srsState, srsKey(it)); }).slice(0, ROUND_SIZE);
+    var chosen = due.slice();
+    if (chosen.length < ROUND_SIZE) {
+      var seen = {};
+      chosen.forEach(function(it){ seen[it.id] = true; });
+      var rest = shuffled.filter(function(it){ return !seen[it.id]; });
+      for (var i = 0; i < rest.length && chosen.length < ROUND_SIZE; i++) chosen.push(rest[i]);
+    }
+    return shuffle(chosen);
+  }
+
+  function startRound(){
+    clearPending();
+    var pool = poolFor(state.mode, state.levels);
+    show('play');
+    if (!pool.length) { renderEmpty(); return; }
+    state.round = buildRound(pool);
+    state.idx = 0; state.correct = 0; state.missed = [];
+    renderItem();
+  }
+
+  function renderEmpty(){
+    el.fill.style.width = '0%';
+    el.pcount.textContent = '';
+    el.itemHost.innerHTML = '';
+    var box = document.createElement('div');
+    box.className = 'empty-state';
+    box.innerHTML = '<p>Der er ingen opgaver til dette valg. Vælg et andet niveau.</p>';
+    var back = document.createElement('button');
+    back.className = 'btn accent'; back.type = 'button'; back.textContent = 'Tilbage';
+    back.addEventListener('click', showStart);
+    box.appendChild(back);
+    el.itemHost.appendChild(box);
+    back.focus();
+  }
+
+  function renderItem(){
+    clearPending();
+    if (state.idx >= state.round.length) { finishRound(); return; }
+    var pct = Math.round((state.idx / state.round.length) * 100);
+    el.fill.style.width = pct + '%';
+    el.pcount.textContent = (state.idx + 1) + '/' + state.round.length;
+    var item = state.round[state.idx];
+    (RENDERERS[effMode(item)] || RENDERERS._fallback)(item);
+  }
+
+  function advance(){
+    clearPending();
+    state.idx++;
+    renderItem();
+  }
+
+  function finishRound(){
+    el.fill.style.width = '100%';
+    SOUND.roundComplete();
+    renderSummary();
+    show('summary');
+  }
+
+  function recordAnswer(item, correct){
+    DC.srs.record(srsState, srsKey(item), correct);
+    DC.srs.pattern(srsState, patternKey(item), correct);
+    if (correct) state.correct++; else state.missed.push(item);
+  }
+
+  function sdFx(correct, node){
+    var S = window.Sjovt;
+    if (!S || !S.fx || !node) return;
+    if (correct) S.fx.correct(node); else S.fx.wrong(node);
+  }
+
+  // ---- shared slip (wrong-answer feedback: correct answer + one note + replay + Videre) ----
+  function buildSlip(host, solutionText, note, ttsText){
+    host.innerHTML = '';
+    var slip = document.createElement('div');
+    slip.className = 'slip';
+    var sol = document.createElement('div');
+    sol.innerHTML = 'Rigtigt svar: <span class="sol">' + esc(solutionText) + '</span>';
+    slip.appendChild(sol);
+    if (note) {
+      var noteEl = document.createElement('div');
+      noteEl.className = 'note';
+      noteEl.textContent = note;
+      slip.appendChild(noteEl);
+    }
+    var actions = document.createElement('div');
+    actions.className = 'actions';
+    DC.ui.ttsButton(ttsText || solutionText, actions);
+    var next = document.createElement('button');
+    next.className = 'btn accent';
+    next.type = 'button';
+    next.textContent = 'Videre';
+    next.addEventListener('click', advance);
+    actions.appendChild(next);
+    slip.appendChild(actions);
+    host.appendChild(slip);
+    next.focus();
+  }
+
+  // ---- renderers ----
+  var RENDERERS = {};
+
+  // Mode 1 — Ikke-flytteren: one movable adverb tile dropped into a gap among fixed tiles.
+  RENDERERS.adverb_placement = function(item){
+    var wrap = document.createElement('div');
+    wrap.setAttribute('role', 'group');
+    wrap.setAttribute('aria-label', 'Opgave');
+
+    var tag = document.createElement('p');
+    tag.className = 'mode-tag';
+    tag.textContent = 'Opgave ' + (state.idx + 1) + ' · Ikke-flytteren';
+    wrap.appendChild(tag);
+
+    var tokens = item.tokens.slice();
+    var movableIdx = tokens.indexOf(item.movable_token);
+    var fixed = tokens.slice();
+    if (movableIdx !== -1) fixed.splice(movableIdx, 1);
+
+    var zoneClass = item.clause_type === 'subordinate' ? 'subordinate' : 'main';
+    var zone = document.createElement('div');
+    zone.className = 'clause-zone ' + zoneClass;
+    var zoneLabel = document.createElement('span');
+    zoneLabel.className = 'clause-zone-label';
+    zoneLabel.textContent = item.clause_type === 'subordinate' ? 'Ledsætning' : 'Hovedsætning';
+    zone.appendChild(zoneLabel);
+    wrap.appendChild(zone);
+
+    var answered = false;
+    var gapButtons = [];
+
+    function renderGaps(){
+      zone.querySelectorAll('.slot-gap, .slot-fixed').forEach(function(n){ n.remove(); });
+      gapButtons = [];
+      for (var i = 0; i <= fixed.length; i++) {
+        var gap = document.createElement('button');
+        gap.type = 'button';
+        gap.className = 'slot-gap';
+        gap.setAttribute('aria-label', 'Sæt ' + item.movable_token + ' her');
+        gap.addEventListener('click', (function(gapIndex){
+          return function(){ placeAt(gapIndex); };
+        })(i));
+        zone.appendChild(gap);
+        gapButtons.push(gap);
+        if (i < fixed.length) {
+          var tile = document.createElement('span');
+          tile.className = 'slot-fixed';
+          tile.textContent = fixed[i];
+          zone.appendChild(tile);
+        }
+      }
+    }
+    renderGaps();
+
+    var trayLabel = document.createElement('p');
+    trayLabel.className = 'group-label';
+    trayLabel.textContent = 'Flyt denne blok';
+    wrap.appendChild(trayLabel);
+    var tray = document.createElement('div');
+    tray.className = 'bank';
+    var movableTile = document.createElement('button');
+    movableTile.type = 'button';
+    movableTile.className = 'tile ' + (zoneClass === 'subordinate' ? 'blue' : 'coral');
+    movableTile.textContent = item.movable_token;
+    movableTile.setAttribute('aria-label', 'Blokken ' + item.movable_token);
+    tray.appendChild(movableTile);
+    wrap.appendChild(tray);
+
+    var slip = document.createElement('div');
+    wrap.appendChild(slip);
+
+    el.itemHost.innerHTML = '';
+    el.itemHost.appendChild(wrap);
+
+    function placeAt(gapIndex){
+      if (answered) return;
+      answered = true;
+      SOUND.select();
+      gapButtons.forEach(function(g){ g.disabled = true; g.setAttribute('aria-disabled', 'true'); });
+      movableTile.disabled = true;
+      var candidate = fixed.slice(0, gapIndex).concat([item.movable_token]).concat(fixed.slice(gapIndex));
+      var correct = matchesAny(candidate, item.accepted_orders);
+      var fullSentence = (item.accepted_orders[0] || candidate).join(' ');
+      recordAnswer(item, correct);
+      if (correct) {
+        SOUND.correct();
+        gapButtons[gapIndex].classList.add('result-correct');
+        movableTile.classList.add('pop');
+        if (!DC.ui.motion.isReduced()) wrap.classList.add('press');
+        DC.ui.announce('Rigtigt.');
+        sdFx(true, wrap);
+        DC.ui.ttsButton(fullSentence, slip);
+        advanceTimer = setTimeout(advance, 800);
+      } else {
+        SOUND.wrong();
+        gapButtons[gapIndex].classList.add('result-wrong');
+        movableTile.classList.add('bounce');
+        DC.ui.announce('Forkert. Rigtigt svar: ' + fullSentence + '. ' + (item.note || ''));
+        sdFx(false, wrap);
+        buildSlip(slip, fullSentence, item.note, fullSentence);
+      }
+    }
+  };
+
+  // Shared full-sentence tile reorder for Mode 2 (main_to_subordinate) and Mode 3 (direct_question).
+  function renderTileReorder(item, opts){
+    var wrap = document.createElement('div');
+    wrap.setAttribute('role', 'group');
+    wrap.setAttribute('aria-label', 'Opgave');
+
+    var tag = document.createElement('p');
+    tag.className = 'mode-tag';
+    tag.textContent = 'Opgave ' + (state.idx + 1) + ' · ' + opts.title;
+    wrap.appendChild(tag);
+
+    if (opts.sourceText) {
+      var src = document.createElement('div');
+      src.className = 'source-line';
+      var srcSpan = document.createElement('span');
+      srcSpan.textContent = opts.sourceText;
+      src.appendChild(srcSpan);
+      DC.ui.ttsButton(opts.sourceText, src);
+      wrap.appendChild(src);
+    }
+    if (opts.frameText) {
+      var frame = document.createElement('div');
+      frame.className = 'frame-line';
+      frame.innerHTML = esc(opts.frameText).replace('&#39;&#39;&#39;', '') ;
+      frame.textContent = opts.frameText;
+      wrap.appendChild(frame);
+    }
+
+    var tiles = item.tiles.slice();
+    var slotCount = tiles.length;
+    var shuffled = shuffle(tiles.slice());
+
+    var trayLabel = document.createElement('p');
+    trayLabel.className = 'group-label';
+    trayLabel.textContent = 'Sæt ordene i rækkefølge';
+    wrap.appendChild(trayLabel);
+
+    var slotsEl = document.createElement('div');
+    slotsEl.className = 'slots';
+    wrap.appendChild(slotsEl);
+    var bankEl = document.createElement('div');
+    bankEl.className = 'bank';
+    wrap.appendChild(bankEl);
+
+    var slip = document.createElement('div');
+    wrap.appendChild(slip);
+
+    el.itemHost.innerHTML = '';
+    el.itemHost.appendChild(wrap);
+
+    var placed = [];
+    var bankButtons = [];
+    var answered = false;
+
+    function renderSlots(){
+      slotsEl.innerHTML = '';
+      for (var i = 0; i < slotCount; i++) {
+        var entry = placed[i];
+        if (entry) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'slot-item';
+          b.textContent = entry.token;
+          b.setAttribute('aria-label', 'Fjern ' + entry.token);
+          b.addEventListener('click', (function(index){ return function(){ removeFromSlot(index); }; })(i));
+          slotsEl.appendChild(b);
+        } else {
+          var ph = document.createElement('span');
+          ph.className = 'slot-empty';
+          ph.setAttribute('aria-hidden', 'true');
+          slotsEl.appendChild(ph);
+        }
+      }
+    }
+    function removeFromSlot(index){
+      if (answered) return;
+      var entry = placed[index];
+      if (!entry) return;
+      placed[index] = null;
+      bankButtons[entry.bankIndex].disabled = false;
+      SOUND.select();
+      renderSlots();
+    }
+    function placeToken(bankIndex){
+      if (answered) return;
+      var nextSlot = -1;
+      for (var i = 0; i < slotCount; i++) { if (!placed[i]) { nextSlot = i; break; } }
+      if (nextSlot === -1) return;
+      SOUND.select();
+      placed[nextSlot] = { token: shuffled[bankIndex], bankIndex: bankIndex };
+      bankButtons[bankIndex].disabled = true;
+      renderSlots();
+      checkComplete();
+    }
+    function checkComplete(){
+      for (var i = 0; i < slotCount; i++) if (!placed[i]) return;
+      answered = true;
+      bankButtons.forEach(function(b){ b.disabled = true; });
+      var order = placed.map(function(p){ return p.token; });
+      var correct = matchesAny(order, item.accepted_orders);
+      recordAnswer(item, correct);
+      var fullSentence = opts.fullAnswer || order.join(' ');
+      if (correct) {
+        SOUND.lockSentence();
+        slotsEl.classList.add('result-correct');
+        if (!DC.ui.motion.isReduced()) wrap.classList.add('press');
+        DC.ui.announce('Rigtigt.');
+        sdFx(true, wrap);
+        DC.ui.ttsButton(fullSentence, slip);
+        advanceTimer = setTimeout(advance, 800);
+      } else {
+        SOUND.wrong();
+        slotsEl.classList.add('result-wrong');
+        DC.ui.announce('Forkert. Rigtigt svar: ' + fullSentence + '. ' + (item.note || ''));
+        sdFx(false, wrap);
+        buildSlip(slip, fullSentence, item.note, fullSentence);
+      }
+    }
+
+    shuffled.forEach(function(token, index){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tile';
+      btn.textContent = token;
+      btn.addEventListener('click', function(){ placeToken(index); });
+      bankButtons.push(btn);
+      bankEl.appendChild(btn);
+    });
+    renderSlots();
+  }
+
+  // Mode 2 — Hovedsætning til ledsætning
+  RENDERERS.main_to_subordinate = function(item){
+    renderTileReorder(item, {
+      title: 'Hovedsætning til ledsætning',
+      sourceText: item.source,
+      frameText: item.frame,
+      fullAnswer: item.full_answer
+    });
+  };
+
+  // Mode 3 — Byg spørgsmålet
+  RENDERERS.direct_question = function(item){
+    renderTileReorder(item, {
+      title: 'Byg spørgsmålet',
+      fullAnswer: item.full_answer
+    });
+  };
+
+  // Mode 4 — Indirekte spørgsmål: pick the one tile that correctly fills the blank.
+  RENDERERS.indirect_question = function(item){
+    var wrap = document.createElement('div');
+    wrap.setAttribute('role', 'group');
+    wrap.setAttribute('aria-label', 'Opgave');
+
+    var tag = document.createElement('p');
+    tag.className = 'mode-tag';
+    tag.textContent = 'Opgave ' + (state.idx + 1) + ' · Indirekte spørgsmål';
+    wrap.appendChild(tag);
+
+    var promptLine = document.createElement('div');
+    promptLine.className = 'prompt-line';
+    var blank = null;
+    String(item.prompt).split(/_{2,}/).forEach(function(seg, i, arr){
+      promptLine.appendChild(document.createTextNode(seg));
+      if (i < arr.length - 1) {
+        blank = document.createElement('span');
+        blank.className = 'blank';
+        blank.textContent = '?';
+        blank.setAttribute('aria-label', 'tomt felt');
+        promptLine.appendChild(blank);
+      }
+    });
+    wrap.appendChild(promptLine);
+    DC.ui.ttsButton(String(item.prompt).replace(/_{2,}/g, '…'), promptLine);
+
+    var trayLabel = document.createElement('p');
+    trayLabel.className = 'group-label';
+    trayLabel.textContent = 'Vælg den rigtige blok';
+    wrap.appendChild(trayLabel);
+    var bank = document.createElement('div');
+    bank.className = 'bank';
+    wrap.appendChild(bank);
+    var slip = document.createElement('div');
+    wrap.appendChild(slip);
+
+    el.itemHost.innerHTML = '';
+    el.itemHost.appendChild(wrap);
+
+    var accepted = Array.isArray(item.accepted_answers) ? item.accepted_answers : [];
+    var answered = false;
+    var buttons = [];
+
+    shuffle(item.tiles.slice()).forEach(function(text){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tile violet';
+      btn.textContent = text;
+      btn.addEventListener('click', function(){ choose(btn, text); });
+      buttons.push(btn);
+      bank.appendChild(btn);
+    });
+
+    function choose(btn, text){
+      if (answered) return;
+      answered = true;
+      SOUND.select();
+      var norm = DC.diff.normalize(text);
+      var correct = accepted.some(function(a){ return DC.diff.normalize(a) === norm; });
+      buttons.forEach(function(b){
+        b.disabled = true;
+        var isAccepted = accepted.some(function(a){ return DC.diff.normalize(a) === DC.diff.normalize(b.textContent); });
+        if (b === btn) b.classList.add(correct ? 'result-correct' : 'result-wrong');
+        else if (!correct && isAccepted) b.classList.add('result-correct');
+      });
+      var filledPrompt = String(item.prompt).replace(/_{2,}/, text);
+      if (blank) {
+        blank.textContent = text;
+        blank.removeAttribute('aria-label');
+        blank.classList.add(correct ? 'done-correct' : 'done-wrong');
+      }
+      recordAnswer(item, correct);
+      if (correct) {
+        SOUND.correct();
+        btn.classList.add('pop');
+        if (!DC.ui.motion.isReduced()) wrap.classList.add('press');
+        DC.ui.announce('Rigtigt.');
+        sdFx(true, wrap);
+        DC.ui.ttsButton(filledPrompt, slip);
+        advanceTimer = setTimeout(advance, 800);
+      } else {
+        SOUND.wrong();
+        btn.classList.add('bounce');
+        var solution = String(item.prompt).replace(/_{2,}/, accepted[0] || '');
+        DC.ui.announce('Forkert. Rigtigt svar: ' + solution + '. ' + (item.note || ''));
+        sdFx(false, wrap);
+        buildSlip(slip, solution, item.note, solution);
+      }
+    }
+  };
+
+  RENDERERS._fallback = function(){ renderEmpty(); };
+
+  // ---- summary ----
+  function uniqueMissed(){
+    var seen = {}, out = [];
+    state.missed.forEach(function(it){ if (!seen[it.id]) { seen[it.id] = true; out.push(it); } });
+    return out;
+  }
+  function weakLabel(item){
+    var m = effMode(item);
+    if (m === 'adverb_placement') return (item.accepted_orders[0] || item.tokens).join(' ');
+    if (m === 'main_to_subordinate') return item.full_answer || '';
+    if (m === 'direct_question') return item.full_answer || '';
+    if (m === 'indirect_question') return String(item.prompt || '').replace(/_{2,}/, (item.accepted_answers || [])[0] || '');
+    return item.id;
+  }
+
+  function renderSummary(){
+    var total = state.round.length;
+    var acc = total ? Math.round((state.correct / total) * 100) : 0;
+    el.sumHost.innerHTML = '';
+
+    var h = document.createElement('h2');
+    h.className = 'sum-head';
+    h.textContent = 'Sætningen er bygget';
+    el.sumHost.appendChild(h);
+
+    var stats = document.createElement('div');
+    stats.className = 'sum-stats';
+    stats.innerHTML = '<div class="stat"><b>' + state.correct + '/' + total + '</b><span>Rigtige</span></div>' +
+      '<div class="stat"><b>' + acc + '%</b><span>Præcision</span></div>';
+    el.sumHost.appendChild(stats);
+
+    var weak = uniqueMissed().slice(0, 3);
+    if (weak.length) {
+      var wl = document.createElement('div');
+      wl.className = 'group-label';
+      wl.textContent = 'Øv disse igen';
+      el.sumHost.appendChild(wl);
+      var ul = document.createElement('ul');
+      ul.className = 'weak-list';
+      weak.forEach(function(item){
+        var li = document.createElement('li');
+        li.textContent = weakLabel(item);
+        ul.appendChild(li);
+      });
+      el.sumHost.appendChild(ul);
+    }
+
+    var x = CROSS[state.mode];
+    if (x) {
+      var a = document.createElement('a');
+      a.className = 'xgame';
+      a.href = x.href;
+      a.textContent = x.text;
+      el.sumHost.appendChild(a);
+    }
+
+    var actions = document.createElement('div');
+    actions.className = 'sum-actions';
+    var again = document.createElement('button');
+    again.className = 'primary';
+    again.type = 'button';
+    again.textContent = 'Spil igen';
+    again.addEventListener('click', startRound);
+    actions.appendChild(again);
+
+    if (state.missed.length) {
+      var retry = document.createElement('button');
+      retry.className = 'btn';
+      retry.type = 'button';
+      retry.textContent = 'Gentag fejl';
+      retry.addEventListener('click', function(){
+        state.round = shuffle(uniqueMissed());
+        state.idx = 0; state.correct = 0; state.missed = [];
+        show('play');
+        renderItem();
+      });
+      actions.appendChild(retry);
+    }
+    var home = document.createElement('button');
+    home.className = 'btn';
+    home.type = 'button';
+    home.textContent = 'Til start';
+    home.addEventListener('click', showStart);
+    actions.appendChild(home);
+    el.sumHost.appendChild(actions);
+    again.focus();
+
+    var S = window.Sjovt;
+    if (S && state.correct > 0 && S.fx && S.fx.celebrate) S.fx.celebrate();
+  }
+
+  buildStartControls();
+  if (window.Sjovt && window.Sjovt.watchScreens) window.Sjovt.watchScreens('#start-screen, #play-screen, #summary-screen');
+})();
+</script>
+</body>
+</html>
