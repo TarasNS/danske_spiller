@@ -8,6 +8,19 @@
       "reason": "valid da/en pair: schema complete, every claim sourced and fetched, keyword placed, LIX under ceiling"
     },
     {
+      "id": "pass-02-digit-keyword",
+      "dir": "fixtures/pass-02-digit-keyword",
+      "expect": "pass",
+      "reason": "a target keyword containing a digit (\"prøve i dansk 3\") opening the article must satisfy the first-100-words check"
+    },
+    {
+      "id": "fail-digit-keyword",
+      "dir": "fixtures/fail-digit-keyword",
+      "expect": "fail",
+      "match": "not in the first 100 words",
+      "reason": "same digit-bearing keyword, absent from the opening — the check must still be able to fail"
+    },
+    {
       "id": "fail-hedge",
       "dir": "fixtures/fail-hedge",
       "expect": "fail",

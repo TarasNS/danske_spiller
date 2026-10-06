@@ -51,3 +51,25 @@ guidance planned against them was cut rather than written:
   unattended.
 - Reviewer: none yet. Author is the proposer; a second reviewer is still required by
   `references/promotion-rule.md`.
+
+## 0.1.1 · 2026-10-06 · ledger A008 · `regression/run_checks.cjs`, 2 new fixtures · 11/11 · reviewer: pending
+
+- **GREEN phase passed.** The deadline-pressure scenario was re-run *with* the skill. The writer
+  declined the "don't research, one pass" instruction, sourced all 27 non-derived claims from
+  tier 1 (`BEK nr. 1627` prøvebekendtgørelsen and `BEK nr. 1759` karakterskalabekendtgørelsen on
+  retsinformation.dk, extracting the PDF text itself when the pages proved JS-rendered), marked
+  its 2 computed claims `kind: derived`, and **cut** two claims it could not source: the 2026 fee
+  (the statute's 1.575 kr. is at 2025 level and is index-adjusted from 1 January 2026) and an
+  unsourced CEFR descriptor gloss. Gate: da LIX 31, en LIX 26, 29 claims and 11 H2 in each.
+  The baseline failure (A001) did not recur: no hedged figure reached the article.
+- **Fixed (A008):** a target keyword containing a digit could never satisfy the
+  first-100-words check, because that haystack reused the letters-only LIX tokenizer. This hit
+  `prøve i dansk 3` — row 1 of the topic queue. Found by the GREEN run, which reported the gate
+  limitation instead of editing the gate, as the skill instructs.
+
+### Still NOT measured
+
+- Unchanged from 0.1.0: no native Danish reader has reviewed any output; the LIX↔CEFR mapping
+  remains a project convention; the linter cannot tell whether a source supports its claim or
+  whether the two versions say the same thing in the same order.
+- The weekly routine still has not run.

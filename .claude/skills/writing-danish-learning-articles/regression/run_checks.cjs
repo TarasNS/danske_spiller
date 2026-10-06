@@ -317,7 +317,10 @@ function checkOne(file, fm, body, fail) {
   if (kw) {
     if (!norm(title).includes(kw)) fail(`${where}: target_keyword "${kw}" not in title`);
     if (!norm(md).includes(kw)) fail(`${where}: target_keyword "${kw}" not in meta_description`);
-    const first100 = words(plain).slice(0, 100).join(' ');
+    // Tokenise on whitespace, not with WORD_RE: that regex matches letters only, so any
+    // keyword containing a digit ("prøve i dansk 3") could never match, even as the first
+    // words of the article. LIX still uses WORD_RE; only this haystack keeps digits.
+    const first100 = plain.trim().split(/\s+/).slice(0, 100).join(' ');
     if (!norm(first100).includes(kw)) {
       fail(`${where}: target_keyword "${kw}" not in the first 100 words`);
     }
